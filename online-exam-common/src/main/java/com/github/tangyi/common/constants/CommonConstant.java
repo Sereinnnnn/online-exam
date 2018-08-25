@@ -10,5 +10,15 @@ public class CommonConstant {
     /**
      * JSON 资源
      */
-    String CONTENT_TYPE = "application/json; charset=utf-8";
+    public static final String CONTENT_TYPE = "application/json; charset=utf-8";
+
+    /**
+     * 正常
+     */
+    public static final String STATUS_NORMAL = "0";
+
+    /**
+     * 锁定
+     */
+    public static final String STATUS_LOCK = "9";
 }

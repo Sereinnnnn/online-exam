@@ -1,0 +1,19 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: online-exam-config
+  profiles:
+    active: dev
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/wells2333/online-exam-config.git
+          default-label: ${spring.profiles.active}
+management:
+  security:
+    enabled: false
+endpoints:
+  health:
+    sensitive: false
