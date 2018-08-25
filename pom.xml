@@ -17,6 +17,7 @@
 
     <modules>
         <module>online-exam-common</module>
+        <module>online-exam-eureka</module>
     </modules>
 
     <properties>
