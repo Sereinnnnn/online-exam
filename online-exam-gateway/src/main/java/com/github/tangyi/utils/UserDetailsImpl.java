@@ -1,4 +1,4 @@
-package com.github.tangyi.service.impl;
+package com.github.tangyi.utils;
 
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.constants.SecurityConstant;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author tangyi
  * @date 2018-08-25-14:02
  */
-public class UserDetailServiceImpl extends BaseService implements UserDetails {
+public class UserDetailsImpl extends BaseService implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 

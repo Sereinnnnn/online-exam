@@ -21,4 +21,9 @@ public class CommonConstant {
      * 锁定
      */
     public static final String STATUS_LOCK = "9";
+
+    /**
+     * jwt签名
+     */
+    public static final String SIGN_KEY = "EXAM";
 }

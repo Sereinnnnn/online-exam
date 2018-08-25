@@ -18,6 +18,8 @@
     <modules>
         <module>online-exam-common</module>
         <module>online-exam-eureka</module>
+        <module>online-exam-config</module>
+        <module>online-exam-gateway</module>
     </modules>
 
     <properties>

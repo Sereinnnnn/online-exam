@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: online-exam-auth
+  profiles:
+    active: dev
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: online-exam-config
+        enabled: true
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
