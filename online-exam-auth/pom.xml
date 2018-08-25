@@ -11,7 +11,7 @@
 	<parent>
 		<artifactId>online-exam</artifactId>
 		<groupId>com.github.tangyi</groupId>
-		<version>0.1.0</version>
+		<version>${online-exam.version}</version>
 	</parent>
 
 	<dependencies>
@@ -68,6 +68,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

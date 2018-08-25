@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.mapper.UserMapper">
+    <resultMap id="userVoResultMap" type="com.github.tangyi.common.vo.UserVo">
+        <id column="id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="phone" property="phone" />
+        <result column="avatar" property="avatar" />
+    </resultMap>
+
+    <sql id="selectUserVo">
+        SELECT
+        `user`.id,
+        `user`.username,
+        `user`.`password`,
+        `user`.salt,
+        `user`.phone,
+        `user`.avatar
+        FROM sys_user AS `user`
+    </sql>
+
+    <select id="selectUserVoByUsername" resultMap="userVoResultMap">
+          <include refid="selectUserVo"/>
+          WHERE `user`.username = #{username}
+    </select>
+</mapper>

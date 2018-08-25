@@ -1,3 +1,14 @@
+spring:
+  application:
+    name: online-exam-gateway
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: online-exam-config
+        enabled: true
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
 eureka:
   instance:
     prefer-ip-address: true
@@ -7,7 +18,9 @@ eureka:
     serviceUrl:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
-#认证服务器地址
+# 认证服务器地址
 security:
   auth:
     server: http://localhost:3000
+logging:
+  level: error

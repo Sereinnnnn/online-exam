@@ -1,3 +1,16 @@
+server:
+  port: 8890
+spring:
+  application:
+    name: online-exam-auth
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: online-exam-config
+        enabled: true
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
 eureka:
   instance:
     prefer-ip-address: true

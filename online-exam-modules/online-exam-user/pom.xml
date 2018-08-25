@@ -2,24 +2,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>online-exam-config</artifactId>
+
+	<artifactId>online-exam-user</artifactId>
 	<version>${online-exam.version}</version>
 	<packaging>jar</packaging>
 
-	<name>online-exam-config</name>
-	<description>online-exam-config</description>
+	<name>online-exam-user</name>
+	<description>online-exam-user</description>
 
 	<parent>
-		<artifactId>online-exam</artifactId>
+		<artifactId>online-exam-modules</artifactId>
 		<groupId>com.github.tangyi</groupId>
 		<version>${online-exam.version}</version>
 	</parent>
 
 	<dependencies>
-		<!--配置中心服务-->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
+			<groupId>com.github.tangyi</groupId>
+			<artifactId>online-exam-common</artifactId>
+			<version>${online-exam.version}</version>
 		</dependency>
 	</dependencies>
 

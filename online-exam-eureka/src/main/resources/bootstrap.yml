@@ -1,11 +1,8 @@
 server:
   port: 8765
-
 spring:
   application:
     name: online-exam-eureka
-
-
 security:
   basic:
     enabled: true # 启用身份认证
