@@ -20,6 +20,13 @@ public class SysUser extends BaseEntity<SysUser> {
 
     private String avatar;
 
+    private String email;
+
+    private String sex;
+
+    private String born;
+
+    private String deptId;
 
     public String getUsername() {
         return username;
@@ -59,5 +66,37 @@ public class SysUser extends BaseEntity<SysUser> {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBorn() {
+        return born;
+    }
+
+    public void setBorn(String born) {
+        this.born = born;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

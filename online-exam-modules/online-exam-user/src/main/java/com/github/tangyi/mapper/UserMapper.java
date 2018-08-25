@@ -1,6 +1,8 @@
 package com.github.tangyi.mapper;
 
+import com.github.tangyi.common.persistence.CrudDao;
 import com.github.tangyi.common.vo.UserVo;
+import com.github.tangyi.module.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,7 +12,9 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2018-08-25-15:27
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends CrudDao<SysUser> {
+
+    UserVo selectUserVo();
 
     /**
      * 通过用户名查询用户信息（含有角色信息）

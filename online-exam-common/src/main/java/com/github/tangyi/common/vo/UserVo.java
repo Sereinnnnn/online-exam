@@ -42,6 +42,21 @@ public class UserVo extends BaseEntity<UserVo> {
      */
     private String avatar;
 
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 性别
+     */
+    private String sex;
+
+    /**
+     * 生日
+     */
+    private String born;
+
 
     /**
      * 部门ID
@@ -128,5 +143,29 @@ public class UserVo extends BaseEntity<UserVo> {
 
     public void setRoleList(List<SysRole> roleList) {
         this.roleList = roleList;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBorn() {
+        return born;
+    }
+
+    public void setBorn(String born) {
+        this.born = born;
     }
 }

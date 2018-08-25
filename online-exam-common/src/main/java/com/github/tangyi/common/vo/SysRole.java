@@ -10,21 +10,11 @@ import com.github.tangyi.common.persistence.BaseEntity;
  */
 public class SysRole extends BaseEntity<SysRole> {
 
-    private Integer roleId;
-
     private String roleName;
 
     private String roleCode;
 
     private String roleDesc;
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
 
     public String getRoleName() {
         return roleName;
