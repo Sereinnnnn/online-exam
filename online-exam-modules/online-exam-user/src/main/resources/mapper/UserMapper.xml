@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.tangyi.mapper.UserMapper">
-    <resultMap id="userResultMap" type="com.github.tangyi.module.SysUser">
+<mapper namespace="com.github.tangyi.user.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.github.tangyi.user.module.SysUser">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -84,7 +84,7 @@
         LEFT JOIN sys_role AS r ON r.id = ur.role_id
     </sql>
 
-    <select id="selectUserVoByUsername" resultMap="userResultMap">
+    <select id="selectUserVoByUsername" resultMap="userVoResultMap">
         SELECT
           <include refid="userColumns"/>
         FROM SYS_USER a

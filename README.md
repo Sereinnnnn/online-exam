@@ -13,3 +13,5 @@ online-exam-config 8888
 online-exam-gateway 
 
 online-exam-auth
+
+online-exam-user 8889

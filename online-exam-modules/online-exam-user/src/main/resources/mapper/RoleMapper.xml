@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.user.mapper.RoleMapper">
+    <resultMap id="roleResultMap" type="com.github.tangyi.user.module.SysRole">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName" />
+        <result column="role_code" property="roleCode" />
+        <result column="role_desc" property="roleDesc" />
+        <result column="creator" property="creator" />
+        <result column="create_date" property="createDate" />
+        <result column="modifier" property="modifier" />
+        <result column="modify_date" property="modifyDate" />
+        <result column="del_flag" property="delFlag" />
+        <result column="application_code" property="applicationCode" />
+    </resultMap>
+
+    <sql id="userColumns">
+        a.id as "id",
+        a.role_name,
+        a.role_code,
+        a.role_desc,
+        a.creator,
+        a.create_date,
+        a.modifier,
+        a.modify_date,
+        a.del_flag,
+        a.application_code
+    </sql>
+</mapper>
