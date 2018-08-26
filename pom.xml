@@ -37,6 +37,8 @@
         <fastjson.version>1.2.46</fastjson.version>
         <hutool.version>3.3.2</hutool.version>
         <commons-io.version>2.6</commons-io.version>
+        <commons-lang3.version>3.8</commons-lang3.version>
+        <commons-collections4.version>4.0</commons-collections4.version>
         <jasypt.version>1.18</jasypt.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
         <swagger2.version>2.8.0</swagger2.version>

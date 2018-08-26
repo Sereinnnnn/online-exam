@@ -27,15 +27,14 @@ public class BaseEntity<T> implements Serializable {
 
     protected String modifyDate;    // 更新日期
 
-    protected Integer delFlag;  // 删除标记
+    protected Integer delFlag = 0;  // 删除标记 0:正常，1-删除
 
     protected String applicationCode;   // 系统编号
 
     protected boolean isNewRecord;  // 是否为新记录
 
     public BaseEntity() {
-        this.delFlag = 0;
-        this.isNewRecord = false;
+
     }
 
     public BaseEntity(String id) {

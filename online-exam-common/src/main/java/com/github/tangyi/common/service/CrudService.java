@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.persistence.BaseEntity;
 import com.github.tangyi.common.persistence.CrudDao;
 import com.github.tangyi.common.utils.ReflectionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,11 +17,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity<T>> extends BaseService {
 
-    private D dao;
-
-    public CrudService() {
-
-    }
+    @Autowired
+    protected D dao;
 
     /**
      * 根据id获取
