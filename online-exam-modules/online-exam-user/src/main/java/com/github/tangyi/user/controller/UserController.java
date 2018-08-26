@@ -1,5 +1,7 @@
 package com.github.tangyi.user.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
@@ -15,10 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author tangyi
@@ -48,6 +51,25 @@ public class UserController extends BaseController {
     @GetMapping("/findUserByUsername/{username}")
     public UserVo findUserByUsername(@PathVariable String username) {
         return userService.selectUserVoByUsername(username);
+    }
+
+    /**
+     * 获取分页数据
+     *
+     * @param params params
+     * @param userVo userVo
+     * @return PageInfo
+     * @author tangyi
+     * @date 2018/8/26 0026 下午 10:56
+     */
+    @RequestMapping("userList")
+    public PageInfo<SysUser> userList(@RequestParam Map<String, String> params, UserVo userVo) {
+        PageInfo<SysUser> page = new PageInfo<SysUser>();
+        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
+        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(userVo, sysUser);
+        return userService.findPage(page, sysUser);
     }
 
     /**

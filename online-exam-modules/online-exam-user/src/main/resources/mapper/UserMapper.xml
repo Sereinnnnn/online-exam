@@ -69,6 +69,22 @@
         a.application_code
     </sql>
 
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="username != null and username != ''">
+            and a.username like #{username}
+        </if>
+        <if test="born != null and born != '' ">
+            and a.born like #{born}
+        </if>
+        <if test="phone != null and phone != ''">
+            and a.phone like #{phone}
+        </if>
+        <if test="email != null and email != ''">
+            and a.email = #{email}
+        </if>
+    </sql>
+
     <sql id="selectUserVo">
         SELECT
         <include refid="userColumns"/>,
@@ -96,6 +112,14 @@
         <include refid="userColumns"/>
         FROM SYS_USER a
         WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultMap="userResultMap">
+        SELECT
+        <include refid="userColumns"/>
+        FROM SYS_USER  a
+        WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
     </select>
 
     <!-- 新增用户 -->
@@ -165,21 +189,17 @@
         <if test="creator != null">
             creator = #{creator} ,
         </if>
-        <if test="create_date != null">
+        <if test="createDate != null">
             create_date = #{createDate} ,
         </if>
-        <if test="modifier != null">
-            modifier = #{modifier} ,
-        </if>
-        <if test="modify_date != null">
-            modify_date = #{modifyDate} ,
-        </if>
-        <if test="del_flag != null">
+        <if test="delFlag != null">
             del_flag = #{delFlag} ,
         </if>
-        <if test="application_code != null">
+        <if test="applicationCode != null">
             application_code = #{applicationCode} ,
         </if>
+        modifier = #{modifier} ,
+        modify_date = #{modifyDate}
         where id = #{id}
     </update>
 </mapper>

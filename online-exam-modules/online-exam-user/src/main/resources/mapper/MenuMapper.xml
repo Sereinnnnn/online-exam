@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.user.mapper.MenuMapper">
+    <resultMap id="menuResultMap" type="com.github.tangyi.user.module.SysMenu">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="permission" property="permission"/>
+        <result column="url" property="url"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="icon" property="icon"/>
+        <result column="sort" property="sort"/>
+        <result column="type" property="type"/>
+        <result column="creator" property="creator"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modifier" property="modifier"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="application_code" property="applicationCode"/>
+    </resultMap>
+
+    <sql id="menuColumns">
+        a.id as "id",
+        a.name,
+        a.permission,
+        a.url,
+        a.parent_id,
+        a.icon,
+        a.sort,
+        a.type,
+        a.creator,
+        a.create_date,
+        a.modifier,
+        a.modify_date,
+        a.del_flag,
+        a.application_code
+    </sql>
+
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="name != null and name != ''">
+            and a.name like #{name}
+        </if>
+        <if test="type != null and type != '' ">
+            and a.type like #{type}
+        </if>
+        <if test="permission != null and permission != ''">
+            and a.permission like #{permission}
+        </if>
+    </sql>
+
+    <select id="findList" resultMap="menuResultMap">
+        SELECT
+        <include refid="menuColumns"/>
+        FROM SYS_MENU  a
+        WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
+    </select>
+</mapper>

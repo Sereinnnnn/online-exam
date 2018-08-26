@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.user.mapper.RoleMenuMapper">
+    <resultMap id="roleMenuResultMap" type="com.github.tangyi.user.module.SysRoleMenu">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="menu_id" property="menuId"/>
+    </resultMap>
+
+    <sql id="roleMenuColumns">
+        a.id as "id",
+        a.role_id as "role_id",
+        a.menu_id as "menu_id"
+    </sql>
+</mapper>
