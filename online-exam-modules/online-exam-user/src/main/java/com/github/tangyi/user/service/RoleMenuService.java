@@ -2,7 +2,7 @@ package com.github.tangyi.user.service;
 
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.user.mapper.RoleMenuMapper;
-import com.github.tangyi.user.module.SysRoleMenu;
+import com.github.tangyi.user.module.RoleMenu;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,5 +12,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysRoleMenuService extends CrudService<RoleMenuMapper, SysRoleMenu> {
+public class RoleMenuService extends CrudService<RoleMenuMapper, RoleMenu> {
 }

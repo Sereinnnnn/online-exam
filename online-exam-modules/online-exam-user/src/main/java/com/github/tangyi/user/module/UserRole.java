@@ -3,16 +3,24 @@ package com.github.tangyi.user.module;
 import com.github.tangyi.common.persistence.BaseEntity;
 
 /**
- * 角色菜单关联
+ * 用户角色关系
  *
  * @author tangyi
- * @date 2018/8/26 0026 22:24
+ * @date 2018/8/26 0026 09:29
  */
-public class SysRoleMenu extends BaseEntity<SysRoleMenu> {
+public class UserRole extends BaseEntity<UserRole> {
+
+    private String userId;
 
     private String roleId;
 
-    private String menuId;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getRoleId() {
         return roleId;
@@ -20,13 +28,5 @@ public class SysRoleMenu extends BaseEntity<SysRoleMenu> {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.tangyi.user.mapper.UserMapper">
-    <resultMap id="userResultMap" type="com.github.tangyi.user.module.SysUser">
+    <resultMap id="userResultMap" type="com.github.tangyi.user.module.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -37,7 +37,7 @@
         <result column="modify_date" property="modifyDate"/>
         <result column="del_flag" property="delFlag"/>
         <result column="application_code" property="applicationCode"/>
-        <collection property="roleList" ofType="com.github.tangyi.common.vo.SysRole">
+        <collection property="roleList" ofType="com.github.tangyi.common.vo.Role">
             <id column="id" property="id"/>
             <result column="role_name" property="roleName"/>
             <result column="role_code" property="roleCode"/>

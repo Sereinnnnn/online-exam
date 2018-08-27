@@ -8,7 +8,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018/8/26 0026 22:25
  */
-public class SysDept extends BaseEntity<SysDept> {
+public class Dept extends BaseEntity<Dept> {
 
     /**
      * 部门名称

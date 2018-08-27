@@ -1,5 +1,5 @@
 server:
-  port: 8890
+  port: 9999
 spring:
   application:
     name: online-exam-auth

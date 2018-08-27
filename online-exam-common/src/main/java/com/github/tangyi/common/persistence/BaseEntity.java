@@ -1,5 +1,6 @@
 package com.github.tangyi.common.persistence;
 
+import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.utils.IdGen;
 import org.apache.commons.lang.StringUtils;
 
@@ -27,7 +28,7 @@ public class BaseEntity<T> implements Serializable {
 
     protected String modifyDate;    // 更新日期
 
-    protected Integer delFlag = 0;  // 删除标记 0:正常，1-删除
+    protected Integer delFlag = CommonConstant.DEL_FLAG_NORMAL;  // 删除标记 0:正常，1-删除
 
     protected String applicationCode;   // 系统编号
 

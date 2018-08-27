@@ -7,7 +7,7 @@ import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.mapper.UserMapper;
 import com.github.tangyi.user.mapper.UserRoleMapper;
 import com.github.tangyi.user.module.SysUser;
-import com.github.tangyi.user.module.SysUserRole;
+import com.github.tangyi.user.module.UserRole;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,12 +52,12 @@ public class SysUserService extends CrudService<UserMapper, SysUser> {
         super.update(sysUser);
         // 更新角色信息
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
-            SysUserRole sysUserRole = new SysUserRole();
+            UserRole sysUserRole = new UserRole();
             sysUserRole.setUserId(sysUser.getId());
             // 删除原有的角色信息
             userRoleMapper.delete(sysUserRole);
             for (String roleId : userDto.getRole()) {
-                SysUserRole role = new SysUserRole();
+                UserRole role = new UserRole();
                 role.setId(IdGen.uuid());
                 role.setUserId(sysUser.getId());
                 role.setRoleId(roleId);

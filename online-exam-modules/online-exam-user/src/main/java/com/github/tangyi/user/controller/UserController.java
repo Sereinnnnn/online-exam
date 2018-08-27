@@ -7,8 +7,8 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.module.SysUser;
-import com.github.tangyi.user.module.SysUserRole;
-import com.github.tangyi.user.service.SysUserRoleService;
+import com.github.tangyi.user.module.UserRole;
+import com.github.tangyi.user.service.UserRoleService;
 import com.github.tangyi.user.service.SysUserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +39,7 @@ public class UserController extends BaseController {
     private SysUserService userService;
 
     @Autowired
-    private SysUserRoleService userRoleService;
+    private UserRoleService userRoleService;
 
 
     /**
@@ -91,7 +91,7 @@ public class UserController extends BaseController {
         // 保存角色
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
             for (String roleId : userDto.getRole()) {
-                SysUserRole sysUserRole = new SysUserRole();
+                UserRole sysUserRole = new UserRole();
                 sysUserRole.setUserId(sysUser.getId());
                 sysUserRole.setRoleId(roleId);
                 // 保存角色

@@ -43,4 +43,14 @@ public class SecurityConstant {
      * 按条件client_id 查询
      */
     public static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
+
+    /**
+     * 用户信息头
+     */
+    public static final String USER_HEADER = "x-user-header";
+
+    /**
+     * 角色信息头
+     */
+    public static final String ROLE_HEADER = "x-role-header";
 }

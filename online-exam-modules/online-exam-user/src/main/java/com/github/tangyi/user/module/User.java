@@ -8,7 +8,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018-08-25-15:30
  */
-public class SysUser extends BaseEntity<SysUser> {
+public class User extends BaseEntity<User> {
 
     private String username;
 

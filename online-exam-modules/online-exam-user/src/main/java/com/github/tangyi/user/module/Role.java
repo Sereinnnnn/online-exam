@@ -8,7 +8,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018-08-25-13:58
  */
-public class SysRole extends BaseEntity<SysRole> {
+public class Role extends BaseEntity<Role> {
 
     private String roleName;
 

@@ -48,4 +48,14 @@ public class CommonConstant {
      */
     public static final String PAGE_SIZE_DEFAULT = "10";
 
+    /**
+     * 正常状态
+     */
+    public static final Integer DEL_FLAG_NORMAL = 0;
+
+    /**
+     * 删除状态
+     */
+    public static final Integer DEL_FLAG_DEL = 1;
+
 }

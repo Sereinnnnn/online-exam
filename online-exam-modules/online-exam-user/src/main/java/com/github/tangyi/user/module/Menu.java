@@ -8,7 +8,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018/8/26 0026 22:21
  */
-public class SysMenu extends BaseEntity<SysMenu> {
+public class Menu extends BaseEntity<Menu> {
 
     /**
      * 菜单名称
