@@ -44,6 +44,7 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
      * @date 2018/8/27 16:22
      */
     @Override
+    @Transactional
     public int delete(Menu menu) {
         // 删除当前菜单
         super.delete(menu);

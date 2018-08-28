@@ -6,7 +6,7 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.mapper.UserMapper;
 import com.github.tangyi.user.mapper.UserRoleMapper;
-import com.github.tangyi.user.module.SysUser;
+import com.github.tangyi.user.module.User;
 import com.github.tangyi.user.module.UserRole;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysUserService extends CrudService<UserMapper, SysUser> {
+public class SysUserService extends CrudService<UserMapper, User> {
 
     private static final Logger logger = LoggerFactory.getLogger(SysUserService.class);
 
@@ -45,21 +45,21 @@ public class SysUserService extends CrudService<UserMapper, SysUser> {
      */
     @Transactional
     public boolean update(UserDto userDto) {
-        SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(userDto, sysUser);
-        sysUser.setCommonValue(sysUser.getUsername(), sysUser.getApplicationCode());
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+        user.setCommonValue(user.getUsername(), user.getApplicationCode());
         // 更新用户信息
-        super.update(sysUser);
+        super.update(user);
         // 更新角色信息
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
             UserRole sysUserRole = new UserRole();
-            sysUserRole.setUserId(sysUser.getId());
+            sysUserRole.setUserId(user.getId());
             // 删除原有的角色信息
             userRoleMapper.delete(sysUserRole);
             for (String roleId : userDto.getRole()) {
                 UserRole role = new UserRole();
                 role.setId(IdGen.uuid());
-                role.setUserId(sysUser.getId());
+                role.setUserId(user.getId());
                 role.setRoleId(roleId);
                 // 保存角色信息
                 userRoleMapper.insert(role);

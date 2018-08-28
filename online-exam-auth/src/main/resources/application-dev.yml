@@ -1,5 +1,5 @@
 server:
-  port: 9999
+  port: 3000
 spring:
   application:
     name: online-exam-auth
@@ -10,7 +10,7 @@ spring:
         service-id: online-exam-config
         enabled: true
       profile: ${spring.profiles.active}
-      label: ${spring.profiles.active}
+      label: master
 eureka:
   instance:
     prefer-ip-address: true

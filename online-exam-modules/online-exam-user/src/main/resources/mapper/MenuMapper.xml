@@ -76,16 +76,16 @@
             #{name},
             #{permission},
             #{url},
-            #{parent_id},
+            #{parentId},
             #{icon},
             #{sort},
             #{type},
             #{creator},
-            #{create_date},
+            #{createDate},
             #{modifier},
-            #{modify_date},
-            #{del_flag},
-            #{application_code}
+            #{modifyDate},
+            #{delFlag},
+            #{applicationCode}
         )
     </insert>
 
@@ -138,7 +138,7 @@
         modify_date = #{modifyDate}
         WHERE
         <if test="id != null">
-            id = #{id},
+            id = #{id}
         </if>
         <if test="parentId != null">
             and parent_id = #{parentId}

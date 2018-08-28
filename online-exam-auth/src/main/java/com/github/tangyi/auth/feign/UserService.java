@@ -3,6 +3,7 @@ package com.github.tangyi.auth.feign;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.auth.feign.fallback.UserDetailServiceFallBackImpl;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * 用户服务接口
@@ -10,7 +11,7 @@ import org.springframework.cloud.netflix.feign.FeignClient;
  * @author tangyi
  * @date 2018-08-25-14:49
  */
-@FeignClient(name = "", fallback = UserDetailServiceFallBackImpl.class)
+@FeignClient(name = "online-exam-user", fallback = UserDetailServiceFallBackImpl.class)
 public interface UserService {
 
     /**
@@ -19,5 +20,6 @@ public interface UserService {
      * @param username
      * @return
      */
+    @GetMapping("/user/findUserByUsername/{username}")
     UserVo findByUsername(String username);
 }

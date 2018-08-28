@@ -36,26 +36,22 @@ import java.util.Map;
  * @author tangyi
  * @date 2018-08-25-14:27
  */
-@Configuration
 @Order(Integer.MIN_VALUE)
+@Configuration
 @EnableAuthorizationServer
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-    private final DataSource dataSource;
-
-    private final AuthenticationManager authenticationManager;
-
-    private final UserDetailsService userDetailsService;
-
-    private final RedisConnectionFactory redisConnectionFactory;
+    @Autowired
+    private  DataSource dataSource;
 
     @Autowired
-    public AuthorizationConfig(DataSource dataSource, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory) {
-        this.dataSource = dataSource;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.redisConnectionFactory = redisConnectionFactory;
-    }
+    private  AuthenticationManager authenticationManager;
+
+    @Autowired
+    private  UserDetailsService userDetailsService;
+
+    @Autowired
+    private  RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

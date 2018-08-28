@@ -35,6 +35,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping
     public ReturnT<Boolean> menu(@RequestBody Menu menu) {
+        menu.setCommonValue("", "");
         return new ReturnT<>(menuService.insert(menu) > 0);
     }
 
@@ -97,6 +98,4 @@ public class MenuController extends BaseController {
     public List<Menu> findMenuByRole(@PathVariable String role) {
         return menuService.findMenuByRole(role);
     }
-
-
 }

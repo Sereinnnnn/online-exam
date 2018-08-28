@@ -6,7 +6,7 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
-import com.github.tangyi.user.module.SysUser;
+import com.github.tangyi.user.module.User;
 import com.github.tangyi.user.module.UserRole;
 import com.github.tangyi.user.service.UserRoleService;
 import com.github.tangyi.user.service.SysUserService;
@@ -63,13 +63,13 @@ public class UserController extends BaseController {
      * @date 2018/8/26 0026 下午 10:56
      */
     @RequestMapping("userList")
-    public PageInfo<SysUser> userList(@RequestParam Map<String, String> params, UserVo userVo) {
-        PageInfo<SysUser> page = new PageInfo<SysUser>();
+    public PageInfo<User> userList(@RequestParam Map<String, String> params, UserVo userVo) {
+        PageInfo<User> page = new PageInfo<User>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(userVo, sysUser);
-        return userService.findPage(page, sysUser);
+        User user = new User();
+        BeanUtils.copyProperties(userVo, user);
+        return userService.findPage(page, user);
     }
 
     /**
@@ -82,17 +82,17 @@ public class UserController extends BaseController {
      */
     @PostMapping
     public ReturnT<Boolean> addUser(@RequestBody UserDto userDto) {
-        SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(userDto, sysUser);
-        sysUser.setCommonValue(userDto.getUsername(), "");
-        sysUser.setPassword(encoder.encode(userDto.getPassword()));
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+        user.setCommonValue(userDto.getUsername(), "");
+        user.setPassword(encoder.encode(userDto.getPassword()));
         // 保存用户
-        userService.insert(sysUser);
+        userService.insert(user);
         // 保存角色
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
             for (String roleId : userDto.getRole()) {
                 UserRole sysUserRole = new UserRole();
-                sysUserRole.setUserId(sysUser.getId());
+                sysUserRole.setUserId(user.getId());
                 sysUserRole.setRoleId(roleId);
                 // 保存角色
                 userRoleService.insert(sysUserRole);
@@ -112,9 +112,9 @@ public class UserController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateUser(@RequestBody UserDto userDto) {
         try {
-            SysUser sysUser = new SysUser();
-            BeanUtils.copyProperties(userDto, sysUser);
-            sysUser = userService.get(sysUser);
+            User user = new User();
+            BeanUtils.copyProperties(userDto, user);
+            user = userService.get(user);
             return new ReturnT<>(userService.update(userDto));
         } catch (Exception e) {
             logger.error("更新用户信息失败！", e);
@@ -135,8 +135,8 @@ public class UserController extends BaseController {
     @DeleteMapping("/{id}")
     public ReturnT<Boolean> deleteUser(@PathVariable String id) {
         try {
-            SysUser sysUser = userService.get(id);
-            userService.delete(sysUser);
+            User user = userService.get(id);
+            userService.delete(user);
         } catch (Exception e) {
             logger.error("删除用户信息失败！", e);
         }

@@ -71,7 +71,7 @@ public class UserVo extends BaseEntity<UserVo> {
     /**
      * 角色列表
      */
-    private List<SysRole> roleList;
+    private List<Role> roleList;
 
     public Integer getUserId() {
         return userId;
@@ -137,11 +137,11 @@ public class UserVo extends BaseEntity<UserVo> {
         this.deptName = deptName;
     }
 
-    public List<SysRole> getRoleList() {
+    public List<Role> getRoleList() {
         return roleList;
     }
 
-    public void setRoleList(List<SysRole> roleList) {
+    public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
     }
 

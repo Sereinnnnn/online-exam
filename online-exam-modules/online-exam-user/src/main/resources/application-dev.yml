@@ -10,7 +10,7 @@ spring:
         service-id: online-exam-config
         enabled: true
       profile: ${spring.profiles.active}
-      label: ${spring.profiles.active}
+      label: master
   datasource:
         name: test
         url: jdbc:mysql://127.0.0.1:3306/online_exam?useUnicode=true&characterEncoding=utf-8

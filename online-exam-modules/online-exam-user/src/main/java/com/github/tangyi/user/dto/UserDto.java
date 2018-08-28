@@ -1,6 +1,6 @@
 package com.github.tangyi.user.dto;
 
-import com.github.tangyi.user.module.SysUser;
+import com.github.tangyi.user.module.User;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author tangyi
  * @date 2018/8/26 0026 14:36
  */
-public class UserDto extends SysUser {
+public class UserDto extends User {
 
     /**
      * 角色

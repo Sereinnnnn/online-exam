@@ -3,7 +3,7 @@ package com.github.tangyi.auth.utils;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.constants.SecurityConstant;
 import com.github.tangyi.common.service.BaseService;
-import com.github.tangyi.common.vo.SysRole;
+import com.github.tangyi.common.vo.Role;
 import com.github.tangyi.common.vo.UserVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,7 +47,7 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
     /**
      * 权限列表
      */
-    private List<SysRole> roleList = new ArrayList<>();
+    private List<Role> roleList = new ArrayList<>();
 
     public UserDetailsImpl(UserVo userVo) {
         this.userId = userVo.getUserId();
@@ -59,7 +59,7 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        for (SysRole role : roleList) {
+        for (Role role : roleList) {
             authorityList.add(new SimpleGrantedAuthority(role.getRoleCode()));
         }
         authorityList.add(new SimpleGrantedAuthority(SecurityConstant.BASE_ROLE));
@@ -120,11 +120,11 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
         this.status = status;
     }
 
-    public List<SysRole> getRoleList() {
+    public List<Role> getRoleList() {
         return roleList;
     }
 
-    public void setRoleList(List<SysRole> roleList) {
+    public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
     }
 }
