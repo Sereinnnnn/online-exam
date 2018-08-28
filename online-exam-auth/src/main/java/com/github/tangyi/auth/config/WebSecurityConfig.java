@@ -1,5 +1,7 @@
 package com.github.tangyi.auth.config;
 
+import com.github.tangyi.common.config.FilterIgnorePropertiesConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -17,7 +19,10 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER - 1)
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -26,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginProcessingUrl("/authentication/form")
                         .and()
                         .authorizeRequests();
+        // 开放配置的接口
+        filterIgnorePropertiesConfig.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
         registry.anyRequest().authenticated()
                 .and()
                 .csrf().disable();

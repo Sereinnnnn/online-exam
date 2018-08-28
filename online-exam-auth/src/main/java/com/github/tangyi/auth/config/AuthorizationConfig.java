@@ -1,8 +1,8 @@
 package com.github.tangyi.auth.config;
 
+import com.github.tangyi.auth.utils.UserDetailsImpl;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.constants.SecurityConstant;
-import com.github.tangyi.auth.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,16 +42,16 @@ import java.util.Map;
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    private  DataSource dataSource;
+    private DataSource dataSource;
 
     @Autowired
-    private  AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    private  UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    private  RedisConnectionFactory redisConnectionFactory;
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

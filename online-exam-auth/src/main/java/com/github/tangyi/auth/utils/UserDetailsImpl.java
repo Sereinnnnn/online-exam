@@ -53,6 +53,7 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
         this.userId = userVo.getUserId();
         this.username = userVo.getUsername();
         this.password = userVo.getPassword();
+        this.status = userVo.getDelFlag().toString();
         roleList = userVo.getRoleList();
     }
 

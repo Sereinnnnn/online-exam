@@ -86,24 +86,26 @@
     </sql>
 
     <sql id="selectUserVo">
-        SELECT
         <include refid="userColumns"/>,
-        r.role_id,
+        r.id,
         r.role_name,
         r.role_code,
         r.role_desc,
-        r.create_time AS rcreate_time,
-        r.update_time AS rupdate_time
+        r.creator,
+        r.create_date,
+        r.modifier,
+        r.modify_date,
+        r.del_flag,
+        r.application_code
         FROM
-        sys_user AS a
-        LEFT JOIN sys_user_role AS ur ON ur.user_id = a.id
-        LEFT JOIN sys_role AS r ON r.id = ur.role_id
+        sys_user  a
+        LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
     </sql>
 
     <select id="selectUserVoByUsername" resultMap="userVoResultMap">
         SELECT
-        <include refid="userColumns"/>
-        FROM SYS_USER a
+        <include refid="selectUserVo"/>
         WHERE a.username = #{username}
     </select>
 

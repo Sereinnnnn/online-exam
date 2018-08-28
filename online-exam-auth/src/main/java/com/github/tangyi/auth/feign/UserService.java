@@ -4,6 +4,7 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.auth.feign.fallback.UserDetailServiceFallBackImpl;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * 用户服务接口
@@ -21,5 +22,5 @@ public interface UserService {
      * @return
      */
     @GetMapping("/user/findUserByUsername/{username}")
-    UserVo findByUsername(String username);
+    UserVo findByUsername(@PathVariable("username") String username);
 }
