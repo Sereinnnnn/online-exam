@@ -24,15 +24,11 @@ import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurity
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
-
-    private final OAuth2WebSecurityExpressionHandler expressionHandler;
+    @Autowired
+    private FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
 
     @Autowired
-    public ResourceServerConfig(FilterIgnorePropertiesConfig filterIgnorePropertiesConfig, OAuth2WebSecurityExpressionHandler expressionHandler) {
-        this.filterIgnorePropertiesConfig = filterIgnorePropertiesConfig;
-        this.expressionHandler = expressionHandler;
-    }
+    private OAuth2WebSecurityExpressionHandler expressionHandler;
 
     /**
      * 加密方式
@@ -53,13 +49,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        //允许使用iframe 嵌套，避免swagger-ui 不被加载的问题
+        // 允许使用iframe 嵌套，避免swagger-ui 不被加载的问题
         http.headers().frameOptions().disable();
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests();
         filterIgnorePropertiesConfig.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
         registry.anyRequest()
-                .access("@permissionService.hasPermission(request,authentication)");
+                .access("@permissionService.hasPermission(request, authentication)");
     }
 
     @Override

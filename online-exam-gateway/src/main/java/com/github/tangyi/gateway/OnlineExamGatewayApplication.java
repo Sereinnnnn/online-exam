@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableFeignClients
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
-@ComponentScan({"com.github.tangyi.common"})
+@ComponentScan(basePackages = {"com.github.tangyi.common", "com.github.tangyi.gateway"})
 public class OnlineExamGatewayApplication {
 
 	public static void main(String[] args) {
