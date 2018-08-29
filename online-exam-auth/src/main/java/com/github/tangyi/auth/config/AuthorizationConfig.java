@@ -98,7 +98,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Bean
     public TokenStore redisTokenStore() {
         RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
-        tokenStore.setPrefix(SecurityConstant.PIG_PREFIX);
+        tokenStore.setPrefix(SecurityConstant.EXAM_PREFIX);
         return tokenStore;
     }
 
@@ -107,10 +107,10 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(2);
             additionalInfo.put("license", SecurityConstant.GITHUB_LICENSE);
+            // 获取用户信息，包括角色信息，放入token
             UserDetailsImpl user = (UserDetailsImpl) authentication.getUserAuthentication().getPrincipal();
-            if (user != null) {
+            if (user != null)
                 additionalInfo.put("userId", user);
-            }
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
         };

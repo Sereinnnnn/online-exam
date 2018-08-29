@@ -9,7 +9,7 @@ public class SecurityConstant {
     /**
      * 前缀
      */
-    public static final String PIG_PREFIX = "pig_";
+    public static final String EXAM_PREFIX = "exam_";
 
     /**
      * 项目的license

@@ -108,7 +108,7 @@
         r.del_flag = 0
         AND a.del_flag = 0
         AND r.role_code = #{role}
-        ORDER BY m.sort DESC
+        ORDER BY a.sort DESC
     </select>
 
     <update id="update">
