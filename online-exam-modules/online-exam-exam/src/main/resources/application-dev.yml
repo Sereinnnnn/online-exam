@@ -1,5 +1,8 @@
 server:
   port: 4040
+  session:
+    cookie:
+      name: APPSESSIONID
 spring:
   application:
     name: online-exam-exam
