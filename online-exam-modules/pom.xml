@@ -13,6 +13,7 @@
     </parent>
     <modules>
         <module>online-exam-user</module>
+        <module>online-exam-exam</module>
     </modules>
 
 </project>

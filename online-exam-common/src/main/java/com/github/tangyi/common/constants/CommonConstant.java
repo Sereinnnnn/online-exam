@@ -58,4 +58,9 @@ public class CommonConstant {
      */
     public static final Integer DEL_FLAG_DEL = 1;
 
+    /**
+     * 路由配置在Redis中的key
+     */
+    public static final String ROUTE_KEY = "_ROUTE_KEY";
+
 }
