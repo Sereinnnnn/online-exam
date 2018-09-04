@@ -6,5 +6,5 @@ package com.github.tangyi.common.persistence;
  * @author tangyi
  * @date 2018-08-24-18:59
  */
-public interface BaseDao {
+public interface BaseMapper {
 }

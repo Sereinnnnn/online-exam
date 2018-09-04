@@ -14,7 +14,7 @@
         <result column="application_code" property="applicationCode" />
     </resultMap>
 
-    <sql id="userColumns">
+    <sql id="roleColumns">
         a.id as "id",
         a.role_name,
         a.role_code,
@@ -26,4 +26,66 @@
         a.del_flag,
         a.application_code
     </sql>
+
+    <select id="get" resultMap="roleResultMap">
+        SELECT
+        <include refid="roleColumns"/>
+        FROM SYS_ROLE a
+        WHERE a.id = #{id} and a.del_flag = 0
+    </select>
+
+    <insert id="insert">
+        INSERT INTO SYS_ROLE (
+        id,
+        role_name,
+        role_code,
+        role_desc,
+        creator,
+        create_date,
+        modifier,
+        modify_date,
+        del_flag,
+        application_code
+        ) VALUES (
+        #{id},
+        #{roleName},
+        #{roleCode},
+        #{roleDesc},
+        #{creator},
+        #{createDate},
+        #{modifier},
+        #{modifyDate},
+        #{delFlag},
+        #{applicationCode}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE SYS_ROLE  SET
+        <if test="roleName != null">
+            roleName = #{roleName},
+        </if>
+        <if test="roleCode != null">
+            roleCode = #{roleCode},
+        </if>
+        <if test="roleDesc != null">
+            roleDesc = #{roleDesc},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE
+        <if test="id != null">
+            id = #{id}
+        </if>
+    </update>
+
+    <delete id="delete">
+        UPDATE SYS_ROLE SET
+        del_flag = 1
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -38,8 +38,6 @@ eureka:
     serviceUrl:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
-
-# º‡øÿ∂Àµ„≈‰÷√
 management:
   security:
     enabled: false

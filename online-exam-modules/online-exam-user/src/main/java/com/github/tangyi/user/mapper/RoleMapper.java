@@ -1,6 +1,6 @@
 package com.github.tangyi.user.mapper;
 
-import com.github.tangyi.common.persistence.CrudDao;
+import com.github.tangyi.common.persistence.CrudMapper;
 import com.github.tangyi.user.module.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2018/8/26 0026 09:33
  */
 @Mapper
-public interface RoleMapper extends CrudDao<Role> {
+public interface RoleMapper extends CrudMapper<Role> {
 }

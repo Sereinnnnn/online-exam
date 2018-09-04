@@ -3,12 +3,12 @@ package com.github.tangyi.common.persistence;
 import java.util.List;
 
 /**
- * Crud Dao
+ * Crud Mapper
  *
  * @author tangyi
  * @date 2018-08-24-18:59
  */
-public interface CrudDao<T> extends BaseDao {
+public interface CrudMapper<T> extends BaseMapper {
 
     /**
      * 获取单条数据
@@ -35,6 +35,7 @@ public interface CrudDao<T> extends BaseDao {
 
     /**
      * 插入单条数据
+     *
      * @param entity
      * @return
      */
@@ -42,6 +43,7 @@ public interface CrudDao<T> extends BaseDao {
 
     /**
      * 更新单条数据
+     *
      * @param entity
      * @return
      */
@@ -49,6 +51,7 @@ public interface CrudDao<T> extends BaseDao {
 
     /**
      * 删除单条数据
+     *
      * @param entity
      * @return
      */

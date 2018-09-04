@@ -1,7 +1,7 @@
 package com.github.tangyi.user.mapper;
 
 import com.github.tangyi.common.model.SysZuulRoute;
-import com.github.tangyi.common.persistence.CrudDao;
+import com.github.tangyi.common.persistence.CrudMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2018/9/1 0001 15:34
  */
 @Mapper
-public interface ZuulRouteMapper extends CrudDao<SysZuulRoute> {
+public interface ZuulRouteMapper extends CrudMapper<SysZuulRoute> {
 }

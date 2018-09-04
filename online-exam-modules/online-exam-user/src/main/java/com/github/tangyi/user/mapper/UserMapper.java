@@ -1,6 +1,6 @@
 package com.github.tangyi.user.mapper;
 
-import com.github.tangyi.common.persistence.CrudDao;
+import com.github.tangyi.common.persistence.CrudMapper;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.user.module.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2018-08-25-15:27
  */
 @Mapper
-public interface UserMapper extends CrudDao<User> {
+public interface UserMapper extends CrudMapper<User> {
 
     UserVo selectUserVo();
 
