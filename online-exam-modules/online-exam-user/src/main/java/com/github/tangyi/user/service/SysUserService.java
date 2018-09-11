@@ -34,6 +34,23 @@ public class SysUserService extends CrudService<UserMapper, User> {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    /**
+     * 获取用户信息
+     *
+     * @param userVo userVo
+     * @return
+     * @author tangyi
+     * @date 2018/9/11 0011 下午 11:44
+     */
+    public User findUserInfo(UserVo userVo) {
+        User user = new User();
+        BeanUtils.copyProperties(userVo, user);
+        user = userMapper.get(user);
+        if (user != null) {
+
+        }
+        return user;
+    }
 
     /**
      * 更新用户

@@ -3,7 +3,7 @@ package com.github.tangyi.common.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.persistence.BaseEntity;
-import com.github.tangyi.common.persistence.CrudDao;
+import com.github.tangyi.common.persistence.CrudMapper;
 import com.github.tangyi.common.utils.ReflectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2018-08-25-17:22
  */
 @Transactional(readOnly = true)
-public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity<T>> extends BaseService {
+public abstract class CrudService<D extends CrudMapper<T>, T extends BaseEntity<T>> extends BaseService {
 
     @Autowired
     protected D dao;
