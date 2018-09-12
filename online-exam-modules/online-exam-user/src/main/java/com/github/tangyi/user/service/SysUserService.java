@@ -38,9 +38,9 @@ public class SysUserService extends CrudService<UserMapper, User> {
      * 获取用户信息
      *
      * @param userVo userVo
-     * @return
+     * @return User
      * @author tangyi
-     * @date 2018/9/11 0011 下午 11:44
+     * @date 2018/9/11 下午 11:44
      */
     public User findUserInfo(UserVo userVo) {
         User user = new User();
@@ -58,7 +58,7 @@ public class SysUserService extends CrudService<UserMapper, User> {
      * @param userDto userDto
      * @return int
      * @author tangyi
-     * @date 2018/8/26 0026 下午 3:15
+     * @date 2018/8/26 下午 3:15
      */
     @Transactional
     public boolean update(UserDto userDto) {

@@ -53,4 +53,14 @@ public class SecurityConstant {
      * 角色信息头
      */
     public static final String ROLE_HEADER = "x-role-header";
+
+    /**
+     * oauth token
+     */
+    public static final String OAUTH_TOKEN_URL = "/oauth/token";
+
+    /**
+     * 手机登录URL
+     */
+    public static final String MOBILE_TOKEN_URL = "/mobile/token";
 }
