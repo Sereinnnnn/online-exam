@@ -1,7 +1,12 @@
 package com.github.tangyi.common.web;
 
+import com.github.tangyi.common.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 基础Controller
@@ -16,5 +21,24 @@ public abstract class BaseController {
      */
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Autowired
+    private HttpServletRequest request;
 
+    /**
+     * 根据token获取用户角色
+     *
+     * @return 角色名
+     */
+    public List<String> getRole() {
+        return UserUtil.getRole(request);
+    }
+
+    /**
+     * 获取用户id
+     *
+     * @return Integer
+     */
+    public Integer getUserId() {
+        return UserUtil.getUserId(request);
+    }
 }

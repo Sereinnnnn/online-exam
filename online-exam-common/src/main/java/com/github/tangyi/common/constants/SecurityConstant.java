@@ -63,4 +63,9 @@ public class SecurityConstant {
      * 手机登录URL
      */
     public static final String MOBILE_TOKEN_URL = "/mobile/token";
+
+    /**
+     * token
+     */
+    public static final String TOKEN_USER_DETAIL = "token-user-detail";
 }

@@ -63,4 +63,19 @@ public class CommonConstant {
      */
     public static final String ROUTE_KEY = "_ROUTE_KEY";
 
+    /**
+     * 菜单标识
+     */
+    public static final String MENU = "0";
+
+    /**
+     * token请求头名称
+     */
+    public static final String REQ_HEADER = "Authorization";
+
+    /**
+     * token分割符
+     */
+    public static final String TOKEN_SPLIT = "Bearer ";
+
 }

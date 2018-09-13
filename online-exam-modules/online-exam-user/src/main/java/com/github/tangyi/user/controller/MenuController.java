@@ -3,14 +3,17 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.TreeUtil;
+import com.github.tangyi.common.vo.MenuVo;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.service.MenuService;
+import com.xiaoleilu.hutool.collection.CollUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 菜单controller
@@ -24,6 +27,26 @@ public class MenuController extends BaseController {
 
     @Autowired
     private MenuService menuService;
+
+    /**
+     * 返回当前用户的树形菜单集合
+     *
+     * @return 当前用户的树形菜单
+     */
+    @GetMapping(value = "/userMenu")
+    public List<MenuDto> userMenu() {
+        // 查询菜单
+        Set<Menu> menuSet = new HashSet<Menu>();
+        getRole().forEach(roleName -> menuSet.addAll(menuService.findMenuByRole(roleName)));
+        List<MenuDto> menuTreeList = new ArrayList<MenuDto>();
+        menuSet.forEach(menuVo -> {
+            if (CommonConstant.MENU.equals(menuVo.getType())) {
+                menuTreeList.add(new MenuDto(menuVo));
+            }
+        });
+        CollUtil.sort(menuTreeList, Comparator.comparingInt(MenuDto::getSort));
+        return TreeUtil.build(menuTreeList, -1);
+    }
 
     /**
      * 新增菜单

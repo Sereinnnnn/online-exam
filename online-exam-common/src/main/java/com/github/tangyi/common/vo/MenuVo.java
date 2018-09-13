@@ -43,6 +43,16 @@ public class MenuVo extends BaseEntity<MenuVo> {
      */
     private String type;
 
+    /**
+     * 路径
+     */
+    private String path;
+
+    /**
+     * VUE页面
+     */
+    private String component;
+
     public String getName() {
         return name;
     }
@@ -97,5 +107,21 @@ public class MenuVo extends BaseEntity<MenuVo> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
     }
 }

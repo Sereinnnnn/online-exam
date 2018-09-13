@@ -39,6 +39,12 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+        <!-- ttl -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <version>${ttl.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.xiaoleilu</groupId>
             <artifactId>hutool-all</artifactId>
