@@ -37,14 +37,14 @@
     <select id="get" resultMap="routeResultMap">
         SELECT
         <include refid="routeColumns"/>
-        FROM SYS_ZUUL_ROUTE a
+        FROM sys_zuul_route a
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
     <select id="findList" resultMap="routeResultMap">
         SELECT
         <include refid="routeColumns"/>
-        FROM SYS_ZUUL_ROUTE a
+        FROM sys_zuul_route a
         WHERE a.del_flag = 0
     </select>
 </mapper>

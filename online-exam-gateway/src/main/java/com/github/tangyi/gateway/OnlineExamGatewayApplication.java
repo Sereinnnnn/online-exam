@@ -12,26 +12,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @EnableZuulProxy
 @EnableFeignClients
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.github.tangyi.common", "com.github.tangyi.gateway"})
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class OnlineExamGatewayApplication {
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+public class OnlineExamGatewayApplication extends WebMvcConfigurationSupport {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OnlineExamGatewayApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OnlineExamGatewayApplication.class, args);
+    }
 
-	@Bean
-	LoadBalancerInterceptor loadBalancerInterceptor(LoadBalancerClient loadBalance){
-		return new LoadBalancerInterceptor(loadBalance);
-	}
+    @Bean
+    LoadBalancerInterceptor loadBalancerInterceptor(LoadBalancerClient loadBalance) {
+        return new LoadBalancerInterceptor(loadBalance);
+    }
 
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }

@@ -1,20 +1,31 @@
 package com.github.tangyi.user.service;
 
+import com.github.tangyi.common.constants.SecurityConstant;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.common.utils.IdGen;
+import com.github.tangyi.common.vo.Role;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.user.dto.UserDto;
+import com.github.tangyi.user.dto.UserInfoDto;
+import com.github.tangyi.user.mapper.MenuMapper;
 import com.github.tangyi.user.mapper.UserMapper;
 import com.github.tangyi.user.mapper.UserRoleMapper;
+import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.module.User;
 import com.github.tangyi.user.module.UserRole;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 用户service实现
@@ -34,6 +45,9 @@ public class SysUserService extends CrudService<UserMapper, User> {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Autowired
+    private MenuMapper menuMapper;
+
     /**
      * 获取用户信息
      *
@@ -42,12 +56,34 @@ public class SysUserService extends CrudService<UserMapper, User> {
      * @author tangyi
      * @date 2018/9/11 下午 11:44
      */
-    public User findUserInfo(UserVo userVo) {
-        User user = new User();
-        BeanUtils.copyProperties(userVo, user);
-        user = userMapper.get(user);
-        if (user != null) {
-
+    public UserInfoDto findUserInfo(UserVo userVo) {
+        // 根据用户名查询用户信息
+        userVo = userMapper.selectUserVoByUsername(userVo.getUsername());
+        UserInfoDto user = new UserInfoDto();
+        if (userVo != null) {
+            user.setUser(userVo);
+            // 用户角色列表
+            List<Role> roleList = userVo.getRoleList();
+            List<String> roleNames = new ArrayList<>();
+            if (CollectionUtils.isNotEmpty(roleList)) {
+                for (Role role : roleList) {
+                    if (!SecurityConstant.BASE_ROLE.equals(role.getRoleName()))
+                        roleNames.add(role.getRoleName());
+                }
+            }
+            String[] roleNameArray = roleNames.toArray(new String[roleNames.size()]);
+            user.setRoles(roleNameArray);
+            // 菜单列表
+            Set<Menu> menuSet = new HashSet<>();
+            for (String role : roleNameArray)
+                menuSet.addAll(menuMapper.findByRole(role));
+            // 权限列表
+            Set<String> permissions = new HashSet<>();
+            for (Menu menu : menuSet) {
+                if (StringUtils.isNotEmpty(menu.getPermission()))
+                    permissions.add(menu.getPermission());
+            }
+            user.setPermissions(permissions.toArray(new String[permissions.size()]));
         }
         return user;
     }

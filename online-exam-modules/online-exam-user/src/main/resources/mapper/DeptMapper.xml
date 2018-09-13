@@ -37,20 +37,20 @@
     <select id="get" resultMap="deptResultMap">
         SELECT
         <include refid="deptColumns"/>
-        FROM SYS_DEPT a
+        FROM sys_dept a
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
     <select id="findList" resultMap="deptResultMap">
         SELECT
         <include refid="deptColumns"/>
-        FROM SYS_DEPT a
+        FROM sys_dept a
         WHERE a.del_flag = 0
         <include refid="whereColumnList"/>
     </select>
 
     <insert id="insert">
-        INSERT  INTO SYS_DEPT (
+        INSERT  INTO sys_dept (
             id,
             name,
             parent_id,
@@ -76,7 +76,7 @@
     </insert>
 
     <update id="update">
-        UPDATE SYS_DEPT  SET
+        UPDATE sys_dept  SET
         <if test="name != null">
             name = #{name},
         </if>
@@ -98,7 +98,7 @@
     </update>
 
     <delete id="delete">
-        UPDATE SYS_DEPT SET
+        UPDATE sys_dept SET
         DEL_FLAG = 1
         WHERE ID = #{id}
     </delete>

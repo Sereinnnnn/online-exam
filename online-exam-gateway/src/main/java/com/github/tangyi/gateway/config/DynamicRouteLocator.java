@@ -47,7 +47,6 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
     protected LinkedHashMap<String, ZuulProperties.ZuulRoute> locateRoutes() {
         // 读取properties配置、eureka默认配置
         LinkedHashMap<String, ZuulProperties.ZuulRoute> routesMap = new LinkedHashMap<>(super.locateRoutes());
-        logger.debug("初始默认的路由配置完成");
         routesMap.putAll(locateRoutesFromDb());
         LinkedHashMap<String, ZuulProperties.ZuulRoute> values = new LinkedHashMap<>();
         for (Map.Entry<String, ZuulProperties.ZuulRoute> entry : routesMap.entrySet()) {
@@ -102,7 +101,6 @@ public class DynamicRouteLocator extends DiscoveryClientRouteLocator {
             } catch (Exception e) {
                 logger.error("从数据库加载路由配置异常", e);
             }
-            logger.debug("添加数据库自定义的路由配置,path：{}，serviceId:{}", zuulRoute.getPath(), zuulRoute.getServiceId());
             routes.put(zuulRoute.getPath(), zuulRoute);
         }
         return routes;

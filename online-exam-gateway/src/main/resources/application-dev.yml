@@ -23,4 +23,5 @@ security:
   auth:
     server: http://localhost:3000
 logging:
-  level: error
+  level:
+    org.apache.http: info

@@ -13,9 +13,9 @@ spring:
       label: master
   datasource:
         name: test
-        url: jdbc:mysql://127.0.0.1:3306/online_exam?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://182.254.233.125:3306/online_exam?useUnicode=true&characterEncoding=utf-8
         username: root
-        password: 11
+        password: 123456
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
 mybatis:
@@ -35,3 +35,6 @@ eureka:
     serviceUrl:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
+logging:
+  level:
+    org.apach.http: info

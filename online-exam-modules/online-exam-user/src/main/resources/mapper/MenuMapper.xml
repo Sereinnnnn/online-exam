@@ -51,12 +51,12 @@
     <select id="get" resultMap="menuResultMap">
         SELECT
         <include refid="menuColumns"/>
-        FROM SYS_MENU a
+        FROM sys_menu a
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
     <insert id="insert">
-        INSERT  INTO SYS_MENU (
+        INSERT  INTO sys_menu (
             id,
             name,
             permission,
@@ -92,7 +92,7 @@
     <select id="findList" resultMap="menuResultMap">
         SELECT
         <include refid="menuColumns"/>
-        FROM SYS_MENU a
+        FROM sys_menu a
         WHERE a.del_flag = 0
         <include refid="whereColumnList"/>
     </select>
@@ -112,7 +112,7 @@
     </select>
 
     <update id="update">
-        UPDATE SYS_MENU  SET
+        UPDATE sys_menu  SET
         <if test="name != null">
             name = #{name},
         </if>
@@ -146,7 +146,7 @@
     </update>
 
     <delete id="delete">
-        UPDATE SYS_MENU SET
+        UPDATE sys_menu SET
 			del_flag = 1
 		WHERE id = #{id}
     </delete>

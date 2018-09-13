@@ -6,11 +6,11 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
+import com.github.tangyi.user.dto.UserInfoDto;
 import com.github.tangyi.user.module.User;
 import com.github.tangyi.user.module.UserRole;
-import com.github.tangyi.user.service.UserRoleService;
 import com.github.tangyi.user.service.SysUserService;
-import com.xiaoleilu.hutool.system.UserInfo;
+import com.github.tangyi.user.service.UserRoleService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
@@ -50,7 +50,7 @@ public class UserController extends BaseController {
      * @return 用户名
      */
     @GetMapping("/info")
-    public User user(UserVo userVo) {
+    public UserInfoDto user(UserVo userVo) {
         return userService.findUserInfo(userVo);
     }
 

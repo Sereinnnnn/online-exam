@@ -30,12 +30,12 @@
     <select id="get" resultMap="roleResultMap">
         SELECT
         <include refid="roleColumns"/>
-        FROM SYS_ROLE a
+        FROM sys_role a
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
     <insert id="insert">
-        INSERT INTO SYS_ROLE (
+        INSERT INTO sys_role (
         id,
         role_name,
         role_code,
@@ -61,7 +61,7 @@
     </insert>
 
     <update id="update">
-        UPDATE SYS_ROLE  SET
+        UPDATE sys_role  SET
         <if test="roleName != null">
             roleName = #{roleName},
         </if>
@@ -83,7 +83,7 @@
     </update>
 
     <delete id="delete">
-        UPDATE SYS_ROLE SET
+        UPDATE sys_role SET
         del_flag = 1
         WHERE id = #{id}
     </delete>

@@ -1,4 +1,4 @@
-package com.github.tangyi.common.web;
+package com.github.tangyi.common.resolver;
 
 import com.github.tangyi.common.constants.SecurityConstant;
 import com.github.tangyi.common.vo.Role;
@@ -33,7 +33,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
      * 传入的参数是UserVo类型时才做解析
      *
      * @param methodParameter methodParameter
-     * @return
+     * @return boolean
      */
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {

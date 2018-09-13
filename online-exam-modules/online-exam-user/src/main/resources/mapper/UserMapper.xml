@@ -112,14 +112,14 @@
     <select id="get" resultMap="userResultMap">
         SELECT
         <include refid="userColumns"/>
-        FROM SYS_USER a
+        FROM sys_user a
         WHERE a.id = #{id}
     </select>
 
     <select id="findList" resultMap="userResultMap">
         SELECT
         <include refid="userColumns"/>
-        FROM SYS_USER  a
+        FROM sys_user  a
         WHERE a.del_flag = 0
         <include refid="whereColumnList"/>
     </select>
