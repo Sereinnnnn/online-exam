@@ -68,4 +68,14 @@ public class SecurityConstant {
      * token
      */
     public static final String TOKEN_USER_DETAIL = "token-user-detail";
+
+    /**
+     * 保存code的前缀
+     */
+    public static final String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY";
+
+    /**
+     * 默认生成图形验证码过期时间
+     */
+    public static final int DEFAULT_IMAGE_EXPIRE = 60;
 }

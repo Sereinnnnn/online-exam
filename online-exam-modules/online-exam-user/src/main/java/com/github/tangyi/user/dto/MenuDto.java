@@ -46,7 +46,7 @@ public class MenuDto extends TreeEntity<MenuDto> {
         this.url = menu.getUrl();
         this.type = menu.getType();
         this.label = menu.getName();
-        this.sort = menu.getSort();
+        this.sort = Integer.parseInt(menu.getSort());
     }
 
     public String getIcon() {

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户service实现
@@ -35,9 +37,9 @@ import java.util.Set;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysUserService extends CrudService<UserMapper, User> {
+public class UserService extends CrudService<UserMapper, User> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SysUserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -47,6 +49,9 @@ public class SysUserService extends CrudService<UserMapper, User> {
 
     @Autowired
     private MenuMapper menuMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 获取用户信息
@@ -123,5 +128,17 @@ public class SysUserService extends CrudService<UserMapper, User> {
 
     public UserVo selectUserVoByUsername(String username) {
         return userMapper.selectUserVoByUsername(username);
+    }
+
+    /**
+     * 保存验证码
+     *
+     * @param random    random
+     * @param imageCode imageCode
+     * @author tangyi
+     * @date 2018/9/14 20:12
+     */
+    public void saveImageCode(String random, String imageCode) {
+        redisTemplate.opsForValue().set(SecurityConstant.DEFAULT_CODE_KEY + random, imageCode, SecurityConstant.DEFAULT_IMAGE_EXPIRE, TimeUnit.SECONDS);
     }
 }

@@ -9,7 +9,7 @@ import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
 import com.github.tangyi.user.module.User;
 import com.github.tangyi.user.module.UserRole;
-import com.github.tangyi.user.service.SysUserService;
+import com.github.tangyi.user.service.UserService;
 import com.github.tangyi.user.service.UserRoleService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +37,7 @@ public class UserController extends BaseController {
     private static final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
-    private SysUserService userService;
+    private UserService userService;
 
     @Autowired
     private UserRoleService userRoleService;
