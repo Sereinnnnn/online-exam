@@ -6,6 +6,8 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import com.xiaoleilu.hutool.collection.CollectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AccessFilter extends ZuulFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(AccessFilter.class);
 
     @Override
     public String filterType() {
@@ -45,8 +49,11 @@ public class AccessFilter extends ZuulFilter {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             RequestContext currentContext = RequestContext.getCurrentContext();
-            currentContext.addZuulRequestHeader(SecurityConstant.USER_HEADER, authentication.getName());
-            currentContext.addZuulRequestHeader(SecurityConstant.ROLE_HEADER, CollectionUtil.join(authentication.getAuthorities(), ","));
+            String username = authentication.getName(),
+                    authorities = CollectionUtil.join(authentication.getAuthorities(), ",");
+            logger.debug("username:{}, authorities:{}", username, authorities);
+            currentContext.addZuulRequestHeader(SecurityConstant.USER_HEADER, username);
+            currentContext.addZuulRequestHeader(SecurityConstant.ROLE_HEADER, authorities);
         }
         return null;
     }

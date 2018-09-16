@@ -50,8 +50,8 @@ public class UserController extends BaseController {
      * @return 用户名
      */
     @GetMapping("/info")
-    public UserInfoDto user(UserVo userVo) {
-        return userService.findUserInfo(userVo);
+    public ReturnT<UserInfoDto> user(UserVo userVo) {
+        return new ReturnT<>(userService.findUserInfo(userVo));
     }
 
     /**
