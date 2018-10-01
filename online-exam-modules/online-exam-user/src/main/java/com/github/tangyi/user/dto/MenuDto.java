@@ -38,6 +38,8 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     private String label;
 
+    private MenuMeta meta;
+
     public MenuDto(Menu menu) {
         this.id = menu.getId();
         this.parentId = menu.getParentId();
@@ -47,6 +49,12 @@ public class MenuDto extends TreeEntity<MenuDto> {
         this.type = menu.getType();
         this.label = menu.getName();
         this.sort = Integer.parseInt(menu.getSort());
+        this.component = menu.getComponent();
+        this.path = menu.getPath();
+        MenuMeta menuMeta = new MenuMeta();
+        menuMeta.setTitle(menu.getName());
+        menuMeta.setIcon(menu.getIcon());
+        this.meta = menuMeta;
     }
 
     public String getIcon() {
@@ -137,5 +145,54 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public MenuMeta getMeta() {
+        return meta;
+    }
+
+    public void setMeta(MenuMeta meta) {
+        this.meta = meta;
+    }
+}
+
+class MenuMeta {
+
+    private String title;
+
+    private String icon;
+
+    private String[] roles;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String[] roles) {
+        this.roles = roles;
     }
 }

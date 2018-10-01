@@ -3,8 +3,8 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
-import com.github.tangyi.common.utils.TreeUtil;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.user.MenuUtil;
 import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.service.MenuService;
@@ -44,7 +44,7 @@ public class MenuController extends BaseController {
             }
         });
         CollUtil.sort(menuTreeList, Comparator.comparingInt(MenuDto::getSort));
-        return TreeUtil.build(menuTreeList, -1);
+        return MenuUtil.build(menuTreeList, "-1");
     }
 
     /**

@@ -45,6 +45,17 @@ public class Menu extends BaseEntity<Menu> {
      */
     private String type;
 
+    /**
+     * 模块
+     */
+    private String component;
+
+    /**
+     * 路径
+     */
+    private String path;
+
+
     public String getName() {
         return name;
     }
@@ -99,5 +110,21 @@ public class Menu extends BaseEntity<Menu> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

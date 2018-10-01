@@ -10,6 +10,8 @@
         <result column="icon" property="icon"/>
         <result column="sort" property="sort"/>
         <result column="type" property="type"/>
+        <result column="component" property="component"/>
+        <result column="path" property="path"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -27,6 +29,8 @@
         a.icon,
         a.sort,
         a.type,
+        a.component,
+        a.path,
         a.creator,
         a.create_date,
         a.modifier,
@@ -65,6 +69,8 @@
             icon,
             sort,
             type,
+            component,
+            path,
             creator,
             create_date,
             modifier,
@@ -80,6 +86,8 @@
             #{icon},
             #{sort},
             #{type},
+            #{component},
+            #{path},
             #{creator},
             #{createDate},
             #{modifier},
@@ -130,6 +138,12 @@
         </if>
         <if test="type != null">
             type = #{type},
+        </if>
+        <if test="component != null">
+            component = #{component},
+        </if>
+        <if test="path != null">
+            path = #{path},
         </if>
         <if test="delFlag != null">
             del_flag = #{delFlag},
