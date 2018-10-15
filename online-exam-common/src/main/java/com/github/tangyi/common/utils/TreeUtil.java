@@ -13,27 +13,4 @@ import java.util.List;
  */
 public class TreeUtil {
 
-    /**
-     * 两层循环实现建树
-     *
-     * @param treeEntities 传入的树实体列表
-     * @return List
-     */
-    public static <T extends TreeEntity> List<T> build(List<T> treeEntities, Object root) {
-        List<T> trees = new ArrayList<T>();
-        for (T treeEntity : treeEntities) {
-            TreeEntity parent = (TreeEntity) treeEntity.getParent();
-            if (root.equals(parent.getId()))
-                trees.add(treeEntity);
-            for (T childEntity : treeEntities) {
-                TreeEntity itParent = (TreeEntity) childEntity.getParent();
-                if (itParent.getId().equals(treeEntity.getId())) {
-                    if (treeEntity.getChildren() == null)
-                        treeEntity.setChildren(new ArrayList<TreeEntity>());
-                    treeEntity.add(childEntity);
-                }
-            }
-        }
-        return trees;
-    }
 }

@@ -6,6 +6,7 @@
         <result column="name" property="name"/>
         <result column="permission" property="permission"/>
         <result column="url" property="url"/>
+        <result column="redirect" property="redirect"/>
         <result column="parent_id" property="parentId"/>
         <result column="icon" property="icon"/>
         <result column="sort" property="sort"/>
@@ -25,6 +26,7 @@
         a.name,
         a.permission,
         a.url,
+        a.redirect,
         a.parent_id,
         a.icon,
         a.sort,
@@ -65,6 +67,7 @@
             name,
             permission,
             url,
+            redirect,
             parent_id,
             icon,
             sort,
@@ -82,6 +85,7 @@
             #{name},
             #{permission},
             #{url},
+            #{redirect},
             #{parentId},
             #{icon},
             #{sort},
@@ -129,6 +133,9 @@
         </if>
         <if test="url != null">
             url = #{url},
+        </if>
+        <if test="redirect != null">
+            redirect = #{redirect},
         </if>
         <if test="icon != null">
             icon = #{icon},

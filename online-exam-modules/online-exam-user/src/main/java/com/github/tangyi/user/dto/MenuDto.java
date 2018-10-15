@@ -22,6 +22,8 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     private String url;
 
+    private String redirect;
+
     private boolean spread = false;
 
     private String path;
@@ -29,8 +31,6 @@ public class MenuDto extends TreeEntity<MenuDto> {
     private String component;
 
     private String authority;
-
-    private String redirect;
 
     private String code;
 
@@ -51,6 +51,7 @@ public class MenuDto extends TreeEntity<MenuDto> {
         this.sort = Integer.parseInt(menu.getSort());
         this.component = menu.getComponent();
         this.path = menu.getPath();
+        this.redirect = menu.getRedirect();
         MenuMeta menuMeta = new MenuMeta();
         menuMeta.setTitle(menu.getName());
         menuMeta.setIcon(menu.getIcon());
@@ -195,4 +196,6 @@ class MenuMeta {
     public void setRoles(String[] roles) {
         this.roles = roles;
     }
+
+
 }

@@ -26,6 +26,11 @@ public class Menu extends BaseEntity<Menu> {
     private String url;
 
     /**
+     * 重定向url
+     */
+    private String redirect;
+
+    /**
      * 父菜单ID
      */
     private String parentId;
@@ -126,5 +131,13 @@ public class Menu extends BaseEntity<Menu> {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getRedirect() {
+        return redirect;
+    }
+
+    public void setRedirect(String redirect) {
+        this.redirect = redirect;
     }
 }
