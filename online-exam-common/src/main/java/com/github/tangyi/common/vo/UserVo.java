@@ -73,6 +73,11 @@ public class UserVo extends BaseEntity<UserVo> {
      */
     private List<Role> roleList;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
     public Integer getUserId() {
         return userId;
     }
@@ -167,5 +172,13 @@ public class UserVo extends BaseEntity<UserVo> {
 
     public void setBorn(String born) {
         this.born = born;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

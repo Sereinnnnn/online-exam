@@ -12,6 +12,7 @@
         <result column="sex" property="sex"/>
         <result column="born" property="born"/>
         <result column="dept_id" property="deptId"/>
+        <result column="remark" property="remark"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -31,6 +32,7 @@
         <result column="sex" property="sex"/>
         <result column="born" property="born"/>
         <result column="dept_id" property="deptId"/>
+        <result column="remark" property="remark"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -61,6 +63,7 @@
         a.email,
         a.sex,
         a.born,
+        a.remark,
         a.creator,
         a.create_date,
         a.modifier,
@@ -136,6 +139,7 @@
             email,
             sex,
             born,
+            remark,
             creator,
             create_date,
             modifier,
@@ -152,6 +156,7 @@
             #{email},
             #{sex},
             #{born},
+            #{remark},
             #{creator},
             #{createDate},
             #{modifier},
@@ -187,6 +192,9 @@
         </if>
         <if test="born != null">
             born = #{born} ,
+        </if>
+        <if test="remark != null">
+            remark = #{remark} ,
         </if>
         <if test="creator != null">
             creator = #{creator} ,
