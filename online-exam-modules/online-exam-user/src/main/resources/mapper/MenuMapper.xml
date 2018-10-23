@@ -4,6 +4,7 @@
     <resultMap id="menuResultMap" type="com.github.tangyi.user.module.Menu">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="title" property="title"/>
         <result column="permission" property="permission"/>
         <result column="url" property="url"/>
         <result column="redirect" property="redirect"/>
@@ -24,6 +25,7 @@
     <sql id="menuColumns">
         a.id as "id",
         a.name,
+        a.title,
         a.permission,
         a.url,
         a.redirect,
@@ -65,6 +67,7 @@
         INSERT  INTO sys_menu (
             id,
             name,
+            title,
             permission,
             url,
             redirect,
@@ -83,6 +86,7 @@
         ) VALUES (
             #{id},
             #{name},
+            #{title},
             #{permission},
             #{url},
             #{redirect},
@@ -127,6 +131,9 @@
         UPDATE sys_menu  SET
         <if test="name != null">
             name = #{name},
+        </if>
+        <if test="title != null">
+            name = #{title},
         </if>
         <if test="permission != null">
             permission = #{permission},

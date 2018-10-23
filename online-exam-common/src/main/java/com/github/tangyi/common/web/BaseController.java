@@ -41,4 +41,13 @@ public abstract class BaseController {
     public Integer getUserId() {
         return UserUtil.getUserId(request);
     }
+
+    /**
+     * 获取当前用户
+     *
+     * @return String
+     */
+    public String getUser() {
+        return UserUtil.getUser();
+    }
 }

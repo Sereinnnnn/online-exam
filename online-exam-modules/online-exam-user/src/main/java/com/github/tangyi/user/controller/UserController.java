@@ -14,6 +14,7 @@ import com.github.tangyi.user.service.UserRoleService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -81,6 +82,8 @@ public class UserController extends BaseController {
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
         User user = new User();
         BeanUtils.copyProperties(userVo, user);
+        // 用户名查询条件
+        user.setUsername(params.getOrDefault("username", ""));
         return userService.findPage(page, user);
     }
 
@@ -97,6 +100,9 @@ public class UserController extends BaseController {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         user.setCommonValue(userDto.getUsername(), "");
+        // 设置默认密码
+        if (StringUtils.isEmpty(userDto.getPassword()))
+            userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
         user.setPassword(encoder.encode(userDto.getPassword()));
         // 保存用户
         userService.insert(user);

@@ -16,6 +16,11 @@ public class Menu extends BaseEntity<Menu> {
     private String name;
 
     /**
+     * 标题
+     */
+    private String title;
+
+    /**
      * 菜单权限标识
      */
     private String permission;
@@ -139,5 +144,13 @@ public class Menu extends BaseEntity<Menu> {
 
     public void setRedirect(String redirect) {
         this.redirect = redirect;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

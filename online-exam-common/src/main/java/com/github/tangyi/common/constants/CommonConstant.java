@@ -78,4 +78,9 @@ public class CommonConstant {
      */
     public static final String TOKEN_SPLIT = "Bearer ";
 
+    /**
+     * 默认密码
+     */
+    public static final String DEFAULT_PASSWORD = "123456";
+
 }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 权限服务实现
+ * 权限服务实现，经过网关的请求都会校验是否有权限
  *
  * @author tangyi
  * @date 2018-08-28-20:36
