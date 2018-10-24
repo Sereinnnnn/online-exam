@@ -3,6 +3,7 @@
 <mapper namespace="com.github.tangyi.user.mapper.UserMapper">
     <resultMap id="userResultMap" type="com.github.tangyi.user.module.User">
         <id column="id" property="id"/>
+        <result column="name" property="name"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
@@ -13,6 +14,7 @@
         <result column="born" property="born"/>
         <result column="dept_id" property="deptId"/>
         <result column="remark" property="remark"/>
+        <result column="status" property="status"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -23,6 +25,7 @@
 
     <resultMap id="userVoResultMap" type="com.github.tangyi.common.vo.UserVo">
         <id column="id" property="id"/>
+        <result column="name" property="name"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
@@ -33,6 +36,7 @@
         <result column="born" property="born"/>
         <result column="dept_id" property="deptId"/>
         <result column="remark" property="remark"/>
+        <result column="status" property="status"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -55,6 +59,7 @@
 
     <sql id="userColumns">
         a.id as "id",
+        a.name,
         a.username,
         a.password,
         a.salt,
@@ -64,6 +69,7 @@
         a.sex,
         a.born,
         a.remark,
+        a.status,
         a.creator,
         a.create_date,
         a.modifier,
@@ -74,6 +80,9 @@
 
     <!-- where 条件 -->
     <sql id="whereColumnList">
+        <if test="name != null and name != ''">
+            and a.name like #{username}
+        </if>
         <if test="username != null and username != ''">
             and a.username like #{username}
         </if>
@@ -85,6 +94,9 @@
         </if>
         <if test="email != null and email != ''">
             and a.email = #{email}
+        </if>
+        <if test="status != null and status != ''">
+            and a.status = #{status}
         </if>
     </sql>
 
@@ -131,6 +143,7 @@
     <insert id="insert">
         insert  into sys_user (
             id,
+            name,
             username,
             password,
             salt,
@@ -140,6 +153,7 @@
             sex,
             born,
             remark,
+            status,
             creator,
             create_date,
             modifier,
@@ -148,6 +162,7 @@
             application_code
         ) values (
             #{id},
+            #{name},
             #{username},
             #{password},
             #{salt},
@@ -157,6 +172,7 @@
             #{sex},
             #{born},
             #{remark},
+            #{status},
             #{creator},
             #{createDate},
             #{modifier},
@@ -169,6 +185,9 @@
     <!-- 更新用户 -->
     <update id="update">
         update sys_user set
+        <if test="name != null">
+            name = #{name} ,
+        </if>
         <if test="username != null">
             username = #{username} ,
         </if>
@@ -196,6 +215,9 @@
         <if test="remark != null">
             remark = #{remark} ,
         </if>
+        <if test="status != null">
+            status = #{status} ,
+        </if>
         <if test="creator != null">
             creator = #{creator} ,
         </if>
@@ -208,6 +230,14 @@
         <if test="applicationCode != null">
             application_code = #{applicationCode} ,
         </if>
+        modifier = #{modifier} ,
+        modify_date = #{modifyDate}
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update sys_user set
+        del_flag = 1,
         modifier = #{modifier} ,
         modify_date = #{modifyDate}
         where id = #{id}

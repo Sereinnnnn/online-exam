@@ -10,6 +10,8 @@ import com.github.tangyi.common.persistence.BaseEntity;
  */
 public class User extends BaseEntity<User> {
 
+    private String name;
+
     private String username;
 
     private String password;
@@ -30,12 +32,22 @@ public class User extends BaseEntity<User> {
 
     private String remark;
 
+    private String status;
+
     public User() {
         super();
     }
 
     public User(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -116,5 +128,13 @@ public class User extends BaseEntity<User> {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

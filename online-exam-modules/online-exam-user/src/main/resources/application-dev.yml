@@ -13,9 +13,9 @@ spring:
       label: master
   datasource:
         name: test
-        url: jdbc:mysql://182.254.233.125:3306/online_exam?useUnicode=true&characterEncoding=utf-8
-        username: root
-        password: 123456
+        url: jdbc:mysql://192.168.0.144:3306/platform_test001?useUnicode=true&characterEncoding=utf-8
+        username: platform_test001
+        password: 11
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
 mybatis:
@@ -38,3 +38,4 @@ eureka:
 logging:
   level:
     org.apach.http: info
+    org.springframework: debug

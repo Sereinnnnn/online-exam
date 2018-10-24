@@ -48,6 +48,24 @@ public class MenuController extends BaseController {
     }
 
     /**
+     * 返回树形菜单集合
+     *
+     * @return 树形菜单集合
+     */
+    @GetMapping(value = "/menus")
+    public List<MenuDto> menus() {
+        // 查询所有菜单
+        Set<Menu> menuSet = new HashSet<Menu>(menuService.findList(new Menu()));
+        List<MenuDto> menuTreeList = new ArrayList<MenuDto>();
+        menuSet.forEach(menuVo -> {
+            menuTreeList.add(new MenuDto(menuVo));
+        });
+        // 排序
+        CollUtil.sort(menuTreeList, Comparator.comparingInt(MenuDto::getSort));
+        return MenuUtil.build(menuTreeList, "-1");
+    }
+
+    /**
      * 新增菜单
      *
      * @param menu menu
@@ -56,9 +74,23 @@ public class MenuController extends BaseController {
      * @date 2018/8/27 16:12
      */
     @PostMapping
-    public ReturnT<Boolean> menu(@RequestBody Menu menu) {
+    public ReturnT<Boolean> addMenu(@RequestBody Menu menu) {
         menu.setCommonValue("", "");
         return new ReturnT<>(menuService.insert(menu) > 0);
+    }
+
+    /**
+     * 更新菜单
+     *
+     * @param menu menu
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/10/24 16:34
+     */
+    @PutMapping
+    public ReturnT<Boolean> updateMenu(@RequestBody Menu menu) {
+        menu.setCommonValue("", "");
+        return new ReturnT<>(menuService.update(menu) > 0);
     }
 
     /**

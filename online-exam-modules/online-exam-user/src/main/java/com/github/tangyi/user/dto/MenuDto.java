@@ -20,6 +20,8 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     private String name;
 
+    private String displayName;
+
     private String url;
 
     private String redirect;
@@ -52,6 +54,7 @@ public class MenuDto extends TreeEntity<MenuDto> {
         this.component = menu.getComponent();
         this.path = menu.getPath();
         this.redirect = menu.getRedirect();
+        this.setDisplayName(menu.getTitle());
         MenuMeta menuMeta = new MenuMeta();
         menuMeta.setTitle(menu.getName());
         menuMeta.setIcon(menu.getIcon());
@@ -162,6 +165,14 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     public void setMeta(MenuMeta meta) {
         this.meta = meta;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
 

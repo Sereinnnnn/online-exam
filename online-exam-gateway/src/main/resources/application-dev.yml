@@ -25,3 +25,4 @@ security:
 logging:
   level:
     org.apache.http: info
+    org.springframework: debug
