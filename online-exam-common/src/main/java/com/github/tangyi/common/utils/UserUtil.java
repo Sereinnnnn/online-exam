@@ -12,6 +12,7 @@ import org.slf4j.MDC;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户工具类
@@ -51,8 +52,10 @@ public class UserUtil {
         String token = getToken(httpServletRequest);
         String key = Base64.getEncoder().encodeToString(CommonConstant.SIGN_KEY.getBytes());
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-        Integer userId = (Integer) claims.get("userId");
-        return userId;
+        Object object = claims.get("userId");
+        if (object != null)
+            return (Integer) ((Map) object).get("user_id");
+        return null;
     }
 
     /**

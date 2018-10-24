@@ -1,5 +1,7 @@
 package com.github.tangyi.user.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.module.Role;
@@ -7,6 +9,8 @@ import com.github.tangyi.user.service.RoleMenuService;
 import com.github.tangyi.user.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 角色controller
@@ -43,16 +47,20 @@ public class RoleController extends BaseController {
     }
 
     /**
-     * 创建角色
+     * 角色分页查询
      *
-     * @param role role
-     * @return ReturnT
+     * @param params params
+     * @param role   role
+     * @return PageInfo
      * @author tangyi
-     * @date 2018/9/14 18:22
+     * @date 2018/10/24 0024 下午 10:13
      */
-    @PutMapping
-    public ReturnT<Boolean> role(@RequestBody Role role) {
-        return new ReturnT<>(roleService.insert(role) > 0);
+    @RequestMapping("roleList")
+    public PageInfo<Role> userList(@RequestParam Map<String, String> params, Role role) {
+        PageInfo<Role> page = new PageInfo<Role>();
+        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
+        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+        return roleService.findPage(page, role);
     }
 
     /**
@@ -61,11 +69,25 @@ public class RoleController extends BaseController {
      * @param role role
      * @return ReturnT
      * @author tangyi
+     * @date 2018/9/14 18:22
+     */
+    @PutMapping
+    public ReturnT<Boolean> role(@RequestBody Role role) {
+        return new ReturnT<>(roleService.update(role) > 0);
+    }
+
+    /**
+     * 创建角色
+     *
+     * @param role role
+     * @return ReturnT
+     * @author tangyi
      * @date 2018/9/14 18:23
      */
     @PostMapping
     public ReturnT<Boolean> updateRole(@RequestBody Role role) {
-        return new ReturnT<>(roleService.update(role) > 0);
+        role.setCommonValue(getUser(), "");
+        return new ReturnT<>(roleService.insert(role) > 0);
     }
 
     /**

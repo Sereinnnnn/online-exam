@@ -21,4 +21,5 @@ eureka:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
 logging:
-  level: debug
+  level:
+   org.apache.http: info

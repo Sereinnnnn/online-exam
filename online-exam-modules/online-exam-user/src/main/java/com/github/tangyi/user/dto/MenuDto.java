@@ -20,8 +20,6 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     private String name;
 
-    private String displayName;
-
     private String url;
 
     private String redirect;
@@ -40,7 +38,9 @@ public class MenuDto extends TreeEntity<MenuDto> {
 
     private String label;
 
-    private MenuMeta meta;
+    private String[] roles;
+
+    private String remark;
 
     public MenuDto(Menu menu) {
         this.id = menu.getId();
@@ -54,11 +54,7 @@ public class MenuDto extends TreeEntity<MenuDto> {
         this.component = menu.getComponent();
         this.path = menu.getPath();
         this.redirect = menu.getRedirect();
-        this.setDisplayName(menu.getTitle());
-        MenuMeta menuMeta = new MenuMeta();
-        menuMeta.setTitle(menu.getName());
-        menuMeta.setIcon(menu.getIcon());
-        this.meta = menuMeta;
+        this.remark = menu.getRemark();
     }
 
     public String getIcon() {
@@ -159,54 +155,11 @@ public class MenuDto extends TreeEntity<MenuDto> {
         this.parentId = parentId;
     }
 
-    public MenuMeta getMeta() {
-        return meta;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setMeta(MenuMeta meta) {
-        this.meta = meta;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-}
-
-class MenuMeta {
-
-    private String title;
-
-    private String icon;
-
-    private String[] roles;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String[] getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String[] roles) {
-        this.roles = roles;
-    }
-
-
 }

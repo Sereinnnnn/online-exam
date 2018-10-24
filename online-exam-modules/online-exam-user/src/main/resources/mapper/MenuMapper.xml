@@ -4,7 +4,6 @@
     <resultMap id="menuResultMap" type="com.github.tangyi.user.module.Menu">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
-        <result column="title" property="title"/>
         <result column="permission" property="permission"/>
         <result column="url" property="url"/>
         <result column="redirect" property="redirect"/>
@@ -14,6 +13,7 @@
         <result column="type" property="type"/>
         <result column="component" property="component"/>
         <result column="path" property="path"/>
+        <result column="remark" property="remark"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -25,7 +25,6 @@
     <sql id="menuColumns">
         a.id as "id",
         a.name,
-        a.title,
         a.permission,
         a.url,
         a.redirect,
@@ -35,6 +34,7 @@
         a.type,
         a.component,
         a.path,
+        a.remark,
         a.creator,
         a.create_date,
         a.modifier,
@@ -67,7 +67,6 @@
         INSERT  INTO sys_menu (
             id,
             name,
-            title,
             permission,
             url,
             redirect,
@@ -77,6 +76,7 @@
             type,
             component,
             path,
+            remark,
             creator,
             create_date,
             modifier,
@@ -86,7 +86,6 @@
         ) VALUES (
             #{id},
             #{name},
-            #{title},
             #{permission},
             #{url},
             #{redirect},
@@ -96,6 +95,7 @@
             #{type},
             #{component},
             #{path},
+            #{remark},
             #{creator},
             #{createDate},
             #{modifier},
@@ -132,9 +132,6 @@
         <if test="name != null">
             name = #{name},
         </if>
-        <if test="title != null">
-            name = #{title},
-        </if>
         <if test="permission != null">
             permission = #{permission},
         </if>
@@ -158,6 +155,9 @@
         </if>
         <if test="path != null">
             path = #{path},
+        </if>
+        <if test="remark != null">
+            remark = #{remark},
         </if>
         <if test="delFlag != null">
             del_flag = #{delFlag},

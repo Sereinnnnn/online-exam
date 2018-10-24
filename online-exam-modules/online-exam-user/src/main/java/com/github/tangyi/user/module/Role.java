@@ -16,6 +16,8 @@ public class Role extends BaseEntity<Role> {
 
     private String roleDesc;
 
+    private String status;
+
     public String getRoleName() {
         return roleName;
     }
@@ -38,5 +40,13 @@ public class Role extends BaseEntity<Role> {
 
     public void setRoleDesc(String roleDesc) {
         this.roleDesc = roleDesc;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
