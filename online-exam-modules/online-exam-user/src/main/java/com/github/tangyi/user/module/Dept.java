@@ -13,7 +13,17 @@ public class Dept extends BaseEntity<Dept> {
     /**
      * 部门名称
      */
-    private String name;
+    private String deptName;
+
+    /**
+     * 部门描述
+     */
+    private String deptDesc;
+
+    /**
+     * 部门负责人
+     */
+    private String deptLeader;
 
     /**
      * 父部门ID
@@ -25,12 +35,25 @@ public class Dept extends BaseEntity<Dept> {
      */
     private String sort;
 
-    public String getName() {
-        return name;
+    /**
+     * 状态， 0-启用，1-禁用
+     */
+    private String status;
+
+    public String getDeptName() {
+        return deptName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getDeptDesc() {
+        return deptDesc;
+    }
+
+    public void setDeptDesc(String deptDesc) {
+        this.deptDesc = deptDesc;
     }
 
     public String getParentId() {
@@ -47,5 +70,21 @@ public class Dept extends BaseEntity<Dept> {
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeptLeader() {
+        return deptLeader;
+    }
+
+    public void setDeptLeader(String deptLeader) {
+        this.deptLeader = deptLeader;
     }
 }

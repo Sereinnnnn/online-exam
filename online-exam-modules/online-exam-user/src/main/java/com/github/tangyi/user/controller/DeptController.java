@@ -2,10 +2,15 @@ package com.github.tangyi.user.controller;
 
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.user.TreeUtil;
+import com.github.tangyi.user.dto.DeptDto;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.service.DeptService;
+import com.xiaoleilu.hutool.collection.CollUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 /**
  * 部门controller
@@ -19,6 +24,26 @@ public class DeptController extends BaseController {
 
     @Autowired
     private DeptService deptService;
+
+    /**
+     * 查询树形部门集合
+     *
+     * @return List
+     * @author tangyi
+     * @date 2018/10/25 12:57
+     */
+    @GetMapping(value = "/depts")
+    public List<DeptDto> depts() {
+        // 查询所有部门
+        Set<Dept> deptSet = new HashSet<Dept>(deptService.findList(new Dept()));
+        List<DeptDto> deptTreeList = new ArrayList<DeptDto>();
+        deptSet.forEach(dept -> {
+            deptTreeList.add(new DeptDto(dept));
+        });
+        // 排序
+        CollUtil.sort(deptTreeList, Comparator.comparingInt(DeptDto::getSort));
+        return TreeUtil.buildTree(deptTreeList, "-1");
+    }
 
     /**
      * 根据id获取部门

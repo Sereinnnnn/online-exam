@@ -24,6 +24,11 @@ public abstract class TreeEntity<T> extends BaseEntity<T> {
     protected T parent;
 
     /**
+     * 父节点id
+     */
+    protected String parentId;
+
+    /**
      * 排序号
      */
     protected Integer sort;
@@ -67,5 +72,13 @@ public abstract class TreeEntity<T> extends BaseEntity<T> {
 
     public void add(TreeEntity node) {
         children.add(node);
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

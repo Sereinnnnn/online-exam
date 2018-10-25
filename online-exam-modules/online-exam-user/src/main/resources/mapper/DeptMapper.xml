@@ -3,9 +3,12 @@
 <mapper namespace="com.github.tangyi.user.mapper.DeptMapper">
     <resultMap id="deptResultMap" type="com.github.tangyi.user.module.Dept">
         <id column="id" property="id"/>
-        <result column="name" property="name"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="dept_desc" property="deptDesc"/>
+        <result column="dept_leader" property="deptLeader"/>
         <result column="parent_id" property="parentId"/>
         <result column="sort" property="sort"/>
+        <result column="status" property="status"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -16,9 +19,12 @@
 
     <sql id="deptColumns">
         a.id as "id",
-        a.name,
+        a.dept_name,
+        a.dept_desc,
+        a.dept_leader,
         a.parent_id,
         a.sort,
+        a.status,
         a.creator,
         a.create_date,
         a.modifier,
@@ -29,8 +35,8 @@
 
     <!-- where 条件 -->
     <sql id="whereColumnList">
-        <if test="name != null and name != ''">
-            and a.name like #{name}
+        <if test="deptName != null and deptName != ''">
+            and a.dept_name like #{deptName}
         </if>
     </sql>
 
@@ -52,9 +58,12 @@
     <insert id="insert">
         INSERT  INTO sys_dept (
             id,
-            name,
+            dept_name,
+            dept_desc,
+            dept_leader,
             parent_id,
             sort,
+            status,
             creator,
             create_date,
             modifier,
@@ -63,9 +72,12 @@
             application_code
         ) VALUES (
             #{id},
-            #{name},
+            #{deptName},
+            #{deptDesc},
+            #{deptLeader},
             #{parentId},
             #{sort},
+            #{status},
             #{creator},
             #{createDate},
             #{modifier},
@@ -77,11 +89,20 @@
 
     <update id="update">
         UPDATE sys_dept  SET
-        <if test="name != null">
-            name = #{name},
+        <if test="deptName != null">
+            dept_name = #{deptName},
+        </if>
+        <if test="deptDesc != null">
+            dept_desc = #{deptDesc},
+        </if>
+        <if test="deptLeader != null">
+            dept_leader = #{deptLeader},
         </if>
         <if test="sort != null">
             sort = #{sort},
+        </if>
+        <if test="status != null">
+            status = #{status},
         </if>
         <if test="delFlag != null">
             del_flag = #{delFlag},

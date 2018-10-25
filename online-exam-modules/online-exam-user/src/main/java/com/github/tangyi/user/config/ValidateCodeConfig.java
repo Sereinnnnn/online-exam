@@ -1,11 +1,9 @@
 package com.github.tangyi.user.config;
 
-import com.github.tangyi.common.constants.SecurityConstant;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import sun.security.util.SecurityConstants;
 
 import java.util.Properties;
 

@@ -72,7 +72,8 @@ public class RoleController extends BaseController {
      * @date 2018/9/14 18:22
      */
     @PutMapping
-    public ReturnT<Boolean> role(@RequestBody Role role) {
+    public ReturnT<Boolean> updateRole(@RequestBody Role role) {
+        role.setCommonValue(getUser(), "");
         return new ReturnT<>(roleService.update(role) > 0);
     }
 
@@ -85,7 +86,7 @@ public class RoleController extends BaseController {
      * @date 2018/9/14 18:23
      */
     @PostMapping
-    public ReturnT<Boolean> updateRole(@RequestBody Role role) {
+    public ReturnT<Boolean> role(@RequestBody Role role) {
         role.setCommonValue(getUser(), "");
         return new ReturnT<>(roleService.insert(role) > 0);
     }
@@ -102,6 +103,8 @@ public class RoleController extends BaseController {
     public ReturnT<Boolean> deleteRole(@PathVariable String id) {
         Role role = new Role();
         role.setId(id);
+        role.setNewRecord(false);
+        role.setCommonValue(getUser(), "");
         return new ReturnT<>(roleService.delete(role) > 0);
     }
 }
