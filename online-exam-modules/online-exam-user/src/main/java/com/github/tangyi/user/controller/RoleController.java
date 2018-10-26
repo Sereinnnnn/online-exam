@@ -12,9 +12,12 @@ import com.github.tangyi.user.service.RoleDeptService;
 import com.github.tangyi.user.service.RoleMenuService;
 import com.github.tangyi.user.service.RoleService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,6 +97,34 @@ public class RoleController extends BaseController {
             }
         }
         return pageInfo;
+    }
+
+    /**
+     * 根据部门ID获取角色
+     *
+     * @param deptId 部门ID
+     * @return List
+     */
+    @GetMapping("/roleList/{deptId}")
+    public List<Role> roleList(@PathVariable String deptId) {
+        List<Role> roles = new ArrayList<>();
+        if (StringUtils.isNotBlank(deptId)) {
+            // 获取角色部门关系
+            List<RoleDept> roleDepts = roleDeptService.getRoleByDeptId(deptId);
+            // 遍历
+            if (CollectionUtils.isNotEmpty(roleDepts)) {
+                for (RoleDept roleDept : roleDepts) {
+                    Role role = new Role();
+                    role.setId(roleDept.getRoleId());
+                    // 查询部门信息
+                    role = roleService.get(role);
+                    if (role != null)
+                        roles.add(role);
+                }
+            }
+        }
+        return roles;
+
     }
 
     /**

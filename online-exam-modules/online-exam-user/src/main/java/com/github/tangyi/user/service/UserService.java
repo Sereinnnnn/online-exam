@@ -108,7 +108,7 @@ public class UserService extends CrudService<UserMapper, User> {
         user.setCommonValue(user.getUsername(), user.getApplicationCode());
         // 更新用户信息
         super.update(user);
-        // 更新角色信息
+        // 更新用户角色关系
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
             UserRole sysUserRole = new UserRole();
             sysUserRole.setUserId(user.getId());
@@ -123,6 +123,7 @@ public class UserService extends CrudService<UserMapper, User> {
                 userRoleMapper.insert(role);
             }
         }
+        // TODO 更新用户部门关系
         return Boolean.TRUE;
     }
 

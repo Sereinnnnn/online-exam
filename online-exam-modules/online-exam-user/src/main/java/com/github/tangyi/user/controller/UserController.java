@@ -130,9 +130,6 @@ public class UserController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateUser(@RequestBody UserDto userDto) {
         try {
-            User user = new User();
-            BeanUtils.copyProperties(userDto, user);
-            user = userService.get(user);
             return new ReturnT<>(userService.update(userDto));
         } catch (Exception e) {
             logger.error("更新用户信息失败！", e);

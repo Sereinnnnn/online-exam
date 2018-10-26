@@ -12,4 +12,34 @@
         a.role_id as "role_id",
         a.dept_id as "dept_id"
     </sql>
+
+    <select id="get" resultMap="roleDeptResultMap">
+        SELECT
+        <include refid="roleDeptColumns"/>
+        FROM sys_role_dept a
+        WHERE a.role_id = #{roleId}
+    </select>
+
+    <select id="getByDeptId" resultMap="roleDeptResultMap">
+        SELECT
+        <include refid="roleDeptColumns"/>
+        FROM sys_role_dept a
+        WHERE a.dept_id = #{deptId}
+    </select>
+
+    <insert id="insert">
+        INSERT  INTO sys_role_dept (
+            id,
+            role_id,
+            dept_id
+        ) VALUES (
+            #{id},
+            #{roleId},
+            #{deptId}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE from sys_role_dept WHERE role_id = #{roleId}
+    </delete>
 </mapper>
