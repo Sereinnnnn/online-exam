@@ -18,6 +18,10 @@ public class Role extends BaseEntity<Role> {
 
     private String status;
 
+    private String deptName;
+
+    private String deptId;
+
     public String getRoleName() {
         return roleName;
     }
@@ -48,5 +52,21 @@ public class Role extends BaseEntity<Role> {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

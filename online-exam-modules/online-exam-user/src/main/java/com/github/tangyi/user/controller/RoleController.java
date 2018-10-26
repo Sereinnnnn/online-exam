@@ -4,9 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.module.Role;
+import com.github.tangyi.user.module.RoleDept;
+import com.github.tangyi.user.service.DeptService;
+import com.github.tangyi.user.service.RoleDeptService;
 import com.github.tangyi.user.service.RoleMenuService;
 import com.github.tangyi.user.service.RoleService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +32,12 @@ public class RoleController extends BaseController {
 
     @Autowired
     private RoleMenuService roleMenuService;
+
+    @Autowired
+    private RoleDeptService roleDeptService;
+
+    @Autowired
+    private DeptService deptService;
 
     /**
      * 根据id获取角色
@@ -60,7 +71,29 @@ public class RoleController extends BaseController {
         PageInfo<Role> page = new PageInfo<Role>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        return roleService.findPage(page, role);
+        // 查询所属部门
+        PageInfo<Role> pageInfo = roleService.findPage(page, role);
+        if (CollectionUtils.isNotEmpty(pageInfo.getList())) {
+            for (Role tempRole : pageInfo.getList()) {
+                RoleDept roleDept = new RoleDept();
+                roleDept.setRoleId(tempRole.getId());
+                // 查询角色部门关系
+                roleDept = roleDeptService.get(roleDept);
+                if (roleDept != null) {
+                    // 查询部门信息
+                    Dept dept = new Dept();
+                    dept.setId(roleDept.getDeptId());
+                    dept = deptService.get(dept);
+                    // 设置角色所属部门ID和名称
+                    if (dept != null) {
+                        tempRole.setDeptId(roleDept.getDeptId());
+                        tempRole.setDeptName(dept.getDeptName());
+                    }
+                }
+
+            }
+        }
+        return pageInfo;
     }
 
     /**
