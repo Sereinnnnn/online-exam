@@ -12,4 +12,14 @@
         a.role_id as "role_id",
         a.menu_id as "menu_id"
     </sql>
+
+    <delete id="deleteByRoleId">
+        delete from sys_role_menu
+        where role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByMenuId">
+        delete from sys_role_menu
+        where menu_id = #{menuId}
+    </delete>
 </mapper>

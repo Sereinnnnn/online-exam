@@ -62,12 +62,6 @@ public class UserVo extends BaseEntity<UserVo> {
      */
     private String born;
 
-
-    /**
-     * 部门ID
-     */
-    private Integer deptId;
-
     /**
      * 部门名称
      */
@@ -134,14 +128,6 @@ public class UserVo extends BaseEntity<UserVo> {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public Integer getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Integer deptId) {
-        this.deptId = deptId;
     }
 
     public String getDeptName() {

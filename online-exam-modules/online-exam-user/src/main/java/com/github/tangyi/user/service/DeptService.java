@@ -2,9 +2,18 @@ package com.github.tangyi.user.service;
 
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.user.mapper.DeptMapper;
+import com.github.tangyi.user.mapper.RoleDeptMapper;
+import com.github.tangyi.user.mapper.RoleMapper;
+import com.github.tangyi.user.mapper.UserDeptMapper;
 import com.github.tangyi.user.module.Dept;
+import com.github.tangyi.user.module.Role;
+import com.github.tangyi.user.module.RoleDept;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author tangyi
@@ -13,4 +22,37 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class DeptService extends CrudService<DeptMapper, Dept> {
+
+    @Autowired
+    private RoleDeptMapper roleDeptMapper;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private UserDeptMapper userDeptMapper;
+
+    /**
+     * 删除部门
+     * @param dept dept
+     * @return int
+     */
+    @Transactional
+    @Override
+    public int delete(Dept dept) {
+        // 删除角色和部门角色关系
+        List<RoleDept> roleDeptList = roleDeptMapper.getByDeptId(dept.getId());
+        if (CollectionUtils.isNotEmpty(roleDeptList)) {
+            for (RoleDept roleDept : roleDeptList) {
+                Role role = new Role();
+                role.setId(roleDept.getRoleId());
+                // 删除角色
+                roleService.delete(role);
+            }
+        }
+        // 删除部门用户关系
+        userDeptMapper.deleteByDeptId(dept.getId());
+        // 删除部门
+        return super.delete(dept);
+    }
 }

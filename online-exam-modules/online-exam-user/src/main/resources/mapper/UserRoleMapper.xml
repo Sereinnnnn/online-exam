@@ -5,25 +5,20 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="role_id" property="roleId"/>
-        <result column="creator" property="creator" />
-        <result column="create_date" property="createDate" />
-        <result column="modifier" property="modifier" />
-        <result column="modify_date" property="modifyDate" />
-        <result column="del_flag" property="delFlag" />
-        <result column="application_code" property="applicationCode" />
     </resultMap>
 
     <sql id="userRoleColumns">
         a.id as "id",
         a.user_id as "userId",
-        a.role_id as "roleId",
-        a.creator,
-        a.create_date,
-        a.modifier,
-        a.modify_date,
-        a.del_flag,
-        a.application_code
+        a.role_id as "roleId"
     </sql>
+
+    <select id="getByUserId" resultMap="userResultMap">
+        SELECT
+        <include refid="userRoleColumns"/>
+        FROM sys_user_role a
+        WHERE a.user_id = #{userId}
+    </select>
 
     <insert id="insert">
         insert  into sys_user_role (id, user_id, role_id)
@@ -36,5 +31,15 @@
 	    <if test="roleId != null and roleId != ''">
             and role_id = #{roleId}
         </if>
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from sys_user_role
+        where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByRoleId">
+        delete from sys_user_role
+        where role_id = #{roleId}
     </delete>
 </mapper>

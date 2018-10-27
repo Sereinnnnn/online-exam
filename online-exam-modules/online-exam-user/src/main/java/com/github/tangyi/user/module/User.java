@@ -28,11 +28,13 @@ public class User extends BaseEntity<User> {
 
     private String born;
 
-    private String deptId;
-
     private String remark;
 
     private String status;
+
+    private String deptName;
+
+    private String roleName;
 
     public User() {
         super();
@@ -114,14 +116,6 @@ public class User extends BaseEntity<User> {
         this.born = born;
     }
 
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -136,5 +130,21 @@ public class User extends BaseEntity<User> {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

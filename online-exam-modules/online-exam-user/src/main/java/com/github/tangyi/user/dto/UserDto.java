@@ -35,7 +35,6 @@ public class UserDto extends User {
         this.role = role;
     }
 
-    @Override
     public String getDeptId() {
         return deptId;
     }

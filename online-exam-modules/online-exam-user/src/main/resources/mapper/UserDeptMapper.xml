@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.user.mapper.UserDeptMapper">
+    <resultMap id="userDeptResultMap" type="com.github.tangyi.user.module.UserDept">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="dept_id" property="deptId"/>
+    </resultMap>
+
+    <sql id="userDeptColumns">
+        a.id as "id",
+        a.user_id as "user_id",
+        a.dept_id as "dept_id"
+    </sql>
+
+    <select id="get" resultMap="userDeptResultMap">
+        SELECT
+        <include refid="userDeptColumns"/>
+        FROM sys_user_dept a
+        WHERE a.user_id = #{userId}
+    </select>
+
+    <select id="getByUserId" resultMap="userDeptResultMap">
+        SELECT
+        <include refid="userDeptColumns"/>
+        FROM sys_user_dept a
+        WHERE a.user_id = #{userId}
+    </select>
+
+    <select id="getByDeptId" resultMap="userDeptResultMap">
+        SELECT
+        <include refid="userDeptColumns"/>
+        FROM sys_user_dept a
+        WHERE a.dept_id = #{deptId}
+    </select>
+
+    <insert id="insert">
+        INSERT  INTO sys_user_dept (
+            id,
+            user_id,
+            dept_id
+        ) VALUES (
+            #{id},
+            #{userId},
+            #{deptId}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE from sys_user_dept WHERE user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from sys_user_dept
+        where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByDeptId">
+        delete from sys_user_dept
+        where dept_id = #{deptId}
+    </delete>
+</mapper>

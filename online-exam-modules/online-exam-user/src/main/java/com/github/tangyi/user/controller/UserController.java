@@ -7,10 +7,8 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
-import com.github.tangyi.user.module.User;
-import com.github.tangyi.user.module.UserRole;
-import com.github.tangyi.user.service.UserService;
-import com.github.tangyi.user.service.UserRoleService;
+import com.github.tangyi.user.module.*;
+import com.github.tangyi.user.service.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +41,15 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    private UserDeptService userDeptService;
+
+    @Autowired
+    private DeptService deptService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 获取当前用户信息（角色、权限）
@@ -84,7 +92,37 @@ public class UserController extends BaseController {
         BeanUtils.copyProperties(userVo, user);
         // 用户名查询条件
         user.setUsername(params.getOrDefault("username", ""));
-        return userService.findPage(page, user);
+        page = userService.findPage(page, user);
+        if (CollectionUtils.isNotEmpty(page.getList())) {
+            for (User tempUser : page.getList()) {
+                // 查询用户部门关系
+                UserDept userDept = userDeptService.getDeptByUserId(tempUser.getId());
+                if (userDept != null) {
+                    Dept dept = new Dept();
+                    dept.setId(userDept.getDeptId());
+                    // 查询部门信息
+                    dept = deptService.get(dept);
+                    if (dept != null) {
+                        tempUser.setDeptName(dept.getDeptName());
+                    }
+                }
+
+                // 查询用户角色关系
+                List<UserRole> userRoles = userRoleService.getByUserId(tempUser.getId());
+                if (CollectionUtils.isNotEmpty(userRoles)) {
+                    for (UserRole userRole : userRoles) {
+                        Role role = new Role();
+                        role.setId(userRole.getRoleId());
+                        // 查询角色信息
+                        role = roleService.get(role);
+                        if (role != null) {
+                            tempUser.setRoleName(role.getRoleName());
+                        }
+                    }
+                }
+            }
+        }
+        return page;
     }
 
     /**

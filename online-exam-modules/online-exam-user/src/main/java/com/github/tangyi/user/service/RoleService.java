@@ -4,6 +4,8 @@ import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.common.utils.IdGen;
 import com.github.tangyi.user.mapper.RoleDeptMapper;
 import com.github.tangyi.user.mapper.RoleMapper;
+import com.github.tangyi.user.mapper.RoleMenuMapper;
+import com.github.tangyi.user.mapper.UserRoleMapper;
 import com.github.tangyi.user.module.Role;
 import com.github.tangyi.user.module.RoleDept;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +25,12 @@ public class RoleService extends CrudService<RoleMapper, Role> {
 
     @Autowired
     private RoleDeptMapper roleDeptMapper;
+
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     /**
      * 新增
@@ -57,7 +65,7 @@ public class RoleService extends CrudService<RoleMapper, Role> {
         if (StringUtils.isNotBlank(role.getDeptId())) {
             RoleDept roleDept = new RoleDept();
             roleDept.setRoleId(role.getId());
-            roleDeptMapper.delete(roleDept);
+            roleDeptMapper.deleteByRoleId(role.getId());
             roleDept.setId(IdGen.uuid());
             roleDept.setDeptId(role.getDeptId());
             roleDeptMapper.insert(roleDept);
@@ -75,9 +83,11 @@ public class RoleService extends CrudService<RoleMapper, Role> {
     @Transactional
     public int delete(Role role) {
         // 删除所属部门
-        RoleDept roleDept = new RoleDept();
-        roleDept.setRoleId(role.getId());
-        roleDeptMapper.delete(roleDept);
+        roleDeptMapper.deleteByRoleId(role.getId());
+        // 删除角色菜单关系
+        roleMenuMapper.deleteByRoleId(role.getId());
+        // 删除用户角色关系
+        userRoleMapper.deleteByRoleId(role.getId());
         return super.delete(role);
     }
 }

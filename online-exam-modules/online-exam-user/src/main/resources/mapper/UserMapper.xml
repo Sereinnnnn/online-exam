@@ -12,7 +12,6 @@
         <result column="email" property="email"/>
         <result column="sex" property="sex"/>
         <result column="born" property="born"/>
-        <result column="dept_id" property="deptId"/>
         <result column="remark" property="remark"/>
         <result column="status" property="status"/>
         <result column="creator" property="creator"/>
@@ -34,7 +33,6 @@
         <result column="email" property="email"/>
         <result column="sex" property="sex"/>
         <result column="born" property="born"/>
-        <result column="dept_id" property="deptId"/>
         <result column="remark" property="remark"/>
         <result column="status" property="status"/>
         <result column="creator" property="creator"/>
