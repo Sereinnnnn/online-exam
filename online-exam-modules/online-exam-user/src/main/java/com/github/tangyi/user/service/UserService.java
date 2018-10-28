@@ -114,11 +114,11 @@ public class UserService extends CrudService<UserMapper, User> {
         // 更新用户信息
         super.update(user);
         // 更新用户角色关系
+        UserRole sysUserRole = new UserRole();
+        sysUserRole.setUserId(user.getId());
+        // 删除原有的角色信息
+        userRoleMapper.delete(sysUserRole);
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
-            UserRole sysUserRole = new UserRole();
-            sysUserRole.setUserId(user.getId());
-            // 删除原有的角色信息
-            userRoleMapper.delete(sysUserRole);
             for (String roleId : userDto.getRole()) {
                 UserRole role = new UserRole();
                 role.setId(IdGen.uuid());

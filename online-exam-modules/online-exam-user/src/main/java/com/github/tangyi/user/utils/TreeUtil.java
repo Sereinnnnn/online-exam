@@ -1,4 +1,4 @@
-package com.github.tangyi.user;
+package com.github.tangyi.user.utils;
 
 import com.github.tangyi.common.persistence.TreeEntity;
 

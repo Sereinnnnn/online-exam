@@ -13,6 +13,18 @@
         a.menu_id as "menu_id"
     </sql>
 
+    <insert id="insert">
+        INSERT  INTO sys_role_menu (
+            id,
+            role_id,
+            menu_id
+        ) VALUES (
+            #{id},
+            #{roleId},
+            #{menuId}
+        )
+    </insert>
+
     <delete id="deleteByRoleId">
         delete from sys_role_menu
         where role_id = #{roleId}

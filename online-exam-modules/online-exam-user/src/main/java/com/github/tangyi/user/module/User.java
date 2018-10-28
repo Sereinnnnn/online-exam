@@ -2,6 +2,8 @@ package com.github.tangyi.user.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
 
+import java.util.List;
+
 /**
  * 用户实体
  *
@@ -34,7 +36,12 @@ public class User extends BaseEntity<User> {
 
     private String deptName;
 
-    private String roleName;
+    private String deptId;
+
+    /**
+     * 角色列表
+     */
+    private List<Role> roleList;
 
     public User() {
         super();
@@ -140,11 +147,19 @@ public class User extends BaseEntity<User> {
         this.deptName = deptName;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

@@ -1,0 +1,59 @@
+package com.github.tangyi.user.constants;
+
+/**
+ * @author tangyi
+ * @date 2018/10/28 0028 15:48
+ */
+public class MenuConstant {
+
+    /**
+     * 菜单
+     */
+    public static final String MENU_TYPE_MENU = "0";
+
+    /**
+     * 权限
+     */
+    public static final String MENU_TYPE_PERMISSION = "1";
+
+    /**
+     * 新增
+     */
+    public static final String PERMISSION_ADD = "新增";
+
+    /**
+     * 删除
+     */
+    public static final String PERMISSION_DELETE = "删除";
+
+    /**
+     * 修改
+     */
+    public static final String PERMISSION_MODIFY = "修改";
+
+    /**
+     * 查询
+     */
+    public static final String PERMISSION_QUERY = "查询";
+
+    /**
+     * 新增
+     */
+    public static final String PERMISSION_SUFFIX_ADD = "_add";
+
+    /**
+     * 删除
+     */
+    public static final String PERMISSION_SUFFIX_DELETE = "_del";
+
+    /**
+     * 修改
+     */
+    public static final String PERMISSION_SUFFIX_MODIFY = "_modify";
+
+    /**
+     * 查询
+     */
+    public static final String PERMISSION_SUFFIX_QUERY = "_query";
+}
+

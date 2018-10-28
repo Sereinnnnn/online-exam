@@ -83,4 +83,9 @@ public class CommonConstant {
      */
     public static final String DEFAULT_PASSWORD = "123456";
 
+    /**
+     * 默认排序
+     */
+    public static final String DEFAULT_SORT = "30";
+
 }

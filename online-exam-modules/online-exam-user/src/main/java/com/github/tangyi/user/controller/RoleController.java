@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -139,6 +140,29 @@ public class RoleController extends BaseController {
     public ReturnT<Boolean> updateRole(@RequestBody Role role) {
         role.setCommonValue(getUser(), "");
         return new ReturnT<>(roleService.update(role) > 0);
+    }
+
+    /**
+     * 更新角色菜单
+     *
+     * @param id    id
+     * @param menus menus
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/10/28 下午 2:20
+     */
+    @PutMapping("roleMenuUpdate")
+    public ReturnT<Boolean> updateRoleMenu(String id, @RequestParam("menus") String menus) {
+        boolean success = false;
+        if (StringUtils.isNotBlank(id)) {
+            Role role = new Role();
+            role.setId(id);
+            role = roleService.get(role);
+            // 保存角色菜单关系
+            if (role != null)
+                success = roleMenuService.saveRoleMenus(role, Arrays.asList(menus.split(","))) > 0;
+        }
+        return new ReturnT<>(success);
     }
 
     /**

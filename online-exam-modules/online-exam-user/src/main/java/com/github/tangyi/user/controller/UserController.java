@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +105,7 @@ public class UserController extends BaseController {
                     dept = deptService.get(dept);
                     if (dept != null) {
                         tempUser.setDeptName(dept.getDeptName());
+                        tempUser.setDeptId(dept.getId());
                     }
                 }
 
@@ -116,7 +118,9 @@ public class UserController extends BaseController {
                         // 查询角色信息
                         role = roleService.get(role);
                         if (role != null) {
-                            tempUser.setRoleName(role.getRoleName());
+                            if (tempUser.getRoleList() == null)
+                                tempUser.setRoleList(new ArrayList<>());
+                            tempUser.getRoleList().add(role);
                         }
                     }
                 }

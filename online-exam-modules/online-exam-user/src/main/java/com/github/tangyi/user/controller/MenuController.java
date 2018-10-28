@@ -4,7 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.web.BaseController;
-import com.github.tangyi.user.TreeUtil;
+import com.github.tangyi.user.utils.TreeUtil;
+import com.github.tangyi.user.constants.MenuConstant;
 import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.service.MenuService;
@@ -151,5 +152,21 @@ public class MenuController extends BaseController {
     @GetMapping("findMenuByRole/{role}")
     public List<Menu> findMenuByRole(@PathVariable String role) {
         return menuService.findMenuByRole(role);
+    }
+
+    /**
+     * 根据角色查找菜单
+     *
+     * @param roleCode 角色code
+     * @return 属性集合
+     */
+    @GetMapping("/roleTree/{roleCode}")
+    public List<String> roleTree(@PathVariable String roleCode) {
+        List<Menu> menus = menuService.findMenuByRole(roleCode);
+        List<String> menuList = new ArrayList<>();
+        for (Menu menu : menus) {
+            menuList.add(menu.getId());
+        }
+        return menuList;
     }
 }

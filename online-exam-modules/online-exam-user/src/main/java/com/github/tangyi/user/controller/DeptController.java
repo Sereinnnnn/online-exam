@@ -2,7 +2,7 @@ package com.github.tangyi.user.controller;
 
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.web.BaseController;
-import com.github.tangyi.user.TreeUtil;
+import com.github.tangyi.user.utils.TreeUtil;
 import com.github.tangyi.user.dto.DeptDto;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.service.DeptService;

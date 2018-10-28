@@ -2,8 +2,10 @@ package com.github.tangyi.user.service;
 
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.service.CrudService;
+import com.github.tangyi.user.constants.MenuConstant;
 import com.github.tangyi.user.mapper.MenuMapper;
 import com.github.tangyi.user.module.Menu;
+import com.github.tangyi.user.utils.MenuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,26 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
      */
     public List<Menu> findMenuByRole(String role) {
         return menuMapper.findByRole(role);
+    }
+
+    /**
+     * 新增菜单
+     *
+     * @param menu menu
+     * @return int
+     * @author tangyi
+     * @date 2018/10/28 0028 下午 3:56
+     */
+    @Transactional
+    @Override
+    public int insert(Menu menu) {
+        // 初始化权限
+        if (MenuConstant.MENU_TYPE_MENU.equals(menu.getType())) {
+            List<Menu> menus = MenuUtil.initMenuPermission(menu);
+            for (Menu permission : menus)
+                super.insert(permission);
+        }
+        return super.insert(menu);
     }
 
     /**
