@@ -3,7 +3,6 @@ package com.github.tangyi.user.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.user.mapper.DeptMapper;
 import com.github.tangyi.user.mapper.RoleDeptMapper;
-import com.github.tangyi.user.mapper.RoleMapper;
 import com.github.tangyi.user.mapper.UserDeptMapper;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.module.Role;
@@ -34,6 +33,7 @@ public class DeptService extends CrudService<DeptMapper, Dept> {
 
     /**
      * 删除部门
+     *
      * @param dept dept
      * @return int
      */

@@ -138,7 +138,7 @@ public class RoleController extends BaseController {
      */
     @PutMapping
     public ReturnT<Boolean> updateRole(@RequestBody Role role) {
-        role.setCommonValue(getUser(), SysUtil.getSysCode());
+        role.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.update(role) > 0);
     }
 
@@ -160,7 +160,7 @@ public class RoleController extends BaseController {
             role = roleService.get(role);
             // 保存角色菜单关系
             if (role != null)
-                success = roleMenuService.saveRoleMenus(role, Arrays.asList(menus.split(","))) > 0;
+                success = roleMenuService.saveRoleMenus(role.getId(), Arrays.asList(menus.split(","))) > 0;
         }
         return new ReturnT<>(success);
     }
@@ -175,7 +175,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping
     public ReturnT<Boolean> role(@RequestBody Role role) {
-        role.setCommonValue(getUser(), SysUtil.getSysCode());
+        role.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.insert(role) > 0);
     }
 
@@ -192,7 +192,7 @@ public class RoleController extends BaseController {
         Role role = new Role();
         role.setId(id);
         role.setNewRecord(false);
-        role.setCommonValue(getUser(), SysUtil.getSysCode());
+        role.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.delete(role) > 0);
     }
 }

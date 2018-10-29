@@ -3,6 +3,7 @@ package com.github.tangyi.user.service;
 import com.github.tangyi.common.constants.SecurityConstant;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.common.utils.IdGen;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.Role;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.user.dto.UserDto;
@@ -21,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +69,7 @@ public class UserService extends CrudService<UserMapper, User> {
      * @author tangyi
      * @date 2018/9/11 下午 11:44
      */
+    @Cacheable(value = "user", key = "#username")
     public UserInfoDto findUserInfo(UserVo userVo) {
         // 根据用户名查询用户信息
         userVo = userMapper.selectUserVoByUsername(userVo.getUsername());
@@ -107,10 +111,11 @@ public class UserService extends CrudService<UserMapper, User> {
      * @date 2018/8/26 下午 3:15
      */
     @Transactional
+    @CacheEvict(value = "user", key = "#username")
     public boolean update(UserDto userDto) {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-        user.setCommonValue(user.getUsername(), user.getApplicationCode());
+        user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         // 更新用户信息
         super.update(user);
         // 更新用户角色关系
@@ -133,13 +138,20 @@ public class UserService extends CrudService<UserMapper, User> {
             UserDept userDept = new UserDept();
             userDept.setUserId(user.getId());
             userDeptMapper.delete(userDept);
-            userDept.setCommonValue(user.getUsername(), "");
+            userDept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
             userDept.setDeptId(userDto.getDeptId());
             userDeptMapper.insert(userDept);
         }
         return Boolean.TRUE;
     }
 
+    /**
+     * 根据用户名查找
+     *
+     * @param username username
+     * @return UserVo
+     */
+    @Cacheable(value = "user", key = "#username")
     public UserVo selectUserVoByUsername(String username) {
         return userMapper.selectUserVoByUsername(username);
     }
@@ -164,6 +176,7 @@ public class UserService extends CrudService<UserMapper, User> {
      */
     @Transactional
     @Override
+    @CacheEvict(value = "user", key = "#username")
     public int delete(User user) {
         // 删除用户角色关系
         userRoleMapper.deleteByUserId(user.getId());

@@ -1,6 +1,7 @@
 package com.github.tangyi.user.utils;
 
 import com.github.tangyi.common.constants.CommonConstant;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.user.constants.MenuConstant;
 import com.github.tangyi.user.module.Menu;
 
@@ -27,7 +28,7 @@ public class MenuUtil {
         List<Menu> menus = new ArrayList<>();
         // 新增权限
         Menu add = new Menu();
-        add.setCommonValue(menu.getCreator(), menu.getApplicationCode());
+        add.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         add.setParentId(menu.getId());
         add.setName(MenuConstant.PERMISSION_ADD);
         add.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_ADD);
@@ -36,7 +37,7 @@ public class MenuUtil {
 
         // 删除权限
         Menu del = new Menu();
-        del.setCommonValue(menu.getCreator(), menu.getApplicationCode());
+        del.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         del.setParentId(menu.getId());
         del.setName(MenuConstant.PERMISSION_DELETE);
         del.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_DELETE);
@@ -45,7 +46,7 @@ public class MenuUtil {
 
         // 修改权限
         Menu modify = new Menu();
-        modify.setCommonValue(menu.getCreator(), menu.getApplicationCode());
+        modify.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         modify.setParentId(menu.getId());
         modify.setName(MenuConstant.PERMISSION_MODIFY);
         modify.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_MODIFY);
@@ -54,7 +55,7 @@ public class MenuUtil {
 
         // 查询权限
         Menu query = new Menu();
-        query.setCommonValue(menu.getCreator(), menu.getApplicationCode());
+        query.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         query.setParentId(menu.getId());
         query.setName(MenuConstant.PERMISSION_QUERY);
         query.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_QUERY);

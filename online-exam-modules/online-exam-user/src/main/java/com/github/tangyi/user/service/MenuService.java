@@ -2,11 +2,14 @@ package com.github.tangyi.user.service;
 
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.service.CrudService;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.user.constants.MenuConstant;
 import com.github.tangyi.user.mapper.MenuMapper;
 import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.utils.MenuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +36,7 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
      * @author tangyi
      * @date 2018/8/27 16:00
      */
+    @Cacheable(value = "menu", key = "#role  + '_menu'")
     public List<Menu> findMenuByRole(String role) {
         return menuMapper.findByRole(role);
     }
@@ -49,10 +53,10 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
     @Override
     public int insert(Menu menu) {
         // 初始化权限
-        if (MenuConstant.MENU_TYPE_MENU.equals(menu.getType())) {
+        /*if (MenuConstant.MENU_TYPE_MENU.equals(menu.getType())) {
             List<Menu> menus = MenuUtil.initMenuPermission(menu);
             menus.forEach(super::insert);
-        }
+        }*/
         return super.insert(menu);
     }
 
@@ -66,6 +70,7 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
      */
     @Override
     @Transactional
+    @CacheEvict(value = "menu", allEntries = true)
     public int delete(Menu menu) {
         // 删除当前菜单
         super.delete(menu);
@@ -73,7 +78,7 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
         Menu parentMenu = new Menu();
         parentMenu.setParentId(menu.getId());
         parentMenu.setNewRecord(false);
-        parentMenu.setCommonValue("", "");
+        parentMenu.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         parentMenu.setDelFlag(CommonConstant.DEL_FLAG_DEL);
         return super.update(parentMenu);
     }

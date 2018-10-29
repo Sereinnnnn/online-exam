@@ -84,11 +84,10 @@ public class ControllerAop {
             logger.debug("get username:{}", username);
             SysUtil.setUser(username);
         }
-        logger.debug("URL : {}", request.getRequestURL());
-        logger.debug("HTTP_METHOD : {}", request.getMethod());
-        logger.debug("IP : {}", request.getRemoteAddr());
-        logger.debug("CLASS_METHOD : {}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.debug("ARGS : {}", Arrays.toString(joinPoint.getArgs()));
+        logger.debug("URL : {}, HTTP_METHOD : {}, IP : {}, CLASS_METHOD : {}, ARGS : {}",
+                request.getRequestURL(), request.getMethod(), request.getRemoteAddr(),
+                joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName(),
+                Arrays.toString(joinPoint.getArgs()));
         Object result;
         result = joinPoint.proceed();
         logger.info("{} use time: {}", joinPoint.getSignature(), System.currentTimeMillis() - startTime);

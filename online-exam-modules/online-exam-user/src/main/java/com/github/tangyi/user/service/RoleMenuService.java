@@ -7,6 +7,7 @@ import com.github.tangyi.user.module.Role;
 import com.github.tangyi.user.module.RoleMenu;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,15 +32,16 @@ public class RoleMenuService extends CrudService<RoleMenuMapper, RoleMenu> {
      * @date 2018/10/28 0028 下午 2:29
      */
     @Transactional
-    public int saveRoleMenus(Role role, List<String> menus) {
+    @CacheEvict(value = "menu", key = "#role + '_menu'")
+    public int saveRoleMenus(String role, List<String> menus) {
         int update = -1;
         if (CollectionUtils.isNotEmpty(menus)) {
             // 删除旧的管理数据
-            roleMenuMapper.deleteByRoleId(role.getId());
+            roleMenuMapper.deleteByRoleId(role);
             for (String menuId : menus) {
                 RoleMenu roleMenu = new RoleMenu();
                 roleMenu.setId(IdGen.uuid());
-                roleMenu.setRoleId(role.getId());
+                roleMenu.setRoleId(role);
                 roleMenu.setMenuId(menuId);
                 // 重新插入
                 update += roleMenuMapper.insert(roleMenu);
