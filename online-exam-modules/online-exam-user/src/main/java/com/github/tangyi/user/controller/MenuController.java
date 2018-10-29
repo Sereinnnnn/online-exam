@@ -3,6 +3,7 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.utils.TreeUtil;
 import com.github.tangyi.user.constants.MenuConstant;
@@ -74,7 +75,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping
     public ReturnT<Boolean> addMenu(@RequestBody Menu menu) {
-        menu.setCommonValue("", "");
+        menu.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(menuService.insert(menu) > 0);
     }
 
@@ -88,7 +89,7 @@ public class MenuController extends BaseController {
      */
     @PutMapping
     public ReturnT<Boolean> updateMenu(@RequestBody Menu menu) {
-        menu.setCommonValue("", "");
+        menu.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(menuService.update(menu) > 0);
     }
 

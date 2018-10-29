@@ -9,6 +9,11 @@ package com.github.tangyi.common.constants;
 public class CommonConstant {
 
     /**
+     * 默认系统编号
+     */
+    public static final String SYS_CODE = "EXAM";
+
+    /**
      * JSON 资源
      */
     public static final String CONTENT_TYPE = "application/json; charset=utf-8";

@@ -1,6 +1,6 @@
 package com.github.tangyi.common.web;
 
-import com.github.tangyi.common.utils.UserUtil;
+import com.github.tangyi.common.utils.SysUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public abstract class BaseController {
      * @return 角色名
      */
     public List<String> getRole() {
-        return UserUtil.getRole(request);
+        return SysUtil.getRole(request);
     }
 
     /**
@@ -39,7 +39,7 @@ public abstract class BaseController {
      * @return Integer
      */
     public Integer getUserId() {
-        return UserUtil.getUserId(request);
+        return SysUtil.getUserId(request);
     }
 
     /**
@@ -48,6 +48,6 @@ public abstract class BaseController {
      * @return String
      */
     public String getUser() {
-        return UserUtil.getUser();
+        return SysUtil.getUser();
     }
 }

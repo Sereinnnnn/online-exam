@@ -3,6 +3,7 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
@@ -141,7 +142,7 @@ public class UserController extends BaseController {
     public ReturnT<Boolean> addUser(@RequestBody UserDto userDto) {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-        user.setCommonValue(userDto.getUsername(), "");
+        user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         // 设置默认密码
         if (StringUtils.isEmpty(userDto.getPassword()))
             userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
@@ -193,6 +194,7 @@ public class UserController extends BaseController {
     public ReturnT<Boolean> deleteUser(@PathVariable String id) {
         try {
             User user = userService.get(id);
+            user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
             userService.delete(user);
         } catch (Exception e) {
             logger.error("删除用户信息失败！", e);

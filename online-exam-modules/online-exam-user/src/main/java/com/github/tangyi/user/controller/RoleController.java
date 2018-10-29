@@ -3,6 +3,7 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.module.Role;
@@ -137,7 +138,7 @@ public class RoleController extends BaseController {
      */
     @PutMapping
     public ReturnT<Boolean> updateRole(@RequestBody Role role) {
-        role.setCommonValue(getUser(), "");
+        role.setCommonValue(getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.update(role) > 0);
     }
 
@@ -174,7 +175,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping
     public ReturnT<Boolean> role(@RequestBody Role role) {
-        role.setCommonValue(getUser(), "");
+        role.setCommonValue(getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.insert(role) > 0);
     }
 
@@ -191,7 +192,7 @@ public class RoleController extends BaseController {
         Role role = new Role();
         role.setId(id);
         role.setNewRecord(false);
-        role.setCommonValue(getUser(), "");
+        role.setCommonValue(getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.delete(role) > 0);
     }
 }

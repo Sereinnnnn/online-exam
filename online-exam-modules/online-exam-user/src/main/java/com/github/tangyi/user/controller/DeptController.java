@@ -1,6 +1,7 @@
 package com.github.tangyi.user.controller;
 
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.utils.TreeUtil;
 import com.github.tangyi.user.dto.DeptDto;
@@ -68,7 +69,7 @@ public class DeptController extends BaseController {
      */
     @PostMapping
     public ReturnT<Boolean> add(@RequestBody Dept dept) {
-        dept.setCommonValue("", "");
+        dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(deptService.insert(dept) > 0);
     }
 
@@ -84,7 +85,7 @@ public class DeptController extends BaseController {
     public ReturnT<Boolean> delete(@PathVariable String id) {
         Dept dept = new Dept();
         dept.setId(id);
-        dept.setCommonValue("", "");
+        dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(deptService.delete(dept) > 0);
     }
 
@@ -98,7 +99,7 @@ public class DeptController extends BaseController {
      */
     @PutMapping
     public ReturnT<Boolean> update(@RequestBody Dept dept) {
-        dept.setCommonValue("", "");
+        dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<Boolean>(deptService.update(dept) > 0);
     }
 }

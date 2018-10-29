@@ -20,9 +20,9 @@ import java.util.Map;
  * @author tangyi
  * @date 2018-09-13-20:50
  */
-public class UserUtil {
+public class SysUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(SysUtil.class);
 
     private static final String KEY_USER = "user";
 
@@ -95,5 +95,14 @@ public class UserUtil {
     public static void clearAllUserInfo() {
         THREAD_LOCAL_USER.remove();
         MDC.remove(KEY_USER);
+    }
+
+    /**
+     * 获取系统编号
+     *
+     * @return String
+     */
+    public static String getSysCode() {
+        return CommonConstant.SYS_CODE;
     }
 }
