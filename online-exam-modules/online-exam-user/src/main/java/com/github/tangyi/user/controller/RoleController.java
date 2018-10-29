@@ -78,7 +78,7 @@ public class RoleController extends BaseController {
         // 查询所属部门
         PageInfo<Role> pageInfo = roleService.findPage(page, role);
         if (CollectionUtils.isNotEmpty(pageInfo.getList())) {
-            for (Role tempRole : pageInfo.getList()) {
+            pageInfo.getList().forEach(tempRole -> {
                 RoleDept roleDept = new RoleDept();
                 roleDept.setRoleId(tempRole.getId());
                 // 查询角色部门关系
@@ -94,8 +94,7 @@ public class RoleController extends BaseController {
                         tempRole.setDeptName(dept.getDeptName());
                     }
                 }
-
-            }
+            });
         }
         return pageInfo;
     }
@@ -114,14 +113,14 @@ public class RoleController extends BaseController {
             List<RoleDept> roleDepts = roleDeptService.getRoleByDeptId(deptId);
             // 遍历
             if (CollectionUtils.isNotEmpty(roleDepts)) {
-                for (RoleDept roleDept : roleDepts) {
+                roleDepts.forEach(roleDept -> {
                     Role role = new Role();
                     role.setId(roleDept.getRoleId());
                     // 查询部门信息
                     role = roleService.get(role);
                     if (role != null)
                         roles.add(role);
-                }
+                });
             }
         }
         return roles;

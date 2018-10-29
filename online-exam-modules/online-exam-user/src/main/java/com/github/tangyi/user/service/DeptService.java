@@ -43,12 +43,12 @@ public class DeptService extends CrudService<DeptMapper, Dept> {
         // 删除角色和部门角色关系
         List<RoleDept> roleDeptList = roleDeptMapper.getByDeptId(dept.getId());
         if (CollectionUtils.isNotEmpty(roleDeptList)) {
-            for (RoleDept roleDept : roleDeptList) {
+            roleDeptList.forEach(roleDept -> {
                 Role role = new Role();
                 role.setId(roleDept.getRoleId());
                 // 删除角色
                 roleService.delete(role);
-            }
+            });
         }
         // 删除部门用户关系
         userDeptMapper.deleteByDeptId(dept.getId());

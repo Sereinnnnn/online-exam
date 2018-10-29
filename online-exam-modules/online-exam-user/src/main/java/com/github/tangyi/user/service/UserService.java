@@ -76,10 +76,10 @@ public class UserService extends CrudService<UserMapper, User> {
             List<Role> roleList = userVo.getRoleList();
             List<String> roleNames = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(roleList)) {
-                for (Role role : roleList) {
+                roleList.forEach(role -> {
                     if (!SecurityConstant.BASE_ROLE.equals(role.getRoleName()))
                         roleNames.add(role.getRoleName());
-                }
+                });
             }
             String[] roleNameArray = roleNames.toArray(new String[roleNames.size()]);
             user.setRoles(roleNameArray);
@@ -89,10 +89,10 @@ public class UserService extends CrudService<UserMapper, User> {
                 menuSet.addAll(menuMapper.findByRole(role));
             // 权限列表
             Set<String> permissions = new HashSet<>();
-            for (Menu menu : menuSet) {
+            menuSet.forEach(menu -> {
                 if (StringUtils.isNotEmpty(menu.getPermission()))
                     permissions.add(menu.getPermission());
-            }
+            });
             user.setPermissions(permissions.toArray(new String[permissions.size()]));
         }
         return user;
@@ -119,14 +119,14 @@ public class UserService extends CrudService<UserMapper, User> {
         // 删除原有的角色信息
         userRoleMapper.delete(sysUserRole);
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
-            for (String roleId : userDto.getRole()) {
+            userDto.getRole().forEach(roleId -> {
                 UserRole role = new UserRole();
                 role.setId(IdGen.uuid());
                 role.setUserId(user.getId());
                 role.setRoleId(roleId);
                 // 保存角色信息
                 userRoleMapper.insert(role);
-            }
+            });
         }
         // 更新用户部门关系
         if (StringUtils.isNotBlank(userDto.getDeptId())) {

@@ -37,9 +37,7 @@ public class DeptController extends BaseController {
         // 查询所有部门
         Set<Dept> deptSet = new HashSet<Dept>(deptService.findList(new Dept()));
         List<DeptDto> deptTreeList = new ArrayList<DeptDto>();
-        deptSet.forEach(dept -> {
-            deptTreeList.add(new DeptDto(dept));
-        });
+        deptSet.forEach(dept -> deptTreeList.add(new DeptDto(dept)));
         // 排序
         CollUtil.sort(deptTreeList, Comparator.comparingInt(DeptDto::getSort));
         return TreeUtil.buildTree(deptTreeList, "-1");

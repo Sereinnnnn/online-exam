@@ -95,7 +95,7 @@ public class UserController extends BaseController {
         user.setUsername(params.getOrDefault("username", ""));
         page = userService.findPage(page, user);
         if (CollectionUtils.isNotEmpty(page.getList())) {
-            for (User tempUser : page.getList()) {
+            page.getList().forEach(tempUser -> {
                 // 查询用户部门关系
                 UserDept userDept = userDeptService.getDeptByUserId(tempUser.getId());
                 if (userDept != null) {
@@ -112,7 +112,7 @@ public class UserController extends BaseController {
                 // 查询用户角色关系
                 List<UserRole> userRoles = userRoleService.getByUserId(tempUser.getId());
                 if (CollectionUtils.isNotEmpty(userRoles)) {
-                    for (UserRole userRole : userRoles) {
+                    userRoles.forEach(userRole -> {
                         Role role = new Role();
                         role.setId(userRole.getRoleId());
                         // 查询角色信息
@@ -122,9 +122,9 @@ public class UserController extends BaseController {
                                 tempUser.setRoleList(new ArrayList<>());
                             tempUser.getRoleList().add(role);
                         }
-                    }
+                    });
                 }
-            }
+            });
         }
         return page;
     }
@@ -150,13 +150,13 @@ public class UserController extends BaseController {
         userService.insert(user);
         // 保存角色
         if (CollectionUtils.isNotEmpty(userDto.getRole())) {
-            for (String roleId : userDto.getRole()) {
+            userDto.getRole().forEach(roleId -> {
                 UserRole sysUserRole = new UserRole();
                 sysUserRole.setUserId(user.getId());
                 sysUserRole.setRoleId(roleId);
                 // 保存角色
                 userRoleService.insert(sysUserRole);
-            }
+            });
         }
         return new ReturnT<>(Boolean.TRUE);
     }

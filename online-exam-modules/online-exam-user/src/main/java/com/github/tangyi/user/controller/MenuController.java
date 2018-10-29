@@ -58,9 +58,7 @@ public class MenuController extends BaseController {
         // 查询所有菜单
         Set<Menu> menuSet = new HashSet<Menu>(menuService.findList(new Menu()));
         List<MenuDto> menuTreeList = new ArrayList<MenuDto>();
-        menuSet.forEach(menuVo -> {
-            menuTreeList.add(new MenuDto(menuVo));
-        });
+        menuSet.forEach(menuVo -> menuTreeList.add(new MenuDto(menuVo)));
         // 排序
         CollUtil.sort(menuTreeList, Comparator.comparingInt(MenuDto::getSort));
         return TreeUtil.buildTree(menuTreeList, "-1");
@@ -164,9 +162,7 @@ public class MenuController extends BaseController {
     public List<String> roleTree(@PathVariable String roleCode) {
         List<Menu> menus = menuService.findMenuByRole(roleCode);
         List<String> menuList = new ArrayList<>();
-        for (Menu menu : menus) {
-            menuList.add(menu.getId());
-        }
+        menus.forEach(menu -> menuList.add(menu.getId()));
         return menuList;
     }
 }

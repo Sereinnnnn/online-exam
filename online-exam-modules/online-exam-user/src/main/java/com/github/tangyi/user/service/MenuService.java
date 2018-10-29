@@ -51,8 +51,7 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
         // 初始化权限
         if (MenuConstant.MENU_TYPE_MENU.equals(menu.getType())) {
             List<Menu> menus = MenuUtil.initMenuPermission(menu);
-            for (Menu permission : menus)
-                super.insert(permission);
+            menus.forEach(super::insert);
         }
         return super.insert(menu);
     }
