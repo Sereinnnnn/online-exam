@@ -35,6 +35,18 @@ eureka:
     serviceUrl:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
+# fastDfs
+fdfs:
+  soTimeout: 1501
+  connectTimeout: 601
+  thumbImage:
+    width: 150
+    height: 150
+  pool:
+    maxTotal: 30
+    maxTotalPerKey: 30
+    maxWaitMillis: 10000
+  trackerList: 192.168.0.213:22122
 logging:
   level:
     org.apach.http: info

@@ -59,6 +59,21 @@ public class MenuService extends CrudService<MenuMapper, Menu> {
     }
 
     /**
+     * 更新菜单
+     *
+     * @param menu menu
+     * @return int
+     * @author tangyi
+     * @date 2018/10/30 0030 下午 8:19
+     */
+    @Transactional
+    @Override
+    @CacheEvict(value = {"menu", "user"}, allEntries = true)
+    public int update(Menu menu) {
+        return super.update(menu);
+    }
+
+    /**
      * 删除菜单
      *
      * @param menu menu

@@ -145,22 +145,20 @@ public class RoleController extends BaseController {
     /**
      * 更新角色菜单
      *
-     * @param id    id
-     * @param menus menus
+     * @param role role
      * @return ReturnT
      * @author tangyi
      * @date 2018/10/28 下午 2:20
      */
     @PutMapping("roleMenuUpdate")
-    public ReturnT<Boolean> updateRoleMenu(String id, @RequestParam("menus") String menus) {
+    public ReturnT<Boolean> updateRoleMenu(@RequestBody Role role) {
         boolean success = false;
-        if (StringUtils.isNotBlank(id)) {
-            Role role = new Role();
-            role.setId(id);
+        String deptId = role.getDeptId();
+        if (StringUtils.isNotBlank(role.getId())) {
             role = roleService.get(role);
             // 保存角色菜单关系
-            if (role != null)
-                success = roleMenuService.saveRoleMenus(role.getId(), Arrays.asList(menus.split(","))) > 0;
+            if (role != null && StringUtils.isNotBlank(deptId))
+                success = roleMenuService.saveRoleMenus(role.getId(), Arrays.asList(deptId.split(","))) > 0;
         }
         return new ReturnT<>(success);
     }
