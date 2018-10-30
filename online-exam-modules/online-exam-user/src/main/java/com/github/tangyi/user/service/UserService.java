@@ -62,6 +62,39 @@ public class UserService extends CrudService<UserMapper, User> {
     private RedisTemplate redisTemplate;
 
     /**
+     * 新增用户
+     *
+     * @param user user
+     * @return int
+     * @author tangyi
+     * @date 2018/10/30 12:43
+     */
+    @Override
+    @Transactional
+    public int insert(User user) {
+        // 保存角色
+        if (CollectionUtils.isNotEmpty(user.getRole())) {
+            user.getRole().forEach(roleId -> {
+                UserRole sysUserRole = new UserRole();
+                sysUserRole.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                sysUserRole.setUserId(user.getId());
+                sysUserRole.setRoleId(roleId);
+                // 保存角色
+                userRoleMapper.insert(sysUserRole);
+            });
+        }
+        // 保存部门
+        if (StringUtils.isNotEmpty(user.getDeptId())) {
+            UserDept userDept = new UserDept();
+            userDept.setId(IdGen.uuid());
+            userDept.setUserId(user.getId());
+            userDept.setDeptId(user.getDeptId());
+            userDeptMapper.insert(userDept);
+        }
+        return super.insert(user);
+    }
+
+    /**
      * 获取用户信息
      *
      * @param userVo userVo
@@ -69,7 +102,6 @@ public class UserService extends CrudService<UserMapper, User> {
      * @author tangyi
      * @date 2018/9/11 下午 11:44
      */
-    @Cacheable(value = "user", key = "#username")
     public UserInfoDto findUserInfo(UserVo userVo) {
         // 根据用户名查询用户信息
         userVo = userMapper.selectUserVoByUsername(userVo.getUsername());
@@ -111,8 +143,8 @@ public class UserService extends CrudService<UserMapper, User> {
      * @date 2018/8/26 下午 3:15
      */
     @Transactional
-    @CacheEvict(value = "user", key = "#username")
-    public boolean update(UserDto userDto) {
+    @CacheEvict(value = "user", key = "#userDto.username")
+    public boolean updateUser(UserDto userDto) {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -146,6 +178,19 @@ public class UserService extends CrudService<UserMapper, User> {
     }
 
     /**
+     * 更新用户基本信息
+     *
+     * @param user user
+     * @return int
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "user", key = "#user.username")
+    public int update(User user) {
+        return super.update(user);
+    }
+
+    /**
      * 根据用户名查找
      *
      * @param username username
@@ -176,7 +221,7 @@ public class UserService extends CrudService<UserMapper, User> {
      */
     @Transactional
     @Override
-    @CacheEvict(value = "user", key = "#username")
+    @CacheEvict(value = "user", key = "#user.username")
     public int delete(User user) {
         // 删除用户角色关系
         userRoleMapper.deleteByUserId(user.getId());

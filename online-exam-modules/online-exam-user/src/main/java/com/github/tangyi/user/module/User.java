@@ -43,6 +43,11 @@ public class User extends BaseEntity<User> {
      */
     private List<Role> roleList;
 
+    /**
+     * 角色
+     */
+    private List<String> role;
+
     public User() {
         super();
     }
@@ -161,5 +166,13 @@ public class User extends BaseEntity<User> {
 
     public void setDeptId(String deptId) {
         this.deptId = deptId;
+    }
+
+    public List<String> getRole() {
+        return role;
+    }
+
+    public void setRole(List<String> role) {
+        this.role = role;
     }
 }

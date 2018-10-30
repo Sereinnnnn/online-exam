@@ -55,13 +55,13 @@ public class PermissionServiceImpl implements PermissionService {
             }
             // 获取权限
             Set<MenuVo> urls = new HashSet<>();
-            for (SimpleGrantedAuthority grantedAuthority : grantedAuthorities) {
+            grantedAuthorities.forEach(grantedAuthority -> {
                 if (!SecurityConstant.BASE_ROLE.equals(grantedAuthority.getAuthority())) {
                     Set<MenuVo> menuVoSet = menuService.findMenuByRole(grantedAuthority.getAuthority());
                     if (CollectionUtils.isNotEmpty(menuVoSet))
                         urls.addAll(menuVoSet);
                 }
-            }
+            });
             // 检查是否有权限
             for (MenuVo menuVo : urls) {
                 if (StringUtils.isNotBlank(menuVo.getUrl())

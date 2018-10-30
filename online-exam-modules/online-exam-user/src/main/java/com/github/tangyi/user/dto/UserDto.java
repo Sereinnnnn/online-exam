@@ -23,6 +23,11 @@ public class UserDto extends User {
     private String deptId;
 
     /**
+     * 旧密码
+     */
+    private String oldPassword;
+
+    /**
      * 新密码
      */
     private String newPassword;
@@ -49,5 +54,13 @@ public class UserDto extends User {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 }

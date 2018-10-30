@@ -3,6 +3,7 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.IdGen;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
@@ -54,8 +55,23 @@ public class UserController extends BaseController {
     private RoleService roleService;
 
     /**
+     * 根据id获取
+     *
+     * @param id id
+     * @return ReturnT
+     */
+    @GetMapping("/{id}")
+    public ReturnT<User> user(@PathVariable String id) {
+        User user = new User();
+        if (StringUtils.isNotEmpty(id)) {
+            user.setId(id);
+            user = userService.get(user);
+        }
+        return new ReturnT<>(user);
+    }
+
+    /**
      * 获取当前用户信息（角色、权限）
-     * 并且异步初始化用户部门信息
      *
      * @param userVo 当前用户信息
      * @return 用户名
@@ -148,18 +164,7 @@ public class UserController extends BaseController {
             userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
         user.setPassword(encoder.encode(userDto.getPassword()));
         // 保存用户
-        userService.insert(user);
-        // 保存角色
-        if (CollectionUtils.isNotEmpty(userDto.getRole())) {
-            userDto.getRole().forEach(roleId -> {
-                UserRole sysUserRole = new UserRole();
-                sysUserRole.setUserId(user.getId());
-                sysUserRole.setRoleId(roleId);
-                // 保存角色
-                userRoleService.insert(sysUserRole);
-            });
-        }
-        return new ReturnT<>(Boolean.TRUE);
+        return new ReturnT<>(userService.insert(user) > 0);
     }
 
     /**
@@ -173,11 +178,35 @@ public class UserController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateUser(@RequestBody UserDto userDto) {
         try {
-            return new ReturnT<>(userService.update(userDto));
+            return new ReturnT<>(userService.updateUser(userDto));
         } catch (Exception e) {
             logger.error("更新用户信息失败！", e);
         }
         return new ReturnT<>(Boolean.FALSE);
+    }
+
+    /**
+     * 更新用户的基本信息
+     *
+     * @param userDto userDto
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/10/30 10:06
+     */
+    @PutMapping("/updateInfo")
+    public ReturnT<Boolean> updateInfo(@RequestBody UserDto userDto) {
+        // 新密码不为空
+        if (StringUtils.isNotEmpty(userDto.getNewPassword())) {
+            if (!encoder.matches(userDto.getOldPassword(), userDto.getPassword())) {
+                ReturnT<Boolean> returnT = new ReturnT<>(Boolean.FALSE);
+                returnT.setMsg("新旧密码不匹配");
+                return returnT;
+            } else {
+                // 新旧密码一致，修改密码
+                userDto.setPassword(encoder.encode(userDto.getNewPassword()));
+            }
+        }
+        return new ReturnT<>(userService.update(userDto) > 0);
     }
 
     /**

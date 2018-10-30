@@ -39,21 +39,21 @@ public class MenuConstant {
     /**
      * 新增
      */
-    public static final String PERMISSION_SUFFIX_ADD = "_add";
+    public static final String PERMISSION_SUFFIX_ADD = ":add";
 
     /**
      * 删除
      */
-    public static final String PERMISSION_SUFFIX_DELETE = "_del";
+    public static final String PERMISSION_SUFFIX_DELETE = ":del";
 
     /**
      * 修改
      */
-    public static final String PERMISSION_SUFFIX_MODIFY = "_modify";
+    public static final String PERMISSION_SUFFIX_MODIFY = ":modify";
 
     /**
      * 查询
      */
-    public static final String PERMISSION_SUFFIX_QUERY = "_query";
+    public static final String PERMISSION_SUFFIX_QUERY = ":query";
 }
 
