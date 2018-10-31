@@ -68,6 +68,13 @@ public class AttachmentController extends BaseController {
     @RequestMapping("upload")
     public ReturnT<Attachment> upload(@RequestParam("file") MultipartFile file) {
         long start = System.currentTimeMillis();
+        try {
+            logger.debug("{}", new String(file.getOriginalFilename().getBytes(), "utf-8"));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        logger.debug("{}", file.getName());
         if (file.isEmpty())
             return new ReturnT<Attachment>(new Attachment());
         InputStream inputStream = null;
@@ -83,7 +90,7 @@ public class AttachmentController extends BaseController {
             attachment.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
             attachment.setGroupName(fastFileId.substring(0, fastFileId.indexOf("/")));
             attachment.setFastFileId(fastFileId);
-            attachment.setAttachName(new String(file.getOriginalFilename().getBytes("utf-8")));
+            attachment.setAttachName(new String(file.getOriginalFilename().getBytes(), "utf-8"));
             attachment.setAttachSize(Long.toString(attachSize));
             attachmentService.insert(attachment);
         } catch (Exception e) {
