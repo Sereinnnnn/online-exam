@@ -163,6 +163,8 @@ public class UserController extends BaseController {
         if (StringUtils.isEmpty(userDto.getPassword()))
             userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
         user.setPassword(encoder.encode(userDto.getPassword()));
+        // 默认头像
+        user.setAvatar(CommonConstant.DEFAULT_AVATAR);
         // 保存用户
         return new ReturnT<>(userService.insert(user) > 0);
     }
