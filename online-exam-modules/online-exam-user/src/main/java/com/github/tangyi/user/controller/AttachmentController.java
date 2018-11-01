@@ -5,12 +5,14 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.exception.CommonException;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.FileUtil;
+import com.github.tangyi.common.utils.LogUtil;
 import com.github.tangyi.common.utils.Servlets;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.module.Attachment;
 import com.github.tangyi.user.service.AttachmentService;
 import com.github.tangyi.user.service.FastDfsService;
+import com.github.tangyi.user.service.LogService;
 import com.google.common.net.HttpHeaders;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -34,6 +36,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/attachment")
 public class AttachmentController extends BaseController {
+
+    @Autowired
+    private LogService logService;
 
     @Autowired
     private AttachmentService attachmentService;
@@ -61,23 +66,19 @@ public class AttachmentController extends BaseController {
     /**
      * 上传文件
      *
-     * @param file file
+     * @param file       file
+     * @param attachment attachment
      * @author tangyi
-     * @date 2018/10/30 0030 下午 9:54
+     * @date 2018/10/30 21:54
      */
     @RequestMapping("upload")
-    public ReturnT<Attachment> upload(@RequestParam("file") MultipartFile file, Attachment attachment) {
+    public ReturnT<Attachment> upload(@RequestParam("file") MultipartFile file, Attachment attachment, HttpServletRequest request) {
         long start = System.currentTimeMillis();
-        try {
-            logger.debug("{}", new String(file.getOriginalFilename().getBytes(), "utf-8"));
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
         logger.debug("{}", file.getName());
         if (file.isEmpty())
             return new ReturnT<Attachment>(new Attachment());
         InputStream inputStream = null;
+        Attachment newAttachment = null;
         try {
             inputStream = file.getInputStream();
             long attachSize = file.getSize();
@@ -85,7 +86,7 @@ public class AttachmentController extends BaseController {
             logger.debug("fastFileId:{}", fastFileId);
             if (StringUtils.isBlank(fastFileId))
                 throw new CommonException("上传失败！");
-            Attachment newAttachment = new Attachment();
+            newAttachment = new Attachment();
             newAttachment.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
             newAttachment.setGroupName(fastFileId.substring(0, fastFileId.indexOf("/")));
             newAttachment.setFastFileId(fastFileId);
@@ -97,11 +98,12 @@ public class AttachmentController extends BaseController {
             attachmentService.insert(newAttachment);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "上传附件"));
         } finally {
             IOUtils.closeQuietly(inputStream);
         }
         logger.info("上传文件{}成功，耗时：{}ms", file.getName(), System.currentTimeMillis() - start);
-        return new ReturnT<Attachment>(attachment);
+        return new ReturnT<Attachment>(newAttachment);
     }
 
     /**
@@ -134,6 +136,7 @@ public class AttachmentController extends BaseController {
             FileCopyUtils.copy(inputStream, outputStream);  // 下载文件
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "下载附件"));
         } finally {
             IOUtils.closeQuietly(outputStream);
             IOUtils.closeQuietly(inputStream);
@@ -155,9 +158,11 @@ public class AttachmentController extends BaseController {
         Attachment attachment = new Attachment();
         attachment.setId(id);
         attachment = attachmentService.get(attachment);
-        if (attachment == null)
-            throw new CommonException("附件不存在！");
-        fastDfsService.deleteFile(attachment.getGroupName(), attachment.getFastFileId());
-        return new ReturnT<>(attachmentService.delete(attachment) > 0);
+        boolean success = false;
+        if (attachment != null) {
+            fastDfsService.deleteFile(attachment.getGroupName(), attachment.getFastFileId());
+            success = attachmentService.delete(attachment) > 0;
+        }
+        return new ReturnT<>(success);
     }
 }

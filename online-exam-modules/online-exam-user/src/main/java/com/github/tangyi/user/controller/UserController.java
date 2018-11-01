@@ -3,7 +3,7 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
-import com.github.tangyi.common.utils.IdGen;
+import com.github.tangyi.common.utils.LogUtil;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
@@ -23,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private LogService logService;
 
     /**
      * 根据id获取
@@ -99,7 +103,7 @@ public class UserController extends BaseController {
      * @param userVo userVo
      * @return PageInfo
      * @author tangyi
-     * @date 2018/8/26 0026 下午 10:56
+     * @date 2018/8/26 22:56
      */
     @RequestMapping("userList")
     public PageInfo<User> userList(@RequestParam Map<String, String> params, UserVo userVo) {
@@ -152,7 +156,7 @@ public class UserController extends BaseController {
      * @param userDto userDto
      * @return ReturnT
      * @author tangyi
-     * @date 2018/8/26 0026 下午 2:34
+     * @date 2018/8/26 14:34
      */
     @PostMapping
     public ReturnT<Boolean> addUser(@RequestBody UserDto userDto) {
@@ -175,14 +179,15 @@ public class UserController extends BaseController {
      * @param userDto userDto
      * @return ReturnT
      * @author tangyi
-     * @date 2018/8/26 0026 下午 3:06
+     * @date 2018/8/26 15:06
      */
     @PutMapping
-    public ReturnT<Boolean> updateUser(@RequestBody UserDto userDto) {
+    public ReturnT<Boolean> updateUser(@RequestBody UserDto userDto, HttpServletRequest request) {
         try {
             return new ReturnT<>(userService.updateUser(userDto));
         } catch (Exception e) {
             logger.error("更新用户信息失败！", e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "更新用户"));
         }
         return new ReturnT<>(Boolean.FALSE);
     }
@@ -217,18 +222,19 @@ public class UserController extends BaseController {
      * @param id id
      * @return ReturnT
      * @author tangyi
-     * @date 2018/8/26 0026 下午 3:28
+     * @date 2018/8/26 15:28
      */
     @ApiOperation(value = "删除用户", notes = "根据ID删除用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
     @DeleteMapping("/{id}")
-    public ReturnT<Boolean> deleteUser(@PathVariable String id) {
+    public ReturnT<Boolean> deleteUser(@PathVariable String id, HttpServletRequest request) {
         try {
             User user = userService.get(id);
             user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
             userService.delete(user);
         } catch (Exception e) {
             logger.error("删除用户信息失败！", e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "删除用户"));
         }
         return new ReturnT<>(Boolean.FALSE);
     }

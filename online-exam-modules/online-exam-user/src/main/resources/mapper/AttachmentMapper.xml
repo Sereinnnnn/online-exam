@@ -40,6 +40,12 @@
         <if test="attachName != null and attachName != ''">
             and a.attach_name like #{attachName}
         </if>
+        <if test="busiType != null and busiType != ''">
+            and a.busi_type like #{busiType}
+        </if>
+        <if test="busiModule != null and busiModule != ''">
+            and a.busi_module like #{busiModule}
+        </if>
     </sql>
 
     <select id="get" resultMap="attachmentResultMap">

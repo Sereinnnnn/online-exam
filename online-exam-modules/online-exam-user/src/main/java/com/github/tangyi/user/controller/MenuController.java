@@ -20,7 +20,7 @@ import java.util.*;
  * 菜单controller
  *
  * @author tangyi
- * @date 2018/8/26 0026 22:48
+ * @date 2018/8/26 22:48
  */
 @RestController
 @RequestMapping("/menu")
@@ -130,7 +130,7 @@ public class MenuController extends BaseController {
      * @param Menu   Menu
      * @return PageInfo
      * @author tangyi
-     * @date 2018/8/26 0026 下午 11:17
+     * @date 2018/8/26 23:17
      */
     @RequestMapping("/menuList")
     public PageInfo<Menu> menuList(@RequestParam Map<String, String> params, Menu Menu) {
