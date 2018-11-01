@@ -8,8 +8,8 @@
         <result column="group_name" property="groupName"/>
         <result column="fast_file_id" property="fastFileId"/>
         <result column="busi_id" property="busiId"/>
-        <result column="busi_module" property="busiType"/>
-        <result column="busi_type" property="busiModule"/>
+        <result column="busi_module" property="busiModule"/>
+        <result column="busi_type" property="busiType"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -55,6 +55,7 @@
         FROM sys_attachment a
         WHERE a.del_flag = 0
         <include refid="whereColumnList"/>
+        ORDER BY CREATE_DATE DESC
     </select>
 
     <insert id="insert">

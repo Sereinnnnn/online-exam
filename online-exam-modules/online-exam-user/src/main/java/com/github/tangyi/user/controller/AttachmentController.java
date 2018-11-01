@@ -66,7 +66,7 @@ public class AttachmentController extends BaseController {
      * @date 2018/10/30 0030 下午 9:54
      */
     @RequestMapping("upload")
-    public ReturnT<Attachment> upload(@RequestParam("file") MultipartFile file) {
+    public ReturnT<Attachment> upload(@RequestParam("file") MultipartFile file, Attachment attachment) {
         long start = System.currentTimeMillis();
         try {
             logger.debug("{}", new String(file.getOriginalFilename().getBytes(), "utf-8"));
@@ -78,7 +78,6 @@ public class AttachmentController extends BaseController {
         if (file.isEmpty())
             return new ReturnT<Attachment>(new Attachment());
         InputStream inputStream = null;
-        Attachment attachment = null;
         try {
             inputStream = file.getInputStream();
             long attachSize = file.getSize();
@@ -86,13 +85,16 @@ public class AttachmentController extends BaseController {
             logger.debug("fastFileId:{}", fastFileId);
             if (StringUtils.isBlank(fastFileId))
                 throw new CommonException("上传失败！");
-            attachment = new Attachment();
-            attachment.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-            attachment.setGroupName(fastFileId.substring(0, fastFileId.indexOf("/")));
-            attachment.setFastFileId(fastFileId);
-            attachment.setAttachName(new String(file.getOriginalFilename().getBytes(), "utf-8"));
-            attachment.setAttachSize(Long.toString(attachSize));
-            attachmentService.insert(attachment);
+            Attachment newAttachment = new Attachment();
+            newAttachment.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+            newAttachment.setGroupName(fastFileId.substring(0, fastFileId.indexOf("/")));
+            newAttachment.setFastFileId(fastFileId);
+            newAttachment.setAttachName(new String(file.getOriginalFilename().getBytes(), "utf-8"));
+            newAttachment.setAttachSize(Long.toString(attachSize));
+            newAttachment.setBusiId(attachment.getBusiId());
+            newAttachment.setBusiModule(attachment.getBusiModule());
+            newAttachment.setBusiType(attachment.getBusiType());
+            attachmentService.insert(newAttachment);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         } finally {
