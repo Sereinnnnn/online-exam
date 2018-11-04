@@ -13,11 +13,6 @@ import java.util.List;
 public class UserVo extends BaseEntity<UserVo> {
 
     /**
-     * 主键ID
-     */
-    private Integer userId;
-
-    /**
      * 姓名
      */
     private String name;
@@ -81,14 +76,6 @@ public class UserVo extends BaseEntity<UserVo> {
      * 状态，0-启用，1-禁用
      */
     private String status;
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public String getUsername() {
         return username;

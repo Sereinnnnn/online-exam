@@ -110,18 +110,18 @@ public class UserService extends CrudService<UserMapper, User> {
             user.setUser(userVo);
             // 用户角色列表
             List<Role> roleList = userVo.getRoleList();
-            List<String> roleNames = new ArrayList<>();
+            List<String> roleCodes = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(roleList)) {
                 roleList.forEach(role -> {
                     if (!SecurityConstant.BASE_ROLE.equals(role.getRoleName()))
-                        roleNames.add(role.getRoleName());
+                        roleCodes.add(role.getRoleCode());
                 });
             }
-            String[] roleNameArray = roleNames.toArray(new String[roleNames.size()]);
-            user.setRoles(roleNameArray);
+            String[] roleCodeArray = roleCodes.toArray(new String[roleCodes.size()]);
+            user.setRoles(roleCodeArray);
             // 菜单列表
             Set<Menu> menuSet = new HashSet<>();
-            for (String role : roleNameArray)
+            for (String role : roleCodeArray)
                 menuSet.addAll(menuMapper.findByRole(role));
             // 权限列表
             Set<String> permissions = new HashSet<>();
@@ -198,7 +198,8 @@ public class UserService extends CrudService<UserMapper, User> {
      */
     @Cacheable(value = "user", key = "#username")
     public UserVo selectUserVoByUsername(String username) {
-        return userMapper.selectUserVoByUsername(username);
+        UserVo userVo = userMapper.selectUserVoByUsername(username);
+        return userVo;
     }
 
     /**

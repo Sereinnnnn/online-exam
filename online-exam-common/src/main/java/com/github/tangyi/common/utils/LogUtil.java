@@ -34,6 +34,7 @@ public class LogUtil {
      */
     public static Log getLog(HttpServletRequest request, String user, Exception ex, String title) {
         Log log = new Log();
+        log.setCommonValue(user, SysUtil.getSysCode());
         log.setTitle(title);
         log.setCreator(user);
         log.setType(ex == null ? TYPE_ACCESS : TYPE_EXCEPTION);
@@ -42,6 +43,7 @@ public class LogUtil {
         log.setRequestUri(request == null ? null : request.getRequestURI());
         log.setParams(request == null ? null : request.getParameterMap().toString());
         log.setMethod(request == null ? null : request.getMethod());
+        log.setException(ex == null ? "" : ex.getMessage());
         return log;
     }
 

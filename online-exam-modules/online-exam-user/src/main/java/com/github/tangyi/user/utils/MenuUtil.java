@@ -45,27 +45,17 @@ public class MenuUtil {
         del.setType(MenuConstant.MENU_TYPE_PERMISSION);
 
         // 修改权限
-        Menu modify = new Menu();
-        modify.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        modify.setParentId(menu.getId());
-        modify.setName(MenuConstant.PERMISSION_MODIFY);
-        modify.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_MODIFY);
-        modify.setSort(CommonConstant.DEFAULT_SORT);
-        modify.setType(MenuConstant.MENU_TYPE_PERMISSION);
-
-        // 查询权限
-        Menu query = new Menu();
-        query.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        query.setParentId(menu.getId());
-        query.setName(MenuConstant.PERMISSION_QUERY);
-        query.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_QUERY);
-        query.setSort(CommonConstant.DEFAULT_SORT);
-        query.setType(MenuConstant.MENU_TYPE_PERMISSION);
+        Menu edit = new Menu();
+        edit.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        edit.setParentId(menu.getId());
+        edit.setName(MenuConstant.PERMISSION_MODIFY);
+        edit.setPermission(menu.getPermission() + MenuConstant.PERMISSION_SUFFIX_MODIFY);
+        edit.setSort(CommonConstant.DEFAULT_SORT);
+        edit.setType(MenuConstant.MENU_TYPE_PERMISSION);
 
         menus.add(add);
         menus.add(del);
-        menus.add(modify);
-        menus.add(query);
+        menus.add(edit);
         return menus;
     }
 }

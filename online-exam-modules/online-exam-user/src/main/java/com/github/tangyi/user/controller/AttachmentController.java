@@ -120,11 +120,11 @@ public class AttachmentController extends BaseController {
         Attachment attachment = new Attachment();
         attachment.setId(id);
         attachment = attachmentService.get(attachment);
-        if (attachment == null)
-            throw new CommonException("附件不存在！");
         InputStream inputStream = null;
         OutputStream outputStream = null;
         try {
+            if (attachment == null)
+                throw new CommonException("附件不存在！");
             // 下载附件
             inputStream = fastDfsService.downloadStream(attachment.getGroupName(), attachment.getFastFileId());
             outputStream = response.getOutputStream();  // 输出流

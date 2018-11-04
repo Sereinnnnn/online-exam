@@ -27,7 +27,7 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
     /**
      * 用户id
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * 用户名
@@ -50,7 +50,7 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
     private List<Role> roleList = new ArrayList<>();
 
     public UserDetailsImpl(UserVo userVo) {
-        this.userId = userVo.getUserId();
+        this.userId = userVo.getId();
         this.username = userVo.getUsername();
         this.password = userVo.getPassword();
         this.status = userVo.getDelFlag().toString();
@@ -97,11 +97,11 @@ public class UserDetailsImpl extends BaseService implements UserDetails {
         return StringUtils.equals(CommonConstant.STATUS_NORMAL, status);
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

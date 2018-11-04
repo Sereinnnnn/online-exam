@@ -35,23 +35,23 @@
         <result column="born" property="born"/>
         <result column="remark" property="remark"/>
         <result column="status" property="status"/>
-        <result column="creator" property="creator"/>
-        <result column="create_date" property="createDate"/>
-        <result column="modifier" property="modifier"/>
-        <result column="modify_date" property="modifyDate"/>
-        <result column="del_flag" property="delFlag"/>
-        <result column="application_code" property="applicationCode"/>
+        <result column="ucreator" property="creator"/>
+        <result column="ucreate_date" property="createDate"/>
+        <result column="umodifier" property="modifier"/>
+        <result column="umodify_date" property="modifyDate"/>
+        <result column="udel_flag" property="delFlag"/>
+        <result column="uapplication_code" property="applicationCode"/>
         <collection property="roleList" ofType="com.github.tangyi.common.vo.Role">
-            <id column="id" property="id"/>
+            <id column="roleId" property="id"/>
             <result column="role_name" property="roleName"/>
             <result column="role_code" property="roleCode"/>
             <result column="role_desc" property="roleDesc"/>
-            <result column="creator" property="creator"/>
-            <result column="create_date" property="createDate"/>
-            <result column="modifier" property="modifier"/>
-            <result column="modify_date" property="modifyDate"/>
-            <result column="del_flag" property="delFlag"/>
-            <result column="application_code" property="applicationCode"/>
+            <result column="rcreator" property="creator"/>
+            <result column="rcreate_date" property="createDate"/>
+            <result column="rmodifier" property="modifier"/>
+            <result column="rmodify_date" property="modifyDate"/>
+            <result column="rdel_flag" property="delFlag"/>
+            <result column="rapplication_code" property="applicationCode"/>
         </collection>
     </resultMap>
 
@@ -99,27 +99,44 @@
     </sql>
 
     <sql id="selectUserVo">
-        <include refid="userColumns"/>,
-        r.id,
+      SELECT
+        `user`.id,
+        `user`.name,
+        `user`.username,
+        `user`.password,
+        `user`.salt,
+        `user`.phone,
+        `user`.avatar,
+        `user`.email,
+        `user`.sex,
+        `user`.born,
+        `user`.remark,
+        `user`.status,
+        `user`.creator as "ucreator",
+        `user`.create_date as "ucreate_date",
+        `user`.modifier as "umodifier",
+        `user`.modify_date as "umodify_date",
+        `user`.del_flag as "udel_flag",
+        `user`.application_code as "uapplication_code",
+        r.id as "roleId",
         r.role_name,
         r.role_code,
         r.role_desc,
-        r.creator,
-        r.create_date,
-        r.modifier,
-        r.modify_date,
-        r.del_flag,
-        r.application_code
+        r.creator as "rcreator",
+        r.create_date as "rcreate_date",
+        r.modifier as "rmodifier",
+        r.modify_date as "rmodify_date",
+        r.del_flag as "rdel_flag",
+        r.application_code as "rapplication_code"
         FROM
-        sys_user  a
-        LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        sys_user  as `user`
+        LEFT JOIN sys_user_role ur ON ur.user_id = `user`.id
         LEFT JOIN sys_role r ON r.id = ur.role_id
     </sql>
 
     <select id="selectUserVoByUsername" resultMap="userVoResultMap">
-        SELECT
         <include refid="selectUserVo"/>
-        WHERE a.username = #{username}
+        WHERE `user`.username = #{username}
     </select>
 
     <select id="get" resultMap="userResultMap">

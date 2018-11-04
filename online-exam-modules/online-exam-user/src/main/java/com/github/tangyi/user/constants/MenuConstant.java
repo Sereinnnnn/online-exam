@@ -32,11 +32,6 @@ public class MenuConstant {
     public static final String PERMISSION_MODIFY = "修改";
 
     /**
-     * 查询
-     */
-    public static final String PERMISSION_QUERY = "查询";
-
-    /**
      * 新增
      */
     public static final String PERMISSION_SUFFIX_ADD = ":add";
@@ -49,11 +44,6 @@ public class MenuConstant {
     /**
      * 修改
      */
-    public static final String PERMISSION_SUFFIX_MODIFY = ":modify";
-
-    /**
-     * 查询
-     */
-    public static final String PERMISSION_SUFFIX_QUERY = ":query";
+    public static final String PERMISSION_SUFFIX_MODIFY = ":edit";
 }
 

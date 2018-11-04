@@ -11,6 +11,7 @@ import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.service.MenuService;
 import com.xiaoleilu.hutool.collection.CollUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,24 @@ public class MenuController extends BaseController {
     public List<MenuDto> userMenu() {
         // 查询菜单
         Set<Menu> menuSet = new HashSet<Menu>();
-        getRole().forEach(roleName -> menuSet.addAll(menuService.findMenuByRole(roleName)));
+        getRole().forEach(roleName -> {
+            // 获取角色的菜单
+            List<Menu> menus = menuService.findMenuByRole(roleName);
+            if (CollectionUtils.isNotEmpty(menus)) {
+                menus.forEach(menu -> {
+                    // 检查是否已经存在
+                    boolean exist = false;
+                    for (Menu existMenu : menuSet) {
+                        if (existMenu.getId().equals(menu.getId()) && !exist)
+                            exist = true;
+                    }
+                    // 不存在
+                    if (!exist)
+                        menuSet.add(menu);
+
+                });
+            }
+        });
         List<MenuDto> menuTreeList = new ArrayList<MenuDto>();
         menuSet.forEach(menuVo -> {
             if (CommonConstant.MENU.equals(menuVo.getType())) {
