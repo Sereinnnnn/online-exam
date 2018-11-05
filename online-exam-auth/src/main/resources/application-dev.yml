@@ -22,4 +22,4 @@ eureka:
     registry-fetch-interval-seconds: 10
 logging:
   level:
-   org.apache.http: info
+   com.github.tangyi: debug
