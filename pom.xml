@@ -22,6 +22,7 @@
         <module>online-exam-gateway</module>
         <module>online-exam-auth</module>
         <module>online-exam-modules</module>
+        <module>online-exam-zipkin</module>
     </modules>
 
     <properties>
