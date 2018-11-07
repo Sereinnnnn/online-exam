@@ -7,6 +7,11 @@ package com.github.tangyi.common.constants;
 public class SecurityConstant {
 
     /**
+     * 管理员账号
+     */
+    public static final String ADMIN = "admin";
+
+    /**
      * 前缀
      */
     public static final String EXAM_PREFIX = "exam_";

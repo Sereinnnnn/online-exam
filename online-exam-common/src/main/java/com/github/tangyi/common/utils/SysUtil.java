@@ -2,6 +2,7 @@ package com.github.tangyi.common.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.github.tangyi.common.constants.CommonConstant;
+import com.github.tangyi.common.constants.SecurityConstant;
 import com.github.tangyi.common.exception.CheckedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,6 +32,18 @@ public class SysUtil {
     private static final String BASIC_ = "Basic ";
 
     private static final ThreadLocal<String> THREAD_LOCAL_USER = new TransmittableThreadLocal<>();
+
+    /**
+     * 判断是否为管理员
+     *
+     * @param roleCode roleCode
+     * @return boolean
+     * @author tangyi
+     * @date 2018/11/7 17:37
+     */
+    public static boolean isAdmin(String roleCode) {
+        return SecurityConstant.ADMIN.equals(roleCode);
+    }
 
     /**
      * 解析header

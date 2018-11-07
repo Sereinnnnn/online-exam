@@ -1,6 +1,7 @@
 package com.github.tangyi.gateway.service.impl;
 
 import com.github.tangyi.common.constants.SecurityConstant;
+import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.MenuVo;
 import com.github.tangyi.gateway.feign.MenuService;
 import com.github.tangyi.gateway.service.PermissionService;
@@ -53,6 +54,14 @@ public class PermissionServiceImpl implements PermissionService {
                 logger.warn("{}的角色为空！", authentication.getPrincipal());
                 return false;
             }
+            // 如果是管理员角色，不校验权限
+            for (SimpleGrantedAuthority grantedAuthority : grantedAuthorities) {
+                if (SysUtil.isAdmin(grantedAuthority.getAuthority())) {
+                    logger.debug("管理员，不校验权限.");
+                    return true;
+                }
+            }
+
             // 获取权限
             Set<MenuVo> urls = new HashSet<>();
             grantedAuthorities.forEach(grantedAuthority -> {
