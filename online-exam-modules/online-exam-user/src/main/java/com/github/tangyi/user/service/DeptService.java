@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
+ * 部门service
+ *
  * @author tangyi
- * @date 2018/8/26 0026 22:46
+ * @date 2018/8/26 22:46
  */
 @Service
 @Transactional(readOnly = true)

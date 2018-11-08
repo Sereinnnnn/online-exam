@@ -16,8 +16,8 @@ spring:
       label: master
   datasource:
         name: test
-        url: jdbc:mysql://127.0.0.1:3306/online_exam?useUnicode=true&characterEncoding=utf-8
-        username: root
+        url: jdbc:mysql://192.168.0.144:3306/platform_test002?useUnicode=true&characterEncoding=utf-8
+        username: platform_test001
         password: 11
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
@@ -58,3 +58,6 @@ security:
     resource:
       jwt:
         key-uri: http://localhost:3000/oauth/token_key
+logging:
+  level:
+    com.github.tangyi: debug

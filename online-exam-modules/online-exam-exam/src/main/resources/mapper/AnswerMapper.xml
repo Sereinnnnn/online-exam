@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.exam.mapper.AnswerMapper">
+    <resultMap id="answerResultMap" type="com.github.tangyi.exam.module.Answer">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="examination_id" property="examinationId"/>
+        <result column="course_id" property="courseId"/>
+        <result column="subject_id" property="subjectId"/>
+        <result column="answer" property="answer"/>
+        <result column="creator" property="creator"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modifier" property="modifier"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="application_code" property="applicationCode"/>
+    </resultMap>
+
+    <sql id="answerColumns">
+        a.id as "id",
+        a.user_id,
+        a.examination_id,
+        a.course_id,
+        a.subject_id,
+        a.answer,
+        a.creator,
+        a.create_date,
+        a.modifier,
+        a.modify_date,
+        a.del_flag,
+        a.application_code
+    </sql>
+
+    <select id="get" resultMap="answerResultMap">
+        SELECT
+        <include refid="answerColumns"/>
+        FROM answer a
+        WHERE a.id = #{id} and a.del_flag = 0
+    </select>
+
+    <select id="findList" resultMap="answerResultMap">
+        SELECT
+        <include refid="answerColumns"/>
+        FROM answer a
+        WHERE a.del_flag = 0
+    </select>
+
+    <insert id="insert">
+        insert  into answer (
+            id,
+            user_id,
+            examination_id,
+            course_id,
+            subject_id,
+            answer,
+            creator,
+            create_date,
+            modifier,
+            modify_date,
+            del_flag,
+            application_code
+        ) values (
+            #{id},
+            #{userId},
+            #{examinationId},
+            #{courseId},
+            #{subjectId},
+            #{answer},
+            #{creator},
+            #{createDate},
+            #{modifier},
+            #{modifyDate},
+            #{delFlag},
+            #{applicationCode}
+        );
+    </insert>
+
+    <delete id="delete">
+        UPDATE answer SET
+			del_flag = 1
+		WHERE id = #{id}
+    </delete>
+</mapper>

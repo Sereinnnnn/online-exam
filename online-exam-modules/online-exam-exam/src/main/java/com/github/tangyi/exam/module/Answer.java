@@ -1,0 +1,77 @@
+package com.github.tangyi.exam.module;
+
+import com.github.tangyi.common.persistence.BaseEntity;
+
+/**
+ * 答题
+ *
+ * @author tangyi
+ * @date 2018/11/8 20:59
+ */
+public class Answer extends BaseEntity<Answer> {
+
+    /**
+     * 用户ID
+     */
+    private String userId;
+
+    /**
+     * 考试ID
+     */
+    private String examinationId;
+
+    /**
+     * 课程ID
+     */
+    private String courseId;
+
+    /**
+     * 题目ID
+     */
+    private String subjectId;
+
+    /**
+     * 答案
+     */
+    private String answer;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getExaminationId() {
+        return examinationId;
+    }
+
+    public void setExaminationId(String examinationId) {
+        this.examinationId = examinationId;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+}

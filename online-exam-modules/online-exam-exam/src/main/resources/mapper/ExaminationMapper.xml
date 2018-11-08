@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.exam.mapper.ExaminationMapper">
+    <resultMap id="examinationResultMap" type="com.github.tangyi.exam.module.Examination">
+        <id column="id" property="id"/>
+        <result column="examination_name" property="examinationName"/>
+        <result column="type" property="type"/>
+        <result column="attention" property="attention"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="duration" property="duration"/>
+        <result column="total_score" property="totalScore"/>
+        <result column="status" property="status"/>
+        <result column="avatar" property="avatar"/>
+        <result column="college" property="college"/>
+        <result column="major" property="major"/>
+        <result column="course" property="course"/>
+        <result column="remark" property="remark"/>
+        <result column="creator" property="creator"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modifier" property="modifier"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="application_code" property="applicationCode"/>
+    </resultMap>
+
+    <sql id="examinationColumns">
+        a.id as "id",
+        a.examination_name,
+        a.type,
+        a.attention,
+        a.start_time,
+        a.end_time,
+        a.duration,
+        a.total_score,
+        a.status,
+        a.avatar,
+        a.college,
+        a.major,
+        a.course,
+        a.remark,
+        a.creator,
+        a.create_date,
+        a.modifier,
+        a.modify_date,
+        a.del_flag,
+        a.application_code
+    </sql>
+
+    <select id="get" resultMap="examinationResultMap">
+        SELECT
+        <include refid="examinationColumns"/>
+        FROM examination a
+        WHERE a.id = #{id} and a.del_flag = 0
+    </select>
+
+    <select id="findList" resultMap="examinationResultMap">
+        SELECT
+        <include refid="examinationColumns"/>
+        FROM examination a
+        WHERE a.del_flag = 0
+    </select>
+
+    <insert id="insert">
+        insert  into examination (
+            id,
+            examination_name,
+            type,
+            attention,
+            start_time,
+            end_time,
+            duration,
+            total_score,
+            status,
+            avatar,
+            college,
+            major,
+            course,
+            remark,
+            creator,
+            create_date,
+            modifier,
+            modify_date,
+            del_flag,
+            application_code
+        ) values (
+            #{id},
+            #{examinationName},
+            #{type},
+            #{attention},
+            #{startTime},
+            #{endTime},
+            #{duration},
+            #{totalScore},
+            #{status},
+            #{avatar},
+            #{college},
+            #{major},
+            #{course},
+            #{remark},
+            #{creator},
+            #{createDate},
+            #{modifier},
+            #{modifyDate},
+            #{delFlag},
+            #{applicationCode}
+        );
+    </insert>
+
+    <delete id="delete">
+        UPDATE examination SET
+			del_flag = 1
+		WHERE id = #{id}
+    </delete>
+</mapper>

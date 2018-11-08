@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.tangyi.exam.mapper.ExamRecodeMapper">
+    <resultMap id="examRecodeResultMap" type="com.github.tangyi.exam.module.ExamRecode">
+        <id column="id" property="id"/>
+        <result column="creator" property="creator"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modifier" property="modifier"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="application_code" property="applicationCode"/>
+    </resultMap>
+
+    <sql id="examRecodeColumns">
+        a.id as "id",
+        a.creator,
+        a.create_date,
+        a.modifier,
+        a.modify_date,
+        a.del_flag,
+        a.application_code
+    </sql>
+
+    <select id="get" resultMap="examRecodeResultMap">
+        SELECT
+        <include refid="examRecodeColumns"/>
+        FROM sys_log a
+        WHERE a.id = #{id} and a.del_flag = 0
+    </select>
+
+    <select id="findList" resultMap="examRecodeResultMap">
+        SELECT
+        <include refid="examRecodeColumns"/>
+        FROM sys_log a
+        WHERE a.del_flag = 0
+    </select>
+
+    <insert id="insert">
+        insert  into sys_log (
+            id,
+            type,
+            title,
+            ip,
+            user_agent,
+            request_uri,
+            method,
+            params,
+            exception,
+            service_id,
+            creator,
+            create_date,
+            modifier,
+            modify_date,
+            del_flag,
+            application_code
+        ) values (
+            #{id},
+            #{type},
+            #{title},
+            #{ip},
+            #{userAgent},
+            #{requestUri},
+            #{method},
+            #{params},
+            #{exception},
+            #{serviceId},
+            #{creator},
+            #{createDate},
+            #{modifier},
+            #{modifyDate},
+            #{delFlag},
+            #{applicationCode}
+        );
+    </insert>
+
+    <delete id="delete">
+        UPDATE sys_log SET
+			del_flag = 1
+		WHERE id = #{id}
+    </delete>
+</mapper>
