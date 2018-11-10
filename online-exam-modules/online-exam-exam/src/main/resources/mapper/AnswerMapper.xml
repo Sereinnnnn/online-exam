@@ -75,6 +75,31 @@
         );
     </insert>
 
+    <update id="update">
+        UPDATE answer  SET
+        <if test="userId != null">
+            user_id = #{userId},
+        </if>
+        <if test="examinationId != null">
+            examination_id = #{examinationId},
+        </if>
+        <if test="courseId != null">
+            course_id = #{courseId},
+        </if>
+        <if test="subjectId != null">
+            subject_id = #{subjectId},
+        </if>
+        <if test="answer != null">
+            answer = #{answer},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE id = #{id}
+    </update>
+
     <delete id="delete">
         UPDATE answer SET
 			del_flag = 1

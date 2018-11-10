@@ -1,5 +1,5 @@
 server:
-  port: 4040
+  port: 35010
   session:
     cookie:
       name: APPSESSIONID
@@ -13,7 +13,7 @@ spring:
         service-id: online-exam-config
         enabled: true
       profile: ${spring.profiles.active}
-      label: master
+      label: develop
   datasource:
         name: test
         url: jdbc:mysql://192.168.0.144:3306/platform_test002?useUnicode=true&characterEncoding=utf-8

@@ -90,7 +90,7 @@ public class ControllerAop {
                 Arrays.toString(joinPoint.getArgs()));
         Object result;
         result = joinPoint.proceed();
-        logger.info("{} use time: {}", joinPoint.getSignature(), System.currentTimeMillis() - startTime);
+        logger.info("{} use time: {}ms", joinPoint.getSignature(), System.currentTimeMillis() - startTime);
         // 调用完成，清空当前用户信息
         if (StrUtil.isNotEmpty(username))
             SysUtil.clearAllUserInfo();

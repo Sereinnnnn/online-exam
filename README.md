@@ -6,12 +6,16 @@ spring cloud + vue 在线考试
 
 #### 服务和端口
 
-online-exam-eureka 8765
+注册中心（online-exam-eureka）：8765
 
-online-exam-config 8888
+配置中心（online-exam-config）：8888
 
-online-exam-gateway 
+网关（online-exam-gateway）：9999
 
-online-exam-auth
+认证中心（online-exam-auth）：3000
 
-online-exam-user 8889
+用户服务（online-exam-user）：4000
+
+考试服务（online-exam-exam）：35010
+
+链路监控（online-exam-zipkin）：9411

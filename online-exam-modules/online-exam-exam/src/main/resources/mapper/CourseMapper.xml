@@ -29,6 +29,13 @@
         a.application_code
     </sql>
 
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="courseName != null and courseName != ''">
+            and a.course_name like #{courseName}
+        </if>
+    </sql>
+
     <select id="get" resultMap="courseResultMap">
         SELECT
         <include refid="courseColumns"/>
@@ -41,6 +48,7 @@
         <include refid="courseColumns"/>
         FROM course a
         WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
     </select>
 
     <insert id="insert">
@@ -70,6 +78,28 @@
             #{applicationCode}
         );
     </insert>
+
+    <update id="update">
+        UPDATE course  SET
+        <if test="courseName != null">
+            course_name = #{courseName},
+        </if>
+        <if test="college != null">
+            college = #{college},
+        </if>
+        <if test="major != null">
+            major = #{major},
+        </if>
+        <if test="teacher != null">
+            teacher = #{teacher},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE id = #{id}
+    </update>
 
     <delete id="delete">
         UPDATE course SET

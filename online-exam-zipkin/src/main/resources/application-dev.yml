@@ -8,7 +8,7 @@ spring:
         service-id: online-exam-config
         enabled: true
       profile: ${spring.profiles.active}
-      label: master
+      label: develop
 eureka:
   instance:
     prefer-ip-address: true

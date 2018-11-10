@@ -3,6 +3,13 @@
 <mapper namespace="com.github.tangyi.exam.mapper.SubjectMapper">
     <resultMap id="subjectResultMap" type="com.github.tangyi.exam.module.Subject">
         <id column="id" property="id"/>
+        <result column="subject_name" property="subjectName"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="answer" property="answer"/>
+        <result column="score" property="score"/>
+        <result column="analysis" property="analysis"/>
+        <result column="level" property="level"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -13,6 +20,13 @@
 
     <sql id="subjectColumns">
         a.id as "id",
+        a.subject_name,
+        a.type,
+        a.content,
+        a.answer,
+        a.score,
+        a.analysis,
+        a.level,
         a.creator,
         a.create_date,
         a.modifier,
@@ -21,32 +35,38 @@
         a.application_code
     </sql>
 
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="subjectName != null and subjectName != ''">
+            and a.subject_name like #{subjectName}
+        </if>
+    </sql>
+
     <select id="get" resultMap="subjectResultMap">
         SELECT
         <include refid="subjectColumns"/>
-        FROM sys_log a
+        FROM subject a
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
     <select id="findList" resultMap="subjectResultMap">
         SELECT
         <include refid="subjectColumns"/>
-        FROM sys_log a
+        FROM subject a
         WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
     </select>
 
     <insert id="insert">
-        insert  into sys_log (
+        insert  into subject (
             id,
+            subject_name,
             type,
-            title,
-            ip,
-            user_agent,
-            request_uri,
-            method,
-            params,
-            exception,
-            service_id,
+            content,
+            answer,
+            score,
+            analysis,
+            level,
             creator,
             create_date,
             modifier,
@@ -55,15 +75,13 @@
             application_code
         ) values (
             #{id},
+            #{subjectName},
             #{type},
-            #{title},
-            #{ip},
-            #{userAgent},
-            #{requestUri},
-            #{method},
-            #{params},
-            #{exception},
-            #{serviceId},
+            #{content},
+            #{answer},
+            #{score},
+            #{analysis},
+            #{level},
             #{creator},
             #{createDate},
             #{modifier},
@@ -74,7 +92,7 @@
     </insert>
 
     <delete id="delete">
-        UPDATE sys_log SET
+        UPDATE subject SET
 			del_flag = 1
 		WHERE id = #{id}
     </delete>
