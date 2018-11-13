@@ -115,6 +115,55 @@
         );
     </insert>
 
+    <update id="update">
+        UPDATE examination  SET
+        <if test="examinationName != null">
+            examination_name = #{examinationName},
+        </if>
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="attention != null">
+            attention = #{attention},
+        </if>
+        <if test="startTime != null">
+            start_time = #{startTime},
+        </if>
+        <if test="endTime != null">
+            end_time = #{endTime},
+        </if>
+        <if test="duration != null">
+            duration = #{duration},
+        </if>
+        <if test="totalScore != null">
+            total_score = #{totalScore},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="avatar != null">
+            avatar = #{avatar},
+        </if>
+        <if test="college != null">
+            college = #{college},
+        </if>
+        <if test="major != null">
+            major = #{major},
+        </if>
+        <if test="course != null">
+            course = #{course},
+        </if>
+        <if test="remark != null">
+            remark = #{remark},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE id = #{id}
+    </update>
+
     <delete id="delete">
         UPDATE examination SET
 			del_flag = 1

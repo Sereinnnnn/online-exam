@@ -104,7 +104,9 @@ public class ExaminationController extends BaseController {
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteExamination(@PathVariable String id) {
         try {
-            Examination examination = examinationService.get(id);
+            Examination examination = new Examination();
+            examination.setId(id);
+            examination = examinationService.get(examination);
             if (examination != null) {
                 examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 examinationService.delete(examination);

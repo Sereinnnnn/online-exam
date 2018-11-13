@@ -30,6 +30,11 @@ public class Course extends BaseEntity<Course> {
      */
     private String teacher;
 
+    /**
+     * 课程描述
+     */
+    private String courseDescription;
+
     public String getCourseName() {
         return courseName;
     }
@@ -60,5 +65,13 @@ public class Course extends BaseEntity<Course> {
 
     public void setTeacher(String teacher) {
         this.teacher = teacher;
+    }
+
+    public String getCourseDescription() {
+        return courseDescription;
+    }
+
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
 }

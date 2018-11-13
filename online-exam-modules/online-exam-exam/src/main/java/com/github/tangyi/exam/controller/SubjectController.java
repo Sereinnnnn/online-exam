@@ -104,7 +104,9 @@ public class SubjectController extends BaseController {
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteSubject(@PathVariable String id) {
         try {
-            Subject subject = subjectService.get(id);
+            Subject subject = new Subject();
+            subject.setId(id);
+            subject = subjectService.get(subject);
             if (subject != null) {
                 subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 subjectService.delete(subject);

@@ -7,6 +7,7 @@
         <result column="college" property="college"/>
         <result column="major" property="major"/>
         <result column="teacher" property="teacher"/>
+        <result column="course_description" property="courseDescription"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -21,6 +22,7 @@
         a.college,
         a.major,
         a.teacher,
+        a.course_description,
         a.creator,
         a.create_date,
         a.modifier,
@@ -58,6 +60,7 @@
             college,
             major,
             teacher,
+            course_description,
             creator,
             create_date,
             modifier,
@@ -70,6 +73,7 @@
             #{college},
             #{major},
             #{teacher},
+            #{courseDescription},
             #{creator},
             #{createDate},
             #{modifier},
@@ -92,6 +96,9 @@
         </if>
         <if test="teacher != null">
             teacher = #{teacher},
+        </if>
+        <if test="courseDescription != null">
+            course_description = #{courseDescription},
         </if>
         <if test="delFlag != null">
             del_flag = #{delFlag},
