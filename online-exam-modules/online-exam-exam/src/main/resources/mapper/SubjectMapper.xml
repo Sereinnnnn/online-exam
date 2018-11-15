@@ -91,6 +91,37 @@
         );
     </insert>
 
+    <update id="update">
+        UPDATE subject  SET
+        <if test="subjectName != null">
+            subject_name = #{subjectName},
+        </if>
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="content != null">
+            content = #{content},
+        </if>
+        <if test="answer != null">
+            answer = #{answer},
+        </if>
+        <if test="score != null">
+            score = #{score},
+        </if>
+        <if test="analysis != null">
+            analysis = #{analysis},
+        </if>
+        <if test="level != null">
+            level = #{level},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE id = #{id}
+    </update>
+
     <delete id="delete">
         UPDATE subject SET
 			del_flag = 1
