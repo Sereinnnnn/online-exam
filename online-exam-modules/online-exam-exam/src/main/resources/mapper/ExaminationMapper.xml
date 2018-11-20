@@ -12,9 +12,9 @@
         <result column="total_score" property="totalScore"/>
         <result column="status" property="status"/>
         <result column="avatar" property="avatar"/>
-        <result column="college" property="college"/>
-        <result column="major" property="major"/>
-        <result column="course" property="course"/>
+        <result column="college_id" property="collegeId"/>
+        <result column="major_id" property="majorId"/>
+        <result column="course_id" property="courseId"/>
         <result column="remark" property="remark"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
@@ -35,9 +35,9 @@
         a.total_score,
         a.status,
         a.avatar,
-        a.college,
-        a.major,
-        a.course,
+        a.college_id,
+        a.major_id,
+        a.course_id,
         a.remark,
         a.creator,
         a.create_date,
@@ -81,9 +81,9 @@
             total_score,
             status,
             avatar,
-            college,
-            major,
-            course,
+            college_id,
+            major_id,
+            course_id,
             remark,
             creator,
             create_date,
@@ -102,9 +102,9 @@
             #{totalScore},
             #{status},
             #{avatar},
-            #{college},
-            #{major},
-            #{course},
+            #{collegeId},
+            #{majorId},
+            #{courseId},
             #{remark},
             #{creator},
             #{createDate},
@@ -144,14 +144,14 @@
         <if test="avatar != null">
             avatar = #{avatar},
         </if>
-        <if test="college != null">
-            college = #{college},
+        <if test="collegeId != null">
+            college_id = #{collegeId},
         </if>
-        <if test="major != null">
-            major = #{major},
+        <if test="majorId != null">
+            major_id = #{majorId},
         </if>
-        <if test="course != null">
-            course = #{course},
+        <if test="courseId != null">
+            course_id = #{courseId},
         </if>
         <if test="remark != null">
             remark = #{remark},

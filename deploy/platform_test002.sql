@@ -11,7 +11,7 @@
  Target Server Version : 50710
  File Encoding         : 65001
 
- Date: 10/11/2018 23:09:58
+ Date: 20/11/2018 22:59:51
 */
 
 SET NAMES utf8mb4;
@@ -47,6 +47,7 @@ CREATE TABLE `course`  (
   `college` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学院',
   `major` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '专业',
   `teacher` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '老师',
+  `course_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程描述',
   `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
   `modifier` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
@@ -59,8 +60,8 @@ CREATE TABLE `course`  (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES ('1', '2', '2', '2', '2', '1', '1', 'admin', '2018-11-10 23:00:13', '0', '1');
-INSERT INTO `course` VALUES ('c5e17b657ef04813b3d23feb169de0a1', '3', '3', '3', '3', 'admin', '2018-11-10 23:02:06', 'admin', '2018-11-10 23:09:16', '0', 'EXAM');
+INSERT INTO `course` VALUES ('2a6187239d7f48749da321aa6fd56424', '高等数学', '金融学院', '金融工程', '黄*东', '高等数学', 'admin', '2018-11-12 19:39:24', 'admin', '2018-11-12 22:39:20', '0', 'EXAM');
+INSERT INTO `course` VALUES ('6dcccd4639bc49b88810be1d30a77f92', '离散数学', '信息学院', '软件工程', '袁大头', '离散数学', 'admin', '2018-11-12 22:31:28', 'admin', '2018-11-12 22:39:28', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for exam_recode
@@ -97,9 +98,9 @@ CREATE TABLE `examination`  (
   `total_score` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '总分',
   `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试状态',
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面',
-  `college` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学院',
-  `major` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '专业',
-  `course` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程',
+  `college_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学院',
+  `major_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '专业',
+  `course_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
@@ -109,6 +110,14 @@ CREATE TABLE `examination`  (
   `application_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of examination
+-- ----------------------------
+INSERT INTO `examination` VALUES ('b5990bc1c48d49fcb0023de51772c309', '数学期末考试', '0', '期末考试', '2018-11-14 00:00', '2018-11-20 00:00', '', '150', '1', '', '应用数学', '应用数学', '6dcccd4639bc49b88810be1d30a77f92', '期末考试', 'admin', '2018-11-20 22:48:40', 'admin', '2018-11-20 22:48:55', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('e47ad46fd30745d6ac975b92ef6c1384', '2', '2', '', '2', '2', '', '2', '0', '', '2', '2', '2', '2', 'admin', '2018-11-12 20:10:24', 'admin', '2018-11-12 20:10:24', '1', 'EXAM');
+INSERT INTO `examination` VALUES ('f051f54621fc4812b929a7777a701712', '语文考试', '0', '语文考试', '2018-11-07 00:00', '2018-11-20 22:50', '', '150', '0', '', '中文', '中文', '2a6187239d7f48749da321aa6fd56424', '语文考试', 'admin', '2018-11-20 22:50:55', 'admin', '2018-11-20 22:50:55', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '测试对对对', '0', '测试对对对', '2018-11-12 21:06', '2018-11-12 20:43', '', '100', '0', '', '测试等等', '测试对对对', '6dcccd4639bc49b88810be1d30a77f92', '测试对对对', 'admin', '2018-11-12 20:25:38', 'admin', '2018-11-20 22:46:43', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for incorrect_answer
@@ -154,6 +163,7 @@ CREATE TABLE `score`  (
 DROP TABLE IF EXISTS `subject`;
 CREATE TABLE `subject`  (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `examination_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试ID',
   `subject_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '题目名称',
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '题目类型',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '题目内容',
@@ -169,5 +179,16 @@ CREATE TABLE `subject`  (
   `application_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of subject
+-- ----------------------------
+INSERT INTO `subject` VALUES ('03b7f45ac73a462aaef41b0660124e5d', 'fad663ea371f4250a81332bd3a346739', '5', '3', '5', '5', '5', '5', '4', 'admin', '2018-11-20 21:34:08', 'admin', '2018-11-20 22:47:16', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('1cede15b100e470692269754fc44079e', 'fad663ea371f4250a81332bd3a346739', '44', '0', '4', '44', '44', '4', '2', 'admin', '2018-11-20 21:28:25', 'admin', '2018-11-20 21:28:25', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('6bdde374aecd44d9a854dec22eabfabd', 'fad663ea371f4250a81332bd3a346739', '7', '1', '7', '7', '7', '7', '4', 'admin', '2018-11-20 21:41:28', 'admin', '2018-11-20 21:43:31', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('815ccd1252844f2596e1230781e3884c', 'fad663ea371f4250a81332bd3a346739', '6', '0', '6', '6', '6', '6', '1', 'admin', '2018-11-20 21:41:04', 'admin', '2018-11-20 21:42:25', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('84ecd40ac3a74f809cbd07e18658618a', 'f051f54621fc4812b929a7777a701712', '中文简答题', '0', '3', '3', '2', '3', '2', 'admin', '2018-11-20 22:52:35', 'admin', '2018-11-20 22:52:35', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('c2fddedc3b384a4998759b30173702d2', 'b5990bc1c48d49fcb0023de51772c309', '数学选择题', '0', '23', '32', '32', '323', '2', 'admin', '2018-11-20 22:53:04', 'admin', '2018-11-20 22:53:25', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('c77702b62cf2493195c68b4a45ec4e82', 'f051f54621fc4812b929a7777a701712', '语文选择题', '0', '5', '5', '5', '5', '2', 'admin', '2018-11-20 22:52:00', 'admin', '2018-11-20 22:52:00', '0', 'EXAM');
 
 SET FOREIGN_KEY_CHECKS = 1;

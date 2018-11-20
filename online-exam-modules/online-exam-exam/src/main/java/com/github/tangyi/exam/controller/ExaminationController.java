@@ -5,14 +5,21 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.exam.dto.ExaminationDto;
+import com.github.tangyi.exam.module.Course;
 import com.github.tangyi.exam.module.Examination;
+import com.github.tangyi.exam.service.CourseService;
 import com.github.tangyi.exam.service.ExaminationService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +36,9 @@ public class ExaminationController extends BaseController {
 
     @Autowired
     private ExaminationService examinationService;
+
+    @Autowired
+    private CourseService courseService;
 
     /**
      * 根据ID获取
@@ -58,23 +68,41 @@ public class ExaminationController extends BaseController {
      * @date 2018/11/10 21:10
      */
     @RequestMapping("examinationList")
-    public PageInfo<Examination> examinationList(@RequestParam Map<String, String> params, Examination examination) {
+    public PageInfo<ExaminationDto> examinationList(@RequestParam Map<String, String> params, Examination examination) {
         PageInfo<Examination> page = new PageInfo<Examination>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        return examinationService.findPage(page, examination);
+        page = examinationService.findPage(page, examination);
+        PageInfo<ExaminationDto> examinationDtoPageInfo = new PageInfo<>();
+        BeanUtils.copyProperties(page, examinationDtoPageInfo);
+        List<ExaminationDto> examinationDtos = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(page.getList())) {
+            for (Examination exam : page.getList()) {
+                Course course = new Course();
+                course.setId(exam.getCourseId());
+                course = courseService.get(course);
+                ExaminationDto examinationDto = new ExaminationDto(course);
+                BeanUtils.copyProperties(exam, examinationDto);
+                examinationDtos.add(examinationDto);
+            }
+        }
+        examinationDtoPageInfo.setList(examinationDtos);
+        return examinationDtoPageInfo;
     }
 
     /**
      * 创建
      *
-     * @param examination examination
+     * @param examinationDto examinationDto
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:14
      */
     @PostMapping
-    public ReturnT<Boolean> addExamination(@RequestBody Examination examination) {
+    public ReturnT<Boolean> addExamination(@RequestBody ExaminationDto examinationDto) {
+        Examination examination = new Examination();
+        BeanUtils.copyProperties(examinationDto, examination);
+        examination.setCourseId(examinationDto.getCourse().getId());
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<Boolean>(examinationService.insert(examination) > 0);
     }
@@ -82,13 +110,16 @@ public class ExaminationController extends BaseController {
     /**
      * 更新
      *
-     * @param examination examination
+     * @param examinationDto examinationDto
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:15
      */
     @PutMapping
-    public ReturnT<Boolean> updateExamination(@RequestBody Examination examination) {
+    public ReturnT<Boolean> updateExamination(@RequestBody ExaminationDto examinationDto) {
+        Examination examination = new Examination();
+        BeanUtils.copyProperties(examinationDto, examination);
+        examination.setCourseId(examinationDto.getCourse().getId());
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<Boolean>(examinationService.update(examination) > 0);
     }

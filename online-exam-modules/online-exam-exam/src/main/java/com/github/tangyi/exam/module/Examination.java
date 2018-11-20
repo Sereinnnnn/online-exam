@@ -58,17 +58,17 @@ public class Examination extends BaseEntity<Examination> {
     /**
      * 学院
      */
-    private String college;
+    private String collegeId;
 
     /**
      * 专业
      */
-    private String major;
+    private String majorId;
 
     /**
      * 课程
      */
-    private String course;
+    private String courseId;
 
     /**
      * 备注
@@ -147,28 +147,28 @@ public class Examination extends BaseEntity<Examination> {
         this.avatar = avatar;
     }
 
-    public String getCollege() {
-        return college;
+    public String getCollegeId() {
+        return collegeId;
     }
 
-    public void setCollege(String college) {
-        this.college = college;
+    public void setCollegeId(String collegeId) {
+        this.collegeId = collegeId;
     }
 
-    public String getMajor() {
-        return major;
+    public String getMajorId() {
+        return majorId;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setMajorId(String majorId) {
+        this.majorId = majorId;
     }
 
-    public String getCourse() {
-        return course;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public String getRemark() {

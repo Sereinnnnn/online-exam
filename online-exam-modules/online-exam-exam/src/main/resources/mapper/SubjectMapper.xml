@@ -3,6 +3,7 @@
 <mapper namespace="com.github.tangyi.exam.mapper.SubjectMapper">
     <resultMap id="subjectResultMap" type="com.github.tangyi.exam.module.Subject">
         <id column="id" property="id"/>
+        <result column="examination_id" property="examinationId"/>
         <result column="subject_name" property="subjectName"/>
         <result column="type" property="type"/>
         <result column="content" property="content"/>
@@ -20,6 +21,7 @@
 
     <sql id="subjectColumns">
         a.id as "id",
+        a.examination_id,
         a.subject_name,
         a.type,
         a.content,
@@ -37,6 +39,9 @@
 
     <!-- where 条件 -->
     <sql id="whereColumnList">
+        <if test="examinationId != null and examinationId != ''">
+            and a.examination_id = #{examinationId}
+        </if>
         <if test="subjectName != null and subjectName != ''">
             and a.subject_name like #{subjectName}
         </if>
@@ -60,6 +65,7 @@
     <insert id="insert">
         insert  into subject (
             id,
+            examination_id,
             subject_name,
             type,
             content,
@@ -75,6 +81,7 @@
             application_code
         ) values (
             #{id},
+            #{examinationId},
             #{subjectName},
             #{type},
             #{content},
@@ -93,6 +100,9 @@
 
     <update id="update">
         UPDATE subject  SET
+        <if test="examinationId != null">
+            examination_id = #{examinationId},
+        </if>
         <if test="subjectName != null">
             subject_name = #{subjectName},
         </if>

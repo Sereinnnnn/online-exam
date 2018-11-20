@@ -11,6 +11,11 @@ import com.github.tangyi.common.persistence.BaseEntity;
 public class Subject extends BaseEntity<Subject> {
 
     /**
+     * 考试ID
+     */
+    private String examinationId;
+
+    /**
      * 题目名称
      */
     private String subjectName;
@@ -44,6 +49,14 @@ public class Subject extends BaseEntity<Subject> {
      * 难度等级
      */
     private String level;
+
+    public String getExaminationId() {
+        return examinationId;
+    }
+
+    public void setExaminationId(String examinationId) {
+        this.examinationId = examinationId;
+    }
 
     public String getSubjectName() {
         return subjectName;
