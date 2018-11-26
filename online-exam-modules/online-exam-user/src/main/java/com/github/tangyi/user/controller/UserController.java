@@ -3,7 +3,9 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.ExcelToolUtil;
 import com.github.tangyi.common.utils.LogUtil;
+import com.github.tangyi.common.utils.MapUtil;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
@@ -11,6 +13,7 @@ import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
 import com.github.tangyi.user.module.*;
 import com.github.tangyi.user.service.*;
+import com.github.tangyi.user.utils.UserUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
@@ -24,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -237,6 +241,33 @@ public class UserController extends BaseController {
             logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "删除用户"));
         }
         return new ReturnT<>(Boolean.FALSE);
+    }
+
+    /**
+     * 导出
+     *
+     * @param userDtos
+     * @author tangyi
+     * @date 2018/11/26 22:11
+     */
+    @PostMapping("/export")
+    public void export(@RequestBody List<UserDto> userDtos, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (CollectionUtils.isNotEmpty(userDtos)) {
+                List<User> users = new ArrayList<>();
+                for (UserDto userDto : userDtos) {
+                    User user = new User();
+                    user.setId(userDto.getId());
+                    user = userService.get(user);
+                    if (user != null)
+                        users.add(user);
+                }
+                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(users), UserUtils.getUserMap());
+            }
+        } catch (Exception e) {
+            logger.error("导出用户数据失败！", e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导出用户"));
+        }
     }
 }
 
