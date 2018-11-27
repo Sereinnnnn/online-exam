@@ -3,10 +3,7 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
-import com.github.tangyi.common.utils.ExcelToolUtil;
-import com.github.tangyi.common.utils.LogUtil;
-import com.github.tangyi.common.utils.MapUtil;
-import com.github.tangyi.common.utils.SysUtil;
+import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
@@ -14,6 +11,7 @@ import com.github.tangyi.user.dto.UserInfoDto;
 import com.github.tangyi.user.module.*;
 import com.github.tangyi.user.service.*;
 import com.github.tangyi.user.utils.UserUtils;
+import com.google.common.net.HttpHeaders;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
@@ -246,18 +244,22 @@ public class UserController extends BaseController {
     /**
      * 导出
      *
-     * @param userDtos
+     * @param ids 用户id，多个用逗号分隔
      * @author tangyi
      * @date 2018/11/26 22:11
      */
-    @PostMapping("/export")
-    public void export(@RequestBody List<UserDto> userDtos, HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("/export")
+    public void export(String ids, HttpServletRequest request, HttpServletResponse response) {
         try {
-            if (CollectionUtils.isNotEmpty(userDtos)) {
+            // 配置response
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息.xlsx"));
+            if (StringUtils.isNotEmpty(ids)) {
                 List<User> users = new ArrayList<>();
-                for (UserDto userDto : userDtos) {
+                for (String id : ids.split(",")) {
                     User user = new User();
-                    user.setId(userDto.getId());
+                    user.setId(id);
                     user = userService.get(user);
                     if (user != null)
                         users.add(user);
