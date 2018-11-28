@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -249,7 +250,7 @@ public class UserController extends BaseController {
      * @date 2018/11/26 22:11
      */
     @GetMapping("/export")
-    public void export(String ids, HttpServletRequest request, HttpServletResponse response) {
+    public void exportUser(String ids, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
@@ -270,6 +271,34 @@ public class UserController extends BaseController {
             logger.error("导出用户数据失败！", e);
             logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导出用户"));
         }
+    }
+
+    /**
+     * 导入数据
+     *
+     * @param file file
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/11/28 12:44
+     */
+    @RequestMapping("import")
+    public ReturnT<Boolean> importUser(MultipartFile file, HttpServletRequest request) {
+        try {
+            logger.debug("开始导入用户数据");
+            List<User> users = MapUtil.map2Java(User.class,
+                    ExcelToolUtil.importExcel(file.getInputStream(), UserUtils.getUserMap()));
+            if (CollectionUtils.isNotEmpty(users)) {
+                for (User user : users) {
+                    if (userService.update(user) < 1)
+                        userService.insert(user);
+                }
+            }
+            return new ReturnT<>(Boolean.TRUE);
+        } catch (Exception e) {
+            logger.error("导入用户数据失败！", e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导入用户"));
+        }
+        return new ReturnT<>(Boolean.FALSE);
     }
 }
 

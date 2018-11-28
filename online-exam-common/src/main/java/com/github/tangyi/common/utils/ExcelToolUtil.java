@@ -7,6 +7,8 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -162,5 +164,80 @@ public class ExcelToolUtil {
         style.setFont(headerFont);
         styles.put("header", style);
         return styles;
+    }
+
+    /**
+     * 导入数据
+     *
+     * @param input          input
+     * @param keys2titlesMap keys2titlesMap
+     * @return List
+     * @author tangyi
+     * @date 2018/11/28 12:41
+     */
+    public static List<Map<String, Object>> importExcel(InputStream input,
+                                                        LinkedHashMap<String, String> keys2titlesMap) throws Exception {
+        String[] keys = keys2titlesMap.keySet().toArray(new String[]{});
+        return importExcel(input, keys);
+    }
+
+    /**
+     * 导入数据
+     *
+     * @param input input
+     * @param keys  keys
+     * @return List
+     * @author tangyi
+     * @date 2018/11/28 12:42
+     */
+    private static List<Map<String, Object>> importExcel(InputStream input, String[] keys) throws Exception {
+        Workbook wb = WorkbookFactory.create(input);
+        Sheet sheet = wb.getSheetAt(0);
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for (int rownum = 1; rownum <= sheet.getLastRowNum(); rownum++) {
+            // 从第二行开始解析数据
+            Row row = sheet.getRow(rownum);
+            if (row == null) {
+                continue;
+            }
+            Map<String, Object> map = new HashMap<String, Object>();
+            for (int cellnum = 0; cellnum < row.getLastCellNum(); cellnum++) {
+                // 从第1列开始将单元格中的值写入map
+                Cell cell = row.getCell(cellnum);
+                if (cell == null)
+                    continue;
+                int valType = cell.getCellType();
+                if (valType == Cell.CELL_TYPE_STRING) {
+                    map.put(keys[cellnum], cell.getStringCellValue());
+                } else if (valType == Cell.CELL_TYPE_BOOLEAN) {
+                    map.put(keys[cellnum], cell.getBooleanCellValue());
+                } else if (valType == Cell.CELL_TYPE_NUMERIC) {
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        // 用于转化为日期格式
+                        Date d = cell.getDateCellValue();
+                        map.put(keys[cellnum], new SimpleDateFormat("yyyy-MM-dd").format(d));
+                    } else {
+                        map.put(keys[cellnum], numToStringFormat(String.valueOf(cell.getNumericCellValue())));
+                    }
+                }
+            }
+            list.add(map);
+        }
+        return list;
+    }
+
+    /**
+     * 判断这个数字是否是科学计数法 如果是 则转换成普通模式
+     *
+     * @param num num
+     * @return String
+     */
+    private static String numToStringFormat(String num) {
+        if (num.contains("E10")) {
+            return new BigDecimal(num).toPlainString();
+        } else if (num.contains(".0")) {
+            return num.substring(0, num.length() - 2);
+        } else
+            return num;
     }
 }

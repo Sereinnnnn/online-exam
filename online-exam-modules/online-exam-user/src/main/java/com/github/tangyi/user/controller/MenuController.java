@@ -3,18 +3,24 @@ package com.github.tangyi.user.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
-import com.github.tangyi.common.utils.SysUtil;
+import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.web.BaseController;
-import com.github.tangyi.user.utils.TreeUtil;
-import com.github.tangyi.user.constants.MenuConstant;
 import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
+import com.github.tangyi.user.service.LogService;
 import com.github.tangyi.user.service.MenuService;
+import com.github.tangyi.user.utils.MenuUtil;
+import com.github.tangyi.user.utils.TreeUtil;
+import com.google.common.net.HttpHeaders;
 import com.xiaoleilu.hutool.collection.CollUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -29,6 +35,9 @@ public class MenuController extends BaseController {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private LogService logService;
 
     /**
      * 返回当前用户的树形菜单集合
@@ -183,5 +192,64 @@ public class MenuController extends BaseController {
         List<String> menuList = new ArrayList<>();
         menus.forEach(menu -> menuList.add(menu.getId()));
         return menuList;
+    }
+
+    /**
+     * 导出菜单
+     *
+     * @param ids 用户id，多个用逗号分隔
+     * @author tangyi
+     * @date 2018/11/28 12:46
+     */
+    @GetMapping("/export")
+    public void exportMenu(String ids, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // 配置response
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "菜单信息.xlsx"));
+            if (StringUtils.isNotEmpty(ids)) {
+                List<Menu> menus = new ArrayList<>();
+                for (String id : ids.split(",")) {
+                    Menu menu = new Menu();
+                    menu.setId(id);
+                    menu = menuService.get(menu);
+                    if (menu != null)
+                        menus.add(menu);
+                }
+                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(menus), MenuUtil.getMenuMap());
+            }
+        } catch (Exception e) {
+            logger.error("导出菜单数据失败！", e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导出菜单"));
+        }
+    }
+
+    /**
+     * 导入数据
+     *
+     * @param file file
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/11/28 12:51
+     */
+    @RequestMapping("import")
+    public ReturnT<Boolean> importMenu(MultipartFile file, HttpServletRequest request) {
+        try {
+            logger.debug("开始导入菜单数据");
+            List<Menu> menus = MapUtil.map2Java(Menu.class,
+                    ExcelToolUtil.importExcel(file.getInputStream(), MenuUtil.getMenuMap()));
+            if (CollectionUtils.isNotEmpty(menus)) {
+                for (Menu menu : menus) {
+                    if (menuService.update(menu) < 1)
+                        menuService.insert(menu);
+                }
+            }
+            return new ReturnT<>(Boolean.TRUE);
+        } catch (Exception e) {
+            logger.error("导入菜单数据失败！", e);
+            logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导入菜单"));
+        }
+        return new ReturnT<>(Boolean.FALSE);
     }
 }

@@ -3,16 +3,27 @@ package com.github.tangyi.exam.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.ExcelToolUtil;
+import com.github.tangyi.common.utils.MapUtil;
+import com.github.tangyi.common.utils.Servlets;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Subject;
 import com.github.tangyi.exam.service.SubjectService;
+import com.github.tangyi.exam.utils.SubjectUtil;
+import com.google.common.net.HttpHeaders;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -115,5 +126,62 @@ public class SubjectController extends BaseController {
             logger.error("删除题目失败！", e);
         }
         return new ReturnT<Boolean>(Boolean.TRUE);
+    }
+
+    /**
+     * 导出题目
+     *
+     * @param ids 用户id，多个用逗号分隔
+     * @author tangyi
+     * @date 2018/11/28 12:53
+     */
+    @GetMapping("/export")
+    public void exportSubject(String ids, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // 配置response
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息.xlsx"));
+            if (StringUtils.isNotEmpty(ids)) {
+                List<Subject> subjects = new ArrayList<>();
+                for (String id : ids.split(",")) {
+                    Subject subject = new Subject();
+                    subject.setId(id);
+                    subject = subjectService.get(subject);
+                    if (subject != null)
+                        subjects.add(subject);
+                }
+                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(subjects), SubjectUtil.getSubjectMap());
+            }
+        } catch (Exception e) {
+            logger.error("导出题目数据失败！", e);
+        }
+    }
+
+    /**
+     * 导入数据
+     *
+     * @param file file
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/11/28 12:59
+     */
+    @RequestMapping("import")
+    public ReturnT<Boolean> importSubject(MultipartFile file) {
+        try {
+            logger.debug("开始导入题目数据");
+            List<Subject> subjects = MapUtil.map2Java(Subject.class,
+                    ExcelToolUtil.importExcel(file.getInputStream(), SubjectUtil.getSubjectMap()));
+            if (CollectionUtils.isNotEmpty(subjects)) {
+                for (Subject subject : subjects) {
+                    if (subjectService.update(subject) < 1)
+                        subjectService.insert(subject);
+                }
+            }
+            return new ReturnT<>(Boolean.TRUE);
+        } catch (Exception e) {
+            logger.error("导入题目数据失败！", e);
+        }
+        return new ReturnT<>(Boolean.FALSE);
     }
 }

@@ -6,6 +6,7 @@ import com.github.tangyi.user.constants.MenuConstant;
 import com.github.tangyi.user.module.Menu;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -57,5 +58,35 @@ public class MenuUtil {
         menus.add(del);
         menus.add(edit);
         return menus;
+    }
+
+    /**
+     * 获取Menu属性的map
+     *
+     * @return LinkedHashMap
+     * @author tangyi
+     * @date 2018/11/28 12:48
+     */
+    public static LinkedHashMap<String, String> getMenuMap() {
+        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+        map.put("id", "用户id");
+        map.put("name", "菜单名称");
+        map.put("permission", "菜单权限标识");
+        map.put("url", "url");
+        map.put("redirect", "重定向url");
+        map.put("parentId", "父菜单ID");
+        map.put("icon", "图标");
+        map.put("sort", "排序号");
+        map.put("type", "类型");
+        map.put("component", "模块");
+        map.put("path", "路径");
+        map.put("remark", "备注");
+        map.put("creator", "创建人");
+        map.put("createDate", "创建时间");
+        map.put("modifier", "修改人");
+        map.put("modifyDate", "修改时间");
+        map.put("delFlag", "删除标记");
+        map.put("applicationCode", "系统编码");
+        return map;
     }
 }
