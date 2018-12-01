@@ -20,21 +20,21 @@ public class SubjectUtil {
      */
     public static LinkedHashMap<String, String> getSubjectMap() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        map.put("id", "用户id");
-        map.put("examinationId", "菜单名称");
-        map.put("subjectName", "菜单权限标识");
-        map.put("type", "url");
-        map.put("content", "重定向url");
-        map.put("optionA", "父菜单ID");
-        map.put("optionB", "图标");
-        map.put("optionC", "排序号");
-        map.put("optionD", "类型");
-        map.put("optionE", "模块");
-        map.put("optionF", "路径");
-        map.put("answer", "备注");
-        map.put("score", "备注");
-        map.put("analysis", "备注");
-        map.put("level", "备注");
+        map.put("id", "题目ID");
+        map.put("examinationId", "考试ID");
+        map.put("subjectName", "题目名称");
+        map.put("type", "题目类型");
+        map.put("content", "题目内容");
+        map.put("optionA", "选项A");
+        map.put("optionB", "选项B");
+        map.put("optionC", "选项C");
+        map.put("optionD", "选项D");
+        map.put("optionE", "选项E");
+        map.put("optionF", "选项F");
+        map.put("answer", "参考答案");
+        map.put("score", "分值");
+        map.put("analysis", "解析");
+        map.put("level", "难度等级");
         map.put("creator", "创建人");
         map.put("createDate", "创建时间");
         map.put("modifier", "修改人");

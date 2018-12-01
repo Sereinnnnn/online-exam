@@ -131,19 +131,21 @@ public class SubjectController extends BaseController {
     /**
      * 导出题目
      *
-     * @param ids 用户id，多个用逗号分隔
+     * @param ids           用户id，多个用逗号分隔
+     * @param examinationId 考试id
      * @author tangyi
      * @date 2018/11/28 12:53
      */
     @GetMapping("/export")
-    public void exportSubject(String ids, HttpServletRequest request, HttpServletResponse response) {
+    public void exportSubject(String ids, String examinationId, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息.xlsx"));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "题目信息.xlsx"));
+            List<Subject> subjects = new ArrayList<>();
+            // 根据题目id导出
             if (StringUtils.isNotEmpty(ids)) {
-                List<Subject> subjects = new ArrayList<>();
                 for (String id : ids.split(",")) {
                     Subject subject = new Subject();
                     subject.setId(id);
@@ -151,8 +153,12 @@ public class SubjectController extends BaseController {
                     if (subject != null)
                         subjects.add(subject);
                 }
-                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(subjects), SubjectUtil.getSubjectMap());
+            } else if (StringUtils.isNotEmpty(examinationId)){  // 根据考试id导出
+                Subject subject = new Subject();
+                subject.setExaminationId(examinationId);
+                subjects = subjectService.findList(subject);
             }
+            ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(subjects), SubjectUtil.getSubjectMap());
         } catch (Exception e) {
             logger.error("导出题目数据失败！", e);
         }

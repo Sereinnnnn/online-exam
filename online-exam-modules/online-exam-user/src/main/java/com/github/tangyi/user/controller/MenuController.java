@@ -208,8 +208,12 @@ public class MenuController extends BaseController {
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "菜单信息.xlsx"));
-            if (StringUtils.isNotEmpty(ids)) {
-                List<Menu> menus = new ArrayList<>();
+            List<Menu> menus = new ArrayList<>();
+            // 导出所有
+            if (StringUtils.isEmpty(ids)) {
+                Menu menu = new Menu();
+                menus = menuService.findList(menu);
+            } else {    // 导出选中
                 for (String id : ids.split(",")) {
                     Menu menu = new Menu();
                     menu.setId(id);
@@ -217,8 +221,8 @@ public class MenuController extends BaseController {
                     if (menu != null)
                         menus.add(menu);
                 }
-                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(menus), MenuUtil.getMenuMap());
             }
+            ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(menus), MenuUtil.getMenuMap());
         } catch (Exception e) {
             logger.error("导出菜单数据失败！", e);
             logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导出菜单"));
