@@ -56,4 +56,12 @@ public interface CrudMapper<T> extends BaseMapper {
      * @return
      */
     int delete(T entity);
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
+    int deleteAll(String[] ids);
 }

@@ -153,7 +153,7 @@ public class SubjectController extends BaseController {
                     if (subject != null)
                         subjects.add(subject);
                 }
-            } else if (StringUtils.isNotEmpty(examinationId)){  // 根据考试id导出
+            } else if (StringUtils.isNotEmpty(examinationId)) {  // 根据考试id导出
                 Subject subject = new Subject();
                 subject.setExaminationId(examinationId);
                 subjects = subjectService.findList(subject);
@@ -167,21 +167,28 @@ public class SubjectController extends BaseController {
     /**
      * 导入数据
      *
-     * @param file file
+     * @param examinationId examinationId
+     * @param file          file
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/28 12:59
      */
     @RequestMapping("import")
-    public ReturnT<Boolean> importSubject(MultipartFile file) {
+    public ReturnT<Boolean> importSubject(String examinationId, MultipartFile file) {
         try {
             logger.debug("开始导入题目数据");
             List<Subject> subjects = MapUtil.map2Java(Subject.class,
                     ExcelToolUtil.importExcel(file.getInputStream(), SubjectUtil.getSubjectMap()));
             if (CollectionUtils.isNotEmpty(subjects)) {
                 for (Subject subject : subjects) {
-                    if (subjectService.update(subject) < 1)
+                    // 初始化考试ID
+                    if (StringUtils.isBlank(subject.getId()) && StringUtils.isNotBlank(examinationId)) {
+                        subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                        subject.setExaminationId(examinationId);
                         subjectService.insert(subject);
+                    } else {
+                        subjectService.update(subject);
+                    }
                 }
             }
             return new ReturnT<>(Boolean.TRUE);

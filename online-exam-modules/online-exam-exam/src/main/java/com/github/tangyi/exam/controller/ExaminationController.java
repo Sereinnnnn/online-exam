@@ -147,4 +147,32 @@ public class ExaminationController extends BaseController {
         }
         return new ReturnT<Boolean>(Boolean.TRUE);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param examinationDto examinationDto
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/03 22:03
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteAllExamination(ExaminationDto examinationDto) {
+        try {
+            if (examinationDto.getIds() != null && examinationDto.getIds().length > 0) {
+                for (String id : examinationDto.getIds()) {
+                    Examination examination = new Examination();
+                    examination.setId(id);
+                    examination = examinationService.get(examination);
+                    if (examination != null) {
+                        examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                        examinationService.delete(examination);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("删除考试失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
+    }
 }

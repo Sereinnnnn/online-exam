@@ -3,6 +3,8 @@ package com.github.tangyi.exam.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.exam.mapper.CourseMapper;
 import com.github.tangyi.exam.module.Course;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,4 +17,48 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class CourseService extends CrudService<CourseMapper, Course> {
+
+    /**
+     * 获取课程信息
+     *
+     * @param course course
+     * @return Course
+     * @author tangyi
+     * @date 2018/12/03 21:30
+     */
+    @Override
+    @Cacheable(value = "course", key = "#course.id")
+    public Course get(Course course) {
+        return super.get(course);
+    }
+
+    /**
+     * 更新课程信息
+     *
+     * @param course course
+     * @return int
+     * @author tangyi
+     * @date 2018/12/03 21:32
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "course", key = "#course.id")
+    public int update(Course course) {
+        return super.update(course);
+    }
+
+    /**
+     * 删除课程信息
+     *
+     * @param course course
+     * @return int
+     * @author tangyi
+     * @date 2018/12/03 21:32
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "course", key = "#course.id")
+    public int delete(Course course) {
+        return super.delete(course);
+    }
 }

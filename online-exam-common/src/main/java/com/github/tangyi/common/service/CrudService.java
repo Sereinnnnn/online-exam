@@ -94,6 +94,17 @@ public abstract class CrudService<D extends CrudMapper<T>, T extends BaseEntity<
     }
 
     /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int deleteAll(String[] ids) {
+        return this.dao.deleteAll(ids);
+    }
+
+    /**
      * 插入数据
      *
      * @param entity
