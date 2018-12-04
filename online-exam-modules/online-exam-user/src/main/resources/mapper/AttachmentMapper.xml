@@ -134,4 +134,13 @@
         DEL_FLAG = 1
         WHERE ID = #{id}
     </delete>
+
+    <delete id="deleteAll">
+        UPDATE sys_attachment SET
+        del_flag = 1
+        WHERE id in
+        <foreach item="item" index="index" collection="array" open="("
+                 separator="," close=")"> #{item}
+        </foreach>
+    </delete>
 </mapper>

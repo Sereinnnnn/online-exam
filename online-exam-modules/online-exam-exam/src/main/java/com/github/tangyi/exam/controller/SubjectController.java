@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -142,7 +144,7 @@ public class SubjectController extends BaseController {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "题目信息.xlsx"));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "题目信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<Subject> subjects = new ArrayList<>();
             // 根据题目id导出
             if (StringUtils.isNotEmpty(ids)) {
@@ -196,5 +198,24 @@ public class SubjectController extends BaseController {
             logger.error("导入题目数据失败！", e);
         }
         return new ReturnT<>(Boolean.FALSE);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param subject subject
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/04 9:55
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteSubjects(@RequestBody Subject subject) {
+        try {
+            if (StringUtils.isNotEmpty(subject.getIds()))
+                subjectService.deleteAll(subject.getIds().split(","));
+        } catch (Exception e) {
+            logger.error("删除题目失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
     }
 }

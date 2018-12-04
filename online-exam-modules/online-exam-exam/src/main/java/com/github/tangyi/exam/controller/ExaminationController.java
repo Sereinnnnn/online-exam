@@ -151,25 +151,16 @@ public class ExaminationController extends BaseController {
     /**
      * 批量删除
      *
-     * @param examinationDto examinationDto
+     * @param examination examination
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/03 22:03
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllExamination(ExaminationDto examinationDto) {
+    public ReturnT<Boolean> deleteAllExaminations(@RequestBody Examination examination) {
         try {
-            if (examinationDto.getIds() != null && examinationDto.getIds().length > 0) {
-                for (String id : examinationDto.getIds()) {
-                    Examination examination = new Examination();
-                    examination.setId(id);
-                    examination = examinationService.get(examination);
-                    if (examination != null) {
-                        examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                        examinationService.delete(examination);
-                    }
-                }
-            }
+            if (StringUtils.isNotEmpty(examination.getIds()))
+                examinationService.deleteAll(examination.getIds().split(","));
         } catch (Exception e) {
             logger.error("删除考试失败！", e);
         }

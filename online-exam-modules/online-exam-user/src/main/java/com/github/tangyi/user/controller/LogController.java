@@ -74,4 +74,22 @@ public class LogController extends BaseController {
         log.setId(id);
         return new ReturnT<>(logService.delete(log) > 0);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/4 10:12
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteAllAttachments(String ids) {
+        try {
+            logService.deleteAll(ids.split(","));
+        } catch (Exception e) {
+            logger.error("删除附件失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
+    }
 }

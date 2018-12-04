@@ -257,4 +257,13 @@
         modify_date = #{modifyDate}
         where id = #{id}
     </update>
+
+    <delete id="deleteAll">
+        update sys_user SET
+        del_flag = 1
+        where id in
+        <foreach item="item" index="index" collection="array" open="("
+                 separator="," close=")"> #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -27,7 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -255,7 +257,7 @@ public class UserController extends BaseController {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息.xlsx"));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             if (StringUtils.isNotEmpty(ids)) {
                 List<User> users = new ArrayList<>();
                 for (String id : ids.split(",")) {
@@ -299,6 +301,24 @@ public class UserController extends BaseController {
             logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导入用户"));
         }
         return new ReturnT<>(Boolean.FALSE);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/4 9:58
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteAllUsers(String ids) {
+        try {
+            userService.deleteAll(ids.split(","));
+        } catch (Exception e) {
+            logger.error("删除用户失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
     }
 }
 

@@ -116,4 +116,23 @@ public class CourseController extends BaseController {
         }
         return new ReturnT<Boolean>(Boolean.TRUE);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param course course
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/4 11:26
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteAllCourses(@RequestBody Course course) {
+        try {
+            if (StringUtils.isNotEmpty(course.getIds()))
+                courseService.deleteAll(course.getIds().split(","));
+        } catch (Exception e) {
+            logger.error("删除课程失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
+    }
 }

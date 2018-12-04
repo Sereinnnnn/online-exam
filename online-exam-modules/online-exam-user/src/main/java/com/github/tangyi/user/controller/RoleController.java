@@ -193,4 +193,22 @@ public class RoleController extends BaseController {
         role.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<>(roleService.delete(role) > 0);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/4 10:00
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteAllRoles(String ids) {
+        try {
+            roleService.deleteAll(ids.split(","));
+        } catch (Exception e) {
+            logger.error("删除角色失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
+    }
 }

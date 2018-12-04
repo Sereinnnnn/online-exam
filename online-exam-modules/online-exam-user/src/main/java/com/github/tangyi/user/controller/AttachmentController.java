@@ -165,4 +165,22 @@ public class AttachmentController extends BaseController {
         }
         return new ReturnT<>(success);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/4 10:01
+     */
+    @PostMapping("/deleteAll")
+    public ReturnT<Boolean> deleteAllAttachments(String ids) {
+        try {
+            attachmentService.deleteAll(ids.split(","));
+        } catch (Exception e) {
+            logger.error("删除附件失败！", e);
+        }
+        return new ReturnT<Boolean>(Boolean.TRUE);
+    }
 }
