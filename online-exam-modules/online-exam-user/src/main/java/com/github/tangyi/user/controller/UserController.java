@@ -1,5 +1,6 @@
 package com.github.tangyi.user.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
@@ -50,9 +51,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserRoleService userRoleService;
-
-    @Autowired
-    private UserDeptService userDeptService;
 
     @Autowired
     private DeptService deptService;
@@ -119,14 +117,14 @@ public class UserController extends BaseController {
         BeanUtils.copyProperties(userVo, user);
         // 用户名查询条件
         user.setUsername(params.getOrDefault("username", ""));
+        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
         page = userService.findPage(page, user);
         if (CollectionUtils.isNotEmpty(page.getList())) {
             page.getList().forEach(tempUser -> {
                 // 查询用户部门关系
-                UserDept userDept = userDeptService.getDeptByUserId(tempUser.getId());
-                if (userDept != null) {
+                if (StringUtils.isNotBlank(tempUser.getDeptId())) {
                     Dept dept = new Dept();
-                    dept.setId(userDept.getDeptId());
+                    dept.setId(tempUser.getDeptId());
                     // 查询部门信息
                     dept = deptService.get(dept);
                     if (dept != null) {
@@ -134,7 +132,6 @@ public class UserController extends BaseController {
                         tempUser.setDeptId(dept.getId());
                     }
                 }
-
                 // 查询用户角色关系
                 List<UserRole> userRoles = userRoleService.getByUserId(tempUser.getId());
                 if (CollectionUtils.isNotEmpty(userRoles)) {
@@ -258,8 +255,8 @@ public class UserController extends BaseController {
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
+            List<User> users = new ArrayList<>();
             if (StringUtils.isNotEmpty(ids)) {
-                List<User> users = new ArrayList<>();
                 for (String id : ids.split(",")) {
                     User user = new User();
                     user.setId(id);
@@ -267,8 +264,11 @@ public class UserController extends BaseController {
                     if (user != null)
                         users.add(user);
                 }
-                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(users), UserUtils.getUserMap());
+            } else {    // 导出全部用户
+                users = userService.findList(new User());
             }
+            ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(users), UserUtils.getUserMap());
+
         } catch (Exception e) {
             logger.error("导出用户数据失败！", e);
             logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导出用户"));

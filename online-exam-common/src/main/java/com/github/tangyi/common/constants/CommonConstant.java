@@ -54,6 +54,16 @@ public class CommonConstant {
     public static final String PAGE_SIZE_DEFAULT = "10";
 
     /**
+     * 默认排序
+     */
+    public static final String PAGE_SORT_DEFAULT = "id";
+
+    /**
+     * 默认排序方向
+     */
+    public static final String PAGE_ORDER_DEFAULT = " desc";
+
+    /**
      * 正常状态
      */
     public static final Integer DEL_FLAG_NORMAL = 0;

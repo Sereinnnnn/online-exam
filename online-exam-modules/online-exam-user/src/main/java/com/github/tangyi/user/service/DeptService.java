@@ -3,7 +3,6 @@ package com.github.tangyi.user.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.user.mapper.DeptMapper;
 import com.github.tangyi.user.mapper.RoleDeptMapper;
-import com.github.tangyi.user.mapper.UserDeptMapper;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.module.Role;
 import com.github.tangyi.user.module.RoleDept;
@@ -30,9 +29,6 @@ public class DeptService extends CrudService<DeptMapper, Dept> {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private UserDeptMapper userDeptMapper;
-
     /**
      * 删除部门
      *
@@ -52,8 +48,6 @@ public class DeptService extends CrudService<DeptMapper, Dept> {
                 roleService.delete(role);
             });
         }
-        // 删除部门用户关系
-        userDeptMapper.deleteByDeptId(dept.getId());
         // 删除部门
         return super.delete(dept);
     }

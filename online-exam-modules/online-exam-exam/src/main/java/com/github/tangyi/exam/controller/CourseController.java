@@ -1,8 +1,10 @@
 package com.github.tangyi.exam.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.PageUtil;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Course;
@@ -62,6 +64,7 @@ public class CourseController extends BaseController {
         PageInfo<Course> page = new PageInfo<Course>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
         return courseService.findPage(page, course);
     }
 

@@ -63,6 +63,11 @@ public class UserVo extends BaseEntity<UserVo> {
     private String deptName;
 
     /**
+     * 部门ID
+     */
+    private String deptId;
+
+    /**
      * 角色列表
      */
     private List<Role> roleList;
@@ -179,5 +184,13 @@ public class UserVo extends BaseEntity<UserVo> {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

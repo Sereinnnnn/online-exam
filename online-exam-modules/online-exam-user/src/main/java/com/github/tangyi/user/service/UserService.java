@@ -9,12 +9,10 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
 import com.github.tangyi.user.mapper.MenuMapper;
-import com.github.tangyi.user.mapper.UserDeptMapper;
 import com.github.tangyi.user.mapper.UserMapper;
 import com.github.tangyi.user.mapper.UserRoleMapper;
 import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.module.User;
-import com.github.tangyi.user.module.UserDept;
 import com.github.tangyi.user.module.UserRole;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -53,9 +51,6 @@ public class UserService extends CrudService<UserMapper, User> {
     private UserRoleMapper userRoleMapper;
 
     @Autowired
-    private UserDeptMapper userDeptMapper;
-
-    @Autowired
     private MenuMapper menuMapper;
 
     @Autowired
@@ -82,14 +77,6 @@ public class UserService extends CrudService<UserMapper, User> {
                 // 保存角色
                 userRoleMapper.insert(sysUserRole);
             });
-        }
-        // 保存部门
-        if (StringUtils.isNotEmpty(user.getDeptId())) {
-            UserDept userDept = new UserDept();
-            userDept.setId(IdGen.uuid());
-            userDept.setUserId(user.getId());
-            userDept.setDeptId(user.getDeptId());
-            userDeptMapper.insert(userDept);
         }
         return super.insert(user);
     }
@@ -165,15 +152,6 @@ public class UserService extends CrudService<UserMapper, User> {
                 userRoleMapper.insert(role);
             });
         }
-        // 更新用户部门关系
-        if (StringUtils.isNotBlank(userDto.getDeptId())) {
-            UserDept userDept = new UserDept();
-            userDept.setUserId(user.getId());
-            userDeptMapper.delete(userDept);
-            userDept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-            userDept.setDeptId(userDto.getDeptId());
-            userDeptMapper.insert(userDept);
-        }
         return Boolean.TRUE;
     }
 
@@ -226,8 +204,6 @@ public class UserService extends CrudService<UserMapper, User> {
     public int delete(User user) {
         // 删除用户角色关系
         userRoleMapper.deleteByUserId(user.getId());
-        // 删除用户部门关系
-        userDeptMapper.deleteByUserId(user.getId());
         return super.delete(user);
     }
 }

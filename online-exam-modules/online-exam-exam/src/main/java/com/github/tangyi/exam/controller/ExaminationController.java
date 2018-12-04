@@ -1,8 +1,10 @@
 package com.github.tangyi.exam.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.PageUtil;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.dto.ExaminationDto;
@@ -72,6 +74,7 @@ public class ExaminationController extends BaseController {
         PageInfo<Examination> page = new PageInfo<Examination>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+        PageHelper.orderBy(PageUtil.orderBy(params.get("sort"), params.get("order")));
         page = examinationService.findPage(page, examination);
         PageInfo<ExaminationDto> examinationDtoPageInfo = new PageInfo<>();
         BeanUtils.copyProperties(page, examinationDtoPageInfo);

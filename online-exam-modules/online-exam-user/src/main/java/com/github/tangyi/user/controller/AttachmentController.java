@@ -1,13 +1,11 @@
 package com.github.tangyi.user.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.exception.CommonException;
 import com.github.tangyi.common.model.ReturnT;
-import com.github.tangyi.common.utils.FileUtil;
-import com.github.tangyi.common.utils.LogUtil;
-import com.github.tangyi.common.utils.Servlets;
-import com.github.tangyi.common.utils.SysUtil;
+import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.module.Attachment;
 import com.github.tangyi.user.service.AttachmentService;
@@ -60,6 +58,7 @@ public class AttachmentController extends BaseController {
         PageInfo<Attachment> page = new PageInfo<Attachment>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
         return attachmentService.findPage(page, attachment);
     }
 
