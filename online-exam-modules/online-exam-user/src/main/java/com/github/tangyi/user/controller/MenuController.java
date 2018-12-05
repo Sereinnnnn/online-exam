@@ -10,7 +10,6 @@ import com.github.tangyi.user.module.Menu;
 import com.github.tangyi.user.service.LogService;
 import com.github.tangyi.user.service.MenuService;
 import com.github.tangyi.user.utils.MenuUtil;
-import com.github.tangyi.user.utils.TreeUtil;
 import com.google.common.net.HttpHeaders;
 import com.xiaoleilu.hutool.collection.CollUtil;
 import org.apache.commons.collections4.CollectionUtils;

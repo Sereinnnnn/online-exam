@@ -11,7 +11,7 @@
  Target Server Version : 50710
  File Encoding         : 65001
 
- Date: 20/11/2018 23:00:05
+ Date: 04/12/2018 22:35:55
 */
 
 SET NAMES utf8mb4;
@@ -118,6 +118,7 @@ CREATE TABLE `sys_dept`  (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
+INSERT INTO `sys_dept` VALUES ('140b2ba6508240f2a39b6729e6cc5f3e', '11', '2d0b1e08677d45bc8cee3db44774abf6', '30', 'admin', '2018-12-01 14:21:51', 'admin', '2018-12-01 14:21:51', '1', 'EXAM', '0', '11', '11');
 INSERT INTO `sys_dept` VALUES ('1e31659224884cbc89022ab4e6ecf70c', '移动研发部', '551aafb3281b44b1bfbd19bac9e54b94', '27', '', '2018-10-26 17:21:47', '', '2018-10-26 17:21:47', '0', '', '0', '移动研发部', '叶瑞龙');
 INSERT INTO `sys_dept` VALUES ('2d0b1e08677d45bc8cee3db44774abf6', '测试部门', '-1', '30', '', '2018-10-27 22:22:22', '', '2018-10-27 22:22:22', '0', '', '0', '测试', '测试');
 INSERT INTO `sys_dept` VALUES ('34f01bfe915647f2859400fadba431b0', '', '-1', '30', '', '2018-10-29 13:01:46', '', '2018-10-29 13:01:46', '1', '', '0', NULL, NULL);
@@ -162,13 +163,13 @@ CREATE TABLE `sys_log`  (
 INSERT INTO `sys_log` VALUES ('077d10c9a3e94dd9b2287cd203526bb8', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@4c9df721', '附件不存在！', NULL, NULL, '2018-11-05 20:42:43', NULL, '2018-11-05 20:42:43', '1', 'EXAM');
 INSERT INTO `sys_log` VALUES ('0eb7834aedd041968906374d5b87945b', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@4c9df721', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-05 20:59:17', NULL, '2018-11-05 20:59:17', '1', 'EXAM');
 INSERT INTO `sys_log` VALUES ('150992f011a740b0876893951940da01', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@4c9df721', '附件不存在！', NULL, NULL, '2018-11-05 20:44:18', NULL, '2018-11-05 20:44:18', '1', 'EXAM');
-INSERT INTO `sys_log` VALUES ('22ae0049f6de44b3bb6d9f432a690b88', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@21621609', '附件不存在！', NULL, NULL, '2018-11-13 20:53:59', NULL, '2018-11-13 20:53:59', '0', 'EXAM');
-INSERT INTO `sys_log` VALUES ('3e5466c57e794256b9cf9f958c962a8e', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@536583d2', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-13 20:26:43', NULL, '2018-11-13 20:26:43', '0', 'EXAM');
+INSERT INTO `sys_log` VALUES ('22ae0049f6de44b3bb6d9f432a690b88', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@21621609', '附件不存在！', NULL, NULL, '2018-11-13 20:53:59', NULL, '2018-11-13 20:53:59', '1', 'EXAM');
+INSERT INTO `sys_log` VALUES ('3e5466c57e794256b9cf9f958c962a8e', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@536583d2', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-13 20:26:43', NULL, '2018-11-13 20:26:43', '1', 'EXAM');
 INSERT INTO `sys_log` VALUES ('63c8d16c752a40dbb255bdb09df5cd19', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@f0f63ca', '附件不存在！', NULL, NULL, '2018-11-04 13:26:56', NULL, '2018-11-04 13:26:56', '1', 'EXAM');
-INSERT INTO `sys_log` VALUES ('651b2be15b134d6e938a116907906242', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@1049e3c9', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-13 20:26:42', NULL, '2018-11-13 20:26:42', '0', 'EXAM');
+INSERT INTO `sys_log` VALUES ('651b2be15b134d6e938a116907906242', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@1049e3c9', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-13 20:26:42', NULL, '2018-11-13 20:26:42', '1', 'EXAM');
 INSERT INTO `sys_log` VALUES ('70451e36784447388d23b195a7d8b4c1', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@4c9df721', '附件不存在！', NULL, NULL, '2018-11-05 20:43:11', NULL, '2018-11-05 20:43:11', '1', 'EXAM');
 INSERT INTO `sys_log` VALUES ('76e147a9bbb04e2b85a238c8f24a9e5d', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@f0f63ca', '附件不存在！', NULL, NULL, '2018-11-04 13:28:05', NULL, '2018-11-04 13:28:05', '1', 'EXAM');
-INSERT INTO `sys_log` VALUES ('a76ea2335b1c44f29fc28b0d41ffd4b8', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@455e6ab5', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-13 20:26:44', NULL, '2018-11-13 20:26:44', '0', 'EXAM');
+INSERT INTO `sys_log` VALUES ('a76ea2335b1c44f29fc28b0d41ffd4b8', '2', '下载附件', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.17 Safari/537.36', '/attachment/download', 'GET', 'org.apache.catalina.util.ParameterMap@455e6ab5', 'java.io.IOException: 你的主机中的软件中止了一个已建立的连接。', NULL, NULL, '2018-11-13 20:26:44', NULL, '2018-11-13 20:26:44', '1', 'EXAM');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -200,11 +201,14 @@ CREATE TABLE `sys_menu`  (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('0390263ef05f45dfb5d7bcf7e2da90b6', '查询', 'sys_role_query', NULL, '5', 'example', '2', '1', '', '2018-10-28 16:44:44', '', '2018-10-28 16:44:44', '1', '', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('095bb0644ab14d97b31418f87e1cf823', '导出菜单', 'sys:menu:export', NULL, '3', '', '34', '1', 'admin', '2018-11-28 19:07:02', 'admin', '2018-11-28 19:07:02', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('0dc80492cf414db984d825fdd842e022', '新增用户', 'sys:user:add', NULL, '4', 'example', '1', '1', '', '2018-10-28 16:38:57', 'admin', '2018-11-04 10:20:38', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('0ee02b8dc3064fcd972f527c31aad5a7', '修改菜单', 'sys:menu:edit', NULL, '3', 'example', '4', '1', '', '2018-10-28 16:46:38', 'admin', '2018-11-04 10:21:23', '0', '', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('0fe1156ec9e24dd4bc2c663c665a5048', '导出用户', 'sys:user:export', NULL, '4', '', '33', '1', 'admin', '2018-11-27 12:05:03', 'admin', '2018-11-27 12:05:03', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('1', '系统管理', 'sys', '/admin/sys/**', '-1', 'component', '1', '0', '1', '1', 'admin', '2018-11-06 23:23:35', '0', '1', 'Layout', '/sys', NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('14', '个人管理', 'personal', '/admin/personal/**', '-1', 'form', '30', '0', '', '2018-10-28 16:12:34', 'admin', '2018-10-30 14:42:17', '0', '', 'Layout', '/personal', NULL, '个人管理');
 INSERT INTO `sys_menu` VALUES ('15', '附件管理', 'attachment', '/admin/attachment/**', '-1', 'excel', '10', '0', 'admin', '2018-10-30 19:48:36', 'admin', '2018-10-30 20:31:21', '0', 'EXAM', 'Layout', '/attachment', NULL, '附件管理');
+INSERT INTO `sys_menu` VALUES ('1717eabc03174c2e9bdaf27c5a5697dd', '题库管理', 'exam:subject', '/exam/course/**', 'b93eba1199b6420a82d285a8919bcd23', '', '3', '0', 'admin', '2018-12-04 21:33:40', 'admin', '2018-12-04 21:33:40', '0', 'EXAM', 'views/exam/subject', 'subject', NULL, '题库管理');
 INSERT INTO `sys_menu` VALUES ('19371307401c436096c040b935aea0fd', '查询', 'null_query', NULL, '9aeba7d6166941639876bf40673d59cb', NULL, '30', '1', 'admin', '2018-10-29 21:39:21', 'admin', '2018-10-29 21:39:21', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('1b68d41bfcc3441f839188a9d7b6ead0', '接口文档', 'monitor:document', '/monitor/document/**', '7', '', '32', '0', 'admin', '2018-10-30 15:06:08', 'admin', '2018-11-07 18:13:47', '0', 'EXAM', '', 'http://139.224.200.249:19999/swagger-ui.html', NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('1e6a90e57df541e0973691c17d44564c', '日志监控', 'monitor:log', '/admin/log/**', '7', '', '30', '0', 'admin', '2018-10-30 15:00:25', 'admin', '2018-11-06 23:34:19', '0', 'EXAM', 'views/monitor/log', 'log', NULL, '日志监控');
@@ -215,29 +219,38 @@ INSERT INTO `sys_menu` VALUES ('26cd5e31227843219d990ebfbaf35855', '删除', 'nu
 INSERT INTO `sys_menu` VALUES ('26f531763fe94b94bc30208a8bf46427', '测试菜单2', '测试菜单2', 'ddd', '48e4338aef2543e988d4105e153a3c92', 'example', '30', '0', 'admin', '2018-10-29 21:48:28', 'admin', '2018-10-29 21:48:28', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('2a232ac9f43146a49ab5a19226e76742', '删除部门', 'sys:dept:del', NULL, '6', 'example', '3', '1', '', '2018-10-28 16:43:19', 'admin', '2018-11-04 10:20:22', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('3', '菜单管理', 'sys:menu', '/admin/menu/**', '1', '', '10', '0', '1', '1', 'admin', '2018-11-06 23:34:12', '0', '1', 'views/sys/menu', 'menu', NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('34371d1e990549f0b633389bdf64ce0f', '修改题目分类', 'exam:subject:category:edit', NULL, '1717eabc03174c2e9bdaf27c5a5697dd', '', '5', '1', 'admin', '2018-12-04 21:36:34', 'admin', '2018-12-04 21:36:34', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('347d24c6e1cf42eaa976c91f5607007a', '新增部门', 'sys:dept:add', NULL, '6', 'example', '1', '1', '', '2018-10-28 16:42:40', 'admin', '2018-11-04 10:20:15', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('34ffa24d3c124902893e601fe8e22b08', '服务监控', 'monitor:service', '/admin/monitor/service/**', '7', '', '31', '0', 'admin', '2018-10-30 15:01:17', 'admin', '2018-11-07 12:54:16', '0', 'EXAM', '', 'http://localhost:8765/', NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('36cca77232f3487cbee02bb68ae12652', '新增菜单', 'sys:menu:add', NULL, '3', 'example', '1', '1', '', '2018-10-28 16:45:45', 'admin', '2018-11-04 10:21:06', '0', '', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('3a64f8a80dce4f6c8bc4483f0230f49f', '导入用户', 'sys:user:import', NULL, '4', '', '34', '1', 'admin', '2018-11-27 12:05:29', 'admin', '2018-11-27 12:05:29', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('3bb2fec1ba094584aa1a984ec1f05dc7', '删除课程', 'exam:course:del', NULL, 'b8969a3731b0405e82d0bb896e13841e', '', '3', '1', 'admin', '2018-11-10 22:44:53', 'admin', '2018-11-10 22:44:53', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('3f4d1adeb76e49239768f362c6c774e0', '接口文档', 'monitor:document', '/monitor/document/**', '7', 'example', '32', '0', 'admin', '2018-10-30 15:05:36', 'admin', '2018-10-30 15:05:36', '1', 'EXAM', 'monitor/document', '/monitor/document', NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('4', '用户管理', 'sys:user', '/admin/user/**', '1', '', '2', '0', '1', '1', 'admin', '2018-11-06 23:33:55', '0', '1', 'views/sys/user', 'user', '', '用户管理');
 INSERT INTO `sys_menu` VALUES ('42ac13ba9dd343eeb2343f2a3b7a549c', '服务监控', 'monitor:service', '/admin/monitor/service/**', '7', 'example', '30', '0', 'admin', '2018-10-30 15:01:12', 'admin', '2018-10-30 15:01:12', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('42c69128d30a4242b08ef0003da68528', '修改角色', 'sys:role:edit', NULL, '5', 'example', '4', '1', '', '2018-10-28 16:45:11', 'admin', '2018-11-04 10:19:45', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('43d457935f3f47b7ae9cfbd385923257', NULL, NULL, NULL, '-1', 'example', '30', '0', 'admin', '2018-10-29 21:42:50', 'admin', '2018-10-29 21:42:50', '1', 'EXAM', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('451605025d9a4715b4ae78f5a5d01fea', '删除题目分类', 'exam:subject:category:del', NULL, '1717eabc03174c2e9bdaf27c5a5697dd', '', '6', '1', 'admin', '2018-12-04 21:36:55', 'admin', '2018-12-04 21:36:55', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('4f3e874dc310463a82e3b650fd851fdb', '修改密码', 'personal:password', '/admin/user/updateInfo', '14', '', '30', '0', 'admin', '2018-10-29 21:59:03', 'admin', '2018-11-06 23:34:47', '0', 'EXAM', 'views/personal/password', 'password', NULL, '密码修改');
 INSERT INTO `sys_menu` VALUES ('5', '角色管理', 'sys:role', '/admin/role/**', '1', '', '9', '0', '1', '1', 'admin', '2018-11-06 23:34:06', '0', '1', 'views/sys/role', 'role', '', NULL);
+INSERT INTO `sys_menu` VALUES ('530f933da3824e1f9bf3182794141e9e', '删除题目', 'exam:subject:del', NULL, '1717eabc03174c2e9bdaf27c5a5697dd', '', '3', '1', 'admin', '2018-12-04 21:35:13', 'admin', '2018-12-04 21:35:13', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('59b62767c61247d2ae0f1d2775d87f86', '分配权限', 'sys:role:auth', NULL, '-1', '', '30', '1', 'admin', '2018-11-04 10:18:59', 'admin', '2018-11-04 10:18:59', '1', 'EXAM', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('5ba624643cd34ec3b78ca622964c0f8a', '修改题目', 'exam:subject:edit', NULL, '1717eabc03174c2e9bdaf27c5a5697dd', '', '2', '1', 'admin', '2018-12-04 21:34:50', 'admin', '2018-12-04 21:34:50', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('5f809b08920e46cb9b4eb9c87199e6b3', '新增', 'null:add', NULL, '9aeba7d6166941639876bf40673d59cb', NULL, '30', '1', 'admin', '2018-10-29 21:39:21', 'admin', '2018-10-29 21:39:21', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('6', '部门管理', 'sys:dept', '/admin/dept/**', '1', '', '8', '0', '1', '1', 'admin', '2018-11-06 23:34:00', '0', '1', 'views/sys/dept', 'dept', '', NULL);
 INSERT INTO `sys_menu` VALUES ('63f039ea5bcf4208978150b59484a429', '考试管理', 'exam:exam', '/exam/exam/**', 'b93eba1199b6420a82d285a8919bcd23', '', '2', '0', 'admin', '2018-11-10 22:22:42', 'admin', '2018-11-10 22:22:42', '0', 'EXAM', 'views/exam/exam', 'exam', NULL, '考试管理');
 INSERT INTO `sys_menu` VALUES ('657026922f494801a41b64f40e63fca6', '删除考试', 'exam:exam:del', NULL, '63f039ea5bcf4208978150b59484a429', '', '3', '1', 'admin', '2018-11-10 22:46:12', 'admin', '2018-11-10 22:46:12', '0', 'EXAM', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('69a2a85608064762a3d76fc0c92072cc', '新增题目分类', 'exam:subject:category:add', NULL, '1717eabc03174c2e9bdaf27c5a5697dd', '', '4', '1', 'admin', '2018-12-04 21:35:59', 'admin', '2018-12-04 21:35:59', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('6f605148282b4949b5c96e2877dc9052', '题目管理', 'exam:exam:subject', NULL, '63f039ea5bcf4208978150b59484a429', '', '4', '1', 'admin', '2018-11-13 20:50:07', 'admin', '2018-11-13 20:50:41', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('7', '系统监控', 'sys', '/admin/monitor/**', '-1', 'chart', '7', '0', '1', '1', 'admin', '2018-10-31 21:21:49', '0', '1', 'Layout', '/monitor', '', NULL);
 INSERT INTO `sys_menu` VALUES ('70aeccce43b34c7eaa648d52da578bc0', '查询', 'sys_dept:query', NULL, '6', 'example', '2', '1', '', '2018-10-28 16:43:09', '', '2018-10-28 16:43:45', '1', '', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('71e5179363bc4e119a87daaa631a2712', '导入题目', 'exam:exam:subject:import', NULL, '63f039ea5bcf4208978150b59484a429', '', '36', '1', 'admin', '2018-11-27 12:06:45', 'admin', '2018-11-27 12:06:45', '0', 'EXAM', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('7780e3fd6cea4ba78d780f33c111d95a', '导入菜单', 'sys:menu:import', NULL, '3', '', '35', '1', 'admin', '2018-11-28 19:07:20', 'admin', '2018-11-28 19:07:20', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('780f1f5e4db54c7db0700119969382e3', '测试', '测试', '测试', '-1', 'example', '30', '0', 'admin', '2018-10-30 16:23:06', 'admin', '2018-10-30 16:23:06', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('7f78172c09d3408dab1534d26b608b31', '首页', 'dashboard', '/dashboard', '-1', 'dashboard', '0', '0', 'admin', '2018-11-06 23:26:57', 'admin', '2018-11-06 23:28:50', '0', 'EXAM', 'Layout', '/dashboard', '', NULL);
 INSERT INTO `sys_menu` VALUES ('8aefee22294d47d7a3e4a29ae5ced4b4', '个人资料', 'personal:message', '/admin/user/updateInfo', '14', '', '29', '0', 'admin', '2018-10-29 21:58:32', 'admin', '2018-11-06 23:34:41', '0', 'EXAM', 'views/personal/message', 'message', NULL, '个人资料');
 INSERT INTO `sys_menu` VALUES ('8b67ccbe89f74b728e58c2e4a4795027', '删除菜单', 'sys:menu:del', NULL, '3', 'example', '3', '1', '', '2018-10-28 16:46:23', 'admin', '2018-11-04 10:21:14', '0', '', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('8bcf03f73377412b981572517b9055e0', '删除题目', 'exam:exam:subject:del', NULL, '63f039ea5bcf4208978150b59484a429', '', '38', '1', 'admin', '2018-11-29 14:11:24', 'admin', '2018-11-29 14:11:24', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('8dc7bb81a52f4196af3ba3f2704391c0', '测试2', '测试2', '测色2', '780f1f5e4db54c7db0700119969382e3', 'example', '30', '0', 'admin', '2018-10-30 16:23:22', 'admin', '2018-10-30 16:23:22', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('9', '文档', 'sys', '/admin/sys/**', '7', NULL, '11', '0', '1', '1', '1', '1', '1', '1', 'views/documentation/index', '/documentation', '/documentation/index', NULL);
 INSERT INTO `sys_menu` VALUES ('901959fd37df4f7d90adaa4ab6c4b331', '分配权限', 'sys:role:auth', NULL, '5', '', '30', '1', 'admin', '2018-11-04 10:19:32', 'admin', '2018-11-04 10:19:32', '0', 'EXAM', NULL, NULL, NULL, NULL);
@@ -245,6 +258,7 @@ INSERT INTO `sys_menu` VALUES ('91861ef795ab4fc4a207567606fa62cc', '修改用户
 INSERT INTO `sys_menu` VALUES ('9aeba7d6166941639876bf40673d59cb', NULL, NULL, NULL, '-1', 'example', '30', '0', 'admin', '2018-10-29 21:39:21', 'admin', '2018-10-29 21:39:21', '1', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('9c0846685bb24aafae731bdacf879ba2', '删除角色', 'sys:role:del', NULL, '5', 'example', '3', '1', '', '2018-10-28 16:44:56', 'admin', '2018-11-04 10:20:01', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('a382803a28c341519c59342022cda737', '测试菜单2', 'dddddd', '测试菜单2', '-1', 'example', '30', '0', 'admin', '2018-10-29 21:48:57', 'admin', '2018-10-29 21:48:57', '1', 'EXAM', NULL, NULL, NULL, '测试菜单2');
+INSERT INTO `sys_menu` VALUES ('a398216ac2f14c16928452483786329e', '新增题目', 'exam:subject:add', NULL, '1717eabc03174c2e9bdaf27c5a5697dd', '', '1', '1', 'admin', '2018-12-04 21:34:29', 'admin', '2018-12-04 21:34:29', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('a663e71f7b8441b0b8363ae5eb20bbb3', '修改部门', 'sys:dept:edit', NULL, '6', 'example', '4', '1', '', '2018-10-28 16:43:38', 'admin', '2018-11-04 10:20:30', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('ac6768a097184c99ada64810a897f727', '新增考试', 'exam:exam:add', NULL, '63f039ea5bcf4208978150b59484a429', '', '1', '1', 'admin', '2018-11-10 22:45:29', 'admin', '2018-11-10 22:45:29', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('b0c97ca36f0d4f24ae0ca5edc6055aa4', NULL, NULL, NULL, '-1', 'example', '30', '0', 'admin', '2018-10-29 21:43:48', 'admin', '2018-10-29 21:43:48', '1', 'EXAM', NULL, NULL, NULL, NULL);
@@ -256,7 +270,9 @@ INSERT INTO `sys_menu` VALUES ('c3aa1b7231f44883b052cae7ad0bf0d4', '查询', 'sy
 INSERT INTO `sys_menu` VALUES ('c435ac944cd6430ba9a1039d8adb80a7', '新增角色', 'sys:role:add', NULL, '5', 'example', '1', '1', '', '2018-10-28 16:44:29', 'admin', '2018-11-04 10:19:53', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('ca7e69aae4994099a6424aa9727b6a28', '删除用户', 'sys:user:del', NULL, '4', 'example', '3', '1', '', '2018-10-28 16:40:01', 'admin', '2018-11-04 10:20:46', '0', '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('cfc631763d3e4f1ab973141ddbeee449', '修改考试', 'exam:exam:edit', NULL, '63f039ea5bcf4208978150b59484a429', '', '2', '1', 'admin', '2018-11-10 22:45:51', 'admin', '2018-11-10 22:45:51', '0', 'EXAM', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('cffa2058b7c746efa2fca7ceb6052bdc', '新增题目', 'exam:exam:subject:add', NULL, '63f039ea5bcf4208978150b59484a429', '', '37', '1', 'admin', '2018-11-29 14:11:06', 'admin', '2018-11-29 14:11:06', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('ee35a2abc0b04f3bb70527a7f79806e8', '链路监控', 'monitor:link', '/admin/monitor/link/**', '7', '', '32', '0', 'admin', '2018-11-07 20:30:43', 'admin', '2018-11-07 20:31:34', '0', 'EXAM', NULL, 'http://localhost:9411/zipkin/', NULL, NULL);
+INSERT INTO `sys_menu` VALUES ('fa483765360243d0a631a2b9793aaf41', '导出题目', 'exam:exam:subject:export', NULL, '63f039ea5bcf4208978150b59484a429', '', '35', '1', 'admin', '2018-11-27 12:06:17', 'admin', '2018-11-27 12:06:17', '0', 'EXAM', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu` VALUES ('fe73699236be4b148cd35628929cc876', '附件列表', 'attachment:list', '/admin/attachment/list', '15', '', '30', '0', 'admin', '2018-10-30 19:49:50', 'admin', '2018-11-06 23:34:35', '0', 'EXAM', 'views/attachment/list', 'list', NULL, '附件列表');
 
 -- ----------------------------
@@ -308,12 +324,13 @@ CREATE TABLE `sys_role`  (
 INSERT INTO `sys_role` VALUES ('1', '管理员', 'admin', '管理员', 'admin', 'admin', 'test9', '2018-10-30 12:00:03', '0', 'admin', '0');
 INSERT INTO `sys_role` VALUES ('2', '测试角色', 'test', '测试角色', NULL, NULL, NULL, '2018-10-27 23:03:41', '1', NULL, '1');
 INSERT INTO `sys_role` VALUES ('33589c91a8f64c5aa53b94add015e8aa', '测试', 'test1', '测试', NULL, '2018-10-27 22:22:44', NULL, '2018-10-27 22:22:44', '1', '', '0');
+INSERT INTO `sys_role` VALUES ('87ca2801018948cf932b49be07d59b05', '1', '1', '1', 'admin', '2018-12-01 14:45:53', 'admin', '2018-12-01 14:45:53', '1', 'EXAM', '0');
 INSERT INTO `sys_role` VALUES ('88cdd68a79634437a606a5a3fd12127a', 'java开发', 'java', 'java开发', 'test9', '2018-10-30 12:01:33', 'test9', '2018-10-30 12:01:33', '0', 'EXAM', '0');
 INSERT INTO `sys_role` VALUES ('8ff8a3d10f2a4735bc76fc4485732b05', '测试角色', 'test1', '测试角色', NULL, '2018-10-28 10:31:43', 'admin', '2018-10-29 21:10:44', '0', '', '1');
 INSERT INTO `sys_role` VALUES ('90abd3e9d4b5424eacb0397dc0fc4e27', '老师', 'teacher', '老师', 'admin', '2018-11-12 19:49:31', 'admin', '2018-11-12 19:50:45', '0', 'EXAM', '0');
 INSERT INTO `sys_role` VALUES ('e5ab0d61763e4eb7bf1c4122223e1872', '测试角色2', 'test2', '测试角色2', NULL, '2018-10-26 17:17:35', NULL, '2018-10-26 17:18:01', '1', '', '0');
 INSERT INTO `sys_role` VALUES ('ee1a0a7fe7c64ae28922432460d8ae61', '学生', 'student', '学生', 'admin', '2018-11-12 19:49:49', 'admin', '2018-11-12 19:50:53', '0', 'EXAM', '0');
-INSERT INTO `sys_role` VALUES ('f623fcad11474a54bc1dcf0947bef487', '测试角色2', 'test2', '测试角色2', NULL, '2018-10-28 11:51:49', NULL, '2018-10-28 13:22:50', '0', '', '0');
+INSERT INTO `sys_role` VALUES ('f623fcad11474a54bc1dcf0947bef487', '测试角色2', 'test2', '测试角色2', NULL, '2018-10-28 11:51:49', NULL, '2018-10-28 13:22:50', '1', '', '0');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -332,7 +349,6 @@ CREATE TABLE `sys_role_dept`  (
 INSERT INTO `sys_role_dept` VALUES ('4a4ae69046c444b7b303cf8b69e8f749', 'ee1a0a7fe7c64ae28922432460d8ae61', 'c29e267021b242139e95d34a1b1488a4');
 INSERT INTO `sys_role_dept` VALUES ('4fe632d6b36b439d8c198dbccc5caf3f', '1', '4f1ed1353d904ad3837458266de8a080');
 INSERT INTO `sys_role_dept` VALUES ('701ed6dacffd4e8ea4bae43f28fbceea', '88cdd68a79634437a606a5a3fd12127a', '4f1ed1353d904ad3837458266de8a080');
-INSERT INTO `sys_role_dept` VALUES ('b238950dac6148b4aa5fe18da9d2b4a5', 'f623fcad11474a54bc1dcf0947bef487', '2d0b1e08677d45bc8cee3db44774abf6');
 INSERT INTO `sys_role_dept` VALUES ('c77a1fe104924ed382da20bacdfc24d7', '8ff8a3d10f2a4735bc76fc4485732b05', '2d0b1e08677d45bc8cee3db44774abf6');
 INSERT INTO `sys_role_dept` VALUES ('ede476d3f9a14bcea952dcb70d1e91d3', '90abd3e9d4b5424eacb0397dc0fc4e27', 'c29e267021b242139e95d34a1b1488a4');
 
@@ -350,71 +366,86 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('022ed084e5f348b6b690c9f82da43904', '1', '4f3e874dc310463a82e3b650fd851fdb');
-INSERT INTO `sys_role_menu` VALUES ('02c48710ed284ae58304476595c47ed3', '1', '7');
 INSERT INTO `sys_role_menu` VALUES ('084c3f23040c4b1583ed78380c15f7aa', '90abd3e9d4b5424eacb0397dc0fc4e27', '14');
-INSERT INTO `sys_role_menu` VALUES ('0af9b07189684215804ac0ae64b0c079', '1', 'ca7e69aae4994099a6424aa9727b6a28');
+INSERT INTO `sys_role_menu` VALUES ('09d609c760c74da6beac68342ebf751d', '1', '71e5179363bc4e119a87daaa631a2712');
+INSERT INTO `sys_role_menu` VALUES ('0b9e1c3a67d641799e5385865f5c5f06', '1', '2a232ac9f43146a49ab5a19226e76742');
 INSERT INTO `sys_role_menu` VALUES ('11ecfaf5f08e417ebfb7530c9ac3206d', '88cdd68a79634437a606a5a3fd12127a', '34ffa24d3c124902893e601fe8e22b08');
-INSERT INTO `sys_role_menu` VALUES ('1bcf9af485a14cf7ba8ad92c2dd9354f', '1', '8b67ccbe89f74b728e58c2e4a4795027');
+INSERT INTO `sys_role_menu` VALUES ('1719e3ce3d704cb6a2d5616131c66c7f', '1', '1');
+INSERT INTO `sys_role_menu` VALUES ('1a577cf3381848dc8c7061bc406a8107', '1', '34371d1e990549f0b633389bdf64ce0f');
+INSERT INTO `sys_role_menu` VALUES ('1c2dbe57425e4f0089427e54c68c1a9e', '1', '23df3c2475504ca781e25c3443d7ad25');
+INSERT INTO `sys_role_menu` VALUES ('1e0d476d61c646bcb44a5b1f8b376681', '1', 'b85dda1e623e48e4ae82dc228df3edfe');
 INSERT INTO `sys_role_menu` VALUES ('1f0e0f06618c47e2bbaee489a3c817bc', '88cdd68a79634437a606a5a3fd12127a', '8aefee22294d47d7a3e4a29ae5ced4b4');
-INSERT INTO `sys_role_menu` VALUES ('1ffdff4fa0d54f0697ca94e53e14c864', '1', '6');
-INSERT INTO `sys_role_menu` VALUES ('2276d8d3f772459191b73df2891ef216', '1', '3');
-INSERT INTO `sys_role_menu` VALUES ('22ae7a8604c0401bb76283ad7e5200d5', '1', 'ee35a2abc0b04f3bb70527a7f79806e8');
-INSERT INTO `sys_role_menu` VALUES ('2632dac176cd4208a45d998cc2133313', '1', '0dc80492cf414db984d825fdd842e022');
-INSERT INTO `sys_role_menu` VALUES ('2ac81af84da84fab9d46149a351311d2', '1', 'b85dda1e623e48e4ae82dc228df3edfe');
-INSERT INTO `sys_role_menu` VALUES ('2e6f103e565743f6877de5a7ef66780b', '1', 'cfc631763d3e4f1ab973141ddbeee449');
-INSERT INTO `sys_role_menu` VALUES ('2fc4e25376a746f297d116a355690c99', '1', '34ffa24d3c124902893e601fe8e22b08');
+INSERT INTO `sys_role_menu` VALUES ('2365885687c740c881409e41476185c2', '1', 'fa483765360243d0a631a2b9793aaf41');
+INSERT INTO `sys_role_menu` VALUES ('238467f98ce340a28014b706d81c9ac7', '1', 'cffa2058b7c746efa2fca7ceb6052bdc');
+INSERT INTO `sys_role_menu` VALUES ('244ebbde007848b080b7ab963d2cc9e3', '1', '9c0846685bb24aafae731bdacf879ba2');
+INSERT INTO `sys_role_menu` VALUES ('25d5d8012f3047b19db6b4d7dfce1dcc', '1', 'ee35a2abc0b04f3bb70527a7f79806e8');
 INSERT INTO `sys_role_menu` VALUES ('304d8c3e6a71411e9a6e3abbece781e2', 'ee1a0a7fe7c64ae28922432460d8ae61', '7f78172c09d3408dab1534d26b608b31');
 INSERT INTO `sys_role_menu` VALUES ('32f3f8460a944a9f9ebca3cf2bf395f1', '90abd3e9d4b5424eacb0397dc0fc4e27', '3bb2fec1ba094584aa1a984ec1f05dc7');
 INSERT INTO `sys_role_menu` VALUES ('3b23d66468de40a693627116b3f8dfef', '90abd3e9d4b5424eacb0397dc0fc4e27', 'b93eba1199b6420a82d285a8919bcd23');
 INSERT INTO `sys_role_menu` VALUES ('3cfcd844d99d4e76bc7eee00e87d8002', '90abd3e9d4b5424eacb0397dc0fc4e27', 'b85dda1e623e48e4ae82dc228df3edfe');
+INSERT INTO `sys_role_menu` VALUES ('3da59af76e8b4727b0d831c61e458e3c', '1', '6f605148282b4949b5c96e2877dc9052');
 INSERT INTO `sys_role_menu` VALUES ('3e2ecb5b77a9482d8145c15ad0fbb7f0', '8ff8a3d10f2a4735bc76fc4485732b05', '14');
-INSERT INTO `sys_role_menu` VALUES ('3fbe6cc3f89f4773b9bd51f903862284', '1', '9c0846685bb24aafae731bdacf879ba2');
-INSERT INTO `sys_role_menu` VALUES ('4a92b52979a940a684054f716feeb4e4', '1', '42c69128d30a4242b08ef0003da68528');
-INSERT INTO `sys_role_menu` VALUES ('4d2ae162ad834fe88b375780095fbdb7', '1', 'ac6768a097184c99ada64810a897f727');
-INSERT INTO `sys_role_menu` VALUES ('4d57fd3b989643e081e9bd1852a73fda', '1', '1e6a90e57df541e0973691c17d44564c');
-INSERT INTO `sys_role_menu` VALUES ('52f6992dfa324ac4899fb35c1bb48387', '1', '7f78172c09d3408dab1534d26b608b31');
-INSERT INTO `sys_role_menu` VALUES ('5bc3430a3f4640ecbe60365413b3f3cd', '1', 'a663e71f7b8441b0b8363ae5eb20bbb3');
-INSERT INTO `sys_role_menu` VALUES ('5c45177b6d4942f180bf803ee0928727', '1', '91861ef795ab4fc4a207567606fa62cc');
-INSERT INTO `sys_role_menu` VALUES ('60a6e06e3a6641319d7e30d0948b7c41', '1', '8aefee22294d47d7a3e4a29ae5ced4b4');
+INSERT INTO `sys_role_menu` VALUES ('3f53b8498ab641b5b42798ca61e558cb', '1', '530f933da3824e1f9bf3182794141e9e');
+INSERT INTO `sys_role_menu` VALUES ('4c78aad7f5bc4627881b61c5b298b7cd', '1', '1717eabc03174c2e9bdaf27c5a5697dd');
+INSERT INTO `sys_role_menu` VALUES ('4dd68ec6d52b48018bd5eb0d48f36ec6', '1', '7');
+INSERT INTO `sys_role_menu` VALUES ('5037d165ffb549128d4b8a12b064665b', '1', 'ac6768a097184c99ada64810a897f727');
+INSERT INTO `sys_role_menu` VALUES ('5055717171204d379aed32af6483aec7', '1', '5ba624643cd34ec3b78ca622964c0f8a');
+INSERT INTO `sys_role_menu` VALUES ('5dec7db1a19f427aa466f660b09941a3', '1', 'ca7e69aae4994099a6424aa9727b6a28');
+INSERT INTO `sys_role_menu` VALUES ('5df2eabfe6a14622b819eee0a883f0fe', '1', '42c69128d30a4242b08ef0003da68528');
 INSERT INTO `sys_role_menu` VALUES ('6400a4348f6d42ea94699852337f4d65', '88cdd68a79634437a606a5a3fd12127a', '7');
-INSERT INTO `sys_role_menu` VALUES ('67b82d1b2e0745d797bb19ab6cc90f5f', '1', 'b93eba1199b6420a82d285a8919bcd23');
-INSERT INTO `sys_role_menu` VALUES ('685cfbf3da6344e3ab50d391bd9c73be', '1', 'b8969a3731b0405e82d0bb896e13841e');
-INSERT INTO `sys_role_menu` VALUES ('708e69ab2d0347028053280b76cecd67', '1', '2a232ac9f43146a49ab5a19226e76742');
+INSERT INTO `sys_role_menu` VALUES ('6d96e0357c42444b8cb06764157cfc36', '1', '5');
+INSERT INTO `sys_role_menu` VALUES ('6fdd936a0e884367b9351359c3b04ca9', '1', '7f78172c09d3408dab1534d26b608b31');
+INSERT INTO `sys_role_menu` VALUES ('70a29f36d39e4ef2bad56e8e78803073', '1', 'cfc631763d3e4f1ab973141ddbeee449');
+INSERT INTO `sys_role_menu` VALUES ('7313cff3496849dfb9c0027da052427c', '1', '3a64f8a80dce4f6c8bc4483f0230f49f');
+INSERT INTO `sys_role_menu` VALUES ('74ebd941e0fe4d8486b62ec8161bdea2', '1', 'b8969a3731b0405e82d0bb896e13841e');
+INSERT INTO `sys_role_menu` VALUES ('780ab0e7ea064a12bdaba54b80cb68db', '1', '0ee02b8dc3064fcd972f527c31aad5a7');
+INSERT INTO `sys_role_menu` VALUES ('7ac69464c1bc44f9914071177145d57c', '1', '347d24c6e1cf42eaa976c91f5607007a');
+INSERT INTO `sys_role_menu` VALUES ('7f3585f8689f4ea1b9b6050ffd1df2fd', '1', '3bb2fec1ba094584aa1a984ec1f05dc7');
 INSERT INTO `sys_role_menu` VALUES ('81747137eb9d4504ac758c81bfdd55b0', '90abd3e9d4b5424eacb0397dc0fc4e27', '23df3c2475504ca781e25c3443d7ad25');
-INSERT INTO `sys_role_menu` VALUES ('870b4c0c4d974e08ac54ab3d4a5afec2', '1', '1');
-INSERT INTO `sys_role_menu` VALUES ('89663f68a760446fb2ebd37c5de15384', '1', '1b68d41bfcc3441f839188a9d7b6ead0');
+INSERT INTO `sys_role_menu` VALUES ('8773da70f1c54eb69c348f76485f960f', '1', '63f039ea5bcf4208978150b59484a429');
 INSERT INTO `sys_role_menu` VALUES ('8e89d098096e41a69e233f6458057d43', '90abd3e9d4b5424eacb0397dc0fc4e27', '8aefee22294d47d7a3e4a29ae5ced4b4');
-INSERT INTO `sys_role_menu` VALUES ('8f36e420d28f43708379890175eab6db', '1', '4');
-INSERT INTO `sys_role_menu` VALUES ('915808f76fc64b29974e0e8c56cdbd3e', '1', '14');
-INSERT INTO `sys_role_menu` VALUES ('9613267a91de4859871c6bee276ef34c', '1', '3bb2fec1ba094584aa1a984ec1f05dc7');
-INSERT INTO `sys_role_menu` VALUES ('9f6aafd0e8bf468ca64d6b0e1fbca070', '1', '347d24c6e1cf42eaa976c91f5607007a');
+INSERT INTO `sys_role_menu` VALUES ('901fb3f4d8864e3b9621e022dbfbc6e1', '1', 'fe73699236be4b148cd35628929cc876');
+INSERT INTO `sys_role_menu` VALUES ('91af2d63e5c64b77869db3ebb424cac9', '1', '14');
+INSERT INTO `sys_role_menu` VALUES ('94988f5e06df407c85c1f41df10422f7', '1', '1e6a90e57df541e0973691c17d44564c');
+INSERT INTO `sys_role_menu` VALUES ('991df281671949a996eb377d61574bb6', '1', 'b93eba1199b6420a82d285a8919bcd23');
+INSERT INTO `sys_role_menu` VALUES ('9d4ee8d1a87c48929f220ff9e3b03dd6', '1', '4');
+INSERT INTO `sys_role_menu` VALUES ('9e84048ea35b4c49b226f602dc16cebc', '1', '095bb0644ab14d97b31418f87e1cf823');
+INSERT INTO `sys_role_menu` VALUES ('9f4d97d2b134404896357bb3966fedb4', '1', '657026922f494801a41b64f40e63fca6');
 INSERT INTO `sys_role_menu` VALUES ('a35f12b05b9944178b4ca40582bd8656', '88cdd68a79634437a606a5a3fd12127a', '1b68d41bfcc3441f839188a9d7b6ead0');
 INSERT INTO `sys_role_menu` VALUES ('a3619c9f834c4fb9990caad94372d9a8', '90abd3e9d4b5424eacb0397dc0fc4e27', 'ac6768a097184c99ada64810a897f727');
-INSERT INTO `sys_role_menu` VALUES ('a669c5e436124315a92daa134daaf66f', '1', '5');
 INSERT INTO `sys_role_menu` VALUES ('a769b3a6537e407fa9afc386b7a3ba21', 'ee1a0a7fe7c64ae28922432460d8ae61', '8aefee22294d47d7a3e4a29ae5ced4b4');
-INSERT INTO `sys_role_menu` VALUES ('a8049361b427497f8ae4bd89aaa97331', '1', '6f605148282b4949b5c96e2877dc9052');
-INSERT INTO `sys_role_menu` VALUES ('a9ab913dde6b40a798f1821101464512', '1', 'fe73699236be4b148cd35628929cc876');
-INSERT INTO `sys_role_menu` VALUES ('ac136fe7fecc4532a26fe35163f019ff', '1', '36cca77232f3487cbee02bb68ae12652');
+INSERT INTO `sys_role_menu` VALUES ('a95067aba6ac4140b0f1bce44d3ef017', '1', '8aefee22294d47d7a3e4a29ae5ced4b4');
+INSERT INTO `sys_role_menu` VALUES ('a9ad2210b7814c5eadd90ad93503a744', '1', '69a2a85608064762a3d76fc0c92072cc');
+INSERT INTO `sys_role_menu` VALUES ('b4346dca50174c25a12abec3059df286', '1', 'c435ac944cd6430ba9a1039d8adb80a7');
 INSERT INTO `sys_role_menu` VALUES ('b9c36f3f763d4b5dbe2287357d0cf751', '88cdd68a79634437a606a5a3fd12127a', '1e6a90e57df541e0973691c17d44564c');
-INSERT INTO `sys_role_menu` VALUES ('bc79e4c73dcd46dfaf26246abfc0debe', '1', '901959fd37df4f7d90adaa4ab6c4b331');
+INSERT INTO `sys_role_menu` VALUES ('bd829809989b41068f3eb541feec8dc6', '1', '7780e3fd6cea4ba78d780f33c111d95a');
 INSERT INTO `sys_role_menu` VALUES ('be0d8c2be73f41fe9e1881cda8747cb7', 'ee1a0a7fe7c64ae28922432460d8ae61', '4f3e874dc310463a82e3b650fd851fdb');
-INSERT INTO `sys_role_menu` VALUES ('c22c211735454f64b1932d4b0508e07f', '1', '23df3c2475504ca781e25c3443d7ad25');
-INSERT INTO `sys_role_menu` VALUES ('c90df8d5255c49938d049f77aaa1bc39', '1', '0ee02b8dc3064fcd972f527c31aad5a7');
-INSERT INTO `sys_role_menu` VALUES ('cfaa3aa0ef564491ae01d70ac9159276', '1', 'c435ac944cd6430ba9a1039d8adb80a7');
+INSERT INTO `sys_role_menu` VALUES ('bf5c1696941f4389bbb67feffe340b42', '1', '15');
+INSERT INTO `sys_role_menu` VALUES ('c0826508e6244daebec4f3beb15ef0a0', '1', '1b68d41bfcc3441f839188a9d7b6ead0');
+INSERT INTO `sys_role_menu` VALUES ('cf5fed6c8b504ad4862dd11191b964a6', '1', '451605025d9a4715b4ae78f5a5d01fea');
 INSERT INTO `sys_role_menu` VALUES ('cff743617a3d47bbb53ca0481a6b8f6c', '90abd3e9d4b5424eacb0397dc0fc4e27', '63f039ea5bcf4208978150b59484a429');
+INSERT INTO `sys_role_menu` VALUES ('d2f86ec355904fffbcc26fb5aa69581c', '1', '3');
+INSERT INTO `sys_role_menu` VALUES ('da592a9164ae4ad2bb08383f4362d8a3', '1', '0fe1156ec9e24dd4bc2c663c665a5048');
+INSERT INTO `sys_role_menu` VALUES ('df1bd94a749949aa843b3bccf60c1ade', '1', '8bcf03f73377412b981572517b9055e0');
 INSERT INTO `sys_role_menu` VALUES ('df2f3fe1fb56411b8b2e81848a1ac1c2', '90abd3e9d4b5424eacb0397dc0fc4e27', '657026922f494801a41b64f40e63fca6');
-INSERT INTO `sys_role_menu` VALUES ('dfcec1028ef34076aefd813f6f68190e', '1', '63f039ea5bcf4208978150b59484a429');
 INSERT INTO `sys_role_menu` VALUES ('e0c50ec1e2534f5487982079054c80e1', 'ee1a0a7fe7c64ae28922432460d8ae61', '14');
+INSERT INTO `sys_role_menu` VALUES ('e1998fadded24d5c8092f779228a3979', '1', '0dc80492cf414db984d825fdd842e022');
+INSERT INTO `sys_role_menu` VALUES ('e1b4e3af7a1a499c8643c0375c17be34', '1', '901959fd37df4f7d90adaa4ab6c4b331');
 INSERT INTO `sys_role_menu` VALUES ('e22e2404c276427fa141e4b45bf62e13', '90abd3e9d4b5424eacb0397dc0fc4e27', 'b8969a3731b0405e82d0bb896e13841e');
-INSERT INTO `sys_role_menu` VALUES ('e26fa14b9a9d4df4b3a7c3a84f25211f', '1', '657026922f494801a41b64f40e63fca6');
+INSERT INTO `sys_role_menu` VALUES ('e6591f21eee7423c86741b1879711f72', '1', '8b67ccbe89f74b728e58c2e4a4795027');
 INSERT INTO `sys_role_menu` VALUES ('e6630c61d523416ea3e2281d696981c9', '90abd3e9d4b5424eacb0397dc0fc4e27', '6f605148282b4949b5c96e2877dc9052');
+INSERT INTO `sys_role_menu` VALUES ('e741fff1e74a44d7ba366f32f0733aaa', '1', '34ffa24d3c124902893e601fe8e22b08');
 INSERT INTO `sys_role_menu` VALUES ('e76e45a5bd45414ebefeba0239910b5d', '88cdd68a79634437a606a5a3fd12127a', '14');
+INSERT INTO `sys_role_menu` VALUES ('ea8138428ac447908e4332df78c5ecf7', '1', '91861ef795ab4fc4a207567606fa62cc');
 INSERT INTO `sys_role_menu` VALUES ('ec1dc4c735f44b5382a8ea028466e23d', '88cdd68a79634437a606a5a3fd12127a', '4f3e874dc310463a82e3b650fd851fdb');
+INSERT INTO `sys_role_menu` VALUES ('ee2d8cf8a4824c2299b2db8a8c69ff99', '1', '4f3e874dc310463a82e3b650fd851fdb');
+INSERT INTO `sys_role_menu` VALUES ('f1890d927655492cbba42905cc6b26ea', '1', 'a663e71f7b8441b0b8363ae5eb20bbb3');
 INSERT INTO `sys_role_menu` VALUES ('f36ad2435ec1499083e4d5331fd4319c', '90abd3e9d4b5424eacb0397dc0fc4e27', '4f3e874dc310463a82e3b650fd851fdb');
+INSERT INTO `sys_role_menu` VALUES ('f42590336e8c431aa6233ecb7b7c02d7', '1', '36cca77232f3487cbee02bb68ae12652');
 INSERT INTO `sys_role_menu` VALUES ('f918d80c915748e98400e6f38d9df990', '90abd3e9d4b5424eacb0397dc0fc4e27', 'cfc631763d3e4f1ab973141ddbeee449');
 INSERT INTO `sys_role_menu` VALUES ('fa07286787e34e7186f05e51097fedd2', '90abd3e9d4b5424eacb0397dc0fc4e27', '7f78172c09d3408dab1534d26b608b31');
-INSERT INTO `sys_role_menu` VALUES ('fda9ce13f1914b74a9fb65c34e732fed', '1', '15');
+INSERT INTO `sys_role_menu` VALUES ('fe1cb42c98e84ac191bbae4464b3c6a5', '1', 'a398216ac2f14c16928452483786329e');
+INSERT INTO `sys_role_menu` VALUES ('ffd721f066cc44578ce03e123710d08b', '1', '6');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -439,49 +470,26 @@ CREATE TABLE `sys_user`  (
   `del_flag` int(20) NULL DEFAULT NULL COMMENT '删除标记',
   `application_code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '系统编号',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `dept_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '部门ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '测试', 'test9', '$2a$10$7inIxLXYX9I39wu9COLJj.KuJQKsOk5r89O8VRuTdeGN3hHer4Caq', NULL, '23323', 'http://localhost:4000/attachment/download?id=76fe4e3c5c5942639c4b2343cf497955', '3233', '0', '2018-10-05', '0', 'test9', '2018-10-24 10:44:42', 'admin', '2018-11-07 20:12:37', 0, 'EXAM', '3232323');
-INSERT INTO `sys_user` VALUES ('1025', '测试账号', 'test2', '$2a$10$6SognCpa4n3XeopCSJfq..NmCPFla.Teem7Zu5gFAu8nUi/vCx0ly', NULL, '3232', NULL, '3232', '0', '2018-10-30', '0', NULL, NULL, 'admin', '2018-10-29 20:17:13', 0, 'EXAM', 'dddd');
-INSERT INTO `sys_user` VALUES ('1041', '测试', 'test4', '$2a$10$SiiAXC5zlYzMlUMzYmzCf.JCQcrvRY87RCmaJJD2Ow2/.2HRzIgu2', NULL, '15521089185', NULL, '1633736729@qq.com', '1', '2018-10-31', '0', NULL, NULL, 'admin', '2018-10-29 21:50:18', 0, 'EXAM', '测试账号4');
-INSERT INTO `sys_user` VALUES ('1042', '测试账号', 'test', '$2a$10$rAedN0Jn6aAOwlI2XaWEEOszgi5t.xrF..7Sl/At6zK8VN9CM38TO', NULL, '15521089185333', NULL, '1633736729@qq.com', '0', '', '1', NULL, NULL, 'test', '2018-10-27 16:48:50', 0, '', 'test');
-INSERT INTO `sys_user` VALUES ('1043', '测试', 'test6', '$2a$10$NKrQDcg.rd4YaJrg9MPuzemhSkqorQdsIMjGa8ytWmYAj8qtioar2', NULL, 'test6', NULL, '23', '0', '', '0', NULL, NULL, 'test6', '2018-10-27 16:48:56', 0, '', '323');
-INSERT INTO `sys_user` VALUES ('1071', '测试账号', 'test3', '$2a$10$liY3vs6l4aOMDwvQaQ0r7eVC8KmwkfMoBIjYxpamoT/4hieIVsWmO', NULL, 'test3', NULL, '3eeeee', '0', '', '1', NULL, NULL, 'test3', '2018-10-27 22:46:50', 0, '', '测试备注');
-INSERT INTO `sys_user` VALUES ('1076', '测试账号', 'test5', '$2a$10$g8/Yx8Iy8.Py4X4BeTuO6.czmC32rDkRChxueSFk37yO8x7laQ/3q', NULL, '333', NULL, '333', '1', '', '0', NULL, NULL, 'test5', '2018-10-28 15:05:08', 0, '', '333');
-INSERT INTO `sys_user` VALUES ('1099', '测试账号', 'test7', '$2a$10$6t6cVnBMJzcRqCkuRDimau1DvawpZPhMrukaLUGpElSCH5eGbovNq', NULL, '232323', NULL, '32323', '1', '', '0', NULL, NULL, 'test7', '2018-10-28 13:24:12', 0, '', '3232332');
-INSERT INTO `sys_user` VALUES ('112f64a6ff2a4f019c5c8a0cae47e0a8', '瑶瑶', 'xieyy', '$2a$10$zoIKAKypCGOiuvcn/ZQBN.iLEq42JiF4M4IAV2hq9AZ6hr/Q5OmFO', NULL, '3333', 'http://localhost:4000/attachment/download?id=2d72751214c4412abea18b96d3266681', '888', '0', '2018-10-16', '0', 'admin', '2018-10-31 19:40:23', 'admin', '2018-10-31 19:40:23', 0, 'EXAM', '3333');
-INSERT INTO `sys_user` VALUES ('2', '管理员', 'admin', '$2a$10$eTOqrN3oKY76eQTIE5ieGOJvOr86V/GVmoEg2lJWUUk5SOWNaMZfi', NULL, '323232323', 'http://localhost:4000/attachment/download?id=7dc9b8fc78184908a8e3bfdf3eee710b', '1633736729@qq.com', '1', '2018-10-11', '0', 'admin', '2018-09-01 14:37:09', 'admin', '2018-10-30 09:56:09', 0, 'EXAM', 'ccccc');
-INSERT INTO `sys_user` VALUES ('3', '测试账号', 'test8', '$2a$10$f0Jgc.83m6L/yWYtDDFYAuAN1ZP1GIrZOiCmwWnCvWkbXVGmXI4lO', NULL, '323', NULL, '323', '0', '', '1', 'test8', '2018-10-24 09:48:54', 'test8', '2018-10-28 13:17:43', 0, '', '323');
-INSERT INTO `sys_user` VALUES ('c19c2458404a49daa94c43ccc63e4522', '谭广宜', 'tangyi', '$2a$10$4F3oitNhYqvxx6bwHpoFpu1HZ2HmLnDgHSRegLA4paNY3VDiY2V7O', NULL, '15521089185', NULL, '16333736729@qq.com', '0', '2018-10-16', '0', 'test9', '2018-10-30 12:53:25', 'test9', '2018-10-30 12:53:25', 0, 'EXAM', 'Java');
-
--- ----------------------------
--- Table structure for sys_user_dept
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user_dept`;
-CREATE TABLE `sys_user_dept`  (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户ID',
-  `dept_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '部门ID',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_user_dept
--- ----------------------------
-INSERT INTO `sys_user_dept` VALUES ('044419cc516946338bbed749afd63429', '1076', '2d0b1e08677d45bc8cee3db44774abf6');
-INSERT INTO `sys_user_dept` VALUES ('1f612fcd11f74001b7c4a1e4285663b4', '1025', '2d0b1e08677d45bc8cee3db44774abf6');
-INSERT INTO `sys_user_dept` VALUES ('28cc481de51642bea3a2101228538787', '112f64a6ff2a4f019c5c8a0cae47e0a8', '4f1ed1353d904ad3837458266de8a080');
-INSERT INTO `sys_user_dept` VALUES ('722031b52c404b979df22f6a9cf35abb', '1099', '2d0b1e08677d45bc8cee3db44774abf6');
-INSERT INTO `sys_user_dept` VALUES ('8ffe01d9b36b4c4f80a6d6001f4e5c32', '3', '2d0b1e08677d45bc8cee3db44774abf6');
-INSERT INTO `sys_user_dept` VALUES ('914787b06b0a4b48a689dd4b265d1589', '1', '4f1ed1353d904ad3837458266de8a080');
-INSERT INTO `sys_user_dept` VALUES ('9f48132ccffa4405940f36d0040c373e', '2', '4f1ed1353d904ad3837458266de8a080');
-INSERT INTO `sys_user_dept` VALUES ('c4bc3313670e438185623cfd4d6f558b', '1041', '2d0b1e08677d45bc8cee3db44774abf6');
-INSERT INTO `sys_user_dept` VALUES ('f7716153da1145e59f11a451f6f35c91', 'c19c2458404a49daa94c43ccc63e4522', '4f1ed1353d904ad3837458266de8a080');
-INSERT INTO `sys_user_dept` VALUES ('f9e0b572c14c4bb5b3d5fe1b26016466', '1043', 'ef7a812bc75743b3929a8c0dde9d5467');
+INSERT INTO `sys_user` VALUES ('0b48e67d856249fb979d63877e95e307', 'test12', 'test12', '$2a$10$ajZ/kQge0/XKEn7.6TbhauwYQT4Vq6nUWj.UBbdten5o2onVhtx1q', NULL, '23', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80', NULL, '0', '2018-12-19', '0', 'admin', '2018-12-04 20:47:16', 'admin', '2018-12-04 20:48:13', 0, 'EXAM', '32323', '4f1ed1353d904ad3837458266de8a080');
+INSERT INTO `sys_user` VALUES ('1', '测试', 'test9', '$2a$10$7inIxLXYX9I39wu9COLJj.KuJQKsOk5r89O8VRuTdeGN3hHer4Caq', NULL, '23323', 'http://localhost:4000/attachment/download?id=76fe4e3c5c5942639c4b2343cf497955', '3233', '0', '2018-10-05', '0', 'test9', '2018-10-24 10:44:42', 'admin', '2018-12-04 20:42:40', 0, 'EXAM', '3232323', '839a2524aea445bb83a46a0ea03f87ac');
+INSERT INTO `sys_user` VALUES ('1025', '测试账号2222', 'test2', '$2a$10$6SognCpa4n3XeopCSJfq..NmCPFla.Teem7Zu5gFAu8nUi/vCx0ly', NULL, '3232', NULL, '3232', '0', '2018-10-30', '0', NULL, NULL, 'admin', '2018-12-04 20:43:35', 0, 'EXAM', 'dddd', '2d0b1e08677d45bc8cee3db44774abf6');
+INSERT INTO `sys_user` VALUES ('1041', '测试d', 'test4', '$2a$10$SiiAXC5zlYzMlUMzYmzCf.JCQcrvRY87RCmaJJD2Ow2/.2HRzIgu2', NULL, '15521089185', NULL, '1633736729@qq.com', '1', '2018-10-31', '0', NULL, NULL, 'admin', '2018-12-04 20:43:47', 0, 'EXAM', '测试账号4', '839a2524aea445bb83a46a0ea03f87ac');
+INSERT INTO `sys_user` VALUES ('1042', '测试账号', 'test', '$2a$10$rAedN0Jn6aAOwlI2XaWEEOszgi5t.xrF..7Sl/At6zK8VN9CM38TO', NULL, '15521089185333', NULL, '1633736729@qq.com', '0', '', '1', NULL, NULL, 'admin', '2018-12-04 20:43:29', 0, 'EXAM', 'test', '1e31659224884cbc89022ab4e6ecf70c');
+INSERT INTO `sys_user` VALUES ('1043', '测试', 'test6', '$2a$10$NKrQDcg.rd4YaJrg9MPuzemhSkqorQdsIMjGa8ytWmYAj8qtioar2', NULL, 'test6', NULL, '23', '0', '', '0', NULL, NULL, 'admin', '2018-12-04 20:43:23', 0, 'EXAM', '323', '839a2524aea445bb83a46a0ea03f87ac');
+INSERT INTO `sys_user` VALUES ('1071', '测试账号', 'test3', '$2a$10$liY3vs6l4aOMDwvQaQ0r7eVC8KmwkfMoBIjYxpamoT/4hieIVsWmO', NULL, 'test3', NULL, '3eeeee', '0', '', '1', NULL, NULL, 'admin', '2018-12-04 20:43:41', 0, 'EXAM', '测试备注', '1e31659224884cbc89022ab4e6ecf70c');
+INSERT INTO `sys_user` VALUES ('1076', '测试账号', 'test5', '$2a$10$g8/Yx8Iy8.Py4X4BeTuO6.czmC32rDkRChxueSFk37yO8x7laQ/3q', NULL, '333', NULL, '333', '1', '', '0', NULL, NULL, 'test5', '2018-10-28 15:05:08', 0, '', '333', NULL);
+INSERT INTO `sys_user` VALUES ('1099', '测试账号', 'test7', '$2a$10$6t6cVnBMJzcRqCkuRDimau1DvawpZPhMrukaLUGpElSCH5eGbovNq', NULL, '232323', NULL, '32323', '1', '', '0', NULL, NULL, 'admin', '2018-12-04 20:42:53', 0, 'EXAM', '3232332', 'cb38942fba4c438995dee5622d3dfdfa');
+INSERT INTO `sys_user` VALUES ('112f64a6ff2a4f019c5c8a0cae47e0a8', '瑶瑶', 'xieyy', '$2a$10$zoIKAKypCGOiuvcn/ZQBN.iLEq42JiF4M4IAV2hq9AZ6hr/Q5OmFO', NULL, '3333', 'http://localhost:4000/attachment/download?id=2d72751214c4412abea18b96d3266681', '888', '0', '2018-10-16', '0', 'admin', '2018-10-31 19:40:23', 'admin', '2018-12-04 20:42:22', 0, 'EXAM', '3333', '4f1ed1353d904ad3837458266de8a080');
+INSERT INTO `sys_user` VALUES ('2', '管理员', 'admin', '$2a$10$eTOqrN3oKY76eQTIE5ieGOJvOr86V/GVmoEg2lJWUUk5SOWNaMZfi', NULL, '323232323', 'http://localhost:4000/attachment/download?id=7dc9b8fc78184908a8e3bfdf3eee710b', '1633736729@qq.com', '1', '2018-10-11', '0', 'admin', '2018-09-01 14:37:09', 'admin', '2018-12-04 20:44:14', 0, 'EXAM', 'ccccc', '4f1ed1353d904ad3837458266de8a080');
+INSERT INTO `sys_user` VALUES ('3', '测试账号', 'test8', '$2a$10$f0Jgc.83m6L/yWYtDDFYAuAN1ZP1GIrZOiCmwWnCvWkbXVGmXI4lO', NULL, '323', NULL, '323', '0', '', '1', 'test8', '2018-10-24 09:48:54', 'admin', '2018-12-04 20:48:30', 0, 'EXAM', '323', '4f1ed1353d904ad3837458266de8a080');
+INSERT INTO `sys_user` VALUES ('c19c2458404a49daa94c43ccc63e4522', '谭广宜', 'tangyi', '$2a$10$4F3oitNhYqvxx6bwHpoFpu1HZ2HmLnDgHSRegLA4paNY3VDiY2V7O', NULL, '15521089185', NULL, '16333736729@qq.com', '0', '2018-10-16', '0', 'test9', '2018-10-30 12:53:25', 'admin', '2018-12-04 20:39:30', 0, 'EXAM', 'Java', '4f1ed1353d904ad3837458266de8a080');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -497,19 +505,12 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('03e258e5059c4c8896ec3173101212af', '2', '1');
-INSERT INTO `sys_user_role` VALUES ('2280645454d349e991bc2c12dc1bf85b', '1041', '1');
-INSERT INTO `sys_user_role` VALUES ('30f14dcb7bf94b148b524c22e3bb1888', '1', '88cdd68a79634437a606a5a3fd12127a');
-INSERT INTO `sys_user_role` VALUES ('32b58d7d1cdf4c9fb709d1f41a966a31', '1041', '8ff8a3d10f2a4735bc76fc4485732b05');
-INSERT INTO `sys_user_role` VALUES ('36bbfeec665248a5a91de9d86cae3ee9', '1041', 'f623fcad11474a54bc1dcf0947bef487');
-INSERT INTO `sys_user_role` VALUES ('3badf1d7dd2e4d6cb2828af859df099e', '3', 'f623fcad11474a54bc1dcf0947bef487');
-INSERT INTO `sys_user_role` VALUES ('3e224043fa234f57b0081c70929567a0', '1099', '8ff8a3d10f2a4735bc76fc4485732b05');
-INSERT INTO `sys_user_role` VALUES ('46980e96601e4c749b205bd79a90aba4', '112f64a6ff2a4f019c5c8a0cae47e0a8', '88cdd68a79634437a606a5a3fd12127a');
-INSERT INTO `sys_user_role` VALUES ('61367e0e764648bea04ddedf65da8de8', '3', '8ff8a3d10f2a4735bc76fc4485732b05');
-INSERT INTO `sys_user_role` VALUES ('766759b93f5342ebb094371bb46ddb00', '1025', '8ff8a3d10f2a4735bc76fc4485732b05');
-INSERT INTO `sys_user_role` VALUES ('a92104073dff4761add4bbff9257ca6d', '1', '1');
-INSERT INTO `sys_user_role` VALUES ('d0ec65a303b84023a565f9e5ae62e6bf', 'c19c2458404a49daa94c43ccc63e4522', '88cdd68a79634437a606a5a3fd12127a');
+INSERT INTO `sys_user_role` VALUES ('22130ffd442d4f6eb548b0fed8ff5179', '0b48e67d856249fb979d63877e95e307', '88cdd68a79634437a606a5a3fd12127a');
+INSERT INTO `sys_user_role` VALUES ('45468f3924e547eaa3389cf2900b6051', '3', '88cdd68a79634437a606a5a3fd12127a');
+INSERT INTO `sys_user_role` VALUES ('6274b0bf86b74ce9a39fe6a87f121939', '112f64a6ff2a4f019c5c8a0cae47e0a8', '88cdd68a79634437a606a5a3fd12127a');
+INSERT INTO `sys_user_role` VALUES ('abaf262c04d047a2aa1abbcb89e2fd6a', 'c19c2458404a49daa94c43ccc63e4522', '1');
 INSERT INTO `sys_user_role` VALUES ('e1eaed03296a4c518a780a50093826d7', '1076', '8ff8a3d10f2a4735bc76fc4485732b05');
+INSERT INTO `sys_user_role` VALUES ('eed6ce1fcdc845cd90889861099c91bf', '2', '1');
 
 -- ----------------------------
 -- Table structure for sys_zuul_route
