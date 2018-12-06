@@ -16,6 +16,11 @@ public class Subject extends BaseEntity<Subject> {
     private String examinationId;
 
     /**
+     * 分类ID
+     */
+    private String categoryId;
+
+    /**
      * 题目名称
      */
     private String subjectName;
@@ -86,6 +91,14 @@ public class Subject extends BaseEntity<Subject> {
 
     public void setExaminationId(String examinationId) {
         this.examinationId = examinationId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getSubjectName() {

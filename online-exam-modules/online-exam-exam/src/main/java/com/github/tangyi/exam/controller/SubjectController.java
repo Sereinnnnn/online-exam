@@ -134,11 +134,12 @@ public class SubjectController extends BaseController {
      *
      * @param ids           用户id，多个用逗号分隔
      * @param examinationId 考试id
+     * @param categoryId    分类id
      * @author tangyi
      * @date 2018/11/28 12:53
      */
     @GetMapping("/export")
-    public void exportSubject(String ids, String examinationId, HttpServletRequest request, HttpServletResponse response) {
+    public void exportSubject(String ids, String examinationId, String categoryId, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
@@ -157,6 +158,10 @@ public class SubjectController extends BaseController {
             } else if (StringUtils.isNotEmpty(examinationId)) {  // 根据考试id导出
                 Subject subject = new Subject();
                 subject.setExaminationId(examinationId);
+                subjects = subjectService.findList(subject);
+            } else if (StringUtils.isNotBlank(categoryId)) {    // 根据分类ID导出
+                Subject subject = new Subject();
+                subject.setCategoryId(categoryId);
                 subjects = subjectService.findList(subject);
             }
             ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(subjects), SubjectUtil.getSubjectMap());

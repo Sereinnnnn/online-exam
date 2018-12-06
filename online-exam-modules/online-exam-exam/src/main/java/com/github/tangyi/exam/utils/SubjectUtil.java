@@ -22,6 +22,7 @@ public class SubjectUtil {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("id", "题目ID");
         map.put("examinationId", "考试ID");
+        map.put("categoryId", "分类ID");
         map.put("subjectName", "题目名称");
         map.put("type", "题目类型");
         map.put("content", "题目内容");

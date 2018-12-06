@@ -4,6 +4,7 @@
     <resultMap id="subjectResultMap" type="com.github.tangyi.exam.module.Subject">
         <id column="id" property="id"/>
         <result column="examination_id" property="examinationId"/>
+        <result column="category_id" property="categoryId"/>
         <result column="subject_name" property="subjectName"/>
         <result column="type" property="type"/>
         <result column="content" property="content"/>
@@ -28,6 +29,7 @@
     <sql id="subjectColumns">
         a.id as "id",
         a.examination_id,
+        a.category_id,
         a.subject_name,
         a.type,
         a.content,
@@ -54,6 +56,9 @@
         <if test="examinationId != null and examinationId != ''">
             and a.examination_id = #{examinationId}
         </if>
+        <if test="categoryId != null and categoryId != ''">
+            and a.category_id = #{categoryId}
+        </if>
         <if test="subjectName != null and subjectName != ''">
             and a.subject_name like #{subjectName}
         </if>
@@ -78,6 +83,7 @@
         insert  into subject (
             id,
             examination_id,
+            category_id,
             subject_name,
             type,
             content,
@@ -100,6 +106,7 @@
         ) values (
             #{id},
             #{examinationId},
+            #{categoryId},
             #{subjectName},
             #{type},
             #{content},
@@ -126,6 +133,9 @@
         UPDATE subject  SET
         <if test="examinationId != null">
             examination_id = #{examinationId},
+        </if>
+        <if test="categoryId != null">
+            category_id = #{categoryId},
         </if>
         <if test="subjectName != null">
             subject_name = #{subjectName},
