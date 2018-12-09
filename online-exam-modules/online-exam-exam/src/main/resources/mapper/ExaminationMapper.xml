@@ -50,7 +50,7 @@
     <!-- where 条件 -->
     <sql id="whereColumnList">
         <if test="examinationName != null and examinationName != ''">
-            and a.examination_name like #{examinationName}
+            and a.examination_name like CONCAT('%',#{examinationName},'%')
         </if>
         <if test="courseId != null and courseId != ''">
             and a.course_id = #{courseId}

@@ -34,7 +34,7 @@
     <!-- where 条件 -->
     <sql id="whereColumnList">
         <if test="courseName != null and courseName != ''">
-            and a.course_name like #{courseName}
+            and a.course_name like CONCAT('%',#{courseName},'%')
         </if>
     </sql>
 

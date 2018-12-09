@@ -55,7 +55,7 @@
             and a.category_id = #{categoryId}
         </if>
         <if test="subjectName != null and subjectName != ''">
-            and a.subject_name like #{subjectName}
+            and a.subject_name like CONCAT('%',#{subjectName},'%')
         </if>
     </sql>
 

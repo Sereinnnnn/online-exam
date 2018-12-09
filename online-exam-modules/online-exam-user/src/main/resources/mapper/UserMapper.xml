@@ -82,7 +82,7 @@
     <!-- where 条件 -->
     <sql id="whereColumnList">
         <if test="name != null and name != ''">
-            and a.name like #{username}
+            and a.name like CONCAT('%', #{username},'%')
         </if>
         <if test="username != null and username != ''">
             and a.username like #{username}

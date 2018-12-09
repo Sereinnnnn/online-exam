@@ -32,7 +32,7 @@
     <!-- where 条件 -->
     <sql id="whereColumnList">
         <if test="roleName != null and roleName != ''">
-            and a.role_name like #{roleName}
+            and a.role_name like CONCAT('%', #{roleName},'%')
         </if>
         <if test="status != null and status != ''">
             and a.status = #{status}
