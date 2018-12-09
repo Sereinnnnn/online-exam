@@ -7,21 +7,21 @@ import java.util.LinkedHashMap;
  *
  * @author tangyi
  * @version V1.0
- * @date 2018-11-28 12:56
+ * @date 2018/12/9 14:18
  */
-public class SubjectUtil {
+public class SubjectBankUtil {
 
     /**
-     * 获取Subject属性的map
+     * 获取SubjectBank属性的map
      *
      * @return LinkedHashMap
      * @author tangyi
-     * @date 2018/11/28 12:57
+     * @date 2018/12/9 14:18
      */
-    public static LinkedHashMap<String, String> getSubjectMap() {
+    public static LinkedHashMap<String, String> getSubjectBankMap() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("id", "题目ID");
-        map.put("examinationId", "考试ID");
+        map.put("categoryId", "分类ID");
         map.put("subjectName", "题目名称");
         map.put("type", "题目类型");
         map.put("content", "题目内容");

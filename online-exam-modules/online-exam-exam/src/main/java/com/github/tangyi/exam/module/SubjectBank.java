@@ -3,17 +3,16 @@ package com.github.tangyi.exam.module;
 import com.github.tangyi.common.persistence.BaseEntity;
 
 /**
- * 题目
- *
+ * 题库
  * @author tangyi
- * @date 2018/11/8 20:53
+ * @date 2018/12/9 14:09
  */
-public class Subject extends BaseEntity<Subject> {
+public class SubjectBank extends BaseEntity<SubjectBank> {
 
     /**
-     * 考试ID
+     * 分类ID
      */
-    private String examinationId;
+    private String categoryId;
 
     /**
      * 题目名称
@@ -80,12 +79,12 @@ public class Subject extends BaseEntity<Subject> {
      */
     private String level;
 
-    public String getExaminationId() {
-        return examinationId;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setExaminationId(String examinationId) {
-        this.examinationId = examinationId;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getSubjectName() {
@@ -110,38 +109,6 @@ public class Subject extends BaseEntity<Subject> {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public String getAnalysis() {
-        return analysis;
-    }
-
-    public void setAnalysis(String analysis) {
-        this.analysis = analysis;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public String getOptionA() {
@@ -190,5 +157,37 @@ public class Subject extends BaseEntity<Subject> {
 
     public void setOptionF(String optionF) {
         this.optionF = optionF;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getAnalysis() {
+        return analysis;
+    }
+
+    public void setAnalysis(String analysis) {
+        this.analysis = analysis;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }
