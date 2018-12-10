@@ -22,10 +22,10 @@ public class ValidateCodeConfig {
         properties.put("kaptcha.border", "no");
         properties.put("kaptcha.textproducer.font.color", "black");
         properties.put("kaptcha.textproducer.char.space", "6");
-        properties.put("kaptcha.image.width", "120");
-        properties.put("kaptcha.image.height", "45");
+        properties.put("kaptcha.image.width", "105");
+        properties.put("kaptcha.image.height", "35");
         properties.put("kaptcha.textproducer.char.length", "4");
-        properties.put("kaptcha.textproducer.font.size", "32");
+        properties.put("kaptcha.textproducer.font.size", "30");
         Config config = new Config(properties);
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         defaultKaptcha.setConfig(config);
