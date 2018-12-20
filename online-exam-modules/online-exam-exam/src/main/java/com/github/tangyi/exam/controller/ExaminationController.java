@@ -74,7 +74,7 @@ public class ExaminationController extends BaseController {
         PageInfo<Examination> page = new PageInfo<Examination>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.get("sort"), params.get("order")));
+        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
         page = examinationService.findPage(page, examination);
         PageInfo<ExaminationDto> examinationDtoPageInfo = new PageInfo<>();
         BeanUtils.copyProperties(page, examinationDtoPageInfo);
