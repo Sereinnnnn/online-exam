@@ -26,6 +26,11 @@ public class Examination extends BaseEntity<Examination> {
     private String attention;
 
     /**
+     * 当前时间
+     */
+    private String currentTime;
+
+    /**
      * 考试开始时间
      */
     private String startTime;
@@ -177,5 +182,13 @@ public class Examination extends BaseEntity<Examination> {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
     }
 }

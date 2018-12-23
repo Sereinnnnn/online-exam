@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,16 +47,28 @@ public class ExaminationController extends BaseController {
      * 根据ID获取
      *
      * @param id id
+     * @param timeFormat timeFormat
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:08
      */
     @GetMapping("/{id}")
-    public ReturnT<Examination> examination(@PathVariable String id) {
+    public ReturnT<Examination> examination(@PathVariable String id, @RequestParam(required = false) String timeFormat) {
         Examination examination = new Examination();
         if (StringUtils.isNotBlank(id)) {
             examination.setId(id);
             examination = examinationService.get(examination);
+            // 转换时间
+            if (examination != null && timeFormat != null) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                examination.setCurrentTime(System.currentTimeMillis() + "");
+                try {
+                    examination.setStartTime(format.parse(examination.getStartTime()).getTime() + "");
+                    examination.setEndTime(format.parse(examination.getEndTime()).getTime() + "");
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
         }
         return new ReturnT<>(examination);
     }
