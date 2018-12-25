@@ -31,6 +31,22 @@
         a.application_code
     </sql>
 
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="userId != null and userId != ''">
+            and a.user_id = #{userId}
+        </if>
+        <if test="examinationId != null and examinationId != ''">
+            and a.examination_id = #{examinationId}
+        </if>
+        <if test="courseId != null and courseId != ''">
+            and a.course_id = #{courseId}
+        </if>
+        <if test="subjectId != null and subjectId != ''">
+            and a.subject_id = #{subjectId}
+        </if>
+    </sql>
+
     <select id="get" resultMap="answerResultMap">
         SELECT
         <include refid="answerColumns"/>
@@ -43,6 +59,7 @@
         <include refid="answerColumns"/>
         FROM answer a
         WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
     </select>
 
     <insert id="insert">

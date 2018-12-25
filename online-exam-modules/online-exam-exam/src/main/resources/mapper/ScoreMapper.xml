@@ -29,6 +29,19 @@
         a.application_code
     </sql>
 
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="userId != null and userId != ''">
+            and a.user_id = #{userId}
+        </if>
+        <if test="examinationId != null and examinationId != ''">
+            and a.examination_id = #{examinationId}
+        </if>
+        <if test="courseId != null and courseId != ''">
+            and a.course_id = #{courseId}
+        </if>
+    </sql>
+
     <select id="get" resultMap="scoreResultMap">
         SELECT
         <include refid="scoreColumns"/>
@@ -41,6 +54,7 @@
         <include refid="scoreColumns"/>
         FROM score a
         WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
     </select>
 
     <insert id="insert">
@@ -70,6 +84,28 @@
             #{applicationCode}
         );
     </insert>
+
+    <update id="update">
+        UPDATE score  SET
+        <if test="userId != null">
+            user_id = #{userId},
+        </if>
+        <if test="examinationId != null">
+            examination_id = #{examinationId},
+        </if>
+        <if test="courseId != null">
+            course_id = #{courseId},
+        </if>
+        <if test="score != null">
+            score = #{score},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE id = #{id}
+    </update>
 
     <delete id="delete">
         UPDATE score SET
