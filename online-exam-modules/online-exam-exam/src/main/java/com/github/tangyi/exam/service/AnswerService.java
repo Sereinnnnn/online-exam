@@ -34,7 +34,7 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
     private ScoreService scoreService;
 
     @Autowired
-    private ExamRecodeService examRecodeService;
+    private ExamRecordService examRecodeService;
 
     /**
      * 提交答卷
@@ -86,54 +86,46 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                         }
                     }
                 }
-                // 保存错题
-                if (CollectionUtils.isNotEmpty(incorrectAnswers))
-                    incorrectAnswerService.insertBatch(incorrectAnswers);
-            }
-
-            // 保存成绩
-            Score score = new Score();
-            score.setExaminationId(answer.getExaminationId());
-            score.setUserId(answer.getUserId());
-            score.setCourseId(answer.getCourseId());
-            score = scoreService.getByUserIdAndExaminationId(score);
-            // 更新
-            if (score != null) {
-                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                score.setScore(totalScore.toString());
-                score.setCorrectNumber(correctNumber.toString());
-                score.setInCorrectNumber(incorrectNumber.toString());
-                scoreService.update(score);
-            } else {
-                // 新增
-                score = new Score();
-                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                // 保存成绩
+                Score score = new Score();
                 score.setExaminationId(answer.getExaminationId());
                 score.setUserId(answer.getUserId());
                 score.setCourseId(answer.getCourseId());
-                score.setScore(totalScore.toString());
-                score.setCorrectNumber(correctNumber.toString());
-                score.setInCorrectNumber(incorrectNumber.toString());
-                scoreService.insert(score);
-            }
-
-            // 保存考试记录
-            ExamRecode examRecode = new ExamRecode();
-            examRecode.setUserId(answer.getUserId());
-            examRecode.setExaminationId(answer.getExaminationId());
-            examRecode = examRecodeService.getByUserIdAndExaminationId(examRecode);
-            if (examRecode != null) {
-                examRecode.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                examRecode.setExamTime(examRecode.getModifyDate());
-                success = examRecodeService.update(examRecode) > 0;
-            } else {
-                examRecode = new ExamRecode();
+                score = scoreService.getByUserIdAndExaminationId(score);
+                // 更新
+                if (score != null) {
+                    score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                    score.setScore(totalScore.toString());
+                    score.setCorrectNumber(correctNumber.toString());
+                    score.setInCorrectNumber(incorrectNumber.toString());
+                    scoreService.update(score);
+                } else {
+                    // 新增
+                    score = new Score();
+                    score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                    score.setExaminationId(answer.getExaminationId());
+                    score.setUserId(answer.getUserId());
+                    score.setCourseId(answer.getCourseId());
+                    score.setScore(totalScore.toString());
+                    score.setCorrectNumber(correctNumber.toString());
+                    score.setInCorrectNumber(incorrectNumber.toString());
+                    scoreService.insert(score);
+                }
+                // 保存考试记录
+                ExamRecord examRecode = new ExamRecord();
                 examRecode.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 examRecode.setUserId(answer.getUserId());
                 examRecode.setExaminationId(answer.getExaminationId());
                 examRecode.setExamTime(examRecode.getCreateDate());
                 examRecode.setScore(totalScore.toString());
                 success = examRecodeService.insert(examRecode) > 0;
+                // 保存错题
+                if (CollectionUtils.isNotEmpty(incorrectAnswers)) {
+                    incorrectAnswers.forEach(tempIncorrectAnswer -> {
+                        tempIncorrectAnswer.setExamRecordId(examRecode.getId());
+                    });
+                    incorrectAnswerService.insertBatch(incorrectAnswers);
+                }
             }
         }
         return success;

@@ -5,6 +5,7 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="examination_id" property="examinationId"/>
+        <result column="exam_record_id" property="examRecordId"/>
         <result column="subject_id" property="subjectId"/>
         <result column="incorrect_answer" property="incorrectAnswer"/>
         <result column="creator" property="creator"/>
@@ -19,6 +20,7 @@
         a.id as "id",
         a.user_id,
         a.examination_id,
+        a.exam_record_id,
         a.subject_id,
         a.incorrect_answer,
         a.creator,
@@ -36,6 +38,9 @@
         </if>
         <if test="examinationId != null and examinationId != ''">
             and a.examination_id = #{examinationId}
+        </if>
+        <if test="examRecordId != null and examRecordId != ''">
+            and a.exam_record_id = #{examRecordId}
         </if>
     </sql>
 
@@ -59,6 +64,7 @@
             id,
             user_id,
             examination_id,
+            exam_record_id,
             subject_id,
             incorrect_answer,
             creator,
@@ -71,6 +77,7 @@
             #{id},
             #{userId},
             #{examinationId},
+            #{examRecordId},
             #{subjectId},
             #{incorrectAnswer},
             #{creator},
@@ -88,6 +95,7 @@
         id,
         user_id,
         examination_id,
+        exam_record_id,
         subject_id,
         incorrect_answer,
         creator,
@@ -102,6 +110,7 @@
             #{item.id},
             #{item.userId},
             #{item.examinationId},
+            #{item.examRecordId},
             #{item.subjectId},
             #{item.incorrectAnswer},
             #{item.creator},

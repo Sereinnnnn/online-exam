@@ -5,10 +5,10 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
-import com.github.tangyi.exam.dto.ExamRecodeDto;
-import com.github.tangyi.exam.module.ExamRecode;
+import com.github.tangyi.exam.dto.ExamRecordDto;
+import com.github.tangyi.exam.module.ExamRecord;
 import com.github.tangyi.exam.module.Examination;
-import com.github.tangyi.exam.service.ExamRecodeService;
+import com.github.tangyi.exam.service.ExamRecordService;
 import com.github.tangyi.exam.service.ExaminationService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -27,13 +27,13 @@ import java.util.*;
  * @date 2018/11/8 21:27
  */
 @RestController
-@RequestMapping("/examRecode")
-public class ExamRecodeController extends BaseController {
+@RequestMapping("/examRecord")
+public class ExamRecordController extends BaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExamRecodeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExamRecordController.class);
 
     @Autowired
-    private ExamRecodeService examRecodeService;
+    private ExamRecordService examRecordService;
 
     @Autowired
     private ExaminationService examinationService;
@@ -47,46 +47,46 @@ public class ExamRecodeController extends BaseController {
      * @date 2018/11/10 21:33
      */
     @GetMapping("/{id}")
-    public ReturnT<ExamRecode> examRecode(@PathVariable String id) {
-        ExamRecode examRecode = new ExamRecode();
+    public ReturnT<ExamRecord> examRecode(@PathVariable String id) {
+        ExamRecord examRecord = new ExamRecord();
         if (StringUtils.isNotBlank(id)) {
-            examRecode.setId(id);
-            examRecode = examRecodeService.get(examRecode);
+            examRecord.setId(id);
+            examRecord = examRecordService.get(examRecord);
         }
-        return new ReturnT<>(examRecode);
+        return new ReturnT<>(examRecord);
     }
 
     /**
      * 获取分页数据
      *
      * @param params     params
-     * @param examRecode examRecode
+     * @param examRecord examRecord
      * @return PageInfo
      * @author tangyi
      * @date 2018/11/10 21:33
      */
-    @RequestMapping("examRecodeList")
-    public PageInfo<ExamRecodeDto> examRecodeList(@RequestParam Map<String, String> params, ExamRecode examRecode) {
-        PageInfo<ExamRecode> page = new PageInfo<ExamRecode>();
+    @RequestMapping("examRecordList")
+    public PageInfo<ExamRecordDto> examRecodeList(@RequestParam Map<String, String> params, ExamRecord examRecord) {
+        PageInfo<ExamRecord> page = new PageInfo<ExamRecord>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageInfo<ExamRecodeDto> examRecodeDtoPageInfo = new PageInfo<>();
-        List<ExamRecodeDto> examRecodeDtoList = new ArrayList<>();
+        PageInfo<ExamRecordDto> examRecordDtoPageInfo = new PageInfo<>();
+        List<ExamRecordDto> examRecodeDtoList = new ArrayList<>();
         // 查询考试记录
-        PageInfo<ExamRecode> examRecodePageInfo = examRecodeService.findPage(page, examRecode);
-        if (CollectionUtils.isNotEmpty(examRecodePageInfo.getList())) {
+        PageInfo<ExamRecord> examRecordPageInfo = examRecordService.findPage(page, examRecord);
+        if (CollectionUtils.isNotEmpty(examRecordPageInfo.getList())) {
             Set<String> examIdSet = new HashSet<>();
-            examRecodePageInfo.getList().forEach(tempExamRecode -> {
+            examRecordPageInfo.getList().forEach(tempExamRecode -> {
                 examIdSet.add(tempExamRecode.getExaminationId());
             });
             Examination examination = new Examination();
             examination.setIds(examIdSet.toArray(new String[examIdSet.size()]));
             // 查询考试信息
             List<Examination> examinations = examinationService.findListById(examination);
-            examRecodePageInfo.getList().forEach(tempExamRecode -> {
+            examRecordPageInfo.getList().forEach(tempExamRecode -> {
                 examinations.forEach(tempExamination -> {
                     if (tempExamRecode.getExaminationId().equals(tempExamination.getId())) {
-                        ExamRecodeDto examRecodeDto = new ExamRecodeDto();
+                        ExamRecordDto examRecodeDto = new ExamRecordDto();
                         BeanUtils.copyProperties(tempExamination, examRecodeDto);
                         examRecodeDto.setExamTime(tempExamRecode.getExamTime());
                         examRecodeDto.setScore(tempExamRecode.getScore());
@@ -95,36 +95,41 @@ public class ExamRecodeController extends BaseController {
                 });
             });
         }
-        examRecodeDtoPageInfo.setList(examRecodeDtoList);
-        return examRecodeDtoPageInfo;
+        examRecordDtoPageInfo.setTotal(examRecordPageInfo.getTotal());
+        examRecordDtoPageInfo.setPages(examRecordPageInfo.getPages());
+        examRecordDtoPageInfo.setPageSize(examRecordPageInfo.getPageSize());
+        examRecordDtoPageInfo.setPageNum(examRecordPageInfo.getPageNum());
+        examRecordDtoPageInfo.setList(examRecodeDtoList);
+        return examRecordDtoPageInfo;
     }
 
     /**
      * 创建
      *
-     * @param examRecode examRecode
+     * @param examRecord examRecord
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:33
      */
     @PostMapping
-    public ReturnT<Boolean> addExamRecode(@RequestBody ExamRecode examRecode) {
-        examRecode.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<>(examRecodeService.insert(examRecode) > 0);
+    public ReturnT<ExamRecord> addExamRecode(@RequestBody ExamRecord examRecord) {
+        examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        examRecordService.insert(examRecord);
+        return new ReturnT<>(examRecord);
     }
 
     /**
      * 更新
      *
-     * @param examRecode examRecode
+     * @param examRecord examRecord
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:34
      */
     @PutMapping
-    public ReturnT<Boolean> updateExamRecode(@RequestBody ExamRecode examRecode) {
-        examRecode.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<>(examRecodeService.update(examRecode) > 0);
+    public ReturnT<Boolean> updateExamRecode(@RequestBody ExamRecord examRecord) {
+        examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        return new ReturnT<>(examRecordService.update(examRecord) > 0);
     }
 
     /**
@@ -139,10 +144,10 @@ public class ExamRecodeController extends BaseController {
     public ReturnT<Boolean> deleteExamRecode(@PathVariable String id) {
         boolean success = false;
         try {
-            ExamRecode examRecode = examRecodeService.get(id);
-            if (examRecode != null) {
-                examRecode.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                success = examRecodeService.delete(examRecode) > 0;
+            ExamRecord examRecord = examRecordService.get(id);
+            if (examRecord != null) {
+                examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                success = examRecordService.delete(examRecord) > 0;
             }
         } catch (Exception e) {
             logger.error("删除考试记录失败！", e);

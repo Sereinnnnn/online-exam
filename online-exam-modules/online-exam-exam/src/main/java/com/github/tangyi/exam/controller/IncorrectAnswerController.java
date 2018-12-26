@@ -85,9 +85,14 @@ public class IncorrectAnswerController extends BaseController {
             List<Subject> subjects = subjectService.findListById(subject);
             if (CollectionUtils.isNotEmpty(subjects)) {
                 subjects.forEach(tempSubject -> {
-                    IncorrectAnswerDto incorrectAnswerDto = new IncorrectAnswerDto();
-                    BeanUtils.copyProperties(tempSubject, incorrectAnswerDto);
-                    incorrectAnswerDtoList.add(incorrectAnswerDto);
+                    incorrectAnswerPageInfo.getList().forEach(tempIncorrectAnswer -> {
+                        if (tempSubject.getId().equalsIgnoreCase(tempIncorrectAnswer.getSubjectId())) {
+                            IncorrectAnswerDto incorrectAnswerDto = new IncorrectAnswerDto();
+                            BeanUtils.copyProperties(tempSubject, incorrectAnswerDto);
+                            incorrectAnswerDto.setIncorrectAnswer(tempIncorrectAnswer.getIncorrectAnswer());
+                            incorrectAnswerDtoList.add(incorrectAnswerDto);
+                        }
+                    });
                 });
             }
         }

@@ -1,6 +1,6 @@
 package com.github.tangyi.exam.dto;
 
-import com.github.tangyi.exam.module.ExamRecode;
+import com.github.tangyi.exam.module.ExamRecord;
 
 /**
  * 考试记录DTO
@@ -8,7 +8,7 @@ import com.github.tangyi.exam.module.ExamRecode;
  * @author tangyi
  * @date 2018-12-26 16:26
  */
-public class ExamRecodeDto extends ExamRecode {
+public class ExamRecordDto extends ExamRecord {
     /**
      * 考试名称
      */

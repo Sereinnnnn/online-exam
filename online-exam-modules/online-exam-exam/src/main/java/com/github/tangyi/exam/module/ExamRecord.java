@@ -8,7 +8,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018/11/8 21:05
  */
-public class ExamRecode extends BaseEntity<ExamRecode> {
+public class ExamRecord extends BaseEntity<ExamRecord> {
 
     /**
      * 考生ID

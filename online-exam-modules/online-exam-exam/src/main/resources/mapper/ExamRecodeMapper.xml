@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.tangyi.exam.mapper.ExamRecodeMapper">
-    <resultMap id="examRecodeResultMap" type="com.github.tangyi.exam.module.ExamRecode">
+<mapper namespace="com.github.tangyi.exam.mapper.ExamRecordMapper">
+    <resultMap id="examRecodeResultMap" type="com.github.tangyi.exam.module.ExamRecord">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="examination_id" property="examinationId"/>
@@ -105,6 +105,31 @@
             #{applicationCode}
         );
     </insert>
+
+    <update id="update">
+        UPDATE exam_recode  SET
+        <if test="userId != null">
+            user_id = #{userId},
+        </if>
+        <if test="examinationId != null">
+            examination_id = #{examinationId},
+        </if>
+        <if test="courseId != null">
+            course_id = #{courseId},
+        </if>
+        <if test="examTime != null">
+            exam_time = #{examTime},
+        </if>
+        <if test="score != null">
+            score = #{score},
+        </if>
+        <if test="delFlag != null">
+            del_flag = #{delFlag},
+        </if>
+        modifier = #{modifier},
+        modify_date = #{modifyDate}
+        WHERE id = #{id}
+    </update>
 
     <delete id="delete">
         UPDATE exam_recode SET

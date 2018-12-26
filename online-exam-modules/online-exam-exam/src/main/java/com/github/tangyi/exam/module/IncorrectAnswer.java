@@ -21,6 +21,11 @@ public class IncorrectAnswer extends BaseEntity<IncorrectAnswer> {
     private String examinationId;
 
     /**
+     * 考试记录ID
+     */
+    private String examRecordId;
+
+    /**
      * 题目ID
      */
     private String subjectId;
@@ -60,5 +65,13 @@ public class IncorrectAnswer extends BaseEntity<IncorrectAnswer> {
 
     public void setIncorrectAnswer(String incorrectAnswer) {
         this.incorrectAnswer = incorrectAnswer;
+    }
+
+    public String getExamRecordId() {
+        return examRecordId;
+    }
+
+    public void setExamRecordId(String examRecordId) {
+        this.examRecordId = examRecordId;
     }
 }

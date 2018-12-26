@@ -40,7 +40,7 @@ public class AnswerController extends BaseController {
     private IncorrectAnswerService incorrectAnswerService;
 
     @Autowired
-    private ExamRecodeService examRecodeService;
+    private ExamRecordService examRecodeService;
 
     /**
      * 根据ID获取

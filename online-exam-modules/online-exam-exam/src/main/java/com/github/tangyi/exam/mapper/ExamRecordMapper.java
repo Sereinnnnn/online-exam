@@ -1,7 +1,7 @@
 package com.github.tangyi.exam.mapper;
 
 import com.github.tangyi.common.persistence.CrudMapper;
-import com.github.tangyi.exam.module.ExamRecode;
+import com.github.tangyi.exam.module.ExamRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,15 +11,15 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2018/11/8 21:12
  */
 @Mapper
-public interface ExamRecodeMapper extends CrudMapper<ExamRecode> {
+public interface ExamRecordMapper extends CrudMapper<ExamRecord> {
 
     /**
      * 根据用户id、考试id查找
      *
-     * @param examRecode examRecode
+     * @param examRecord examRecord
      * @return Score
      * @author tangyi
      * @date 2018/12/26 13:56
      */
-    ExamRecode getByUserIdAndExaminationId(ExamRecode examRecode);
+    ExamRecord getByUserIdAndExaminationId(ExamRecord examRecord);
 }
