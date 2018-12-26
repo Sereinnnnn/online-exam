@@ -53,6 +53,16 @@
         <include refid="whereColumnList"/>
     </select>
 
+    <select id="findListById" resultMap="courseResultMap">
+        SELECT
+        <include refid="courseColumns"/>
+        FROM course a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insert">
         insert  into course (
             id,

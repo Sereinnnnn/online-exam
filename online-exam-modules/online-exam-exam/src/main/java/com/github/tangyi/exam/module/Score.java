@@ -30,6 +30,16 @@ public class Score extends BaseEntity<Score> {
      */
     private String score;
 
+    /**
+     * 错误题目数量
+     */
+    private String inCorrectNumber;
+
+    /**
+     * 正确题目数量
+     */
+    private String correctNumber;
+
     public String getUserId() {
         return userId;
     }
@@ -60,5 +70,21 @@ public class Score extends BaseEntity<Score> {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getInCorrectNumber() {
+        return inCorrectNumber;
+    }
+
+    public void setInCorrectNumber(String inCorrectNumber) {
+        this.inCorrectNumber = inCorrectNumber;
+    }
+
+    public String getCorrectNumber() {
+        return correctNumber;
+    }
+
+    public void setCorrectNumber(String correctNumber) {
+        this.correctNumber = correctNumber;
     }
 }

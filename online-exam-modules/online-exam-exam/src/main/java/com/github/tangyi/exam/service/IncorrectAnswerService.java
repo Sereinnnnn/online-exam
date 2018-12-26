@@ -6,6 +6,8 @@ import com.github.tangyi.exam.module.IncorrectAnswer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 错题service
  *
@@ -15,4 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class IncorrectAnswerService extends CrudService<IncorrectAnswerMapper, IncorrectAnswer> {
+
+    /**
+     * 批量保存
+     *
+     * @param incorrectAnswerList incorrectAnswerList
+     * @return int
+     * @author tangyi
+     * @date 2018/12/26 14:37
+     */
+    @Transactional
+    public int insertBatch(List<IncorrectAnswer> incorrectAnswerList) {
+        return this.dao.insertBatch(incorrectAnswerList);
+    }
 }

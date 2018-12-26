@@ -79,7 +79,7 @@ public class CourseController extends BaseController {
     @PostMapping
     public ReturnT<Boolean> addCourse(@RequestBody Course course) {
         course.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(courseService.insert(course) > 0);
+        return new ReturnT<>(courseService.insert(course) > 0);
     }
 
     /**
@@ -93,7 +93,7 @@ public class CourseController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateCourse(@RequestBody Course course) {
         course.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(courseService.update(course) > 0);
+        return new ReturnT<>(courseService.update(course) > 0);
     }
 
     /**
@@ -106,18 +106,19 @@ public class CourseController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteCourse(@PathVariable String id) {
+        boolean success = false;
         try {
             Course course = new Course();
             course.setId(id);
             course = courseService.get(course);
             if (course != null) {
                 course.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                courseService.delete(course);
+                success = courseService.delete(course) > 0;
             }
         } catch (Exception e) {
             logger.error("删除课程失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -130,12 +131,13 @@ public class CourseController extends BaseController {
      */
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllCourses(@RequestBody Course course) {
+        boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(course.getIds()))
-                courseService.deleteAll(course.getIds().split(","));
+            if (StringUtils.isNotEmpty(course.getId()))
+                success = courseService.deleteAll(course.getIds()) > 0;
         } catch (Exception e) {
             logger.error("删除课程失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 }

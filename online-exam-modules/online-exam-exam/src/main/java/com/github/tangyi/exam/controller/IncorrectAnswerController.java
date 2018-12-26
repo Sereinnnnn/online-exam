@@ -5,15 +5,20 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.exam.dto.IncorrectAnswerDto;
 import com.github.tangyi.exam.module.IncorrectAnswer;
+import com.github.tangyi.exam.module.Subject;
 import com.github.tangyi.exam.service.IncorrectAnswerService;
+import com.github.tangyi.exam.service.SubjectService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * 错题controller
@@ -29,6 +34,9 @@ public class IncorrectAnswerController extends BaseController {
 
     @Autowired
     private IncorrectAnswerService incorrectAnswerService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * 根据ID获取
@@ -58,11 +66,33 @@ public class IncorrectAnswerController extends BaseController {
      * @date 2018/11/10 21:37
      */
     @RequestMapping("incorrectAnswerList")
-    public PageInfo<IncorrectAnswer> incorrectAnswerList(@RequestParam Map<String, String> params, IncorrectAnswer incorrectAnswer) {
+    public PageInfo<IncorrectAnswerDto> incorrectAnswerList(@RequestParam Map<String, String> params, IncorrectAnswer incorrectAnswer) {
         PageInfo<IncorrectAnswer> page = new PageInfo<IncorrectAnswer>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        return incorrectAnswerService.findPage(page, incorrectAnswer);
+        // 查找错题
+        PageInfo<IncorrectAnswer> incorrectAnswerPageInfo = incorrectAnswerService.findPage(page, incorrectAnswer);
+        PageInfo<IncorrectAnswerDto> pageInfo = new PageInfo<>();
+        List<IncorrectAnswerDto> incorrectAnswerDtoList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(incorrectAnswerPageInfo.getList())) {
+            Set<String> subjectIds = new HashSet<>();
+            incorrectAnswerPageInfo.getList().forEach(incorrect -> {
+                subjectIds.add(incorrect.getSubjectId());
+            });
+            Subject subject = new Subject();
+            subject.setIds(subjectIds.toArray(new String[subjectIds.size()]));
+            // 查找题目
+            List<Subject> subjects = subjectService.findListById(subject);
+            if (CollectionUtils.isNotEmpty(subjects)) {
+                subjects.forEach(tempSubject -> {
+                    IncorrectAnswerDto incorrectAnswerDto = new IncorrectAnswerDto();
+                    BeanUtils.copyProperties(tempSubject, incorrectAnswerDto);
+                    incorrectAnswerDtoList.add(incorrectAnswerDto);
+                });
+            }
+        }
+        pageInfo.setList(incorrectAnswerDtoList);
+        return pageInfo;
     }
 
     /**
@@ -76,7 +106,7 @@ public class IncorrectAnswerController extends BaseController {
     @PostMapping
     public ReturnT<Boolean> addIncorrectAnswer(@RequestBody IncorrectAnswer incorrectAnswer) {
         incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(incorrectAnswerService.insert(incorrectAnswer) > 0);
+        return new ReturnT<>(incorrectAnswerService.insert(incorrectAnswer) > 0);
     }
 
     /**
@@ -90,7 +120,7 @@ public class IncorrectAnswerController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateIncorrectAnswer(@RequestBody IncorrectAnswer incorrectAnswer) {
         incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(incorrectAnswerService.update(incorrectAnswer) > 0);
+        return new ReturnT<>(incorrectAnswerService.update(incorrectAnswer) > 0);
     }
 
     /**
@@ -103,15 +133,16 @@ public class IncorrectAnswerController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteIncorrectAnswer(@PathVariable String id) {
+        boolean success = false;
         try {
             IncorrectAnswer incorrectAnswer = incorrectAnswerService.get(id);
             if (incorrectAnswer != null) {
                 incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                incorrectAnswerService.delete(incorrectAnswer);
+                success = incorrectAnswerService.delete(incorrectAnswer) > 0;
             }
         } catch (Exception e) {
             logger.error("删除错题失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 }

@@ -214,13 +214,14 @@ public class MenuController extends BaseController {
                 Menu menu = new Menu();
                 menus = menuService.findList(menu);
             } else {    // 导出选中
+                Set<String> menuIdSet = new HashSet<>();
                 for (String id : ids.split(",")) {
-                    Menu menu = new Menu();
-                    menu.setId(id);
-                    menu = menuService.get(menu);
-                    if (menu != null)
-                        menus.add(menu);
+                    if (StringUtils.isNotBlank(id))
+                        menuIdSet.add(id);
                 }
+                Menu menu = new Menu();
+                menu.setIds(menuIdSet.toArray(new String[menuIdSet.size()]));
+                menus = menuService.findListById(menu);
             }
             ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(menus), MenuUtil.getMenuMap());
         } catch (Exception e) {

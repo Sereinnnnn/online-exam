@@ -54,6 +54,16 @@
         <include refid="whereColumnList"/>
     </select>
 
+    <select id="findListById" resultMap="roleResultMap">
+        SELECT
+        <include refid="roleColumns"/>
+        FROM sys_role  a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insert">
         INSERT INTO sys_role (
         id,

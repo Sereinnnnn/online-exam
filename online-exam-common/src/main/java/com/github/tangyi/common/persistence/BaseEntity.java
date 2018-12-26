@@ -34,7 +34,7 @@ public class BaseEntity<T> implements Serializable {
 
     protected boolean isNewRecord;  // 是否为新记录
 
-    protected String ids; // ID数组
+    protected String[] ids; // ID数组
 
     public BaseEntity() {
 
@@ -133,11 +133,11 @@ public class BaseEntity<T> implements Serializable {
         isNewRecord = newRecord;
     }
 
-    public String getIds() {
+    public String[] getIds() {
         return ids;
     }
 
-    public void setIds(String ids) {
+    public void setIds(String[] ids) {
         this.ids = ids;
     }
 }

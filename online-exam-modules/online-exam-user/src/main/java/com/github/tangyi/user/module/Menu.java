@@ -65,7 +65,6 @@ public class Menu extends BaseEntity<Menu> {
      */
     private String remark;
 
-
     public String getName() {
         return name;
     }

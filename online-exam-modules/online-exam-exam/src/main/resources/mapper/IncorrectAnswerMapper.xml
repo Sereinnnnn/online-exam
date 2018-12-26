@@ -82,6 +82,38 @@
         );
     </insert>
 
+    <!-- 批量插入 -->
+    <insert id="insertBatch">
+        insert into incorrect_answer (
+        id,
+        user_id,
+        examination_id,
+        subject_id,
+        incorrect_answer,
+        creator,
+        create_date,
+        modifier,
+        modify_date,
+        del_flag,
+        application_code
+        ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.userId},
+            #{item.examinationId},
+            #{item.subjectId},
+            #{item.incorrectAnswer},
+            #{item.creator},
+            #{item.createDate},
+            #{item.modifier},
+            #{item.modifyDate},
+            #{item.delFlag},
+            #{item.applicationCode}
+            )
+        </foreach>
+    </insert>
+
     <delete id="delete">
         UPDATE incorrect_answer SET
 			del_flag = 1

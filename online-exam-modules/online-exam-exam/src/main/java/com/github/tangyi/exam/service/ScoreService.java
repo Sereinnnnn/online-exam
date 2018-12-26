@@ -15,4 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class ScoreService extends CrudService<ScoreMapper, Score> {
+
+    /**
+     * 根据用户id、考试id查找
+     *
+     * @param score score
+     * @return Score
+     * @author tangyi
+     * @date 2018/12/26 13:58
+     */
+    public Score getByUserIdAndExaminationId(Score score) {
+        return this.dao.getByUserIdAndExaminationId(score);
+    }
 }

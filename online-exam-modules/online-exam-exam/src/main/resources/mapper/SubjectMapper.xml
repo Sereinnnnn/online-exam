@@ -74,6 +74,16 @@
         <include refid="whereColumnList"/>
     </select>
 
+    <select id="findListById" resultMap="subjectResultMap">
+        SELECT
+        <include refid="subjectColumns"/>
+        FROM subject a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insert">
         insert  into subject (
             id,

@@ -55,6 +55,16 @@
         <include refid="whereColumnList"/>
     </select>
 
+    <select id="findListById" resultMap="deptResultMap">
+        SELECT
+        <include refid="deptColumns"/>
+        FROM sys_dept a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insert">
         INSERT  INTO sys_dept (
             id,
@@ -88,7 +98,7 @@
     </insert>
 
     <update id="update">
-        UPDATE sys_dept  SET
+        UPDATE sys_dept SET
         <if test="deptName != null">
             dept_name = #{deptName},
         </if>

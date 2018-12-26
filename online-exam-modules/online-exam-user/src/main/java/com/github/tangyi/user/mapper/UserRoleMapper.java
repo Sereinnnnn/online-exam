@@ -22,6 +22,16 @@ public interface UserRoleMapper extends CrudMapper<UserRole> {
     List<UserRole> getByUserId(String userId);
 
     /**
+     * 根据用户ID批量查询
+     *
+     * @param userIds 用户ID集合
+     * @return List
+     */
+    List<UserRole> getByUserIds(List<String> userIds);
+
+
+
+    /**
      * 根据用户ID删除
      *
      * @param userId 用户ID

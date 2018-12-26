@@ -76,7 +76,7 @@ public class ScoreController extends BaseController {
     @PostMapping
     public ReturnT<Boolean> addScore(@RequestBody Score score) {
         score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(scoreService.insert(score) > 0);
+        return new ReturnT<>(scoreService.insert(score) > 0);
     }
 
     /**
@@ -90,7 +90,7 @@ public class ScoreController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateScore(@RequestBody Score score) {
         score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(scoreService.update(score) > 0);
+        return new ReturnT<>(scoreService.update(score) > 0);
     }
 
     /**
@@ -103,15 +103,16 @@ public class ScoreController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteScore(@PathVariable String id) {
+        boolean success = false;
         try {
             Score score = scoreService.get(id);
             if (score != null) {
                 score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                scoreService.delete(score);
+                success = scoreService.delete(score) > 0;
             }
         } catch (Exception e) {
             logger.error("删除成绩失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 }

@@ -12,4 +12,14 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ExamRecodeMapper extends CrudMapper<ExamRecode> {
+
+    /**
+     * 根据用户id、考试id查找
+     *
+     * @param examRecode examRecode
+     * @return Score
+     * @author tangyi
+     * @date 2018/12/26 13:56
+     */
+    ExamRecode getByUserIdAndExaminationId(ExamRecode examRecode);
 }

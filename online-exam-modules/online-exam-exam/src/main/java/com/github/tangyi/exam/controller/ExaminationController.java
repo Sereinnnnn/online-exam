@@ -21,9 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 考试controller
@@ -46,7 +44,7 @@ public class ExaminationController extends BaseController {
     /**
      * 根据ID获取
      *
-     * @param id id
+     * @param id         id
      * @param timeFormat timeFormat
      * @return ReturnT
      * @author tangyi
@@ -93,14 +91,22 @@ public class ExaminationController extends BaseController {
         BeanUtils.copyProperties(page, examinationDtoPageInfo);
         List<ExaminationDto> examinationDtos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(page.getList())) {
-            for (Examination exam : page.getList()) {
-                Course course = new Course();
-                course.setId(exam.getCourseId());
-                course = courseService.get(course);
-                ExaminationDto examinationDto = new ExaminationDto(course);
-                BeanUtils.copyProperties(exam, examinationDto);
-                examinationDtos.add(examinationDto);
-            }
+            Set<String> courseIdSet = new HashSet<>();
+            page.getList().forEach(exam -> {
+                courseIdSet.add(exam.getCourseId());
+            });
+            Course course = new Course();
+            course.setIds(courseIdSet.toArray(new String[courseIdSet.size()]));
+            List<Course> courses = courseService.findListById(course);
+            page.getList().forEach(exam -> {
+                courses.forEach(tempCourse -> {
+                    if (tempCourse.getId().equals(exam.getCourseId())) {
+                        ExaminationDto examinationDto = new ExaminationDto(tempCourse);
+                        BeanUtils.copyProperties(exam, examinationDto);
+                        examinationDtos.add(examinationDto);
+                    }
+                });
+            });
         }
         examinationDtoPageInfo.setList(examinationDtos);
         return examinationDtoPageInfo;
@@ -120,7 +126,7 @@ public class ExaminationController extends BaseController {
         BeanUtils.copyProperties(examinationDto, examination);
         examination.setCourseId(examinationDto.getCourse().getId());
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(examinationService.insert(examination) > 0);
+        return new ReturnT<>(examinationService.insert(examination) > 0);
     }
 
     /**
@@ -137,7 +143,7 @@ public class ExaminationController extends BaseController {
         BeanUtils.copyProperties(examinationDto, examination);
         examination.setCourseId(examinationDto.getCourse().getId());
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(examinationService.update(examination) > 0);
+        return new ReturnT<>(examinationService.update(examination) > 0);
     }
 
     /**
@@ -150,18 +156,19 @@ public class ExaminationController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteExamination(@PathVariable String id) {
+        boolean success = false;
         try {
             Examination examination = new Examination();
             examination.setId(id);
             examination = examinationService.get(examination);
             if (examination != null) {
                 examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                examinationService.delete(examination);
+                success = examinationService.delete(examination) > 0;
             }
         } catch (Exception e) {
             logger.error("删除考试失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -174,12 +181,13 @@ public class ExaminationController extends BaseController {
      */
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllExaminations(@RequestBody Examination examination) {
+        boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(examination.getIds()))
-                examinationService.deleteAll(examination.getIds().split(","));
+            if (StringUtils.isNotEmpty(examination.getId()))
+                success = examinationService.deleteAll(examination.getIds()) > 0;
         } catch (Exception e) {
             logger.error("删除考试失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 }

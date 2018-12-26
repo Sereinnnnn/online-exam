@@ -15,4 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class ExamRecodeService extends CrudService<ExamRecodeMapper, ExamRecode> {
+
+    /**
+     * 根据用户id、考试id查找
+     *
+     * @param examRecode examRecode
+     * @return ExamRecode
+     * @author tangyi
+     * @date 2018/12/26 13:58
+     */
+    public ExamRecode getByUserIdAndExaminationId(ExamRecode examRecode) {
+        return this.dao.getByUserIdAndExaminationId(examRecode);
+    }
 }

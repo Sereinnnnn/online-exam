@@ -27,6 +27,14 @@ public interface CrudMapper<T> extends BaseMapper {
     List<T> findList(T entity);
 
     /**
+     * 根据id获取列表数据
+     *
+     * @param entity
+     * @return
+     */
+    List<T> findListById(T entity);
+
+    /**
      * 获取所有数据
      *
      * @return

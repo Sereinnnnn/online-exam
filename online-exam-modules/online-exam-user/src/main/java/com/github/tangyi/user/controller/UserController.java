@@ -9,7 +9,10 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
-import com.github.tangyi.user.module.*;
+import com.github.tangyi.user.module.Dept;
+import com.github.tangyi.user.module.Role;
+import com.github.tangyi.user.module.User;
+import com.github.tangyi.user.module.UserRole;
 import com.github.tangyi.user.service.*;
 import com.github.tangyi.user.utils.UserUtils;
 import com.google.common.net.HttpHeaders;
@@ -29,10 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author tangyi
@@ -119,35 +119,54 @@ public class UserController extends BaseController {
         user.setUsername(params.getOrDefault("username", ""));
         PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
         page = userService.findPage(page, user);
-        if (CollectionUtils.isNotEmpty(page.getList())) {
-            page.getList().forEach(tempUser -> {
-                // 查询用户部门关系
-                if (StringUtils.isNotBlank(tempUser.getDeptId())) {
-                    Dept dept = new Dept();
-                    dept.setId(tempUser.getDeptId());
-                    // 查询部门信息
-                    dept = deptService.get(dept);
-                    if (dept != null) {
-                        tempUser.setDeptName(dept.getDeptName());
-                        tempUser.setDeptId(dept.getId());
+        List<User> users = page.getList();
+        if (CollectionUtils.isNotEmpty(users)) {
+            // 收集用户、部门id
+            Set<String> deptIdSet = new HashSet<>(), userIdSet = new HashSet<>();
+            users.forEach(tempUser -> {
+                if (tempUser.getDeptId() != null)
+                    deptIdSet.add(tempUser.getDeptId());
+                userIdSet.add(tempUser.getId());
+            });
+            // 批量查找部门
+            Dept dept = new Dept();
+            dept.setIds(deptIdSet.toArray(new String[deptIdSet.size()]));
+            List<Dept> deptList = deptService.findListById(dept);
+            // 批量查找角色
+            List<UserRole> userRoles = userRoleService.getByUserIds(new ArrayList<>(userIdSet));
+            List<Role> roleList = new ArrayList<>();
+            if (CollectionUtils.isNotEmpty(userRoles)) {
+                Set<String> roleIdSet = new HashSet<>();
+                userRoles.forEach(tempUserRole -> {
+                    roleIdSet.add(tempUserRole.getRoleId());
+                });
+                Role role = new Role();
+                role.setIds(roleIdSet.toArray(new String[roleIdSet.size()]));
+                // 查询所有角色
+                roleList = roleService.findListById(role);
+            }
+            // 设置部门、角色信息
+            for (User tempUser : users) {
+                List<Role> userRoleList = new ArrayList<>();
+                // 设置部门信息
+                for (Dept tempDept : deptList) {
+                    if (tempDept.getId().equals(tempUser.getDeptId())) {
+                        tempUser.setDeptName(tempDept.getDeptName());
+                        tempUser.setDeptId(tempDept.getId());
+                        break;
                     }
                 }
-                // 查询用户角色关系
-                List<UserRole> userRoles = userRoleService.getByUserId(tempUser.getId());
-                if (CollectionUtils.isNotEmpty(userRoles)) {
-                    userRoles.forEach(userRole -> {
-                        Role role = new Role();
-                        role.setId(userRole.getRoleId());
-                        // 查询角色信息
-                        role = roleService.get(role);
-                        if (role != null) {
-                            if (tempUser.getRoleList() == null)
-                                tempUser.setRoleList(new ArrayList<>());
-                            tempUser.getRoleList().add(role);
+                for (UserRole tempUserRole : userRoles) {
+                    if (tempUser.getId().equals(tempUserRole.getUserId())) {
+                        for (Role role : roleList) {
+                            if (role.getId().equals(tempUserRole.getRoleId())) {
+                                userRoleList.add(role);
+                            }
                         }
-                    });
+                    }
                 }
-            });
+                tempUser.setRoleList(userRoleList);
+            }
         }
         return page;
     }
@@ -255,20 +274,20 @@ public class UserController extends BaseController {
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
-            List<User> users = new ArrayList<>();
+            List<User> users;
             if (StringUtils.isNotEmpty(ids)) {
+                List<String> userIdList = new ArrayList<>();
                 for (String id : ids.split(",")) {
-                    User user = new User();
-                    user.setId(id);
-                    user = userService.get(user);
-                    if (user != null)
-                        users.add(user);
+                    if (StringUtils.isNotEmpty(id))
+                        userIdList.add(id);
                 }
+                User user = new User();
+                user.setIds(userIdList.toArray(new String[userIdList.size()]));
+                users = userService.findListById(user);
             } else {    // 导出全部用户
                 users = userService.findList(new User());
             }
             ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(users), UserUtils.getUserMap());
-
         } catch (Exception e) {
             logger.error("导出用户数据失败！", e);
             logService.insert(LogUtil.getLog(request, SysUtil.getUser(), e, "导出用户"));

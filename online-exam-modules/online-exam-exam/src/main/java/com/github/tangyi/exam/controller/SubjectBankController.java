@@ -88,7 +88,7 @@ public class SubjectBankController extends BaseController {
     @PostMapping
     public ReturnT<Boolean> addSubjectBank(@RequestBody SubjectBank subjectBank) {
         subjectBank.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(subjectBankService.insert(subjectBank) > 0);
+        return new ReturnT<>(subjectBankService.insert(subjectBank) > 0);
     }
 
     /**
@@ -102,7 +102,7 @@ public class SubjectBankController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateSubjectBank(@RequestBody SubjectBank subjectBank) {
         subjectBank.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(subjectBankService.update(subjectBank) > 0);
+        return new ReturnT<>(subjectBankService.update(subjectBank) > 0);
     }
 
     /**
@@ -115,18 +115,19 @@ public class SubjectBankController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteSubjectBank(@PathVariable String id) {
+        boolean success = false;
         try {
             SubjectBank subjectBank = new SubjectBank();
             subjectBank.setId(id);
             subjectBank = subjectBankService.get(subjectBank);
             if (subjectBank != null) {
                 subjectBank.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                subjectBankService.delete(subjectBank);
+                success = subjectBankService.delete(subjectBank) > 0;
             }
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -212,12 +213,13 @@ public class SubjectBankController extends BaseController {
      */
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteSubjectBanks(@RequestBody SubjectBank subjectBank) {
+        boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(subjectBank.getIds()))
-                subjectBankService.deleteAll(subjectBank.getIds().split(","));
+            if (StringUtils.isNotEmpty(subjectBank.getId()))
+                success = subjectBankService.deleteAll(subjectBank.getIds()) > 0;
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 }

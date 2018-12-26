@@ -6,21 +6,13 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Answer;
-import com.github.tangyi.exam.module.IncorrectAnswer;
-import com.github.tangyi.exam.module.Score;
-import com.github.tangyi.exam.module.Subject;
-import com.github.tangyi.exam.service.AnswerService;
-import com.github.tangyi.exam.service.IncorrectAnswerService;
-import com.github.tangyi.exam.service.ScoreService;
-import com.github.tangyi.exam.service.SubjectService;
-import org.apache.commons.collections4.CollectionUtils;
+import com.github.tangyi.exam.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +38,9 @@ public class AnswerController extends BaseController {
 
     @Autowired
     private IncorrectAnswerService incorrectAnswerService;
+
+    @Autowired
+    private ExamRecodeService examRecodeService;
 
     /**
      * 根据ID获取
@@ -93,7 +88,7 @@ public class AnswerController extends BaseController {
     @PostMapping
     public ReturnT<Boolean> addAnswer(@RequestBody Answer answer) {
         answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(answerService.insert(answer) > 0);
+        return new ReturnT<>(answerService.insert(answer) > 0);
     }
 
     /**
@@ -107,7 +102,7 @@ public class AnswerController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateAnswer(@RequestBody Answer answer) {
         answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(answerService.update(answer) > 0);
+        return new ReturnT<>(answerService.update(answer) > 0);
     }
 
     /**
@@ -120,16 +115,17 @@ public class AnswerController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteAnswer(@PathVariable String id) {
+        boolean success = false;
         try {
             Answer answer = answerService.get(id);
             if (answer != null) {
                 answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                answerService.delete(answer);
+                success = answerService.delete(answer) > 0;
             }
         } catch (Exception e) {
             logger.error("删除答题失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -142,14 +138,15 @@ public class AnswerController extends BaseController {
      */
     @PostMapping("saveOrUpdate")
     public ReturnT<Boolean> saveOrUpdate(@RequestBody Answer answer) {
+        boolean success;
         if (answer.isNewRecord()) {
             answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-            answerService.insert(answer);
+            success = answerService.insert(answer) > 0;
         } else {
             answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-            answerService.update(answer);
+            success = answerService.update(answer) > 0;
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -162,51 +159,6 @@ public class AnswerController extends BaseController {
      */
     @PostMapping("submit")
     public ReturnT<Boolean> submit(@RequestBody Answer answer) {
-        logger.debug("提交答卷：{}, {}", answer.getExaminationId(), answer.getUserId());
-        // 总分
-        Integer totalScore = 0;
-        List<Answer> answerList = answerService.findList(answer);
-        if (CollectionUtils.isNotEmpty(answerList)) {
-            for (Answer tempAnswer : answerList) {
-                Subject subject = new Subject();
-                subject.setId(tempAnswer.getSubjectId());
-                subject.setApplicationCode(tempAnswer.getApplicationCode());
-                subject = subjectService.get(subject);
-                if (subject != null) {
-                    // 答题正确
-                    if (subject.getAnswer().toUpperCase().equalsIgnoreCase(tempAnswer.getAnswer())) {
-                        totalScore += Integer.parseInt(subject.getScore());
-                    } else {
-                        // 记录错题
-                        IncorrectAnswer incorrectAnswer = new IncorrectAnswer();
-                        incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                        incorrectAnswer.setExaminationId(tempAnswer.getExaminationId());
-                        incorrectAnswer.setSubjectId(tempAnswer.getSubjectId());
-                        incorrectAnswer.setUserId(tempAnswer.getUserId());
-                        incorrectAnswer.setIncorrectAnswer(tempAnswer.getAnswer());
-                        incorrectAnswerService.insert(incorrectAnswer);
-                    }
-                }
-            }
-
-            // 保存成绩
-            Score score = new Score();
-            score.setExaminationId(answer.getExaminationId());
-            score.setUserId(answer.getUserId());
-            score.setCourseId(answer.getCourseId());
-            List<Score> scores = scoreService.findList(score);
-            // 更新
-            if (CollectionUtils.isNotEmpty(scores)) {
-                score = scores.get(0);
-                score.setScore(totalScore.toString());
-                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                scoreService.update(score);
-            } else {
-                // 新增
-                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                scoreService.insert(score);
-            }
-        }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(answerService.submit(answer));
     }
 }

@@ -88,7 +88,7 @@ public class SubjectController extends BaseController {
     @PostMapping
     public ReturnT<Boolean> addSubject(@RequestBody Subject subject) {
         subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(subjectService.insert(subject) > 0);
+        return new ReturnT<>(subjectService.insert(subject) > 0);
     }
 
     /**
@@ -102,7 +102,7 @@ public class SubjectController extends BaseController {
     @PutMapping
     public ReturnT<Boolean> updateSubject(@RequestBody Subject subject) {
         subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<Boolean>(subjectService.update(subject) > 0);
+        return new ReturnT<>(subjectService.update(subject) > 0);
     }
 
     /**
@@ -115,18 +115,19 @@ public class SubjectController extends BaseController {
      */
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteSubject(@PathVariable String id) {
+        boolean success = false;
         try {
             Subject subject = new Subject();
             subject.setId(id);
             subject = subjectService.get(subject);
             if (subject != null) {
                 subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                subjectService.delete(subject);
+                success = subjectService.delete(subject) > 0;
             }
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -207,12 +208,13 @@ public class SubjectController extends BaseController {
      */
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteSubjects(@RequestBody Subject subject) {
+        boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(subject.getIds()))
-                subjectService.deleteAll(subject.getIds().split(","));
+            if (StringUtils.isNotEmpty(subject.getId()))
+                success = subjectService.deleteAll(subject.getIds()) > 0;
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 }

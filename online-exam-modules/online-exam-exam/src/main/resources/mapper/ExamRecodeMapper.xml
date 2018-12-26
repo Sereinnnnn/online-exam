@@ -31,6 +31,19 @@
         a.application_code
     </sql>
 
+    <!-- where 条件 -->
+    <sql id="whereColumnList">
+        <if test="userId != null and userId != ''">
+            and a.user_id = #{userId}
+        </if>
+        <if test="examinationId != null and examinationId != ''">
+            and a.examination_id = #{examinationId}
+        </if>
+        <if test="courseId != null and courseId != ''">
+            and a.course_id = #{courseId}
+        </if>
+    </sql>
+
     <select id="get" resultMap="examRecodeResultMap">
         SELECT
         <include refid="examRecodeColumns"/>
@@ -38,11 +51,29 @@
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
+    <select id="getByUserIdAndExaminationId" resultMap="examRecodeResultMap">
+        SELECT
+        <include refid="examRecodeColumns"/>
+        FROM exam_recode a
+        WHERE a.user_id = #{userId} and examination_id = #{examinationId} and a.del_flag = 0
+    </select>
+
     <select id="findList" resultMap="examRecodeResultMap">
         SELECT
         <include refid="examRecodeColumns"/>
         FROM exam_recode a
         WHERE a.del_flag = 0
+        <include refid="whereColumnList"/>
+    </select>
+
+    <select id="findListById" resultMap="examRecodeResultMap">
+        SELECT
+        <include refid="examRecodeColumns"/>
+        FROM exam_recode a
+        WHERE a.id IN
+        <foreach collection="collection" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
     <insert id="insert">
