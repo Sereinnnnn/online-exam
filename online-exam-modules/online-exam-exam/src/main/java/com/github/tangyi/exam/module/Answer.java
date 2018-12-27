@@ -21,6 +21,11 @@ public class Answer extends BaseEntity<Answer> {
     private String examinationId;
 
     /**
+     * 考试记录id
+     */
+    private String examRecordId;
+
+    /**
      * 课程ID
      */
     private String courseId;
@@ -73,5 +78,13 @@ public class Answer extends BaseEntity<Answer> {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getExamRecordId() {
+        return examRecordId;
+    }
+
+    public void setExamRecordId(String examRecordId) {
+        this.examRecordId = examRecordId;
     }
 }

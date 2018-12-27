@@ -6,7 +6,7 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Answer;
-import com.github.tangyi.exam.service.*;
+import com.github.tangyi.exam.service.AnswerService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +29,6 @@ public class AnswerController extends BaseController {
 
     @Autowired
     private AnswerService answerService;
-
-    @Autowired
-    private SubjectService subjectService;
-
-    @Autowired
-    private ScoreService scoreService;
-
-    @Autowired
-    private IncorrectAnswerService incorrectAnswerService;
-
-    @Autowired
-    private ExamRecordService examRecodeService;
 
     /**
      * 根据ID获取

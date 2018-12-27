@@ -3,7 +3,10 @@ package com.github.tangyi.exam.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.exam.mapper.AnswerMapper;
-import com.github.tangyi.exam.module.*;
+import com.github.tangyi.exam.module.Answer;
+import com.github.tangyi.exam.module.IncorrectAnswer;
+import com.github.tangyi.exam.module.Score;
+import com.github.tangyi.exam.module.Subject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,6 +81,7 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                                 IncorrectAnswer incorrectAnswer = new IncorrectAnswer();
                                 incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                                 incorrectAnswer.setExaminationId(tempAnswer.getExaminationId());
+                                incorrectAnswer.setExamRecordId(answer.getExamRecordId());
                                 incorrectAnswer.setSubjectId(tempAnswer.getSubjectId());
                                 incorrectAnswer.setUserId(tempAnswer.getUserId());
                                 incorrectAnswer.setIncorrectAnswer(tempAnswer.getAnswer());
@@ -89,6 +93,7 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                 // 保存成绩
                 Score score = new Score();
                 score.setExaminationId(answer.getExaminationId());
+                score.setExamRecordId(answer.getExamRecordId());
                 score.setUserId(answer.getUserId());
                 score.setCourseId(answer.getCourseId());
                 score = scoreService.getByUserIdAndExaminationId(score);
@@ -98,7 +103,7 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                     score.setScore(totalScore.toString());
                     score.setCorrectNumber(correctNumber.toString());
                     score.setInCorrectNumber(incorrectNumber.toString());
-                    scoreService.update(score);
+                    success = scoreService.update(score) > 0;
                 } else {
                     // 新增
                     score = new Score();
@@ -109,23 +114,11 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                     score.setScore(totalScore.toString());
                     score.setCorrectNumber(correctNumber.toString());
                     score.setInCorrectNumber(incorrectNumber.toString());
-                    scoreService.insert(score);
+                    success = scoreService.insert(score) > 0;
                 }
-                // 保存考试记录
-                ExamRecord examRecode = new ExamRecord();
-                examRecode.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                examRecode.setUserId(answer.getUserId());
-                examRecode.setExaminationId(answer.getExaminationId());
-                examRecode.setExamTime(examRecode.getCreateDate());
-                examRecode.setScore(totalScore.toString());
-                success = examRecodeService.insert(examRecode) > 0;
                 // 保存错题
-                if (CollectionUtils.isNotEmpty(incorrectAnswers)) {
-                    incorrectAnswers.forEach(tempIncorrectAnswer -> {
-                        tempIncorrectAnswer.setExamRecordId(examRecode.getId());
-                    });
+                if (CollectionUtils.isNotEmpty(incorrectAnswers))
                     incorrectAnswerService.insertBatch(incorrectAnswers);
-                }
             }
         }
         return success;

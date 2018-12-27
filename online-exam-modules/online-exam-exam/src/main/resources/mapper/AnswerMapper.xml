@@ -5,6 +5,7 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="examination_id" property="examinationId"/>
+        <result column="exam_record_id" property="examRecordId"/>
         <result column="course_id" property="courseId"/>
         <result column="subject_id" property="subjectId"/>
         <result column="answer" property="answer"/>
@@ -20,6 +21,7 @@
         a.id as "id",
         a.user_id,
         a.examination_id,
+        a.exam_record_id,
         a.course_id,
         a.subject_id,
         a.answer,
@@ -38,6 +40,9 @@
         </if>
         <if test="examinationId != null and examinationId != ''">
             and a.examination_id = #{examinationId}
+        </if>
+        <if test="examRecordId != null and examRecordId != ''">
+            and a.exam_record_id = #{examRecordId}
         </if>
         <if test="courseId != null and courseId != ''">
             and a.course_id = #{courseId}
@@ -67,6 +72,7 @@
             id,
             user_id,
             examination_id,
+            exam_record_id,
             course_id,
             subject_id,
             answer,
@@ -80,6 +86,7 @@
             #{id},
             #{userId},
             #{examinationId},
+            #{examRecordId},
             #{courseId},
             #{subjectId},
             #{answer},
@@ -99,6 +106,9 @@
         </if>
         <if test="examinationId != null">
             examination_id = #{examinationId},
+        </if>
+        <if test="examRecordId != null">
+            exam_record_id = #{examRecordId},
         </if>
         <if test="courseId != null">
             course_id = #{courseId},

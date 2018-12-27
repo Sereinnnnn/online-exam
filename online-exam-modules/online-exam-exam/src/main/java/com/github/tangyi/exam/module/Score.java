@@ -21,6 +21,11 @@ public class Score extends BaseEntity<Score> {
     private String examinationId;
 
     /**
+     * 考试记录id
+     */
+    private String examRecordId;
+
+    /**
      * 课程ID
      */
     private String courseId;
@@ -86,5 +91,13 @@ public class Score extends BaseEntity<Score> {
 
     public void setCorrectNumber(String correctNumber) {
         this.correctNumber = correctNumber;
+    }
+
+    public String getExamRecordId() {
+        return examRecordId;
+    }
+
+    public void setExamRecordId(String examRecordId) {
+        this.examRecordId = examRecordId;
     }
 }
