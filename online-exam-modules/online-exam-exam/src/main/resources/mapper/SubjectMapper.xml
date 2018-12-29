@@ -4,6 +4,7 @@
     <resultMap id="subjectResultMap" type="com.github.tangyi.exam.module.Subject">
         <id column="id" property="id"/>
         <result column="examination_id" property="examinationId"/>
+        <result column="serial_number" property="serialNumber"/>
         <result column="subject_name" property="subjectName"/>
         <result column="type" property="type"/>
         <result column="content" property="content"/>
@@ -28,6 +29,7 @@
     <sql id="subjectColumns">
         a.id as "id",
         a.examination_id,
+        a.serial_number,
         a.subject_name,
         a.type,
         a.content,
@@ -53,6 +55,9 @@
     <sql id="whereColumnList">
         <if test="examinationId != null and examinationId != ''">
             and a.examination_id = #{examinationId}
+        </if>
+        <if test="serialNumber != null and serialNumber != ''">
+            and a.serial_number = #{serialNumber}
         </if>
         <if test="subjectName != null and subjectName != ''">
             and a.subject_name like CONCAT('%',#{subjectName},'%')
@@ -82,12 +87,14 @@
         <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
+        ORDER BY serial_number ASC
     </select>
 
     <insert id="insert">
         insert  into subject (
             id,
             examination_id,
+            serial_number,
             subject_name,
             type,
             content,
@@ -110,6 +117,7 @@
         ) values (
             #{id},
             #{examinationId},
+            #{serialNumber},
             #{subjectName},
             #{type},
             #{content},
@@ -136,6 +144,9 @@
         UPDATE subject  SET
         <if test="examinationId != null">
             examination_id = #{examinationId},
+        </if>
+        <if test="serialNumber != null">
+            serial_number = #{serialNumber},
         </if>
         <if test="subjectName != null">
             subject_name = #{subjectName},

@@ -31,6 +31,11 @@ public class IncorrectAnswer extends BaseEntity<IncorrectAnswer> {
     private String subjectId;
 
     /**
+     * 题目序号
+     */
+    private String serialNumber;
+
+    /**
      * 错误答案
      */
     private String incorrectAnswer;
@@ -73,5 +78,13 @@ public class IncorrectAnswer extends BaseEntity<IncorrectAnswer> {
 
     public void setExamRecordId(String examRecordId) {
         this.examRecordId = examRecordId;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

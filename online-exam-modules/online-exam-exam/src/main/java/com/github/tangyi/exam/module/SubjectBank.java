@@ -15,6 +15,11 @@ public class SubjectBank extends BaseEntity<SubjectBank> {
     private String categoryId;
 
     /**
+     * 题目序号
+     */
+    private String serialNumber;
+
+    /**
      * 题目名称
      */
     private String subjectName;
@@ -78,6 +83,14 @@ public class SubjectBank extends BaseEntity<SubjectBank> {
      * 难度等级
      */
     private String level;
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
     public String getCategoryId() {
         return categoryId;

@@ -3,10 +3,7 @@ package com.github.tangyi.exam.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.exam.mapper.AnswerMapper;
-import com.github.tangyi.exam.module.Answer;
-import com.github.tangyi.exam.module.IncorrectAnswer;
-import com.github.tangyi.exam.module.Score;
-import com.github.tangyi.exam.module.Subject;
+import com.github.tangyi.exam.module.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,6 +80,7 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                                 incorrectAnswer.setExaminationId(tempAnswer.getExaminationId());
                                 incorrectAnswer.setExamRecordId(answer.getExamRecordId());
                                 incorrectAnswer.setSubjectId(tempAnswer.getSubjectId());
+                                incorrectAnswer.setSerialNumber(tempSubject.getSerialNumber());
                                 incorrectAnswer.setUserId(tempAnswer.getUserId());
                                 incorrectAnswer.setIncorrectAnswer(tempAnswer.getAnswer());
                                 incorrectAnswers.add(incorrectAnswer);
@@ -92,33 +90,25 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                 }
                 // 保存成绩
                 Score score = new Score();
+                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 score.setExaminationId(answer.getExaminationId());
                 score.setExamRecordId(answer.getExamRecordId());
                 score.setUserId(answer.getUserId());
                 score.setCourseId(answer.getCourseId());
-                score = scoreService.getByUserIdAndExaminationId(score);
-                // 更新
-                if (score != null) {
-                    score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                    score.setScore(totalScore.toString());
-                    score.setCorrectNumber(correctNumber.toString());
-                    score.setInCorrectNumber(incorrectNumber.toString());
-                    success = scoreService.update(score) > 0;
-                } else {
-                    // 新增
-                    score = new Score();
-                    score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                    score.setExaminationId(answer.getExaminationId());
-                    score.setUserId(answer.getUserId());
-                    score.setCourseId(answer.getCourseId());
-                    score.setScore(totalScore.toString());
-                    score.setCorrectNumber(correctNumber.toString());
-                    score.setInCorrectNumber(incorrectNumber.toString());
-                    success = scoreService.insert(score) > 0;
-                }
+                score.setScore(totalScore.toString());
+                score.setCorrectNumber(correctNumber.toString());
+                score.setInCorrectNumber(incorrectNumber.toString());
+                scoreService.insert(score);
                 // 保存错题
                 if (CollectionUtils.isNotEmpty(incorrectAnswers))
                     incorrectAnswerService.insertBatch(incorrectAnswers);
+                // 更新考试记录
+                ExamRecord examRecord = new ExamRecord();
+                examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                examRecord.setId(answer.getExamRecordId());
+                examRecord.setExamTime(score.getCreateDate());
+                examRecord.setScore(score.getScore());
+                success = examRecodeService.update(examRecord) > 0;
             }
         }
         return success;

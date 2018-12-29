@@ -16,6 +16,11 @@ public class Subject extends BaseEntity<Subject> {
     private String examinationId;
 
     /**
+     * 题目序号
+     */
+    private String serialNumber;
+
+    /**
      * 题目名称
      */
     private String subjectName;
@@ -190,5 +195,13 @@ public class Subject extends BaseEntity<Subject> {
 
     public void setOptionF(String optionF) {
         this.optionF = optionF;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

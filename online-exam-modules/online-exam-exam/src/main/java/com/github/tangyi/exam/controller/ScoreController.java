@@ -7,12 +7,14 @@ import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Score;
 import com.github.tangyi.exam.service.ScoreService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +65,24 @@ public class ScoreController extends BaseController {
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
         return scoreService.findPage(page, score);
+    }
+
+    /**
+     * 查询考试成绩
+     *
+     * @param score score
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/29 19:29
+     */
+    @RequestMapping("score")
+    public ReturnT<Score> score(Score score) {
+        List<Score> scoreList =scoreService.findList(score);
+        score = new Score();
+        if (CollectionUtils.isNotEmpty(scoreList)) {
+            score = scoreList.get(0);
+        }
+        return new ReturnT<>(score);
     }
 
     /**
