@@ -4,8 +4,13 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
+import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.exam.dto.ScoreDto;
+import com.github.tangyi.exam.feign.UserService;
+import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.module.Score;
+import com.github.tangyi.exam.service.ExaminationService;
 import com.github.tangyi.exam.service.ScoreService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,8 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 成绩controller
@@ -31,6 +35,12 @@ public class ScoreController extends BaseController {
 
     @Autowired
     private ScoreService scoreService;
+
+    @Autowired
+    private ExaminationService examinationService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 根据ID获取
@@ -60,11 +70,45 @@ public class ScoreController extends BaseController {
      * @date 2018/11/10 21:41
      */
     @RequestMapping("scoreList")
-    public PageInfo<Score> scoreList(@RequestParam Map<String, String> params, Score score) {
+    public PageInfo<ScoreDto> scoreList(@RequestParam Map<String, String> params, Score score) {
+        PageInfo<ScoreDto> scoreDtoPageInfo = new PageInfo<>();
         PageInfo<Score> page = new PageInfo<Score>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        return scoreService.findPage(page, score);
+        PageInfo<Score> scorePageInfo = scoreService.findPage(page, score);
+        if (CollectionUtils.isNotEmpty(scorePageInfo.getList())) {
+            Set<String> examIdSet = new HashSet<>();
+            scorePageInfo.getList().forEach(tempScore -> {
+                examIdSet.add(tempScore.getExaminationId());
+            });
+            Examination examination = new Examination();
+            examination.setIds(examIdSet.toArray(new String[examIdSet.size()]));
+            // 查询考试信息
+            List<Examination> examinations = examinationService.findListById(examination);
+            List<ScoreDto> scoreDtoList = new ArrayList<>();
+            scorePageInfo.getList().forEach(tempScore -> {
+                examinations.forEach(tempExamination -> {
+                    if (tempScore.getExaminationId().equals(tempExamination.getId())) {
+                        ScoreDto scoreDto = new ScoreDto();
+                        scoreDto.setExaminationName(tempExamination.getExaminationName());
+                        scoreDto.setExamTime(tempScore.getCreateDate());
+                        scoreDto.setScore(tempScore.getScore());
+
+                        // 查询用户信息
+                        UserVo userVo = userService.findById(tempScore.getUserId());
+                        if (userVo != null)
+                            scoreDto.setUserName(userVo.getName());
+                        scoreDtoList.add(scoreDto);
+                    }
+                });
+            });
+            // 分页信息
+            scoreDtoPageInfo.setTotal(scorePageInfo.getTotal());
+            scoreDtoPageInfo.setPageNum(scorePageInfo.getPageNum());
+            scoreDtoPageInfo.setPageSize(scorePageInfo.getPageSize());
+            scoreDtoPageInfo.setList(scoreDtoList);
+        }
+        return scoreDtoPageInfo;
     }
 
     /**
@@ -77,7 +121,7 @@ public class ScoreController extends BaseController {
      */
     @RequestMapping("score")
     public ReturnT<Score> score(Score score) {
-        List<Score> scoreList =scoreService.findList(score);
+        List<Score> scoreList = scoreService.findList(score);
         score = new Score();
         if (CollectionUtils.isNotEmpty(scoreList)) {
             score = scoreList.get(0);
