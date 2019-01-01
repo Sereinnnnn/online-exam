@@ -3,15 +3,22 @@ package com.github.tangyi.exam.controller;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
+import com.github.tangyi.common.utils.ExcelToolUtil;
+import com.github.tangyi.common.utils.MapUtil;
+import com.github.tangyi.common.utils.Servlets;
 import com.github.tangyi.common.utils.SysUtil;
+import com.github.tangyi.common.vo.DeptVo;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.dto.ScoreDto;
+import com.github.tangyi.exam.feign.DeptService;
 import com.github.tangyi.exam.feign.UserService;
 import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.module.Score;
 import com.github.tangyi.exam.service.ExaminationService;
 import com.github.tangyi.exam.service.ScoreService;
+import com.github.tangyi.exam.utils.ScoreUtil;
+import com.google.common.net.HttpHeaders;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -19,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -41,6 +51,9 @@ public class ScoreController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DeptService deptService;
 
     /**
      * 根据ID获取
@@ -86,22 +99,55 @@ public class ScoreController extends BaseController {
             // 查询考试信息
             List<Examination> examinations = examinationService.findListById(examination);
             List<ScoreDto> scoreDtoList = new ArrayList<>();
-            scorePageInfo.getList().forEach(tempScore -> {
-                examinations.forEach(tempExamination -> {
-                    if (tempScore.getExaminationId().equals(tempExamination.getId())) {
+            // 用户id
+            Set<String> userIdSet = new HashSet<>();
+            for (Score tempScore : scorePageInfo.getList()) {
+                for (Examination tempExamination : examinations) {
+                    if (tempExamination.getId().equals(tempScore.getExaminationId())) {
                         ScoreDto scoreDto = new ScoreDto();
+                        scoreDto.setId(tempScore.getId());
                         scoreDto.setExaminationName(tempExamination.getExaminationName());
                         scoreDto.setExamTime(tempScore.getCreateDate());
                         scoreDto.setScore(tempScore.getScore());
-
-                        // 查询用户信息
-                        UserVo userVo = userService.findById(tempScore.getUserId());
-                        if (userVo != null)
-                            scoreDto.setUserName(userVo.getName());
+                        scoreDto.setUserId(tempScore.getUserId());
+                        userIdSet.add(tempScore.getUserId());
                         scoreDtoList.add(scoreDto);
+                        break;
                     }
+                }
+            }
+            // 查询用户信息
+            UserVo userVo = new UserVo();
+            userVo.setIds(userIdSet.toArray(new String[userIdSet.size()]));
+            ReturnT<List<UserVo>> returnT = userService.findById(userVo);
+            if (returnT != null && CollectionUtils.isNotEmpty(returnT.getData())) {
+                // 查询部门信息
+                Set<String> deptIdSet = new HashSet<>();
+                returnT.getData().forEach(tempUserVo -> {
+                    deptIdSet.add(tempUserVo.getDeptId());
                 });
-            });
+                DeptVo deptVo = new DeptVo();
+                deptVo.setIds(deptIdSet.toArray(new String[deptIdSet.size()]));
+                ReturnT<List<DeptVo>> deptReturnT = deptService.findById(deptVo);
+                for (ScoreDto tempScoreDto : scoreDtoList) {
+                    for (UserVo tempUserVo : returnT.getData()) {
+                        if (tempScoreDto.getUserId().equals(tempUserVo.getId())) {
+                            tempScoreDto.setUserName(tempUserVo.getName());
+                            // 查询部门信息
+                            if (deptReturnT != null && CollectionUtils.isNotEmpty(deptReturnT.getData())) {
+                                for (DeptVo tempDept : deptReturnT.getData()) {
+//                                  // 设置所属部门名称
+                                    if (tempDept.getId().equals(tempUserVo.getDeptId())) {
+                                        tempScoreDto.setDeptName(tempDept.getDeptName());
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             // 分页信息
             scoreDtoPageInfo.setTotal(scorePageInfo.getTotal());
             scoreDtoPageInfo.setPageNum(scorePageInfo.getPageNum());
@@ -178,5 +224,96 @@ public class ScoreController extends BaseController {
             logger.error("删除成绩失败！", e);
         }
         return new ReturnT<>(success);
+    }
+
+    /**
+     * 导出成绩
+     *
+     * @param ids ids
+     * @author tangyi
+     * @date 2018/12/31 22:28
+     */
+    @GetMapping("/export")
+    public void exportUser(String ids, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // 配置response
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "考试成绩" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
+            List<Score> scoreList;
+            if (StringUtils.isNotEmpty(ids)) {
+                Set<String> scoreIdSet = new HashSet<>();
+                for (String id : ids.split(",")) {
+                    if (StringUtils.isNotEmpty(id))
+                        scoreIdSet.add(id);
+                }
+                Score score = new Score();
+                score.setIds(scoreIdSet.toArray(new String[scoreIdSet.size()]));
+                scoreList = scoreService.findListById(score);
+            } else {    // 导出全部成绩
+                scoreList = scoreService.findList(new Score());
+            }
+            // 查询考试、用户、部门数据
+            if (CollectionUtils.isNotEmpty(scoreList)) {
+                List<ScoreDto> scoreDtoList = new ArrayList<>();
+                // 查询考试信息
+                Set<String> examIdSet = new HashSet<>();
+                scoreList.forEach(tempScore -> {
+                    examIdSet.add(tempScore.getExaminationId());
+                });
+                Examination examination = new Examination();
+                examination.setIds(examIdSet.toArray(new String[examIdSet.size()]));
+                List<Examination> examinations = examinationService.findListById(examination);
+                // 用户id
+                Set<String> userIdSet = new HashSet<>();
+                scoreList.forEach(tempScore -> {
+                    examinations.forEach(tempExamination -> {
+                        if (tempScore.getExaminationId().equals(tempExamination.getId())) {
+                            ScoreDto scoreDto = new ScoreDto();
+                            scoreDto.setId(tempScore.getId());
+                            scoreDto.setExaminationName(tempExamination.getExaminationName());
+                            scoreDto.setExamTime(tempScore.getCreateDate());
+                            scoreDto.setScore(tempScore.getScore());
+                            scoreDto.setUserId(tempScore.getUserId());
+                            userIdSet.add(tempScore.getUserId());
+                            scoreDtoList.add(scoreDto);
+                        }
+                    });
+                });
+                // 查询用户信息
+                UserVo userVo = new UserVo();
+                userVo.setIds(userIdSet.toArray(new String[userIdSet.size()]));
+                ReturnT<List<UserVo>> returnT = userService.findById(userVo);
+                if (returnT != null && CollectionUtils.isNotEmpty(returnT.getData())) {
+                    // 查询部门信息
+                    Set<String> deptIdSet = new HashSet<>();
+                    returnT.getData().forEach(tempUserVo -> {
+                        deptIdSet.add(tempUserVo.getDeptId());
+                    });
+                    DeptVo deptVo = new DeptVo();
+                    deptVo.setIds(deptIdSet.toArray(new String[deptIdSet.size()]));
+                    ReturnT<List<DeptVo>> deptReturnT = deptService.findById(deptVo);
+                    scoreDtoList.forEach(tempScoreDto -> {
+                        returnT.getData().forEach(tempUserVo -> {
+                            if (tempScoreDto.getUserId().equals(tempUserVo.getId())) {
+                                tempScoreDto.setUserName(tempUserVo.getName());
+                                // 查询部门信息
+                                if (deptReturnT != null && CollectionUtils.isNotEmpty(deptReturnT.getData())) {
+                                    deptReturnT.getData().forEach(tempDept -> {
+                                        // 设置所属部门名称
+                                        if (tempDept.getId().equals(tempUserVo.getDeptId()))
+                                            tempScoreDto.setDeptName(tempDept.getDeptName());
+                                    });
+                                }
+                            }
+                        });
+                    });
+                }
+                // 导出
+                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(scoreDtoList), ScoreUtil.getScoreDtoMap());
+            }
+        } catch (Exception e) {
+            logger.error("导出成绩数据失败！", e);
+        }
     }
 }

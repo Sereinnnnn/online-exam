@@ -26,9 +26,14 @@ public class ExamRecord extends BaseEntity<ExamRecord> {
     private String courseId;
 
     /**
-     * 考试时间
+     * 开始时间
      */
-    private String examTime;
+    private String startTime;
+
+    /**
+     * 结束时间
+     */
+    private String endTime;
 
     /**
      * 成绩
@@ -59,12 +64,20 @@ public class ExamRecord extends BaseEntity<ExamRecord> {
         this.courseId = courseId;
     }
 
-    public String getExamTime() {
-        return examTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setExamTime(String examTime) {
-        this.examTime = examTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getScore() {

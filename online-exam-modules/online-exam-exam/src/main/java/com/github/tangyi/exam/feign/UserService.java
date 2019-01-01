@@ -1,10 +1,14 @@
 package com.github.tangyi.exam.feign;
 
+import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.exam.feign.fallback.UserDetailServiceFallBackImpl;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 /**
  * 用户服务接口
@@ -18,9 +22,9 @@ public interface UserService {
     /**
      * 根据用户id获取用户
      *
-     * @param id id
+     * @param userVo userVo
      * @return UserVo
      */
-    @GetMapping("/user/{id}")
-    UserVo findById(@PathVariable("id") String id);
+    @RequestMapping(value = "/user/findById", method = RequestMethod.POST)
+    ReturnT<List<UserVo>> findById(@RequestBody UserVo userVo);
 }

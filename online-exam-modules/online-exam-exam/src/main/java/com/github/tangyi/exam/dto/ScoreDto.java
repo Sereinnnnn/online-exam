@@ -1,6 +1,6 @@
 package com.github.tangyi.exam.dto;
 
-import com.github.tangyi.exam.module.Score;
+import com.github.tangyi.common.persistence.BaseEntity;
 
 /**
  * 成绩DTO
@@ -8,7 +8,13 @@ import com.github.tangyi.exam.module.Score;
  * @author tangyi
  * @date 2018/12/30 23:08
  */
-public class ScoreDto extends Score {
+public class ScoreDto extends BaseEntity<ScoreDto> {
+
+
+    /**
+     * 考生ID
+     */
+    private String userId;
 
     /**
      * 考试名称
@@ -16,9 +22,19 @@ public class ScoreDto extends Score {
     private String examinationName;
 
     /**
-     * 考试名称
+     * 成绩
+     */
+    private String score;
+
+    /**
+     * 考生名称
      */
     private String userName;
+
+    /**
+     * 部门名称
+     */
+    private String deptName;
 
     /**
      * 考试时间
@@ -47,5 +63,29 @@ public class ScoreDto extends Score {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

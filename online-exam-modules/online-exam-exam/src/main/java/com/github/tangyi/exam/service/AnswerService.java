@@ -36,6 +36,9 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
     @Autowired
     private ExamRecordService examRecodeService;
 
+    @Autowired
+    private ExaminationService examinationService;
+
     /**
      * 提交答卷
      *
@@ -92,6 +95,12 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                 Score score = new Score();
                 score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 score.setExaminationId(answer.getExaminationId());
+                // 查找考试信息
+                Examination examination = new Examination();
+                examination.setId(answer.getExaminationId());
+                examination = examinationService.get(examination);
+                if (examination != null)
+                    score.setExaminationName(examination.getExaminationName());
                 score.setExamRecordId(answer.getExamRecordId());
                 score.setUserId(answer.getUserId());
                 score.setCourseId(answer.getCourseId());
@@ -106,7 +115,7 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                 ExamRecord examRecord = new ExamRecord();
                 examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 examRecord.setId(answer.getExamRecordId());
-                examRecord.setExamTime(score.getCreateDate());
+                examRecord.setEndTime(examRecord.getCreateDate());
                 examRecord.setScore(score.getScore());
                 success = examRecodeService.update(examRecord) > 0;
             }

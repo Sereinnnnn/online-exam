@@ -6,7 +6,8 @@
         <result column="user_id" property="userId"/>
         <result column="examination_id" property="examinationId"/>
         <result column="course_id" property="courseId"/>
-        <result column="exam_time" property="examTime"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
         <result column="score" property="score"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
@@ -21,7 +22,8 @@
         a.user_id,
         a.examination_id,
         a.course_id,
-        a.exam_time,
+        a.start_time,
+        a.end_time,
         a.score,
         a.creator,
         a.create_date,
@@ -82,7 +84,8 @@
             user_id,
             examination_id,
             course_id,
-            exam_time,
+            start_time,
+            end_time,
             score,
             creator,
             create_date,
@@ -95,7 +98,8 @@
             #{userId},
             #{examinationId},
             #{courseId},
-            #{examTime},
+            #{startTime},
+            #{endTime},
             #{score},
             #{creator},
             #{createDate},
@@ -117,8 +121,11 @@
         <if test="courseId != null">
             course_id = #{courseId},
         </if>
-        <if test="examTime != null">
-            exam_time = #{examTime},
+        <if test="startTime != null">
+            start_time = #{startTime},
+        </if>
+        <if test="endTime != null">
+            end_time = #{endTime},
         </if>
         <if test="score != null">
             score = #{score},

@@ -88,7 +88,8 @@ public class ExamRecordController extends BaseController {
                     if (tempExamRecode.getExaminationId().equals(tempExamination.getId())) {
                         ExamRecordDto examRecodeDto = new ExamRecordDto();
                         BeanUtils.copyProperties(tempExamination, examRecodeDto);
-                        examRecodeDto.setExamTime(tempExamRecode.getExamTime());
+                        examRecodeDto.setStartTime(tempExamRecode.getStartTime());
+                        examRecodeDto.setEndTime(tempExamRecode.getEndTime());
                         examRecodeDto.setScore(tempExamRecode.getScore());
                         examRecodeDtoList.add(examRecodeDto);
                     }
@@ -114,6 +115,7 @@ public class ExamRecordController extends BaseController {
     @PostMapping
     public ReturnT<ExamRecord> addExamRecode(@RequestBody ExamRecord examRecord) {
         examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        examRecord.setStartTime(examRecord.getCreateDate());
         examRecordService.insert(examRecord);
         return new ReturnT<>(examRecord);
     }

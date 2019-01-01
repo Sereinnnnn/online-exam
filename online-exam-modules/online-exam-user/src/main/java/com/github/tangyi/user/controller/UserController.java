@@ -339,5 +339,31 @@ public class UserController extends BaseController {
         }
         return new ReturnT<Boolean>(Boolean.TRUE);
     }
+
+    /**
+     * 根据ID查询
+     *
+     * @param userVo userVo
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/31 21:16
+     */
+    @RequestMapping(value = "/findById", method = RequestMethod.POST)
+    public ReturnT<List<UserVo>> findById(@RequestBody UserVo userVo) {
+        ReturnT<List<UserVo>> returnT = null;
+        User user = new User();
+        user.setIds(userVo.getIds());
+        List<User> users = userService.findListById(user);
+        if (CollectionUtils.isNotEmpty(users)) {
+            List<UserVo> userVoList = new ArrayList<>();
+            users.forEach(tempUser -> {
+                UserVo tempUserVo = new UserVo();
+                BeanUtils.copyProperties(tempUser, tempUserVo);
+                userVoList.add(tempUserVo);
+            });
+            returnT = new ReturnT<>(userVoList);
+        }
+        return returnT;
+    }
 }
 

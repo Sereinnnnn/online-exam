@@ -1,14 +1,12 @@
 package com.github.tangyi.exam.dto;
 
-import com.github.tangyi.exam.module.ExamRecord;
-
 /**
  * 考试记录DTO
  *
  * @author tangyi
  * @date 2018-12-26 16:26
  */
-public class ExamRecordDto extends ExamRecord {
+public class ExamRecordDto {
     /**
      * 考试名称
      */
@@ -48,6 +46,11 @@ public class ExamRecordDto extends ExamRecord {
      * 总分
      */
     private String totalScore;
+
+    /**
+     * 分数
+     */
+    private String score;
 
     /**
      * 考试状态
@@ -175,12 +178,10 @@ public class ExamRecordDto extends ExamRecord {
         this.majorId = majorId;
     }
 
-    @Override
     public String getCourseId() {
         return courseId;
     }
 
-    @Override
     public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
@@ -191,5 +192,13 @@ public class ExamRecordDto extends ExamRecord {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

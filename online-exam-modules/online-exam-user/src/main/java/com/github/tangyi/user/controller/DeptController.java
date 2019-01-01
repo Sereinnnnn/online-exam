@@ -3,11 +3,14 @@ package com.github.tangyi.user.controller;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.utils.TreeUtil;
+import com.github.tangyi.common.vo.DeptVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.DeptDto;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.service.DeptService;
 import com.xiaoleilu.hutool.collection.CollUtil;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,5 +104,31 @@ public class DeptController extends BaseController {
     public ReturnT<Boolean> update(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         return new ReturnT<Boolean>(deptService.update(dept) > 0);
+    }
+
+    /**
+     * 根据ID查询
+     *
+     * @param deptVo deptVo
+     * @return ReturnT
+     * @author tangyi
+     * @date 2018/12/31 22:13
+     */
+    @RequestMapping(value = "/findById", method = RequestMethod.POST)
+    public ReturnT<List<DeptVo>> findById(@RequestBody DeptVo deptVo) {
+        ReturnT<List<DeptVo>> returnT = null;
+        Dept dept = new Dept();
+        dept.setIds(deptVo.getIds());
+        List<Dept> depts = deptService.findListById(dept);
+        if (CollectionUtils.isNotEmpty(depts)) {
+            List<DeptVo> deptVoList = new ArrayList<>();
+            depts.forEach(tempDept -> {
+                DeptVo tempDeptVo = new DeptVo();
+                BeanUtils.copyProperties(tempDept, tempDeptVo);
+                deptVoList.add(tempDeptVo);
+            });
+            returnT = new ReturnT<>(deptVoList);
+        }
+        return returnT;
     }
 }

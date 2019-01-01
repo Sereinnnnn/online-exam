@@ -5,6 +5,7 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="examination_id" property="examinationId"/>
+        <result column="examination_name" property="examinationName"/>
         <result column="exam_record_id" property="examRecordId"/>
         <result column="course_id" property="courseId"/>
         <result column="score" property="score"/>
@@ -22,6 +23,7 @@
         a.id as "id",
         a.user_id,
         a.examination_id,
+        a.examination_name,
         a.exam_record_id,
         a.course_id,
         a.score,
@@ -42,6 +44,9 @@
         </if>
         <if test="examinationId != null and examinationId != ''">
             and a.examination_id = #{examinationId}
+        </if>
+        <if test="examinationName != null and examinationName != ''">
+            and a.examination_name like CONCAT('%',#{examinationName},'%')
         </if>
         <if test="examRecordId != null and examRecordId != ''">
             and a.exam_record_id = #{examRecordId}
@@ -73,11 +78,22 @@
         <include refid="whereColumnList"/>
     </select>
 
+    <select id="findListById" resultMap="scoreResultMap">
+        SELECT
+        <include refid="scoreColumns"/>
+        FROM score a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insert">
         insert  into score (
             id,
             user_id,
             examination_id,
+            examination_name,
             exam_record_id,
             course_id,
             score,
@@ -93,6 +109,7 @@
             #{id},
             #{userId},
             #{examinationId},
+            #{examinationName},
             #{examRecordId},
             #{courseId},
             #{score},
@@ -114,6 +131,9 @@
         </if>
         <if test="examinationId != null">
             examination_id = #{examinationId},
+        </if>
+        <if test="examinationName != null">
+            examination_name = #{examinationName},
         </if>
         <if test="examRecordId != null">
             exam_record_id = #{examRecordId},

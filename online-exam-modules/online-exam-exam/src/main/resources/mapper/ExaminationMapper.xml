@@ -55,6 +55,9 @@
         <if test="courseId != null and courseId != ''">
             and a.course_id = #{courseId}
         </if>
+        <if test="status != null and status != ''">
+            and a.status = #{status}
+        </if>
     </sql>
 
     <select id="get" resultMap="examinationResultMap">

@@ -11,7 +11,7 @@
  Target Server Version : 50710
  File Encoding         : 65001
 
- Date: 29/12/2018 22:24:37
+ Date: 01/01/2019 15:29:32
 */
 
 SET NAMES utf8mb4;
@@ -42,9 +42,9 @@ CREATE TABLE `answer`  (
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('19cc8f52a8fa47ba97fff55ec048a5aa', '2', 'fad663ea371f4250a81332bd3a346739', 'c30e607fbadd434288b741ea8ed464cb', NULL, 'e34926a94a4a4895817d7ea78aa63012', 'B', 'admin', '2018-12-29 21:31:16', 'admin', '2018-12-29 21:31:16', '0', 'EXAM');
-INSERT INTO `answer` VALUES ('4db5c184dc214b1ca9bfc83497b393fc', '2', 'fad663ea371f4250a81332bd3a346739', 'c30e607fbadd434288b741ea8ed464cb', NULL, '4d654c576f534f349278806b046608d6', 'B', 'admin', '2018-12-29 21:31:18', 'admin', '2018-12-29 21:31:18', '0', 'EXAM');
-INSERT INTO `answer` VALUES ('9be5a927354f4f6a84717f0f4d7afc2c', '2', 'fad663ea371f4250a81332bd3a346739', 'c30e607fbadd434288b741ea8ed464cb', NULL, '1a934e62942640459b3a66c05f6c09b2', 'C', 'admin', '2018-12-29 21:31:21', 'admin', '2018-12-29 21:31:21', '0', 'EXAM');
+INSERT INTO `answer` VALUES ('456aa1fecbb74496b554a2e53371a9bc', '2', 'fad663ea371f4250a81332bd3a346739', '41f8077b42394d0d8292c23296557837', NULL, '1a934e62942640459b3a66c05f6c09b2', 'B', 'admin', '2019-01-01 14:51:20', 'admin', '2019-01-01 14:51:20', '0', 'EXAM');
+INSERT INTO `answer` VALUES ('7f7c8949edb34222b41735cdc47b0144', '2', 'fad663ea371f4250a81332bd3a346739', '41f8077b42394d0d8292c23296557837', NULL, 'e34926a94a4a4895817d7ea78aa63012', 'B', 'admin', '2019-01-01 14:51:16', 'admin', '2019-01-01 14:51:16', '0', 'EXAM');
+INSERT INTO `answer` VALUES ('e8c82c06c0ee40b0b2c920894cf87216', '2', 'fad663ea371f4250a81332bd3a346739', '41f8077b42394d0d8292c23296557837', NULL, '4d654c576f534f349278806b046608d6', 'C', 'admin', '2019-01-01 14:51:18', 'admin', '2019-01-01 14:51:18', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for course
@@ -86,7 +86,8 @@ CREATE TABLE `exam_recode`  (
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户id',
   `examination_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试id',
   `course_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程id',
-  `exam_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试时间',
+  `start_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '结束时间',
   `score` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '成绩',
   `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `create_date` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
@@ -100,7 +101,7 @@ CREATE TABLE `exam_recode`  (
 -- ----------------------------
 -- Records of exam_recode
 -- ----------------------------
-INSERT INTO `exam_recode` VALUES ('c30e607fbadd434288b741ea8ed464cb', '2', 'fad663ea371f4250a81332bd3a346739', NULL, '2018-12-29 21:31:21', '8', 'admin', '2018-12-29 21:31:13', 'admin', '2018-12-29 21:31:21', '0', 'EXAM');
+INSERT INTO `exam_recode` VALUES ('41f8077b42394d0d8292c23296557837', '2', 'fad663ea371f4250a81332bd3a346739', NULL, '2019-01-01 14:51:06', '2019-01-01 14:51:20', '8', 'admin', '2019-01-01 14:51:06', 'admin', '2019-01-01 14:51:20', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for examination
@@ -133,13 +134,9 @@ CREATE TABLE `examination`  (
 -- ----------------------------
 -- Records of examination
 -- ----------------------------
-INSERT INTO `examination` VALUES ('134bcf6c734b41e8b0b7e63088f8e49d', '2', '0', '11', '2018-12-01 14:21', '2018-12-10 00:00', '', '1', '0', '', '1', '1', '2a6187239d7f48749da321aa6fd56424', '11', 'admin', '2018-12-01 14:21:24', 'admin', '2018-12-01 14:21:24', '1', 'EXAM');
-INSERT INTO `examination` VALUES ('2dadea859eb94dad96b7af71c4c423ab', '1', '0', '', '2018-12-01 15:14', '2018-12-01 15:14', '', '1', '0', '', '1', '1', '6a4ce4b624eb43a09eae4a824e5bd83c', '', 'admin', '2018-12-01 15:14:18', 'admin', '2018-12-01 15:14:18', '1', 'EXAM');
-INSERT INTO `examination` VALUES ('b5990bc1c48d49fcb0023de51772c309', '数学期末考试', '0', '期末考试', '2018-11-14 00:00', '2018-11-20 00:00', '', '150', '0', '', '应用数学', '应用数学', '6dcccd4639bc49b88810be1d30a77f92', '期末考试', 'admin', '2018-11-20 22:48:40', 'admin', '2018-12-04 13:05:50', '0', 'EXAM');
-INSERT INTO `examination` VALUES ('c98f0b0c260e472e84df9da9c0034af3', '2', '0', '2', '2019-02-27 00:00', '2018-12-17 00:00', '', '2', '0', '', '2', '2', '2a6187239d7f48749da321aa6fd56424', '2', 'admin', '2018-12-04 12:38:33', 'admin', '2018-12-04 12:38:33', '1', 'EXAM');
-INSERT INTO `examination` VALUES ('e47ad46fd30745d6ac975b92ef6c1384', '2', '2', '', '2', '2', '', '2', '0', '', '2', '2', '6dcccd4639bc49b88810be1d30a77f92', '2', 'admin', '2018-11-12 20:10:24', 'admin', '2018-11-12 20:10:24', '1', 'EXAM');
-INSERT INTO `examination` VALUES ('f051f54621fc4812b929a7777a701712', '语文考试', '0', '语文考试', '2018-11-07 00:00', '2018-11-20 22:50', '', '150', '0', '', '中文', '中文', '6a4ce4b624eb43a09eae4a824e5bd83c', '语文考试', 'admin', '2018-11-20 22:50:55', 'admin', '2018-12-09 21:08:32', '0', 'EXAM');
-INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '0', '文综历史试题', '2018-12-29 18:30', '2018-12-29 23:30', '', '100', '1', '', '文综历史试题', '文综历史试题', '6a4ce4b624eb43a09eae4a824e5bd83c', '文综历史试题', 'admin', '2018-11-12 20:25:38', 'admin', '2018-12-29 19:45:32', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('b5990bc1c48d49fcb0023de51772c309', '数学期末考试', '0', '期末考试', '2018-11-14 00:00', '2018-11-20 00:00', '', '150', '0', '', '应用数学', '应用数学', '6dcccd4639bc49b88810be1d30a77f92', '期末考试', 'admin', '2018-11-20 22:48:40', 'admin', '2019-01-01 14:41:21', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('f051f54621fc4812b929a7777a701712', '语文考试', '0', '语文考试', '2018-11-07 00:00', '2018-11-20 22:50', '', '150', '0', '', '中文', '中文', '6a4ce4b624eb43a09eae4a824e5bd83c', '语文考试', 'admin', '2018-11-20 22:50:55', 'admin', '2019-01-01 14:41:19', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '0', '文综历史试题', '2019-01-01 13:30', '2019-01-01 18:30', '', '100', '0', '', '文综历史试题', '文综历史试题', '6a4ce4b624eb43a09eae4a824e5bd83c', '文综历史试题', 'admin', '2018-11-12 20:25:38', 'admin', '2019-01-01 14:40:10', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for incorrect_answer
@@ -165,7 +162,32 @@ CREATE TABLE `incorrect_answer`  (
 -- ----------------------------
 -- Records of incorrect_answer
 -- ----------------------------
-INSERT INTO `incorrect_answer` VALUES ('9e6d5fa950494196862460289f7ed9dc', '2', 'fad663ea371f4250a81332bd3a346739', 'c30e607fbadd434288b741ea8ed464cb', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'admin', '2018-12-29 21:31:21', 'admin', '2018-12-29 21:31:21', '0', 'EXAM');
+INSERT INTO `incorrect_answer` VALUES ('6790a38792a6411a8436ceb9c0a9417a', '2', 'fad663ea371f4250a81332bd3a346739', '41f8077b42394d0d8292c23296557837', '4d654c576f534f349278806b046608d6', '2', 'C', 'admin', '2019-01-01 14:51:20', 'admin', '2019-01-01 14:51:20', '0', 'EXAM');
+
+-- ----------------------------
+-- Table structure for knowledge
+-- ----------------------------
+DROP TABLE IF EXISTS `knowledge`;
+CREATE TABLE `knowledge`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `knowledge_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '知识名称',
+  `knowledge_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '知识描述',
+  `attachment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件ID',
+  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '状态',
+  `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
+  `modifier` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+  `modify_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
+  `del_flag` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除标记',
+  `application_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统编号',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of knowledge
+-- ----------------------------
+INSERT INTO `knowledge` VALUES ('0837cec93f7b4d19a5b0a880b9a7e66b', '1', NULL, '1', NULL, 'admin', '2018-12-04 11:24:27', 'admin', '2018-12-04 11:24:27', '1', 'EXAM');
+INSERT INTO `knowledge` VALUES ('dfd688530e3a4b98ae107b1418feeebe', '323', '32233333', '', '323', 'admin', '2019-01-01 15:28:48', 'admin', '2019-01-01 15:28:59', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for score
@@ -175,6 +197,7 @@ CREATE TABLE `score`  (
   `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考生ID',
   `examination_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试ID',
+  `examination_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试名称',
   `exam_record_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考试记录id',
   `course_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程ID',
   `score` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '成绩',
@@ -192,7 +215,7 @@ CREATE TABLE `score`  (
 -- ----------------------------
 -- Records of score
 -- ----------------------------
-INSERT INTO `score` VALUES ('0ea09b61f67d4f5f970eaad62d2c8877', '2', 'fad663ea371f4250a81332bd3a346739', 'c30e607fbadd434288b741ea8ed464cb', NULL, '8', '2', '1', 'admin', '2018-12-29 21:31:21', 'admin', '2018-12-29 21:31:21', '0', 'EXAM');
+INSERT INTO `score` VALUES ('012fdefef1a542a180a2337985a91430', '2', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '41f8077b42394d0d8292c23296557837', NULL, '8', '2', '1', 'admin', '2019-01-01 14:51:20', 'admin', '2019-01-01 14:51:20', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for subject
@@ -230,7 +253,7 @@ CREATE TABLE `subject`  (
 INSERT INTO `subject` VALUES ('185b6875ef694febadba8797fbd0ad29', 'b5990bc1c48d49fcb0023de51772c309', NULL, '232222', '0', '', '323fffff', '32', '32', '323', '', '', 'D', '5', '323', '2', 'admin', '2018-12-09 20:55:31', 'admin', '2018-12-09 20:55:31', '0', 'EXAM');
 INSERT INTO `subject` VALUES ('1a934e62942640459b3a66c05f6c09b2', 'fad663ea371f4250a81332bd3a346739', '3', '唐前期的政治人物多为北方人，北宋时政治人物多出生于江西、福建、苏南等地。这一变化主要反映了', '0', '', '官僚集团重视本地域人才', '南北方士人志向差异', '科举制改变人才地域分布', '政治中心转移到南方', '', '', 'B', '4', '政治中心转移到南方', '2', 'admin', '2018-12-09 21:07:20', 'admin', '2018-12-29 20:32:20', '0', 'EXAM');
 INSERT INTO `subject` VALUES ('2954ff84207542b395d2471e166cb414', 'fad663ea371f4250a81332bd3a346739', NULL, '1', '0', '', '1', '1', '1', '1', '', '', 'D', '5', '1', '2', 'admin', '2018-12-09 20:27:59', 'admin', '2018-12-09 20:27:59', '1', 'EXAM');
-INSERT INTO `subject` VALUES ('4d654c576f534f349278806b046608d6', 'fad663ea371f4250a81332bd3a346739', '2', '公元前212年，秦始皇坑杀“术士”，长子扶苏劝谏说：“远方黔首未集，诸生皆诵     法孔子，今上皆重法绳之，臣恐天下不安，唯上察之”。这反映当时', '0', '', '统一进程曲折', '地方治理不畅', '始皇灭儒崇法', '儒学影响较大', '', '', 'B', '4', '', '2', 'admin', '2018-12-09 21:07:07', 'admin', '2018-12-29 20:32:17', '0', 'EXAM');
+INSERT INTO `subject` VALUES ('4d654c576f534f349278806b046608d6', 'fad663ea371f4250a81332bd3a346739', '2', '公元前212年，秦始皇坑杀“术士”，长子扶苏劝谏说：“远方黔首未集，诸生皆诵     法孔子，今上皆重法绳之，臣恐天下不安，唯上察之”。这反映当时', '0', '', '统一进程曲折', '地方治理不畅', '始皇灭儒崇法', '儒学影响较大', '', '', 'B', '4', '公元前212年，秦始皇坑杀“术士”，长子扶苏劝谏说：“远方黔首未集，诸生皆诵     法孔子，今上皆重法绳之，臣恐天下不安，唯上察之”。这反映当时', '4', 'admin', '2018-12-09 21:07:07', 'admin', '2019-01-01 14:42:12', '0', 'EXAM');
 INSERT INTO `subject` VALUES ('ac2787a9c86e4ca39d17e53348d6fccb', 'f051f54621fc4812b929a7777a701712', NULL, '33', '0', '', '33', '33', '33', '33', '', '', 'D', '5', '333', '2', 'admin', '2018-12-09 20:55:52', 'admin', '2018-12-09 22:16:08', '0', 'EXAM');
 INSERT INTO `subject` VALUES ('e34926a94a4a4895817d7ea78aa63012', 'fad663ea371f4250a81332bd3a346739', '1', '《小雅·鹿鸣》本是西周贵族宣扬宴飨之仪的乐歌，后扩散到民间，在乡人宴会上也可传唱。这表明西周时期', '0', '', '周人生活较为富足', '礼乐文明得到广泛认同', '乡人社会地位提高', '贵族奢靡之风波及民间', '', '', 'B', '4', '材料涉及西周贵族宣扬宴飨之仪的乐歌扩散到民间，并不能由此说明周人生活较为富足，故A项错误；据材料“西周贵族宣扬宴飨之仪的乐歌，后扩散到民间，在乡人宴会上也可传唱”可知礼乐文明得到广泛认同，故B项正确；仅凭材料宴飨之仪的乐歌的扩散不足以说明乡人社会地位提高，故C项错误；材料涉及贵族宴飨之仪的乐歌的扩散，并未涉及贵族奢靡之风，故D项错误。', '2', 'admin', '2018-12-09 20:30:07', 'admin', '2018-12-29 20:50:12', '0', 'EXAM');
 INSERT INTO `subject` VALUES ('e73e1cf4feaf47449ce982376afcdb03', 'fad663ea371f4250a81332bd3a346739', NULL, '232222', '0', '', '323fffff', '32', '32', '323', '', '', 'D', '5', '323', '2', 'admin', '2018-12-09 20:28:15', 'admin', '2018-12-09 20:28:15', '1', 'EXAM');
