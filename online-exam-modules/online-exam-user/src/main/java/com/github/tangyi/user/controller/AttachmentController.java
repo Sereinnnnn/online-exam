@@ -6,14 +6,17 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.exception.CommonException;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
+import com.github.tangyi.common.vo.AttachmentVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.module.Attachment;
 import com.github.tangyi.user.service.AttachmentService;
 import com.github.tangyi.user.service.FastDfsService;
 import com.github.tangyi.user.service.LogService;
 import com.google.common.net.HttpHeaders;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +48,24 @@ public class AttachmentController extends BaseController {
 
     @Autowired
     private FastDfsService fastDfsService;
+
+    /**
+     * 根据ID获取
+     *
+     * @param id id
+     * @return ReturnT
+     * @author tangyi
+     * @date 2019/01/01 19:56
+     */
+    @GetMapping("/{id}")
+    public ReturnT<Attachment> attachment(@PathVariable String id) {
+        Attachment attachment = new Attachment();
+        if (StringUtils.isNotBlank(id)) {
+            attachment.setId(id);
+            attachment = attachmentService.get(attachment);
+        }
+        return new ReturnT<>(attachment);
+    }
 
     /**
      * 分页查询
@@ -181,5 +204,31 @@ public class AttachmentController extends BaseController {
             logger.error("删除附件失败！", e);
         }
         return new ReturnT<Boolean>(Boolean.TRUE);
+    }
+
+    /**
+     * 根据附件ID批量查询
+     *
+     * @param attachmentVo attachmentVo
+     * @return ReturnT
+     * @author tangyi
+     * @date 2019/01/01 22:16
+     */
+    @RequestMapping(value = "/findById", method = RequestMethod.POST)
+    public ReturnT<List<AttachmentVo>> findById(@RequestBody AttachmentVo attachmentVo) {
+        ReturnT<List<AttachmentVo>> returnT = null;
+        Attachment attachment = new Attachment();
+        attachment.setIds(attachmentVo.getIds());
+        List<Attachment> attachmentList = attachmentService.findListById(attachment);
+        if (CollectionUtils.isNotEmpty(attachmentList)) {
+            List<AttachmentVo> attachmentVoList = new ArrayList<>();
+            attachmentList.forEach(tempAttachment -> {
+                AttachmentVo tempAttachmentVo = new AttachmentVo();
+                BeanUtils.copyProperties(tempAttachment, tempAttachmentVo);
+                attachmentVoList.add(tempAttachmentVo);
+            });
+            returnT = new ReturnT<>(attachmentVoList);
+        }
+        return returnT;
     }
 }

@@ -64,6 +64,16 @@
         ORDER BY CREATE_DATE DESC
     </select>
 
+    <select id="findListById" resultMap="attachmentResultMap">
+        SELECT
+        <include refid="attachmentColumns"/>
+        FROM sys_attachment a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insert">
         INSERT  INTO sys_attachment (
             id,
