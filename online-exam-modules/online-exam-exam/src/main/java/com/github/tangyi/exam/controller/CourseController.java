@@ -124,17 +124,17 @@ public class CourseController extends BaseController {
     /**
      * 批量删除
      *
-     * @param course course
+     * @param idMap idMap
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/4 11:26
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllCourses(@RequestBody Course course) {
+    public ReturnT<Boolean> deleteAllCourses(@RequestBody Map<String, String> idMap) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(course.getId()))
-                success = courseService.deleteAll(course.getIds()) > 0;
+            if (StringUtils.isNotEmpty(idMap.get("ids")))
+                success = courseService.deleteAll(idMap.get("ids").split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除课程失败！", e);
         }

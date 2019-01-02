@@ -191,19 +191,21 @@ public class AttachmentController extends BaseController {
     /**
      * 批量删除
      *
-     * @param ids ids
+     * @param idMap idMap
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/4 10:01
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllAttachments(String ids) {
+    public ReturnT<Boolean> deleteAllAttachments(@RequestBody Map<String, String> idMap) {
+        boolean success = false;
         try {
-            attachmentService.deleteAll(ids.split(","));
+            if (StringUtils.isNotEmpty(idMap.get("ids")))
+                success = attachmentService.deleteAll(idMap.get("ids").split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除附件失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**

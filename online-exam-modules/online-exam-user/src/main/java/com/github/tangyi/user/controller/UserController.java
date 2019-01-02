@@ -325,19 +325,21 @@ public class UserController extends BaseController {
     /**
      * 批量删除
      *
-     * @param ids ids
+     * @param idMap idMap
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/4 9:58
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllUsers(String ids) {
+    public ReturnT<Boolean> deleteAllUsers(@RequestBody Map<String, String> idMap) {
+        boolean success = false;
         try {
-            userService.deleteAll(ids.split(","));
+            if (StringUtils.isNotEmpty(idMap.get("ids")))
+                success = userService.deleteAll(idMap.get("ids").split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除用户失败！", e);
         }
-        return new ReturnT<Boolean>(Boolean.TRUE);
+        return new ReturnT<>(success);
     }
 
     /**

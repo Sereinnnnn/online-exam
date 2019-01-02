@@ -201,17 +201,17 @@ public class SubjectController extends BaseController {
     /**
      * 批量删除
      *
-     * @param subject subject
+     * @param idMap idMap
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/04 9:55
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteSubjects(@RequestBody Subject subject) {
+    public ReturnT<Boolean> deleteSubjects(@RequestBody Map<String, String> idMap) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(subject.getId()))
-                success = subjectService.deleteAll(subject.getIds()) > 0;
+            if (StringUtils.isNotEmpty(idMap.get("ids")))
+                success = subjectService.deleteAll(idMap.get("ids").split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }

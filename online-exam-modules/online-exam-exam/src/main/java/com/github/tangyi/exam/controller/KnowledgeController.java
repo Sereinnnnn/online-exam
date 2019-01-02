@@ -168,17 +168,17 @@ public class KnowledgeController extends BaseController {
     /**
      * 批量删除
      *
-     * @param knowledge knowledge
+     * @param idMap idMap
      * @return ReturnT
      * @author tangyi
      * @date 2019/1/1 15:15
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllKnowledge(@RequestBody Knowledge knowledge) {
+    public ReturnT<Boolean> deleteAllKnowledge(@RequestBody Map<String, String> idMap) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(knowledge.getId()))
-                success = knowledgeService.deleteAll(knowledge.getIds()) > 0;
+            if (StringUtils.isNotEmpty(idMap.get("ids")))
+                success = knowledgeService.deleteAll(idMap.get("ids").split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除知识失败！", e);
         }

@@ -1,6 +1,19 @@
+server:
+  tomcat:
+    max-threads: 50 # Maximum amount of worker threads.
+    min-spare-threads: 5 # Minimum amount of worker threads
+    uri-encoding: UTF-8
 spring:
   application:
     name: online-exam-gateway
+  http:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
   cloud:
     config:
       fail-fast: true
@@ -11,6 +24,26 @@ spring:
       label: develop
   zipkin:
     base-url: http://localhost:9411/
+# zuul 限流配置
+zuul:
+  ribbon:
+    eager-load:
+      enabled: true
+      clients: online-exam-auth,online-exam-user,online-exam-exam
+    ignoredServices: '*'
+    host:
+      connect-timeout-millis: 10000
+      socket-timeout-millis: 10000
+  ratelimit:
+    key-prefix: online-exam-ratelimite
+    enabled: true
+    repository: REDIS
+    behind-proxy: true
+    policies:
+      online-exam-user:
+        limit: 100
+        quota: 100
+        refresh-interval: 3
 eureka:
   instance:
     prefer-ip-address: true

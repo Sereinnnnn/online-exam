@@ -206,17 +206,17 @@ public class SubjectBankController extends BaseController {
     /**
      * 批量删除
      *
-     * @param subjectBank subjectBank
+     * @param idMap idMap
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/04 9:55
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteSubjectBanks(@RequestBody SubjectBank subjectBank) {
+    public ReturnT<Boolean> deleteSubjectBanks(@RequestBody Map<String, String> idMap) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(subjectBank.getId()))
-                success = subjectBankService.deleteAll(subjectBank.getIds()) > 0;
+            if (StringUtils.isNotEmpty(idMap.get("ids")))
+                success = subjectBankService.deleteAll(idMap.get("ids").split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }
