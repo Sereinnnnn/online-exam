@@ -2,14 +2,14 @@
 
 #### 项目介绍
 
-重写	[spring-cloud-online-exam](https://gitee.com/wells2333/spring-cloud-online-exam)，采用前后端分离技术，前端通过token和后端接口交互。
+利用业余时间重写毕设[spring-cloud-online-exam](https://gitee.com/wells2333/spring-cloud-online-exam)，采用前后端分离技术，前端通过token和后端接口交互。
 前端采用vue2.0，后端采用spring cloud，MySQL，Redis等技术。
 
 #### 功能概述
 
 项目分前台网站和后台管理两部分，前台主要提供考试功能，后台提供考试管理功能。
 
-前台主要提供在线考试功能
+前台主要提供在线考试、在线学习功能
 
 后台管理分为：系统管理、系统监控、考务管理、附件管理、个人管理
 
@@ -30,6 +30,7 @@
 - 考试管理：考试信息增删改查、题目管理、发布回收
 - 题库管理：题目分类增删改查、题目信息增删改查
 - 成绩管理：查看成绩、导出成绩
+- 知识库：知识库增删改查、上传附件
 
 附件管理：项目的所有附件存储在fastDfs里，提供统一的管理入口
 - 附件列表：管理所有附件，如用户头像、考试附件等。
@@ -40,7 +41,7 @@
 
 #### 系统架构
 
-后续提供
+待提供
 
 #### 服务和端口
 
@@ -60,8 +61,8 @@
 
 启动顺序：
 
-1. online-exam-eureka
-2. online-exam-config
+1. online-exam-config
+2. online-exam-eureka
 3. online-exam-auth
 4. online-exam-user
 5. online-exam-exam
