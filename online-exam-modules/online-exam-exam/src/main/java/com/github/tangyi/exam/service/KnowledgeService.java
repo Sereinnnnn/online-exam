@@ -61,4 +61,19 @@ public class KnowledgeService extends CrudService<KnowledgeMapper, Knowledge> {
     public int delete(Knowledge knowledge) {
         return super.delete(knowledge);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     * @author tangyi
+     * @date 2019/1/3 14:15
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "knowledge", allEntries = true)
+    public int deleteAll(String[] ids) {
+        return super.deleteAll(ids);
+    }
 }

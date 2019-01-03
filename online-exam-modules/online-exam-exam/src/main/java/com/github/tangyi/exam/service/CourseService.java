@@ -61,4 +61,19 @@ public class CourseService extends CrudService<CourseMapper, Course> {
     public int delete(Course course) {
         return super.delete(course);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     * @author tangyi
+     * @date 2019/1/3 14:05
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "course", allEntries = true)
+    public int deleteAll(String[] ids) {
+        return super.deleteAll(ids);
+    }
 }

@@ -6,6 +6,8 @@ import com.github.tangyi.exam.mapper.AnswerMapper;
 import com.github.tangyi.exam.module.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +40,65 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
 
     @Autowired
     private ExaminationService examinationService;
+
+    /**
+     * 查找答题
+     *
+     * @param answer answer
+     * @return Answer
+     * @author tangyi
+     * @date 2019/1/3 14:27
+     */
+    @Override
+    @Cacheable(value = "answer", key = "#answer.id")
+    public Answer get(Answer answer) {
+        return super.get(answer);
+    }
+
+    /**
+     * 更新答题
+     *
+     * @param answer answer
+     * @return int
+     * @author tangyi
+     * @date 2019/1/3 14:27
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "answer", key = "#answer.id")
+    public int update(Answer answer) {
+        return super.update(answer);
+    }
+
+    /**
+     * 删除答题
+     *
+     * @param answer answer
+     * @return int
+     * @author tangyi
+     * @date 2019/1/3 14:27
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "answer", key = "#answer.id")
+    public int delete(Answer answer) {
+        return super.delete(answer);
+    }
+
+    /**
+     * 批量删除答题
+     *
+     * @param ids ids
+     * @return int
+     * @author tangyi
+     * @date 2019/1/3 14:27
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "answer", allEntries = true)
+    public int deleteAll(String[] ids) {
+        return super.deleteAll(ids);
+    }
 
     /**
      * 提交答卷
