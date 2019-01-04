@@ -1,7 +1,7 @@
 package com.github.tangyi.gateway.feign;
 
 import com.github.tangyi.common.vo.MenuVo;
-import com.github.tangyi.gateway.feign.fallback.MenuServiceFallback;
+import com.github.tangyi.gateway.fallback.MenuServiceFallback;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

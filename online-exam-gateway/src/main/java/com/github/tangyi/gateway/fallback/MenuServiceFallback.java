@@ -1,4 +1,4 @@
-package com.github.tangyi.gateway.feign.fallback;
+package com.github.tangyi.gateway.fallback;
 
 import com.github.tangyi.common.vo.MenuVo;
 import com.github.tangyi.gateway.feign.MenuService;
