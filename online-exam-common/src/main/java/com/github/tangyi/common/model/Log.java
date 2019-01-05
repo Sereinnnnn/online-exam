@@ -55,6 +55,11 @@ public class Log extends BaseEntity<Log> {
      */
     private String serviceId;
 
+    /**
+     * 耗时
+     */
+    private String time;
+
     public String getType() {
         return type;
     }
@@ -125,5 +130,13 @@ public class Log extends BaseEntity<Log> {
 
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
