@@ -1,7 +1,9 @@
 package com.github.tangyi.gateway.service.impl;
 
 import com.github.tangyi.common.constants.CommonConstant;
+import com.github.tangyi.common.constants.MqQueueConstant;
 import com.github.tangyi.common.model.Log;
+import com.github.tangyi.common.utils.IdGen;
 import com.github.tangyi.common.vo.LogVo;
 import com.github.tangyi.gateway.service.LogSendService;
 import com.netflix.zuul.context.RequestContext;
@@ -50,11 +52,14 @@ public class LogSendServiceImpl implements LogSendService {
         log.setRequestUri(URLUtil.getPath(request.getRequestURI()));
         log.setMethod(request.getMethod());
         log.setUserAgent(request.getHeader("user-agent"));
-        log.setParams(HttpUtil.toParams(request.getParameterMap()));
+        String params = HttpUtil.toParams(request.getParameterMap());
+        log.setParams(params.length() > 200 ? params.substring(0, 200) : params);
         Long startTime = (Long) requestContext.get("startTime");
         log.setTime(String.valueOf(System.currentTimeMillis() - startTime));
         if (requestContext.get(SERVICE_ID) != null) {
-            log.setServiceId(requestContext.get(SERVICE_ID).toString());
+            String serviceId = requestContext.get(SERVICE_ID).toString();
+            log.setServiceId(serviceId);
+            log.setTitle(serviceId);
         }
         // 正常发送服务异常解析
         if (requestContext.getResponseStatusCode() == HttpStatus.SC_INTERNAL_SERVER_ERROR
@@ -72,6 +77,7 @@ public class LogSendServiceImpl implements LogSendService {
                 String resp = IoUtil.read(stream1, CommonConstant.UTF8);
                 log.setType(CommonConstant.STATUS_LOCK);
                 log.setException(resp);
+                log.setTitle(resp);
                 requestContext.setResponseDataStream(stream2);
             } catch (IOException e) {
                 logger.error("响应流解析异常：", e);
@@ -88,15 +94,16 @@ public class LogSendServiceImpl implements LogSendService {
         if (throwable != null) {
             logger.error("网关异常", throwable);
             log.setException(throwable.getMessage());
+            log.setTitle(throwable.getMessage());
         }
         // 保存发往MQ（只保存授权）
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && StrUtil.isNotBlank(authentication.getName())) {
             LogVo logVo = new LogVo();
-            log.setCreator(authentication.getName());
+            log.setCommonValue(authentication.getName(), CommonConstant.SYS_CODE);
             logVo.setLog(log);
             logVo.setUsername(authentication.getName());
-            //rabbitTemplate.convertAndSend(MqQueueConstant.LOG_QUEUE, logVo);
+            rabbitTemplate.convertAndSend(MqQueueConstant.LOG_QUEUE, logVo);
         }
     }
 }
