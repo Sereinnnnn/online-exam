@@ -21,9 +21,10 @@
 
 系统监控：监控服务、日志等
 - 日志监控：查看系统日志
-- 服务监控：eureka服务监控
+- eureka监控：eureka服务监控
+- zipkin监控：监控服务的调用链路
+- 服务监控：spring boot 服务监控
 - 接口文档：swagger api文档
-- 链路监控：监控服务的调用链路
 
 考务管理：提供课程、考试、题库、成绩等管理
 - 课程管理：课程信息增删改查
@@ -57,7 +58,9 @@
 
 网关（online-exam-gateway）：9999
 
-链路监控（online-exam-zipkin）：9411
+zipkin监控（online-exam-zipkin）：9411
+
+服务监控（online-exam-admin）：5001
 
 启动顺序：
 
@@ -68,6 +71,7 @@
 5. online-exam-exam
 6. online-exam-gateway
 7. online-exam-zipkin
+8. online-exam-admin
 
 #### 问题反馈
 

@@ -14,5 +14,6 @@
 
 	<modules>
         <module>online-exam-zipkin</module>
+		<module>online-exam-admin</module>
     </modules>
 </project>
