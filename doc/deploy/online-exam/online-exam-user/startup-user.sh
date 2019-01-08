@@ -12,7 +12,7 @@ PID=$SERVICE_NAME\.pid
 case "$1" in
 
     start)
-        nohup java -Xms128m -Xmx128m -jar $JAR_NAME >/dev/null 2>&1 &
+        nohup java -Xms64m -Xmx128m -jar $JAR_NAME >/dev/null 2>&1 &
         echo $! > $SERVICE_DIR/$PID
         echo "=== start $SERVICE_NAME"
         ;;

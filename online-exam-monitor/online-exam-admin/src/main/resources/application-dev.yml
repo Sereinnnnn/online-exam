@@ -1,6 +1,9 @@
+server:
+  tomcat:
+    max-threads: 10 # Maximum amount of worker threads.
 spring:
   application:
-    name: online-exam-zipkin
+    name: online-exam-admin
   cloud:
     config:
       fail-fast: true
@@ -18,10 +21,6 @@ eureka:
     serviceUrl:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
-# 认证服务器地址
-security:
-  auth:
-    server: http://localhost:3000
 logging:
   level:
     com.github.tangyi: debug

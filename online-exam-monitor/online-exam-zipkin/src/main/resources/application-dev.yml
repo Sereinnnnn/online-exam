@@ -1,10 +1,10 @@
 server:
-  port: 3000
   tomcat:
-    max-threads: 10 # 最大线程数
+    max-threads: 10 # Maximum amount of worker threads.
+
 spring:
   application:
-    name: online-exam-auth
+    name: online-exam-zipkin
   cloud:
     config:
       fail-fast: true
@@ -13,9 +13,6 @@ spring:
         enabled: true
       profile: ${spring.profiles.active}
       label: develop
-  zipkin:
-    base-url: http://localhost:9411/
-
 eureka:
   instance:
     prefer-ip-address: true
@@ -25,6 +22,10 @@ eureka:
     serviceUrl:
       defaultZone: http://root:11@localhost:8765/eureka
     registry-fetch-interval-seconds: 10
+# 认证服务器地址
+security:
+  auth:
+    server: http://localhost:3000
 logging:
   level:
-   com.github.tangyi: debug
+    com.github.tangyi: debug

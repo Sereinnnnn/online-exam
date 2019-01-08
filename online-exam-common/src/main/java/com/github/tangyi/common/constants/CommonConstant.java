@@ -112,4 +112,9 @@ public class CommonConstant {
      * utf-8
      */
     public static final String UTF8 = "UTF-8";
+
+    /**
+     * 阿里
+     */
+    public static final String ALIYUN_SMS = "aliyun_sms";
 }

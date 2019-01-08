@@ -1,2 +1,2 @@
 title online-exam-eureka
-java -jar -Xmn128m -Xms128m -Xmx128m online-exam-eureka.jar
+java -jar -Xmn64m -Xms64m -Xmx64m online-exam-eureka.jar

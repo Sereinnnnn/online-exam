@@ -1,5 +1,7 @@
 server:
   port: 8888
+  tomcat:
+    max-threads: 10 # 最大线程数
 spring:
   application:
     name: online-exam-config
