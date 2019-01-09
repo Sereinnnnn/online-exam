@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
+import com.github.tangyi.common.vo.ExportVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
@@ -12,6 +13,8 @@ import com.github.tangyi.user.service.MenuService;
 import com.github.tangyi.user.utils.MenuUtil;
 import com.google.common.net.HttpHeaders;
 import com.xiaoleilu.hutool.collection.CollUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,7 @@ public class MenuController extends BaseController {
      *
      * @return 当前用户的树形菜单
      */
+    @ApiOperation(value = "获取当前用户的树形菜单")
     @GetMapping(value = "/userMenu")
     public List<MenuDto> userMenu() {
         // 查询菜单
@@ -81,6 +85,7 @@ public class MenuController extends BaseController {
      *
      * @return 树形菜单集合
      */
+    @ApiOperation(value = "获取树形菜单集合")
     @GetMapping(value = "/menus")
     public List<MenuDto> menus() {
         // 查询所有菜单
@@ -100,6 +105,8 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/8/27 16:12
      */
+    @ApiOperation(value = "创建菜单", notes = "创建菜单")
+    @ApiImplicitParam(name = "menu", value = "角色实体menu", required = true, dataType = "Menu")
     @PostMapping
     public ReturnT<Boolean> addMenu(@RequestBody Menu menu) {
         menu.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -114,6 +121,8 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/10/24 16:34
      */
+    @ApiOperation(value = "更新菜单信息", notes = "根据菜单id更新菜单的基本信息")
+    @ApiImplicitParam(name = "menu", value = "角色实体menu", required = true, dataType = "Menu")
     @PutMapping
     public ReturnT<Boolean> updateMenu(@RequestBody Menu menu) {
         menu.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -128,6 +137,8 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/8/27 16:19
      */
+    @ApiOperation(value = "删除菜单", notes = "根据ID删除菜单")
+    @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
     @DeleteMapping("/{id}")
     public ReturnT<Boolean> deleteMenu(@PathVariable String id) {
         Menu menu = new Menu();
@@ -143,6 +154,8 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/8/27 16:11
      */
+    @ApiOperation(value = "获取菜单信息", notes = "根据菜单id获取菜单详细信息")
+    @ApiImplicitParam(name = "id", value = "菜单ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public Menu menu(@PathVariable String id) {
         Menu menu = new Menu();
@@ -159,6 +172,7 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/8/26 23:17
      */
+    @ApiOperation(value = "获取菜单列表")
     @RequestMapping("/menuList")
     public PageInfo<Menu> menuList(@RequestParam Map<String, String> params, Menu Menu) {
         PageInfo<Menu> page = new PageInfo<Menu>();
@@ -175,6 +189,8 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/8/27 15:58
      */
+    @ApiOperation(value = "根据角色查找菜单", notes = "根据角色id获取角色菜单")
+    @ApiImplicitParam(name = "role", value = "角色名称", required = true, dataType = "String", paramType = "path")
     @GetMapping("findMenuByRole/{role}")
     public List<Menu> findMenuByRole(@PathVariable String role) {
         return menuService.findMenuByRole(role);
@@ -186,6 +202,8 @@ public class MenuController extends BaseController {
      * @param roleCode 角色code
      * @return 属性集合
      */
+    @ApiOperation(value = "根据角色查找菜单", notes = "根据角色code获取角色菜单")
+    @ApiImplicitParam(name = "roleCode", value = "角色code", required = true, dataType = "String", paramType = "path")
     @GetMapping("/roleTree/{roleCode}")
     public List<String> roleTree(@PathVariable String roleCode) {
         List<Menu> menus = menuService.findMenuByRole(roleCode);
@@ -197,12 +215,12 @@ public class MenuController extends BaseController {
     /**
      * 导出菜单
      *
-     * @param ids 用户id，多个用逗号分隔
+     * @param exportVo exportVo
      * @author tangyi
      * @date 2018/11/28 12:46
      */
-    @GetMapping("/export")
-    public void exportMenu(String ids, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/export")
+    public void exportMenu(@RequestBody ExportVo exportVo, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
@@ -210,12 +228,12 @@ public class MenuController extends BaseController {
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "菜单信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<Menu> menus = new ArrayList<>();
             // 导出所有
-            if (StringUtils.isEmpty(ids)) {
+            if (StringUtils.isEmpty(exportVo.getIds())) {
                 Menu menu = new Menu();
                 menus = menuService.findList(menu);
             } else {    // 导出选中
                 Set<String> menuIdSet = new HashSet<>();
-                for (String id : ids.split(",")) {
+                for (String id : exportVo.getIds().split(",")) {
                     if (StringUtils.isNotBlank(id))
                         menuIdSet.add(id);
                 }

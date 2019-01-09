@@ -12,6 +12,8 @@ import com.github.tangyi.exam.module.IncorrectAnswer;
 import com.github.tangyi.exam.module.Subject;
 import com.github.tangyi.exam.service.IncorrectAnswerService;
 import com.github.tangyi.exam.service.SubjectService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -48,6 +50,8 @@ public class IncorrectAnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:36
      */
+    @ApiOperation(value = "获取错题信息", notes = "根据错题id获取错题详细信息")
+    @ApiImplicitParam(name = "id", value = "错题ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<IncorrectAnswer> examRecode(@PathVariable String id) {
         IncorrectAnswer incorrectAnswer = new IncorrectAnswer();
@@ -67,6 +71,7 @@ public class IncorrectAnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:37
      */
+    @ApiOperation(value = "获取错题列表")
     @RequestMapping("incorrectAnswerList")
     public PageInfo<IncorrectAnswerDto> incorrectAnswerList(@RequestParam Map<String, String> params, IncorrectAnswer incorrectAnswer) {
         PageInfo<IncorrectAnswer> page = new PageInfo<IncorrectAnswer>();
@@ -111,6 +116,8 @@ public class IncorrectAnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:38
      */
+    @ApiOperation(value = "创建错题", notes = "创建错题")
+    @ApiImplicitParam(name = "incorrectAnswer", value = "错题实体incorrectAnswer", required = true, dataType = "IncorrectAnswer")
     @PostMapping
     public ReturnT<Boolean> addIncorrectAnswer(@RequestBody IncorrectAnswer incorrectAnswer) {
         incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -125,6 +132,8 @@ public class IncorrectAnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:38
      */
+    @ApiOperation(value = "更新错题信息", notes = "根据错题id更新错题的基本信息")
+    @ApiImplicitParam(name = "incorrectAnswer", value = "错题实体incorrectAnswer", required = true, dataType = "IncorrectAnswer")
     @PutMapping
     public ReturnT<Boolean> updateIncorrectAnswer(@RequestBody IncorrectAnswer incorrectAnswer) {
         incorrectAnswer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -139,6 +148,8 @@ public class IncorrectAnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:39
      */
+    @ApiOperation(value = "删除错题", notes = "根据ID删除错题")
+    @ApiImplicitParam(name = "id", value = "错题ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteIncorrectAnswer(@PathVariable String id) {
         boolean success = false;

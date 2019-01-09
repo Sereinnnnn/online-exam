@@ -13,6 +13,8 @@ import com.github.tangyi.user.service.AttachmentService;
 import com.github.tangyi.user.service.FastDfsService;
 import com.github.tangyi.user.service.LogService;
 import com.google.common.net.HttpHeaders;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -57,6 +59,8 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2019/01/01 19:56
      */
+    @ApiOperation(value = "获取附件信息", notes = "根据附件id获取附件详细信息")
+    @ApiImplicitParam(name = "id", value = "附件ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Attachment> attachment(@PathVariable String id) {
         Attachment attachment = new Attachment();
@@ -76,6 +80,7 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2018/10/30 21:05
      */
+    @ApiOperation(value = "获取附件集合")
     @RequestMapping("attachmentList")
     public PageInfo<Attachment> userList(@RequestParam Map<String, String> params, Attachment attachment) {
         PageInfo<Attachment> page = new PageInfo<Attachment>();
@@ -173,6 +178,8 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2018/10/30 22:44
      */
+    @ApiOperation(value = "删除附件", notes = "根据ID删除附件")
+    @ApiImplicitParam(name = "id", value = "附件ID", required = true, paramType = "path")
     @DeleteMapping("/{id}")
     public ReturnT<Boolean> delete(@PathVariable String id) {
         if (StringUtils.isBlank(id))

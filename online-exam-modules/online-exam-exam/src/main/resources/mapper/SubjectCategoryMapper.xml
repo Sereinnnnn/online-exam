@@ -80,6 +80,16 @@
         order by sort desc
     </select>
 
+    <select id="findListById" resultMap="subjectCategoryResultMap">
+        SELECT
+        <include refid="subjectCategoryColumns"/>
+        FROM subject_category a
+        WHERE a.id IN
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <update id="update">
         UPDATE subject_category  SET
         <if test="categoryName != null">

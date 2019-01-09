@@ -7,9 +7,13 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.SubjectBank;
+import com.github.tangyi.exam.module.SubjectCategory;
 import com.github.tangyi.exam.service.SubjectBankService;
+import com.github.tangyi.exam.service.SubjectCategoryService;
 import com.github.tangyi.exam.utils.SubjectBankUtil;
 import com.google.common.net.HttpHeaders;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -21,10 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 题库controller
@@ -41,6 +42,9 @@ public class SubjectBankController extends BaseController {
     @Autowired
     private SubjectBankService subjectBankService;
 
+    @Autowired
+    private SubjectCategoryService subjectCategoryService;
+
     /**
      * 根据ID获取
      *
@@ -49,6 +53,8 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:12
      */
+    @ApiOperation(value = "获取题库信息", notes = "根据题库id获取题库详细信息")
+    @ApiImplicitParam(name = "id", value = "题库ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<SubjectBank> subjectBank(@PathVariable String id) {
         SubjectBank subjectBank = new SubjectBank();
@@ -68,13 +74,34 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:13
      */
+    @ApiOperation(value = "获取题库列表")
     @RequestMapping("subjectBankList")
     public PageInfo<SubjectBank> subjectBankList(@RequestParam Map<String, String> params, SubjectBank subjectBank) {
-        PageInfo<SubjectBank> page = new PageInfo<SubjectBank>();
+        PageInfo<SubjectBank> page = new PageInfo<>();
         page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
         page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
         PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
-        return subjectBankService.findPage(page, subjectBank);
+        page = subjectBankService.findPage(page, subjectBank);
+        if (CollectionUtils.isNotEmpty(page.getList())) {
+            // 查询分类信息
+            Set<String> categoryIdSet = new HashSet<>();
+            page.getList().forEach(tempSubjectBank -> {
+                categoryIdSet.add(tempSubjectBank.getCategoryId());
+            });
+            SubjectCategory subjectCategory = new SubjectCategory();
+            subjectCategory.setIds(categoryIdSet.toArray(new String[categoryIdSet.size()]));
+            List<SubjectCategory> subjectCategoryList = subjectCategoryService.findListById(subjectCategory);
+            page.getList().forEach(tempSubjectBank -> {
+                for (SubjectCategory tempSubjectCategory : subjectCategoryList) {
+                    if (tempSubjectCategory.getId().equals(tempSubjectBank.getCategoryId())) {
+                        // 设置分类名称
+                        tempSubjectBank.setCategoryName(tempSubjectCategory.getCategoryName());
+                        break;
+                    }
+                }
+            });
+        }
+        return page;
     }
 
     /**
@@ -85,6 +112,8 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:14
      */
+    @ApiOperation(value = "创建题库", notes = "创建题库")
+    @ApiImplicitParam(name = "subjectBank", value = "题库实体subjectBank", required = true, dataType = "SubjectBank")
     @PostMapping
     public ReturnT<Boolean> addSubjectBank(@RequestBody SubjectBank subjectBank) {
         subjectBank.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -99,6 +128,8 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:15
      */
+    @ApiOperation(value = "更新题库信息", notes = "根据题库id更新题库的基本信息")
+    @ApiImplicitParam(name = "subjectBank", value = "题库实体subjectBank", required = true, dataType = "SubjectBank")
     @PutMapping
     public ReturnT<Boolean> updateSubjectBank(@RequestBody SubjectBank subjectBank) {
         subjectBank.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -113,6 +144,8 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:15
      */
+    @ApiOperation(value = "删除题库", notes = "根据ID删除题库")
+    @ApiImplicitParam(name = "id", value = "题库ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteSubjectBank(@PathVariable String id) {
         boolean success = false;

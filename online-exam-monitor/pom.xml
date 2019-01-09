@@ -6,6 +6,7 @@
 	<version>${online-exam.version}</version>
 	<name>online-exam-monitor</name>
 	<description>online-exam-monitor</description>
+	<packaging>pom</packaging>
 	<parent>
 		<artifactId>online-exam</artifactId>
 		<groupId>com.github.tangyi</groupId>

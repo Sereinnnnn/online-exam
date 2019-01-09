@@ -95,6 +95,7 @@ public class LogSendServiceImpl implements LogSendService {
             logger.error("网关异常", throwable);
             log.setException(throwable.getMessage());
             log.setTitle(throwable.getMessage());
+            log.setType(CommonConstant.STATUS_EXCEPTION);
         }
         // 保存发往MQ（只保存授权）
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

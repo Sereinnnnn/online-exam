@@ -24,6 +24,11 @@ public class CommonConstant {
     public static final String STATUS_NORMAL = "0";
 
     /**
+     * 异常
+     */
+    public static final String STATUS_EXCEPTION = "1";
+
+    /**
      * 锁定
      */
     public static final String STATUS_LOCK = "9";

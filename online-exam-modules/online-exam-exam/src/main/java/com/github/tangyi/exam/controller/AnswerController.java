@@ -7,6 +7,8 @@ import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Answer;
 import com.github.tangyi.exam.service.AnswerService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,8 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:23
      */
+    @ApiOperation(value = "获取答题信息", notes = "根据答题id获取答题详细信息")
+    @ApiImplicitParam(name = "id", value = "答题ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Answer> answer(@PathVariable String id) {
         Answer answer = new Answer();
@@ -57,6 +61,7 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:25
      */
+    @ApiOperation(value = "获取答题列表")
     @RequestMapping("answerList")
     public PageInfo<Answer> answerList(@RequestParam Map<String, String> params, Answer answer) {
         PageInfo<Answer> page = new PageInfo<Answer>();
@@ -73,6 +78,8 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:26
      */
+    @ApiOperation(value = "创建答题", notes = "创建答题")
+    @ApiImplicitParam(name = "answer", value = "答题实体answer", required = true, dataType = "Answer")
     @PostMapping
     public ReturnT<Boolean> addAnswer(@RequestBody Answer answer) {
         answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -87,6 +94,8 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:27
      */
+    @ApiOperation(value = "更新答题信息", notes = "根据答题id更新答题的基本信息")
+    @ApiImplicitParam(name = "answer", value = "答题实体answer", required = true, dataType = "Answer")
     @PutMapping
     public ReturnT<Boolean> updateAnswer(@RequestBody Answer answer) {
         answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -101,6 +110,8 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:28
      */
+    @ApiOperation(value = "删除答题", notes = "根据ID删除答题")
+    @ApiImplicitParam(name = "id", value = "答题ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteAnswer(@PathVariable String id) {
         boolean success = false;

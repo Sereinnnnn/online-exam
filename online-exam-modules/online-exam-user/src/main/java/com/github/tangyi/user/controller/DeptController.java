@@ -9,6 +9,8 @@ import com.github.tangyi.user.dto.DeptDto;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.service.DeptService;
 import com.xiaoleilu.hutool.collection.CollUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/10/25 12:57
      */
+    @ApiOperation(value = "获取树形部门集合")
     @GetMapping(value = "/depts")
     public List<DeptDto> depts() {
         // 查询所有部门
@@ -55,6 +58,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:11
      */
+    @ApiOperation(value = "获取部门信息", notes = "根据部门id获取部门详细信息")
+    @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public Dept get(@PathVariable String id) {
         Dept dept = new Dept();
@@ -70,6 +75,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:15
      */
+    @ApiOperation(value = "创建部门", notes = "创建部门")
+    @ApiImplicitParam(name = "dept", value = "部门实体dept", required = true, dataType = "Dept")
     @PostMapping
     public ReturnT<Boolean> add(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -84,6 +91,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:16
      */
+    @ApiOperation(value = "删除部门", notes = "根据ID删除部门")
+    @ApiImplicitParam(name = "id", value = "部门ID", required = true, paramType = "path")
     @DeleteMapping("/{id}")
     public ReturnT<Boolean> delete(@PathVariable String id) {
         Dept dept = new Dept();
@@ -100,6 +109,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:22
      */
+    @ApiOperation(value = "更新部门信息", notes = "根据部门id更新部门的基本信息")
+    @ApiImplicitParam(name = "dept", value = "部门实体dept", required = true, dataType = "Dept")
     @PutMapping
     public ReturnT<Boolean> update(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());

@@ -10,6 +10,8 @@ import com.github.tangyi.exam.module.ExamRecord;
 import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.service.ExamRecordService;
 import com.github.tangyi.exam.service.ExaminationService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -46,6 +48,8 @@ public class ExamRecordController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:33
      */
+    @ApiOperation(value = "获取考试记录信息", notes = "根据考试记录id获取考试记录详细信息")
+    @ApiImplicitParam(name = "id", value = "考试记录ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<ExamRecord> examRecode(@PathVariable String id) {
         ExamRecord examRecord = new ExamRecord();
@@ -65,6 +69,7 @@ public class ExamRecordController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:33
      */
+    @ApiOperation(value = "获取考试记录列表")
     @RequestMapping("examRecordList")
     public PageInfo<ExamRecordDto> examRecodeList(@RequestParam Map<String, String> params, ExamRecord examRecord) {
         PageInfo<ExamRecord> page = new PageInfo<ExamRecord>();
@@ -112,6 +117,8 @@ public class ExamRecordController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:33
      */
+    @ApiOperation(value = "创建考试记录", notes = "创建考试记录")
+    @ApiImplicitParam(name = "examRecord", value = "考试记录实体examRecord", required = true, dataType = "ExamRecord")
     @PostMapping
     public ReturnT<ExamRecord> addExamRecode(@RequestBody ExamRecord examRecord) {
         examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -128,6 +135,8 @@ public class ExamRecordController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:34
      */
+    @ApiOperation(value = "更新考试记录信息", notes = "根据考试记录id更新考试记录的基本信息")
+    @ApiImplicitParam(name = "examRecord", value = "考试记录实体examRecord", required = true, dataType = "ExamRecord")
     @PutMapping
     public ReturnT<Boolean> updateExamRecode(@RequestBody ExamRecord examRecord) {
         examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -142,6 +151,8 @@ public class ExamRecordController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:34
      */
+    @ApiOperation(value = "删除考试记录", notes = "根据ID删除考试记录")
+    @ApiImplicitParam(name = "id", value = "考试记录ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteExamRecode(@PathVariable String id) {
         boolean success = false;

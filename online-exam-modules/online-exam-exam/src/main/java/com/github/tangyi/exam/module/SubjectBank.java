@@ -15,6 +15,11 @@ public class SubjectBank extends BaseEntity<SubjectBank> {
     private String categoryId;
 
     /**
+     * 分类名称
+     */
+    private String categoryName;
+
+    /**
      * 题目序号
      */
     private String serialNumber;
@@ -202,5 +207,13 @@ public class SubjectBank extends BaseEntity<SubjectBank> {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

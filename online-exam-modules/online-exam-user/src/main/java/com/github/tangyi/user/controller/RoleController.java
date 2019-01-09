@@ -14,6 +14,8 @@ import com.github.tangyi.user.service.DeptService;
 import com.github.tangyi.user.service.RoleDeptService;
 import com.github.tangyi.user.service.RoleMenuService;
 import com.github.tangyi.user.service.RoleService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,8 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/9/14 18:20
      */
+    @ApiOperation(value = "获取角色信息", notes = "根据角色id获取角色详细信息")
+    @ApiImplicitParam(name = "id", value = "角色ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public Role role(@PathVariable String id) {
         try {
@@ -73,6 +77,7 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/10/24 0024 下午 10:13
      */
+    @ApiOperation(value = "获取角色列表")
     @RequestMapping("roleList")
     public PageInfo<Role> userList(@RequestParam Map<String, String> params, Role role) {
         PageInfo<Role> page = new PageInfo<Role>();
@@ -109,6 +114,8 @@ public class RoleController extends BaseController {
      * @param deptId 部门ID
      * @return List
      */
+    @ApiOperation(value = "获取角色信息", notes = "根据部门id获取角色详细信息")
+    @ApiImplicitParam(name = "deptId", value = "部门ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/roleList/{deptId}")
     public List<Role> roleList(@PathVariable String deptId) {
         List<Role> roles = new ArrayList<>();
@@ -139,6 +146,8 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/9/14 18:22
      */
+    @ApiOperation(value = "更新角色信息", notes = "根据角色id更新角色的基本信息")
+    @ApiImplicitParam(name = "role", value = "角色实体role", required = true, dataType = "Role")
     @PutMapping
     public ReturnT<Boolean> updateRole(@RequestBody Role role) {
         role.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -174,6 +183,8 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/9/14 18:23
      */
+    @ApiOperation(value = "创建角色", notes = "创建角色")
+    @ApiImplicitParam(name = "role", value = "角色实体role", required = true, dataType = "Role")
     @PostMapping
     public ReturnT<Boolean> role(@RequestBody Role role) {
         role.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -188,6 +199,8 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/9/14 18:24
      */
+    @ApiOperation(value = "删除角色", notes = "根据ID删除角色")
+    @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
     @DeleteMapping("/{id}")
     public ReturnT<Boolean> deleteRole(@PathVariable String id) {
         Role role = new Role();

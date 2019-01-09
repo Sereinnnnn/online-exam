@@ -37,10 +37,6 @@ public class Servlets {
                 } else if (httpUserAgent.contains("trident") || httpUserAgent.contains("edge")) {
                     result = "attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8");
                 }
-                // Safari浏览器，只能采用ISO编码的中文输出
-                else if (httpUserAgent.contains("safari")) {
-                    result = "attachment;filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO8859-1") + "\"";
-                }
                 // Chrome浏览器，只能采用MimeUtility编码或ISO编码的中文输出
                 else if (httpUserAgent.contains("applewebkit")) {
                     result = "attachment;filename=\"" + downloadName + "\"";

@@ -12,6 +12,8 @@ import com.github.tangyi.exam.module.Course;
 import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.service.CourseService;
 import com.github.tangyi.exam.service.ExaminationService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -50,6 +52,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:08
      */
+    @ApiOperation(value = "获取考试信息", notes = "根据考试id获取考试详细信息")
+    @ApiImplicitParam(name = "id", value = "考试ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Examination> examination(@PathVariable String id, @RequestParam(required = false) String timeFormat) {
         Examination examination = new Examination();
@@ -80,6 +84,7 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:10
      */
+    @ApiOperation(value = "获取考试列表")
     @RequestMapping("examinationList")
     public PageInfo<ExaminationDto> examinationList(@RequestParam Map<String, String> params, Examination examination) {
         PageInfo<Examination> page = new PageInfo<Examination>();
@@ -120,6 +125,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:14
      */
+    @ApiOperation(value = "创建考试", notes = "创建考试")
+    @ApiImplicitParam(name = "examinationDto", value = "考试实体examinationDto", required = true, dataType = "ExaminationDto")
     @PostMapping
     public ReturnT<Boolean> addExamination(@RequestBody ExaminationDto examinationDto) {
         Examination examination = new Examination();
@@ -137,6 +144,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:15
      */
+    @ApiOperation(value = "更新考试信息", notes = "根据考试id更新考试的基本信息")
+    @ApiImplicitParam(name = "examinationDto", value = "考试实体answer", required = true, dataType = "ExaminationDto")
     @PutMapping
     public ReturnT<Boolean> updateExamination(@RequestBody ExaminationDto examinationDto) {
         Examination examination = new Examination();
@@ -154,6 +163,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:20
      */
+    @ApiOperation(value = "删除考试", notes = "根据ID删除考试")
+    @ApiImplicitParam(name = "id", value = "考试ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteExamination(@PathVariable String id) {
         boolean success = false;

@@ -9,6 +9,8 @@ import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Course;
 import com.github.tangyi.exam.service.CourseService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,8 @@ public class CourseController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:28
      */
+    @ApiOperation(value = "获取课程信息", notes = "根据课程id获取课程详细信息")
+    @ApiImplicitParam(name = "id", value = "课程ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Course> course(@PathVariable String id) {
         Course course = new Course();
@@ -59,6 +63,7 @@ public class CourseController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:30
      */
+    @ApiOperation(value = "获取课程列表")
     @RequestMapping("courseList")
     public PageInfo<Course> courseList(@RequestParam Map<String, String> params, Course course) {
         PageInfo<Course> page = new PageInfo<Course>();
@@ -76,6 +81,8 @@ public class CourseController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:31
      */
+    @ApiOperation(value = "创建课程", notes = "创建课程")
+    @ApiImplicitParam(name = "course", value = "课程实体course", required = true, dataType = "Course")
     @PostMapping
     public ReturnT<Boolean> addCourse(@RequestBody Course course) {
         course.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -90,6 +97,8 @@ public class CourseController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:31
      */
+    @ApiOperation(value = "更新课程信息", notes = "根据课程id更新课程的基本信息")
+    @ApiImplicitParam(name = "course", value = "课程实体course", required = true, dataType = "Course")
     @PutMapping
     public ReturnT<Boolean> updateCourse(@RequestBody Course course) {
         course.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -104,6 +113,8 @@ public class CourseController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:32
      */
+    @ApiOperation(value = "删除课程", notes = "根据ID删除课程")
+    @ApiImplicitParam(name = "id", value = "课程ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteCourse(@PathVariable String id) {
         boolean success = false;

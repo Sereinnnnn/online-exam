@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
+import com.github.tangyi.common.vo.ExportVo;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
@@ -67,6 +68,8 @@ public class UserController extends BaseController {
      * @param id id
      * @return ReturnT
      */
+    @ApiOperation(value = "获取用户信息", notes = "根据用户id获取用户详细信息")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<User> user(@PathVariable String id) {
         User user = new User();
@@ -83,6 +86,8 @@ public class UserController extends BaseController {
      * @param userVo 当前用户信息
      * @return 用户名
      */
+    @ApiOperation(value = "获取用户信息", notes = "获取当前登录用户详细信息")
+    @ApiImplicitParam(name = "userVo", value = "用户实体userVo", required = true, dataType = "UserVo")
     @GetMapping("/info")
     public ReturnT<UserInfoDto> user(UserVo userVo) {
         return new ReturnT<>(userService.findUserInfo(userVo));
@@ -91,9 +96,11 @@ public class UserController extends BaseController {
     /**
      * 根据用户名获取用户
      *
-     * @param username
-     * @return
+     * @param username username
+     * @return UserVo
      */
+    @ApiOperation(value = "获取用户信息", notes = "根据用户name获取用户详细信息")
+    @ApiImplicitParam(name = "username", value = "用户name", required = true, dataType = "String", paramType = "path")
     @GetMapping("/findUserByUsername/{username}")
     public UserVo findUserByUsername(@PathVariable String username) {
         return userService.selectUserVoByUsername(username);
@@ -108,6 +115,7 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/8/26 22:56
      */
+    @ApiOperation(value = "获取用户列表")
     @RequestMapping("userList")
     public PageInfo<User> userList(@RequestParam Map<String, String> params, UserVo userVo) {
         PageInfo<User> page = new PageInfo<User>();
@@ -179,6 +187,8 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/8/26 14:34
      */
+    @ApiOperation(value = "创建用户", notes = "创建用户")
+    @ApiImplicitParam(name = "userDto", value = "用户实体user", required = true, dataType = "UserDto")
     @PostMapping
     public ReturnT<Boolean> addUser(@RequestBody UserDto userDto) {
         User user = new User();
@@ -202,6 +212,8 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/8/26 15:06
      */
+    @ApiOperation(value = "更新用户信息", notes = "根据用户id更新用户的基本信息、角色信息")
+    @ApiImplicitParam(name = "userDto", value = "用户实体user", required = true, dataType = "UserDto")
     @PutMapping
     public ReturnT<Boolean> updateUser(@RequestBody UserDto userDto, HttpServletRequest request) {
         try {
@@ -221,6 +233,8 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/10/30 10:06
      */
+    @ApiOperation(value = "更新用户基本信息", notes = "根据用户id更新用户的基本信息")
+    @ApiImplicitParam(name = "userDto", value = "用户实体user", required = true, dataType = "UserDto")
     @PutMapping("/updateInfo")
     public ReturnT<Boolean> updateInfo(@RequestBody UserDto userDto) {
         // 新密码不为空
@@ -263,21 +277,21 @@ public class UserController extends BaseController {
     /**
      * 导出
      *
-     * @param ids 用户id，多个用逗号分隔
+     * @param exportVo exportVo
      * @author tangyi
      * @date 2018/11/26 22:11
      */
-    @GetMapping("/export")
-    public void exportUser(String ids, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/export")
+    public void exportUser(@RequestBody ExportVo exportVo, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<User> users;
-            if (StringUtils.isNotEmpty(ids)) {
+            if (StringUtils.isNotEmpty(exportVo.getIds())) {
                 List<String> userIdList = new ArrayList<>();
-                for (String id : ids.split(",")) {
+                for (String id : exportVo.getIds().split(",")) {
                     if (StringUtils.isNotEmpty(id))
                         userIdList.add(id);
                 }

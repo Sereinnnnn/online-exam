@@ -12,6 +12,8 @@ import com.github.tangyi.exam.dto.KnowledgeDto;
 import com.github.tangyi.exam.feign.AttachmentService;
 import com.github.tangyi.exam.module.Knowledge;
 import com.github.tangyi.exam.service.KnowledgeService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -48,6 +50,8 @@ public class KnowledgeController extends BaseController {
      * @author tangyi
      * @date 2019/1/1 15:15
      */
+    @ApiOperation(value = "获取知识信息", notes = "根据知识id获取知识详细信息")
+    @ApiImplicitParam(name = "id", value = "知识ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Knowledge> knowledge(@PathVariable String id) {
         Knowledge knowledge = new Knowledge();
@@ -67,6 +71,7 @@ public class KnowledgeController extends BaseController {
      * @author tangyi
      * @date 2019/1/1 15:15
      */
+    @ApiOperation(value = "获取知识列表")
     @RequestMapping("knowledgeList")
     public PageInfo<KnowledgeDto> knowledgeList(@RequestParam Map<String, String> params, Knowledge knowledge) {
         PageInfo<Knowledge> page = new PageInfo<Knowledge>();
@@ -117,6 +122,8 @@ public class KnowledgeController extends BaseController {
      * @author tangyi
      * @date 2019/1/1 15:15
      */
+    @ApiOperation(value = "创建知识", notes = "创建知识")
+    @ApiImplicitParam(name = "knowledge", value = "知识实体knowledge", required = true, dataType = "Knowledge")
     @PostMapping
     public ReturnT<Boolean> addKnowledge(@RequestBody Knowledge knowledge) {
         knowledge.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -131,6 +138,8 @@ public class KnowledgeController extends BaseController {
      * @author tangyi
      * @date 2019/1/1 15:15
      */
+    @ApiOperation(value = "更新知识信息", notes = "根据知识id更新知识的基本信息")
+    @ApiImplicitParam(name = "knowledge", value = "知识实体knowledge", required = true, dataType = "Knowledge")
     @PutMapping
     public ReturnT<Boolean> updateKnowledge(@RequestBody Knowledge knowledge) {
         knowledge.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -145,6 +154,8 @@ public class KnowledgeController extends BaseController {
      * @author tangyi
      * @date 2019/1/1 15:15
      */
+    @ApiOperation(value = "删除知识", notes = "根据ID删除知识")
+    @ApiImplicitParam(name = "id", value = "知识ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteKnowledge(@PathVariable String id) {
         boolean success = false;
@@ -157,7 +168,7 @@ public class KnowledgeController extends BaseController {
                 success = knowledgeService.delete(knowledge) > 0;
             }
             // 删除附件
-            if (StringUtils.isNotBlank(knowledge.getAttachmentId()))
+            if (knowledge != null && StringUtils.isNotBlank(knowledge.getAttachmentId()))
                 success = attachmentService.delete(knowledge.getAttachmentId()).getData();
         } catch (Exception e) {
             logger.error("删除知识失败！", e);

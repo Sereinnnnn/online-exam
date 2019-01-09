@@ -8,6 +8,7 @@ import com.github.tangyi.common.utils.MapUtil;
 import com.github.tangyi.common.utils.Servlets;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.DeptVo;
+import com.github.tangyi.common.vo.ExportVo;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.dto.ScoreDto;
@@ -19,6 +20,8 @@ import com.github.tangyi.exam.service.ExaminationService;
 import com.github.tangyi.exam.service.ScoreService;
 import com.github.tangyi.exam.utils.ScoreUtil;
 import com.google.common.net.HttpHeaders;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -63,6 +66,8 @@ public class ScoreController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:40
      */
+    @ApiOperation(value = "获取成绩信息", notes = "根据成绩id获取成绩详细信息")
+    @ApiImplicitParam(name = "id", value = "成绩ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Score> score(@PathVariable String id) {
         Score score = new Score();
@@ -82,6 +87,7 @@ public class ScoreController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:41
      */
+    @ApiOperation(value = "获取成绩列表")
     @RequestMapping("scoreList")
     public PageInfo<ScoreDto> scoreList(@RequestParam Map<String, String> params, Score score) {
         PageInfo<ScoreDto> scoreDtoPageInfo = new PageInfo<>();
@@ -183,6 +189,8 @@ public class ScoreController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:41
      */
+    @ApiOperation(value = "创建成绩", notes = "创建成绩")
+    @ApiImplicitParam(name = "score", value = "成绩实体score", required = true, dataType = "Score")
     @PostMapping
     public ReturnT<Boolean> addScore(@RequestBody Score score) {
         score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -197,6 +205,8 @@ public class ScoreController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:42
      */
+    @ApiOperation(value = "更新成绩信息", notes = "根据成绩id更新成绩的基本信息")
+    @ApiImplicitParam(name = "score", value = "成绩实体score", required = true, dataType = "Score")
     @PutMapping
     public ReturnT<Boolean> updateScore(@RequestBody Score score) {
         score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -211,6 +221,8 @@ public class ScoreController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:43
      */
+    @ApiOperation(value = "删除成绩", notes = "根据ID删除成绩")
+    @ApiImplicitParam(name = "id", value = "成绩ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteScore(@PathVariable String id) {
         boolean success = false;
@@ -229,21 +241,21 @@ public class ScoreController extends BaseController {
     /**
      * 导出成绩
      *
-     * @param ids ids
+     * @param exportVo exportVo
      * @author tangyi
      * @date 2018/12/31 22:28
      */
-    @GetMapping("/export")
-    public void exportUser(String ids, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/export")
+    public void exportScore(@RequestBody ExportVo exportVo, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "考试成绩" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<Score> scoreList;
-            if (StringUtils.isNotEmpty(ids)) {
+            if (StringUtils.isNotEmpty(exportVo.getIds())) {
                 Set<String> scoreIdSet = new HashSet<>();
-                for (String id : ids.split(",")) {
+                for (String id : exportVo.getIds().split(",")) {
                     if (StringUtils.isNotEmpty(id))
                         scoreIdSet.add(id);
                 }

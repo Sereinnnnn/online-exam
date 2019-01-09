@@ -10,6 +10,8 @@ import com.github.tangyi.exam.module.Subject;
 import com.github.tangyi.exam.service.SubjectService;
 import com.github.tangyi.exam.utils.SubjectUtil;
 import com.google.common.net.HttpHeaders;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -49,6 +51,8 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:43
      */
+    @ApiOperation(value = "获取题目信息", notes = "根据题目id获取题目详细信息")
+    @ApiImplicitParam(name = "id", value = "题目ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Subject> subject(@PathVariable String id) {
         Subject subject = new Subject();
@@ -68,6 +72,7 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:43
      */
+    @ApiOperation(value = "获取题目列表")
     @RequestMapping("subjectList")
     public PageInfo<Subject> subjectList(@RequestParam Map<String, String> params, Subject subject) {
         PageInfo<Subject> page = new PageInfo<Subject>();
@@ -85,6 +90,8 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:43
      */
+    @ApiOperation(value = "创建题目", notes = "创建题目")
+    @ApiImplicitParam(name = "subject", value = "题目实体subject", required = true, dataType = "Subject")
     @PostMapping
     public ReturnT<Boolean> addSubject(@RequestBody Subject subject) {
         subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -99,6 +106,8 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:43
      */
+    @ApiOperation(value = "更新题目信息", notes = "根据题目id更新题目的基本信息")
+    @ApiImplicitParam(name = "subject", value = "角色实体subject", required = true, dataType = "Subject")
     @PutMapping
     public ReturnT<Boolean> updateSubject(@RequestBody Subject subject) {
         subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -113,6 +122,8 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:43
      */
+    @ApiOperation(value = "删除题目", notes = "根据ID删除题目")
+    @ApiImplicitParam(name = "id", value = "题目ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteSubject(@PathVariable String id) {
         boolean success = false;
