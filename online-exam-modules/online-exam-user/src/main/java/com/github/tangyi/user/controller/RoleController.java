@@ -213,17 +213,17 @@ public class RoleController extends BaseController {
     /**
      * 批量删除
      *
-     * @param idMap idMap
+     * @param role role
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/4 10:00
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllRoles(@RequestBody Map<String, String> idMap) {
+    public ReturnT<Boolean> deleteAllRoles(@RequestBody Role role) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(idMap.get("ids")))
-                success = roleService.deleteAll(idMap.get("ids").split(",")) > 0;
+            if (StringUtils.isNotEmpty(role.getIdString()))
+                success = roleService.deleteAll(role.getIdString().split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除角色失败！", e);
         }

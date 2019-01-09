@@ -8,7 +8,6 @@ import com.github.tangyi.common.utils.MapUtil;
 import com.github.tangyi.common.utils.Servlets;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.vo.DeptVo;
-import com.github.tangyi.common.vo.ExportVo;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.dto.ScoreDto;
@@ -241,21 +240,21 @@ public class ScoreController extends BaseController {
     /**
      * 导出成绩
      *
-     * @param exportVo exportVo
+     * @param scoreDto scoreDto
      * @author tangyi
      * @date 2018/12/31 22:28
      */
     @PostMapping("/export")
-    public void exportScore(@RequestBody ExportVo exportVo, HttpServletRequest request, HttpServletResponse response) {
+    public void exportScore(@RequestBody ScoreDto scoreDto, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "考试成绩" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<Score> scoreList;
-            if (StringUtils.isNotEmpty(exportVo.getIds())) {
+            if (StringUtils.isNotEmpty(scoreDto.getIdString())) {
                 Set<String> scoreIdSet = new HashSet<>();
-                for (String id : exportVo.getIds().split(",")) {
+                for (String id : scoreDto.getIdString().split(",")) {
                     if (StringUtils.isNotEmpty(id))
                         scoreIdSet.add(id);
                 }
@@ -281,14 +280,14 @@ public class ScoreController extends BaseController {
                 scoreList.forEach(tempScore -> {
                     examinations.forEach(tempExamination -> {
                         if (tempScore.getExaminationId().equals(tempExamination.getId())) {
-                            ScoreDto scoreDto = new ScoreDto();
-                            scoreDto.setId(tempScore.getId());
-                            scoreDto.setExaminationName(tempExamination.getExaminationName());
-                            scoreDto.setExamTime(tempScore.getCreateDate());
-                            scoreDto.setScore(tempScore.getScore());
-                            scoreDto.setUserId(tempScore.getUserId());
+                            ScoreDto tempScoreDto = new ScoreDto();
+                            tempScoreDto.setId(tempScore.getId());
+                            tempScoreDto.setExaminationName(tempExamination.getExaminationName());
+                            tempScoreDto.setExamTime(tempScore.getCreateDate());
+                            tempScoreDto.setScore(tempScore.getScore());
+                            tempScoreDto.setUserId(tempScore.getUserId());
                             userIdSet.add(tempScore.getUserId());
-                            scoreDtoList.add(scoreDto);
+                            scoreDtoList.add(tempScoreDto);
                         }
                     });
                 });

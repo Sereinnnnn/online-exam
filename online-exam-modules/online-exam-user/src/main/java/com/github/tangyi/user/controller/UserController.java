@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
-import com.github.tangyi.common.vo.ExportVo;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.UserDto;
@@ -277,21 +276,21 @@ public class UserController extends BaseController {
     /**
      * 导出
      *
-     * @param exportVo exportVo
+     * @param userVo userVo
      * @author tangyi
      * @date 2018/11/26 22:11
      */
     @PostMapping("/export")
-    public void exportUser(@RequestBody ExportVo exportVo, HttpServletRequest request, HttpServletResponse response) {
+    public void exportUser(@RequestBody UserVo userVo, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "用户信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<User> users;
-            if (StringUtils.isNotEmpty(exportVo.getIds())) {
+            if (StringUtils.isNotEmpty(userVo.getIdString())) {
                 List<String> userIdList = new ArrayList<>();
-                for (String id : exportVo.getIds().split(",")) {
+                for (String id : userVo.getIdString().split(",")) {
                     if (StringUtils.isNotEmpty(id))
                         userIdList.add(id);
                 }
@@ -339,17 +338,17 @@ public class UserController extends BaseController {
     /**
      * 批量删除
      *
-     * @param idMap idMap
+     * @param user user
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/4 9:58
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllUsers(@RequestBody Map<String, String> idMap) {
+    public ReturnT<Boolean> deleteAllUsers(@RequestBody User user) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(idMap.get("ids")))
-                success = userService.deleteAll(idMap.get("ids").split(",")) > 0;
+            if (StringUtils.isNotEmpty(user.getIdString()))
+                success = userService.deleteAll(user.getIdString().split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除用户失败！", e);
         }

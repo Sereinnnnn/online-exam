@@ -79,17 +79,17 @@ public class LogController extends BaseController {
     /**
      * 批量删除
      *
-     * @param idMap idMap
+     * @param log log
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/4 10:12
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllAttachments(@RequestBody Map<String, String> idMap) {
+    public ReturnT<Boolean> deleteAllAttachments(@RequestBody Log log) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(idMap.get("ids")))
-                success = logService.deleteAll(idMap.get("ids").split(",")) > 0;
+            if (StringUtils.isNotEmpty(log.getIdString()))
+                success = logService.deleteAll(log.getIdString().split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除附件失败！", e);
         }

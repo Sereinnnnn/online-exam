@@ -6,6 +6,7 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.exam.dto.SubjectBankDto;
 import com.github.tangyi.exam.module.SubjectBank;
 import com.github.tangyi.exam.module.SubjectCategory;
 import com.github.tangyi.exam.service.SubjectBankService;
@@ -166,13 +167,12 @@ public class SubjectBankController extends BaseController {
     /**
      * 导出题目
      *
-     * @param ids        用户id，多个用逗号分隔
-     * @param categoryId 分类id
+     * @param subjectBankDto subjectBankDto
      * @author tangyi
      * @date 2018/12/9 14:16
      */
-    @GetMapping("/export")
-    public void exportSubjectBank(String ids, String categoryId, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/export")
+    public void exportSubjectBank(@RequestBody SubjectBankDto subjectBankDto, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
@@ -180,17 +180,17 @@ public class SubjectBankController extends BaseController {
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "题目信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<SubjectBank> subjectBanks = new ArrayList<>();
             // 根据题目id导出
-            if (StringUtils.isNotEmpty(ids)) {
-                for (String id : ids.split(",")) {
+            if (StringUtils.isNotEmpty(subjectBankDto.getIdString())) {
+                for (String id : subjectBankDto.getIdString().split(",")) {
                     SubjectBank subjectBank = new SubjectBank();
                     subjectBank.setId(id);
                     subjectBank = subjectBankService.get(subjectBank);
                     if (subjectBank != null)
                         subjectBanks.add(subjectBank);
                 }
-            } else if (StringUtils.isNotBlank(categoryId)) {    // 根据分类ID导出
+            } else if (StringUtils.isNotBlank(subjectBankDto.getCategoryId())) {    // 根据分类ID导出
                 SubjectBank subjectBank = new SubjectBank();
-                subjectBank.setCategoryId(categoryId);
+                subjectBank.setCategoryId(subjectBankDto.getCategoryId());
                 subjectBanks = subjectBankService.findList(subjectBank);
             }
             ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(subjectBanks), SubjectBankUtil.getSubjectBankMap());
@@ -239,17 +239,17 @@ public class SubjectBankController extends BaseController {
     /**
      * 批量删除
      *
-     * @param idMap idMap
+     * @param subjectBankDto subjectBankDto
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/04 9:55
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteSubjectBanks(@RequestBody Map<String, String> idMap) {
+    public ReturnT<Boolean> deleteSubjectBanks(@RequestBody SubjectBankDto subjectBankDto) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(idMap.get("ids")))
-                success = subjectBankService.deleteAll(idMap.get("ids").split(",")) > 0;
+            if (StringUtils.isNotEmpty(subjectBankDto.getIdString()))
+                success = subjectBankService.deleteAll(subjectBankDto.getIdString().split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }

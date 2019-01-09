@@ -36,6 +36,8 @@ public class BaseEntity<T> implements Serializable {
 
     protected String[] ids; // ID数组
 
+    protected String idString;  // ID字符串，多个用逗号隔开
+
     public BaseEntity() {
 
     }
@@ -139,5 +141,13 @@ public class BaseEntity<T> implements Serializable {
 
     public void setIds(String[] ids) {
         this.ids = ids;
+    }
+
+    public String getIdString() {
+        return idString;
+    }
+
+    public void setIdString(String idString) {
+        this.idString = idString;
     }
 }

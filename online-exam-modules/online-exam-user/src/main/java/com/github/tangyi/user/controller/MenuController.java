@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
-import com.github.tangyi.common.vo.ExportVo;
+import com.github.tangyi.common.vo.MenuVo;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.MenuDto;
 import com.github.tangyi.user.module.Menu;
@@ -215,12 +215,12 @@ public class MenuController extends BaseController {
     /**
      * 导出菜单
      *
-     * @param exportVo exportVo
+     * @param menuVo menuVo
      * @author tangyi
      * @date 2018/11/28 12:46
      */
     @PostMapping("/export")
-    public void exportMenu(@RequestBody ExportVo exportVo, HttpServletRequest request, HttpServletResponse response) {
+    public void exportMenu(@RequestBody MenuVo menuVo, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
@@ -228,12 +228,12 @@ public class MenuController extends BaseController {
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "菜单信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<Menu> menus = new ArrayList<>();
             // 导出所有
-            if (StringUtils.isEmpty(exportVo.getIds())) {
+            if (StringUtils.isEmpty(menuVo.getIdString())) {
                 Menu menu = new Menu();
                 menus = menuService.findList(menu);
             } else {    // 导出选中
                 Set<String> menuIdSet = new HashSet<>();
-                for (String id : exportVo.getIds().split(",")) {
+                for (String id : menuVo.getIdString().split(",")) {
                     if (StringUtils.isNotBlank(id))
                         menuIdSet.add(id);
                 }

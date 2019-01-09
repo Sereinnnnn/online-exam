@@ -6,6 +6,7 @@ import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.exam.dto.SubjectDto;
 import com.github.tangyi.exam.module.Subject;
 import com.github.tangyi.exam.service.SubjectService;
 import com.github.tangyi.exam.utils.SubjectUtil;
@@ -144,13 +145,12 @@ public class SubjectController extends BaseController {
     /**
      * 导出题目
      *
-     * @param ids           用户id，多个用逗号分隔
-     * @param examinationId 考试id
+     * @param subjectDto subjectDto
      * @author tangyi
      * @date 2018/11/28 12:53
      */
-    @GetMapping("/export")
-    public void exportSubject(String ids, String examinationId, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/export")
+    public void exportSubject(@RequestBody SubjectDto subjectDto, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 配置response
             response.setCharacterEncoding("utf-8");
@@ -158,17 +158,17 @@ public class SubjectController extends BaseController {
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, Servlets.getDownName(request, "题目信息" + new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date()) + ".xlsx"));
             List<Subject> subjects = new ArrayList<>();
             // 根据题目id导出
-            if (StringUtils.isNotEmpty(ids)) {
-                for (String id : ids.split(",")) {
+            if (StringUtils.isNotEmpty(subjectDto.getIdString())) {
+                for (String id : subjectDto.getIdString().split(",")) {
                     Subject subject = new Subject();
                     subject.setId(id);
                     subject = subjectService.get(subject);
                     if (subject != null)
                         subjects.add(subject);
                 }
-            } else if (StringUtils.isNotEmpty(examinationId)) {  // 根据考试id导出
+            } else if (StringUtils.isNotEmpty(subjectDto.getExaminationId())) {  // 根据考试id导出
                 Subject subject = new Subject();
-                subject.setExaminationId(examinationId);
+                subject.setExaminationId(subjectDto.getExaminationId());
                 subjects = subjectService.findList(subject);
             }
             ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(subjects), SubjectUtil.getSubjectMap());
@@ -212,17 +212,17 @@ public class SubjectController extends BaseController {
     /**
      * 批量删除
      *
-     * @param idMap idMap
+     * @param subjectDto subjectDto
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/04 9:55
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteSubjects(@RequestBody Map<String, String> idMap) {
+    public ReturnT<Boolean> deleteSubjects(@RequestBody SubjectDto subjectDto) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(idMap.get("ids")))
-                success = subjectService.deleteAll(idMap.get("ids").split(",")) > 0;
+            if (StringUtils.isNotEmpty(subjectDto.getIdString()))
+                success = subjectService.deleteAll(subjectDto.getIdString().split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }

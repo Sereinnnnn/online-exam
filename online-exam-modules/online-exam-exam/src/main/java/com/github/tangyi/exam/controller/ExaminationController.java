@@ -185,17 +185,17 @@ public class ExaminationController extends BaseController {
     /**
      * 批量删除
      *
-     * @param idMap idMap
+     * @param examinationDto examinationDto
      * @return ReturnT
      * @author tangyi
      * @date 2018/12/03 22:03
      */
     @PostMapping("/deleteAll")
-    public ReturnT<Boolean> deleteAllExaminations(@RequestBody Map<String, String> idMap) {
+    public ReturnT<Boolean> deleteAllExaminations(@RequestBody ExaminationDto examinationDto) {
         boolean success = false;
         try {
-            if (StringUtils.isNotEmpty(idMap.get("ids")))
-                success = examinationService.deleteAll(idMap.get("ids").split(",")) > 0;
+            if (StringUtils.isNotEmpty(examinationDto.getIdString()))
+                success = examinationService.deleteAll(examinationDto.getIdString().split(",")) > 0;
         } catch (Exception e) {
             logger.error("删除考试失败！", e);
         }
