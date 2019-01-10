@@ -380,5 +380,31 @@ public class UserController extends BaseController {
         }
         return returnT;
     }
+
+    /**
+     * 注册
+     * @param userDto userDto
+     * @return ReturnT
+     * @author tangyi
+     * @date 2019/01/10 22:35
+     */
+    @ApiOperation(value = "注册", notes = "注册")
+    @ApiImplicitParam(name = "userDto", value = "用户实体user", required = true, dataType = "UserDto")
+    @PostMapping("register")
+    public ReturnT<Boolean> register(@RequestBody UserDto userDto) {
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+        user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        // 设置默认密码
+        if (StringUtils.isEmpty(userDto.getPassword()))
+            userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
+        user.setPassword(encoder.encode(userDto.getPassword()));
+        // 默认头像
+        user.setAvatar(CommonConstant.DEFAULT_AVATAR);
+        // TODO 分配默认角色
+
+        // 保存用户
+        return new ReturnT<>(userService.insert(user) > 0);
+    }
 }
 
