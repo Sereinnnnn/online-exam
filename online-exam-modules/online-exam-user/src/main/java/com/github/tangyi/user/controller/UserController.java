@@ -7,6 +7,7 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.user.constants.RoleConstant;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
 import com.github.tangyi.user.module.Dept;
@@ -392,6 +393,7 @@ public class UserController extends BaseController {
     @ApiImplicitParam(name = "userDto", value = "用户实体user", required = true, dataType = "UserDto")
     @PostMapping("register")
     public ReturnT<Boolean> register(@RequestBody UserDto userDto) {
+        boolean success = false;
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         user.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -401,10 +403,24 @@ public class UserController extends BaseController {
         user.setPassword(encoder.encode(userDto.getPassword()));
         // 默认头像
         user.setAvatar(CommonConstant.DEFAULT_AVATAR);
-        // TODO 分配默认角色
-
         // 保存用户
-        return new ReturnT<>(userService.insert(user) > 0);
+        if (userService.insert(user) > 0) {
+            // 分配默认角色
+            Role role = new Role();
+            role.setIsDefault(RoleConstant.IS_DEFAULT_ROLE);
+            // 查询默认角色
+            List<Role> roleList = roleService.findList(role);
+            if (CollectionUtils.isNotEmpty(roleList)) {
+                Role defaultRole = roleList.get(0);
+                UserRole userRole = new UserRole();
+                userRole.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                userRole.setUserId(user.getId());
+                userRole.setRoleId(defaultRole.getId());
+                // 保存用户角色关系
+                success = userRoleService.insert(userRole) > 0;
+            }
+        }
+        return new ReturnT<>(success);
     }
 }
 

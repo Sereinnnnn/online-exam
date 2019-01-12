@@ -28,3 +28,5 @@ eureka:
 logging:
   level:
    com.github.tangyi: debug
+   org.apache.http: info
+   com.netflix: info

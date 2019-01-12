@@ -7,6 +7,7 @@
         <result column="role_code" property="roleCode" />
         <result column="role_desc" property="roleDesc" />
         <result column="status" property="status" />
+        <result column="is_default" property="isDefault" />
         <result column="creator" property="creator" />
         <result column="create_date" property="createDate" />
         <result column="modifier" property="modifier" />
@@ -21,6 +22,7 @@
         a.role_code,
         a.role_desc,
         a.status,
+        a.is_default,
         a.creator,
         a.create_date,
         a.modifier,
@@ -36,6 +38,9 @@
         </if>
         <if test="status != null and status != ''">
             and a.status = #{status}
+        </if>
+        <if test="isDefault != null and isDefault != ''">
+            and a.is_default = #{isDefault}
         </if>
     </sql>
 
@@ -71,6 +76,7 @@
         role_code,
         role_desc,
         status,
+        is_default,
         creator,
         create_date,
         modifier,
@@ -83,6 +89,7 @@
         #{roleCode},
         #{roleDesc},
         #{status},
+        #{isDefault},
         #{creator},
         #{createDate},
         #{modifier},
@@ -105,6 +112,9 @@
         </if>
         <if test="status != null">
             status = #{status},
+        </if>
+        <if test="isDefault != null">
+            is_default = #{isDefault},
         </if>
         <if test="delFlag != null">
             del_flag = #{delFlag},

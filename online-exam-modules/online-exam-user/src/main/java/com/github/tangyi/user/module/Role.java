@@ -22,6 +22,11 @@ public class Role extends BaseEntity<Role> {
 
     private String deptId;
 
+    /**
+     * 是否默认 0-否，1-是
+     */
+    private String isDefault;
+
     public String getRoleName() {
         return roleName;
     }
@@ -68,5 +73,13 @@ public class Role extends BaseEntity<Role> {
 
     public void setDeptId(String deptId) {
         this.deptId = deptId;
+    }
+
+    public String getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(String isDefault) {
+        this.isDefault = isDefault;
     }
 }
