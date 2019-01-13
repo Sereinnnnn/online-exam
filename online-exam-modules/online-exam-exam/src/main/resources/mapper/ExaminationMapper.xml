@@ -58,6 +58,9 @@
         <if test="status != null and status != ''">
             and a.status = #{status}
         </if>
+        <if test="type != null and type != ''">
+            and a.type = #{type}
+        </if>
     </sql>
 
     <select id="get" resultMap="examinationResultMap">
