@@ -51,6 +51,11 @@ public class Examination extends BaseEntity<Examination> {
     private String totalScore;
 
     /**
+     * 总题目数
+     */
+    private String totalSubject;
+
+    /**
      * 考试状态
      */
     private String status;
@@ -190,5 +195,13 @@ public class Examination extends BaseEntity<Examination> {
 
     public void setCurrentTime(String currentTime) {
         this.currentTime = currentTime;
+    }
+
+    public String getTotalSubject() {
+        return totalSubject;
+    }
+
+    public void setTotalSubject(String totalSubject) {
+        this.totalSubject = totalSubject;
     }
 }

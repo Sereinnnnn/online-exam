@@ -7,7 +7,11 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.dto.SubjectDto;
+import com.github.tangyi.exam.module.Answer;
+import com.github.tangyi.exam.module.ExamRecord;
 import com.github.tangyi.exam.module.Subject;
+import com.github.tangyi.exam.service.AnswerService;
+import com.github.tangyi.exam.service.ExamRecordService;
 import com.github.tangyi.exam.service.SubjectService;
 import com.github.tangyi.exam.utils.SubjectUtil;
 import com.google.common.net.HttpHeaders;
@@ -17,6 +21,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +48,12 @@ public class SubjectController extends BaseController {
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private ExamRecordService examRecordService;
 
     /**
      * 根据ID获取
@@ -217,7 +228,7 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/12/04 9:55
      */
-    @PostMapping("/deleteAll")
+    @PostMapping("deleteAll")
     public ReturnT<Boolean> deleteSubjects(@RequestBody SubjectDto subjectDto) {
         boolean success = false;
         try {
@@ -227,5 +238,51 @@ public class SubjectController extends BaseController {
             logger.error("删除题目失败！", e);
         }
         return new ReturnT<>(success);
+    }
+
+    /**
+     * 查询题目和答题
+     *
+     * @param serialNumber  serialNumber
+     * @param examRecordId  examRecordId
+     * @param userId        userId
+     * @return ReturnT
+     * @author tangyi
+     * @date 2019/01/16 22:25
+     */
+    @GetMapping("subjectAnswer")
+    public ReturnT<SubjectDto> subjectAnswer(@RequestParam("serialNumber") String serialNumber,
+                                             @RequestParam("examRecordId") String examRecordId,
+                                             @RequestParam(value = "userId", required = false) String userId) {
+        SubjectDto subjectDto = null;
+        ExamRecord examRecord = new ExamRecord();
+        examRecord.setId(examRecordId);
+        // 查找考试记录
+        examRecord = examRecordService.get(examRecord);
+        if (examRecord != null) {
+            // 查找题目
+            Subject subject = new Subject();
+            subject.setExaminationId(examRecord.getExaminationId());
+            subject.setSerialNumber(serialNumber);
+            subject = subjectService.getByExaminationIdAndSerialNumber(subject);
+            if (subject != null) {
+                subjectDto = new SubjectDto();
+                // 查找答题
+                Answer answer = new Answer();
+                answer.setSubjectId(subject.getId());
+                answer.setExaminationId(examRecord.getExaminationId());
+                answer.setExamRecordId(examRecordId);
+                answer.setUserId(userId);
+                List<Answer> answerList = answerService.findList(answer);
+                if (answerList != null && answerList.size() == 1) {
+                    answer = answerList.get(0);
+                }
+                BeanUtils.copyProperties(subject, subjectDto);
+                // 设置答题
+                subjectDto.setAnswer(answer);
+                subjectDto.setExaminationRecordId(examRecordId);
+            }
+        }
+        return new ReturnT<>(subjectDto);
     }
 }

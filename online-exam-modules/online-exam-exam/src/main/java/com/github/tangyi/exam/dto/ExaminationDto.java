@@ -5,7 +5,7 @@ import com.github.tangyi.exam.module.Examination;
 
 /**
  * @author tangyi
- * @date 2018/11/2022:02
+ * @date 2018/11/20 22:02
  */
 public class ExaminationDto extends Examination {
 

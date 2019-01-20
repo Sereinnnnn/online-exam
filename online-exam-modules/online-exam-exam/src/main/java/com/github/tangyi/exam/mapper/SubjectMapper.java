@@ -12,4 +12,14 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SubjectMapper extends CrudMapper<Subject> {
+
+    /**
+     * 根据考试ID和序号查找
+     *
+     * @param subject subject
+     * @return Subject
+     * @author tangyi
+     * @date 2019/01/20 12:19
+     */
+    Subject getByExaminationIdAndSerialNumber(Subject subject);
 }

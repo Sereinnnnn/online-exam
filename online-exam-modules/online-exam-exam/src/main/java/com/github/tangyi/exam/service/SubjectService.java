@@ -33,6 +33,18 @@ public class SubjectService extends CrudService<SubjectMapper, Subject> {
     }
 
     /**
+     * 根据考试ID和序号查找
+     *
+     * @param subject subject
+     * @return Subject
+     * @author tangyi
+     * @date 2019/01/20 12:22
+     */
+    public Subject getByExaminationIdAndSerialNumber(Subject subject) {
+        return this.dao.getByExaminationIdAndSerialNumber(subject);
+    }
+
+    /**
      * 更新题目
      *
      * @param subject subject

@@ -10,6 +10,7 @@
         <result column="end_time" property="endTime"/>
         <result column="duration" property="duration"/>
         <result column="total_score" property="totalScore"/>
+        <result column="total_subject" property="totalSubject"/>
         <result column="status" property="status"/>
         <result column="avatar" property="avatar"/>
         <result column="college_id" property="collegeId"/>
@@ -33,6 +34,7 @@
         a.end_time,
         a.duration,
         a.total_score,
+        a.total_subject,
         a.status,
         a.avatar,
         a.college_id,
@@ -98,6 +100,7 @@
             end_time,
             duration,
             total_score,
+            total_subject,
             status,
             avatar,
             college_id,
@@ -119,6 +122,7 @@
             #{endTime},
             #{duration},
             #{totalScore},
+            #{totalSubject},
             #{status},
             #{avatar},
             #{collegeId},
@@ -156,6 +160,9 @@
         </if>
         <if test="totalScore != null">
             total_score = #{totalScore},
+        </if>
+        <if test="totalSubject != null">
+            total_subject = #{totalSubject},
         </if>
         <if test="status != null">
             status = #{status},

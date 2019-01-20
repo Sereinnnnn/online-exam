@@ -71,6 +71,13 @@
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
+    <select id="getByExaminationIdAndSerialNumber" resultMap="subjectResultMap">
+        SELECT
+        <include refid="subjectColumns"/>
+        FROM subject a
+        WHERE a.examination_id = #{examinationId} and a.serial_number = #{serialNumber} and a.del_flag = 0
+    </select>
+
     <select id="findList" resultMap="subjectResultMap">
         SELECT
         <include refid="subjectColumns"/>
