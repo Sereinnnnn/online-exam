@@ -3,21 +3,21 @@ package com.github.tangyi.exam.utils;
 import java.util.LinkedHashMap;
 
 /**
- * 成绩工具类
+ * 考试记录工具类
  *
  * @author tangyi
  * @date 2018/12/31 22:35
  */
-public class ScoreUtil {
+public class ExamRecordUtil {
 
     /**
-     * 获取ScoreDto属性的map
+     * 获取ExamRecordDto属性的map
      *
      * @return LinkedHashMap
      * @author tangyi
      * @date 2018/12/31 22:35
      */
-    public static LinkedHashMap<String, String> getScoreDtoMap() {
+    public static LinkedHashMap<String, String> getExamRecordDtoMap() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("id", "成绩id");
         map.put("examinationName", "考试名称");

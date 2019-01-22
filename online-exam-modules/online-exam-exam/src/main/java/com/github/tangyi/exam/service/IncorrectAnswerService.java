@@ -2,6 +2,7 @@ package com.github.tangyi.exam.service;
 
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.exam.mapper.IncorrectAnswerMapper;
+import com.github.tangyi.exam.module.ExamRecord;
 import com.github.tangyi.exam.module.IncorrectAnswer;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -90,5 +91,19 @@ public class IncorrectAnswerService extends CrudService<IncorrectAnswerMapper, I
     @CacheEvict(value = "incorrect", allEntries = true)
     public int deleteAll(String[] ids) {
         return super.deleteAll(ids);
+    }
+
+    /**
+     * 根据考试记录删除
+     *
+     * @param examRecord examRecord
+     * @return int
+     * @author tangyi
+     * @date 2019/1/22 14:06
+     */
+    @Transactional
+    @CacheEvict(value = "incorrect", allEntries = true)
+    public int deleteByExaminationRecord(ExamRecord examRecord) {
+        return this.dao.deleteByExaminationRecord(examRecord);
     }
 }

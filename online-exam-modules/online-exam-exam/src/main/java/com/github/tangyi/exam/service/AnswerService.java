@@ -3,7 +3,10 @@ package com.github.tangyi.exam.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.exam.mapper.AnswerMapper;
-import com.github.tangyi.exam.module.*;
+import com.github.tangyi.exam.module.Answer;
+import com.github.tangyi.exam.module.ExamRecord;
+import com.github.tangyi.exam.module.IncorrectAnswer;
+import com.github.tangyi.exam.module.Subject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,9 +34,6 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
 
     @Autowired
     private IncorrectAnswerService incorrectAnswerService;
-
-    @Autowired
-    private ScoreService scoreService;
 
     @Autowired
     private ExamRecordService examRecodeService;
@@ -164,32 +164,26 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                     }
                 }
                 // 保存成绩
-                Score score = new Score();
-                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                score.setExaminationId(answer.getExaminationId());
-                // 查找考试信息
-                Examination examination = new Examination();
-                examination.setId(answer.getExaminationId());
-                examination = examinationService.get(examination);
-                if (examination != null)
-                    score.setExaminationName(examination.getExaminationName());
-                score.setExamRecordId(answer.getExamRecordId());
-                score.setUserId(answer.getUserId());
-                score.setCourseId(answer.getCourseId());
-                score.setScore(totalScore.toString());
-                score.setCorrectNumber(correctNumber.toString());
-                score.setInCorrectNumber(incorrectNumber.toString());
-                scoreService.insert(score);
-                // 保存错题
-                if (CollectionUtils.isNotEmpty(incorrectAnswers))
-                    incorrectAnswerService.insertBatch(incorrectAnswers);
-                // 更新考试记录
                 ExamRecord examRecord = new ExamRecord();
                 examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
                 examRecord.setId(answer.getExamRecordId());
                 examRecord.setEndTime(examRecord.getCreateDate());
-                examRecord.setScore(score.getScore());
+                examRecord.setScore(totalScore.toString());
+                examRecord.setCorrectNumber(correctNumber.toString());
+                examRecord.setInCorrectNumber(incorrectNumber.toString());
+                examRecodeService.getByUserIdAndExaminationId(examRecord);
                 success = examRecodeService.update(examRecord) > 0;
+                // 保存错题
+                ExamRecord searchExamRecord = new ExamRecord();
+                searchExamRecord.setUserId(answer.getUserId());
+                searchExamRecord.setExaminationId(answer.getExaminationId());
+                searchExamRecord.setId(answer.getExamRecordId());
+                // 先删除之前的错题
+                incorrectAnswerService.deleteByExaminationRecord(searchExamRecord);
+                if (CollectionUtils.isNotEmpty(incorrectAnswers)) {
+                    // 批量插入
+                    incorrectAnswerService.insertBatch(incorrectAnswers);
+                }
             }
         }
         return success;
