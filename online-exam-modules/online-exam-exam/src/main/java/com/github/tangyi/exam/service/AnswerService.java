@@ -153,25 +153,48 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
                     }
                 }
                 // 保存成绩
-                Score score = new Score();
-                score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                score.setExaminationId(answer.getExaminationId());
-                // 查找考试信息
-                Examination examination = new Examination();
-                examination.setId(answer.getExaminationId());
-                examination = examinationService.get(examination);
-                if (examination != null)
-                    score.setExaminationName(examination.getExaminationName());
-                score.setExamRecordId(answer.getExamRecordId());
-                score.setUserId(answer.getUserId());
-                score.setCourseId(answer.getCourseId());
-                score.setScore(totalScore.toString());
-                score.setCorrectNumber(correctNumber.toString());
-                score.setInCorrectNumber(incorrectNumber.toString());
-                scoreService.insert(score);
+                Score searchScore = new Score();
+                searchScore.setExaminationId(answer.getExaminationId());
+                searchScore.setExamRecordId(answer.getExamRecordId());
+                searchScore.setUserId(answer.getUserId());
+                Score score = scoreService.getByUserIdAndExaminationId(searchScore);
+                // 新增成绩
+                if (score == null) {
+                    score = new Score();
+                    score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                    score.setExaminationId(answer.getExaminationId());
+                    score.setExamRecordId(answer.getExamRecordId());
+                    score.setUserId(answer.getUserId());
+                    // 查找考试信息
+                    Examination examination = new Examination();
+                    examination.setId(answer.getExaminationId());
+                    examination = examinationService.get(examination);
+                    if (examination != null)
+                        score.setExaminationName(examination.getExaminationName());
+                    score.setCourseId(answer.getCourseId());
+                    score.setScore(totalScore.toString());
+                    score.setCorrectNumber(correctNumber.toString());
+                    score.setInCorrectNumber(incorrectNumber.toString());
+                    scoreService.insert(score);
+                } else {
+                    // 更新成绩
+                    score.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+                    score.setScore(totalScore.toString());
+                    score.setCorrectNumber(correctNumber.toString());
+                    score.setInCorrectNumber(incorrectNumber.toString());
+                    scoreService.update(score);
+                }
                 // 保存错题
-                if (CollectionUtils.isNotEmpty(incorrectAnswers))
+                ExamRecord searchExamRecord = new ExamRecord();
+                searchExamRecord.setUserId(answer.getUserId());
+                searchExamRecord.setExaminationId(answer.getExaminationId());
+                searchExamRecord.setId(answer.getExamRecordId());
+                // 先删除之前的错题
+                incorrectAnswerService.deleteByExaminationRecord(searchExamRecord);
+                if (CollectionUtils.isNotEmpty(incorrectAnswers)) {
+                    // 批量插入
                     incorrectAnswerService.insertBatch(incorrectAnswers);
+                }
                 // 更新考试记录
                 ExamRecord examRecord = new ExamRecord();
                 examRecord.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());

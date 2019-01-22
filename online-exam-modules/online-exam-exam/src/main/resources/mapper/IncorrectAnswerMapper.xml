@@ -137,4 +137,10 @@
 			del_flag = 1
 		WHERE id = #{id}
     </delete>
+
+    <delete id="deleteByExaminationRecord">
+        UPDATE incorrect_answer SET
+        del_flag = 1
+        WHERE user_id = #{userId} and examination_id = #{examinationId} and exam_record_id = #{id}
+    </delete>
 </mapper>

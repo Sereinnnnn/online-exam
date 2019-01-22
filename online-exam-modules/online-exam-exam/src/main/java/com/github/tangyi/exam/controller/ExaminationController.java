@@ -47,7 +47,6 @@ public class ExaminationController extends BaseController {
      * 根据ID获取
      *
      * @param id         id
-     * @param timeFormat timeFormat
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:08
@@ -55,22 +54,14 @@ public class ExaminationController extends BaseController {
     @ApiOperation(value = "获取考试信息", notes = "根据考试id获取考试详细信息")
     @ApiImplicitParam(name = "id", value = "考试ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
-    public ReturnT<Examination> examination(@PathVariable String id, @RequestParam(required = false) String timeFormat) {
+    public ReturnT<Examination> examination(@PathVariable String id) {
         Examination examination = new Examination();
         if (StringUtils.isNotBlank(id)) {
             examination.setId(id);
             examination = examinationService.get(examination);
-            // 转换时间
-            if (examination != null && timeFormat != null) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                examination.setCurrentTime(System.currentTimeMillis() + "");
-                try {
-                    examination.setStartTime(format.parse(examination.getStartTime()).getTime() + "");
-                    examination.setEndTime(format.parse(examination.getEndTime()).getTime() + "");
-                } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
-                }
-            }
+            // 获取当前时间
+            if (examination != null)
+                examination.setCurrentTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         }
         return new ReturnT<>(examination);
     }
@@ -103,11 +94,13 @@ public class ExaminationController extends BaseController {
             Course course = new Course();
             course.setIds(courseIdSet.toArray(new String[courseIdSet.size()]));
             List<Course> courses = courseService.findListById(course);
+            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             page.getList().forEach(exam -> {
                 courses.forEach(tempCourse -> {
                     if (tempCourse.getId().equals(exam.getCourseId())) {
                         ExaminationDto examinationDto = new ExaminationDto(tempCourse);
                         BeanUtils.copyProperties(exam, examinationDto);
+                        examinationDto.setCurrentTime(currentTime);
                         examinationDtos.add(examinationDto);
                     }
                 });
