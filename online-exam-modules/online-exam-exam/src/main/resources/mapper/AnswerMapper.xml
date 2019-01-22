@@ -59,6 +59,16 @@
         WHERE a.id = #{id} and a.del_flag = 0
     </select>
 
+    <select id="getAnswer" resultMap="answerResultMap">
+        SELECT
+        <include refid="answerColumns"/>
+        FROM answer a
+        WHERE a.user_id = #{userId}
+        and a.examination_id = #{examinationId}
+        and a.exam_record_id = #{examRecordId}
+        and a.subject_id = #{subjectId}
+    </select>
+
     <select id="findList" resultMap="answerResultMap">
         SELECT
         <include refid="answerColumns"/>

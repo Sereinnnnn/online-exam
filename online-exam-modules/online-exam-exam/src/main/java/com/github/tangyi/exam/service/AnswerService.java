@@ -56,6 +56,17 @@ public class AnswerService extends CrudService<AnswerMapper, Answer> {
     }
 
     /**
+     * 根据用户ID、考试ID、考试记录ID、题目ID查找答题
+     * @param answer answer
+     * @return Answer
+     * @author tangyi
+     * @date 2019/01/21 19:41
+     */
+    public Answer getAnswer(Answer answer) {
+        return this.dao.getAnswer(answer);
+    }
+
+    /**
      * 更新答题
      *
      * @param answer answer

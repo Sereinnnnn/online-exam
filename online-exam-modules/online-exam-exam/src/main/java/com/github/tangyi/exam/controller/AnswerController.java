@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -138,12 +139,16 @@ public class AnswerController extends BaseController {
     @PostMapping("saveOrUpdate")
     public ReturnT<Boolean> saveOrUpdate(@RequestBody Answer answer) {
         boolean success;
-        if (answer.isNewRecord()) {
+        Answer search = new Answer();
+        BeanUtils.copyProperties(answer, search);
+        search = answerService.getAnswer(search);
+        if (search == null) {
             answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
             success = answerService.insert(answer) > 0;
         } else {
-            answer.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-            success = answerService.update(answer) > 0;
+            search.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+            search.setAnswer(answer.getAnswer());
+            success = answerService.update(search) > 0;
         }
         return new ReturnT<>(success);
     }
