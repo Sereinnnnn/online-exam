@@ -1,12 +1,20 @@
 package com.github.tangyi.exam.dto;
 
+import com.github.tangyi.common.persistence.BaseEntity;
+
 /**
  * 考试记录DTO
  *
  * @author tangyi
  * @date 2018-12-26 16:26
  */
-public class ExamRecordDto {
+public class ExamRecordDto extends BaseEntity<ExamRecordDto> {
+
+    /**
+     * 考生ID
+     */
+    private String userId;
+
     /**
      * 考试名称
      */
@@ -81,6 +89,21 @@ public class ExamRecordDto {
      * 备注
      */
     private String remark;
+
+    /**
+     * 考生名称
+     */
+    private String userName;
+
+    /**
+     * 部门名称
+     */
+    private String deptName;
+
+    /**
+     * 考试时间
+     */
+    private String examTime;
 
     public String getExaminationName() {
         return examinationName;
@@ -200,5 +223,37 @@ public class ExamRecordDto {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getExamTime() {
+        return examTime;
+    }
+
+    public void setExamTime(String examTime) {
+        this.examTime = examTime;
     }
 }

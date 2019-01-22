@@ -21,6 +21,11 @@ public class ExamRecord extends BaseEntity<ExamRecord> {
     private String examinationId;
 
     /**
+     * 考试名称
+     */
+    private String examinationName;
+
+    /**
      * 课程ID
      */
     private String courseId;
@@ -39,6 +44,16 @@ public class ExamRecord extends BaseEntity<ExamRecord> {
      * 成绩
      */
     private String score;
+
+    /**
+     * 错误题目数量
+     */
+    private String inCorrectNumber;
+
+    /**
+     * 正确题目数量
+     */
+    private String correctNumber;
 
     public String getUserId() {
         return userId;
@@ -86,5 +101,29 @@ public class ExamRecord extends BaseEntity<ExamRecord> {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getExaminationName() {
+        return examinationName;
+    }
+
+    public void setExaminationName(String examinationName) {
+        this.examinationName = examinationName;
+    }
+
+    public String getInCorrectNumber() {
+        return inCorrectNumber;
+    }
+
+    public void setInCorrectNumber(String inCorrectNumber) {
+        this.inCorrectNumber = inCorrectNumber;
+    }
+
+    public String getCorrectNumber() {
+        return correctNumber;
+    }
+
+    public void setCorrectNumber(String correctNumber) {
+        this.correctNumber = correctNumber;
     }
 }

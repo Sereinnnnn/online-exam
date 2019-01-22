@@ -5,10 +5,13 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="examination_id" property="examinationId"/>
+        <result column="examination_name" property="examinationName"/>
         <result column="course_id" property="courseId"/>
         <result column="start_time" property="startTime"/>
         <result column="end_time" property="endTime"/>
         <result column="score" property="score"/>
+        <result column="correct_number" property="correctNumber"/>
+        <result column="incorrect_number" property="inCorrectNumber"/>
         <result column="creator" property="creator"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
@@ -21,10 +24,13 @@
         a.id as "id",
         a.user_id,
         a.examination_id,
+        a.examination_name,
         a.course_id,
         a.start_time,
         a.end_time,
         a.score,
+        a.correct_number,
+        a.incorrect_number,
         a.creator,
         a.create_date,
         a.modifier,
@@ -83,10 +89,13 @@
             id,
             user_id,
             examination_id,
+            examination_name,
             course_id,
             start_time,
             end_time,
             score,
+            correct_number,
+            incorrect_number,
             creator,
             create_date,
             modifier,
@@ -97,10 +106,13 @@
             #{id},
             #{userId},
             #{examinationId},
+            #{examinationName},
             #{courseId},
             #{startTime},
             #{endTime},
             #{score},
+            #{correctNumber},
+            #{inCorrectNumber},
             #{creator},
             #{createDate},
             #{modifier},
@@ -118,6 +130,9 @@
         <if test="examinationId != null">
             examination_id = #{examinationId},
         </if>
+        <if test="examinationName != null">
+            examination_name = #{examinationName},
+        </if>
         <if test="courseId != null">
             course_id = #{courseId},
         </if>
@@ -129,6 +144,12 @@
         </if>
         <if test="score != null">
             score = #{score},
+        </if>
+        <if test="correctNumber != null">
+            correct_number = #{correctNumber},
+        </if>
+        <if test="inCorrectNumber != null">
+            incorrect_number = #{inCorrectNumber},
         </if>
         <if test="delFlag != null">
             del_flag = #{delFlag},
