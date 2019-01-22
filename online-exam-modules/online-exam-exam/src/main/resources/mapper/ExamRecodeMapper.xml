@@ -47,6 +47,9 @@
         <if test="examinationId != null and examinationId != ''">
             and a.examination_id = #{examinationId}
         </if>
+        <if test="examinationName != null and examinationName != ''">
+            and a.examination_name like CONCAT('%',#{examinationName},'%')
+        </if>
         <if test="courseId != null and courseId != ''">
             and a.course_id = #{courseId}
         </if>

@@ -122,15 +122,14 @@ public class ExamRecordController extends BaseController {
                             examRecordDto.setStartTime(tempExamRecord.getStartTime());
                             examRecordDto.setEndTime(tempExamRecord.getEndTime());
                             examRecordDto.setScore(tempExamRecord.getScore());
+                            examRecordDto.setUserId(tempExamRecord.getUserId());
                             examRecordDtoList.add(examRecordDto);
                         }
                     });
                 });
                 // 查询部门信息
                 Set<String> deptIdSet = new HashSet<>();
-                returnT.getData().forEach(tempUserVo -> {
-                    deptIdSet.add(tempUserVo.getDeptId());
-                });
+                returnT.getData().forEach(tempUserVo -> deptIdSet.add(tempUserVo.getDeptId()));
                 DeptVo deptVo = new DeptVo();
                 deptVo.setIds(deptIdSet.toArray(new String[deptIdSet.size()]));
                 ReturnT<List<DeptVo>> deptReturnT = deptService.findById(deptVo);
@@ -266,9 +265,7 @@ public class ExamRecordController extends BaseController {
                 List<ExamRecordDto> examRecordDtoList = new ArrayList<>();
                 // 查询考试信息
                 Set<String> examIdSet = new HashSet<>();
-                examRecordList.forEach(tempExamRecord -> {
-                    examIdSet.add(tempExamRecord.getExaminationId());
-                });
+                examRecordList.forEach(tempExamRecord -> examIdSet.add(tempExamRecord.getExaminationId()));
                 Examination examination = new Examination();
                 examination.setIds(examIdSet.toArray(new String[examIdSet.size()]));
                 List<Examination> examinations = examinationService.findListById(examination);
@@ -295,30 +292,26 @@ public class ExamRecordController extends BaseController {
                 if (returnT != null && CollectionUtils.isNotEmpty(returnT.getData())) {
                     // 查询部门信息
                     Set<String> deptIdSet = new HashSet<>();
-                    returnT.getData().forEach(tempUserVo -> {
-                        deptIdSet.add(tempUserVo.getDeptId());
-                    });
+                    returnT.getData().forEach(tempUserVo -> deptIdSet.add(tempUserVo.getDeptId()));
                     DeptVo deptVo = new DeptVo();
                     deptVo.setIds(deptIdSet.toArray(new String[deptIdSet.size()]));
                     ReturnT<List<DeptVo>> deptReturnT = deptService.findById(deptVo);
-                    examRecordDtoList.forEach(tempExamRecordDto -> {
-                        returnT.getData().forEach(tempUserVo -> {
-                            if (tempExamRecordDto.getUserId().equals(tempUserVo.getId())) {
-                                tempExamRecordDto.setUserName(tempUserVo.getName());
-                                // 查询部门信息
-                                if (deptReturnT != null && CollectionUtils.isNotEmpty(deptReturnT.getData())) {
-                                    deptReturnT.getData().forEach(tempDept -> {
-                                        // 设置所属部门名称
-                                        if (tempDept.getId().equals(tempUserVo.getDeptId()))
-                                            tempExamRecordDto.setDeptName(tempDept.getDeptName());
-                                    });
-                                }
+                    examRecordDtoList.forEach(tempExamRecordDto -> returnT.getData().forEach(tempUserVo -> {
+                        if (tempExamRecordDto.getUserId().equals(tempUserVo.getId())) {
+                            tempExamRecordDto.setUserName(tempUserVo.getName());
+                            // 查询部门信息
+                            if (deptReturnT != null && CollectionUtils.isNotEmpty(deptReturnT.getData())) {
+                                deptReturnT.getData().forEach(tempDept -> {
+                                    // 设置所属部门名称
+                                    if (tempDept.getId().equals(tempUserVo.getDeptId()))
+                                        tempExamRecordDto.setDeptName(tempDept.getDeptName());
+                                });
                             }
-                        });
-                    });
+                        }
+                    }));
                 }
                 // 导出
-                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(examRecordList), ExamRecordUtil.getExamRecordDtoMap());
+                ExcelToolUtil.exportExcel(request.getInputStream(), response.getOutputStream(), MapUtil.java2Map(examRecordDtoList), ExamRecordUtil.getExamRecordDtoMap());
             }
         } catch (Exception e) {
             logger.error("导出成绩数据失败！", e);
