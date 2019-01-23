@@ -73,10 +73,14 @@
 
     <select id="findList" resultMap="subjectBankResultMap">
         SELECT
-        <include refid="subjectBankColumns"/>
-        FROM subject_bank a
-        WHERE a.del_flag = 0
+        a.*
+        FROM (
+        SELECT f.id, f.category_id, f.serial_number, f.subject_name, f.type, f.content, f.option_a, f.option_b, f.option_c, f.option_d, f.option_e, f.option_f,
+        f.answer, f.score, f.analysis, f.level, f.creator, f.create_date, f.modifier, f.modify_date, f.del_flag, f.application_code, c.category_name
+        FROM subject_bank f LEFT JOIN subject_category c ON c.del_flag = 0 AND c.id = f.category_id
+        WHERE f.del_flag = 0
         <include refid="whereColumnList"/>
+        ) a
     </select>
 
     <insert id="insert">

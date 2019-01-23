@@ -42,7 +42,7 @@
 
 #### 系统架构
 
-![image](doc/images/framework.png)
+![image](doc/产品设计/系统架构图.png)
 
 #### 服务和端口
 
