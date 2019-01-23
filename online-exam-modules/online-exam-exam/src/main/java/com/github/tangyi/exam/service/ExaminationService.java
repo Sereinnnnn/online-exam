@@ -3,6 +3,8 @@ package com.github.tangyi.exam.service;
 import com.github.tangyi.common.service.CrudService;
 import com.github.tangyi.exam.mapper.ExaminationMapper;
 import com.github.tangyi.exam.module.Examination;
+import com.github.tangyi.exam.module.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class ExaminationService extends CrudService<ExaminationMapper, Examination> {
+
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * 查询考试
@@ -44,6 +49,12 @@ public class ExaminationService extends CrudService<ExaminationMapper, Examinati
     @Transactional
     @CacheEvict(value = "examination", key = "#examination.id")
     public int update(Examination examination) {
+        // 更新题目数量
+        Subject subject = new Subject();
+        subject.setExaminationId(examination.getId());
+        int totalSubject = subjectService.getExaminationTotalSubject(subject);
+        logger.debug("totalSubject:{}", totalSubject);
+        examination.setTotalSubject(String.valueOf(totalSubject));
         return super.update(examination);
     }
 

@@ -9,9 +9,11 @@ import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.dto.SubjectDto;
 import com.github.tangyi.exam.module.Answer;
 import com.github.tangyi.exam.module.ExamRecord;
+import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.module.Subject;
 import com.github.tangyi.exam.service.AnswerService;
 import com.github.tangyi.exam.service.ExamRecordService;
+import com.github.tangyi.exam.service.ExaminationService;
 import com.github.tangyi.exam.service.SubjectService;
 import com.github.tangyi.exam.utils.SubjectUtil;
 import com.google.common.net.HttpHeaders;
@@ -54,6 +56,9 @@ public class SubjectController extends BaseController {
 
     @Autowired
     private ExamRecordService examRecordService;
+
+    @Autowired
+    private ExaminationService examinationService;
 
     /**
      * 根据ID获取
@@ -106,8 +111,18 @@ public class SubjectController extends BaseController {
     @ApiImplicitParam(name = "subject", value = "题目实体subject", required = true, dataType = "Subject")
     @PostMapping
     public ReturnT<Boolean> addSubject(@RequestBody Subject subject) {
+        Assert.notNull(subject.getExaminationId(), CommonConstant.IllEGAL_ARGUMENT);
+        boolean success = false;
         subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-        return new ReturnT<>(subjectService.insert(subject) > 0);
+        if (subjectService.insert(subject) > 0) {
+            // 更新考试的题目数
+            Examination examination = new Examination();
+            examination.setId(subject.getExaminationId());
+            examination = examinationService.get(examination);
+            if (examination != null)
+                success = examinationService.update(examination) > 0;
+        }
+        return new ReturnT<>(success);
     }
 
     /**
@@ -145,7 +160,14 @@ public class SubjectController extends BaseController {
             subject = subjectService.get(subject);
             if (subject != null) {
                 subject.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
-                success = subjectService.delete(subject) > 0;
+                if (subjectService.delete(subject) > 0) {
+                    // 更新考试的题目数
+                    Examination examination = new Examination();
+                    examination.setId(subject.getExaminationId());
+                    examination = examinationService.get(examination);
+                    if (examination != null)
+                        success = examinationService.update(examination) > 0;
+                }
             }
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
@@ -199,6 +221,8 @@ public class SubjectController extends BaseController {
      */
     @RequestMapping("import")
     public ReturnT<Boolean> importSubject(String examinationId, MultipartFile file) {
+        boolean success = false;
+        Assert.notNull(examinationId, CommonConstant.IllEGAL_ARGUMENT);
         try {
             logger.debug("开始导入题目数据，分类ID：{}", examinationId);
             List<Subject> subjects = MapUtil.map2Java(Subject.class,
@@ -212,12 +236,18 @@ public class SubjectController extends BaseController {
                         subjectService.insert(subject);
                     }
                 }
+                // 更新考试的题目数
+                Examination examination = new Examination();
+                examination.setId(examinationId);
+                examination = examinationService.get(examination);
+                if (examination != null)
+                    success = examinationService.update(examination) > 0;
             }
             return new ReturnT<>(Boolean.TRUE);
         } catch (Exception e) {
             logger.error("导入题目数据失败！", e);
         }
-        return new ReturnT<>(Boolean.FALSE);
+        return new ReturnT<>(success);
     }
 
     /**
@@ -231,9 +261,23 @@ public class SubjectController extends BaseController {
     @PostMapping("deleteAll")
     public ReturnT<Boolean> deleteSubjects(@RequestBody SubjectDto subjectDto) {
         boolean success = false;
+        Assert.notNull(subjectDto.getIdString(), CommonConstant.IllEGAL_ARGUMENT);
         try {
-            if (StringUtils.isNotEmpty(subjectDto.getIdString()))
-                success = subjectService.deleteAll(subjectDto.getIdString().split(",")) > 0;
+            String[] subjectIds = subjectDto.getIdString().split(",");
+            success = subjectService.deleteAll(subjectIds) > 0;
+            Subject subject = new Subject();
+            subject.setIds(subjectIds);
+            List<Subject> subjectList = subjectService.findListById(subject);
+            if (CollectionUtils.isNotEmpty(subjectList)) {
+                subjectList.forEach(tempSubject -> {
+                    // 更新考试的题目数
+                    Examination examination = new Examination();
+                    examination.setId(tempSubject.getExaminationId());
+                    examination = examinationService.get(examination);
+                    if (examination != null)
+                        examinationService.update(examination);
+                });
+            }
         } catch (Exception e) {
             logger.error("删除题目失败！", e);
         }
@@ -243,9 +287,9 @@ public class SubjectController extends BaseController {
     /**
      * 查询题目和答题
      *
-     * @param serialNumber  serialNumber
-     * @param examRecordId  examRecordId
-     * @param userId        userId
+     * @param serialNumber serialNumber
+     * @param examRecordId examRecordId
+     * @param userId       userId
      * @return ReturnT
      * @author tangyi
      * @date 2019/01/16 22:25

@@ -22,4 +22,14 @@ public interface SubjectMapper extends CrudMapper<Subject> {
      * @date 2019/01/20 12:19
      */
     Subject getByExaminationIdAndSerialNumber(Subject subject);
+
+    /**
+     * 根据考试ID查询题目数
+     *
+     * @param subject subject
+     * @return int
+     * @author tangyi
+     * @date 2019/01/23 20:14
+     */
+    int getExaminationTotalSubject(Subject subject);
 }

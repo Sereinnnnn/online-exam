@@ -122,4 +122,9 @@ public class CommonConstant {
      * 阿里
      */
     public static final String ALIYUN_SMS = "aliyun_sms";
+
+    /**
+     * 参数校验失败
+     */
+    public static final String IllEGAL_ARGUMENT = "参数校验失败！";
 }

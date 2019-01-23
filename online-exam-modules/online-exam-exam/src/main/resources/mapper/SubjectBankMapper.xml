@@ -54,13 +54,13 @@
     <!-- where 条件 -->
     <sql id="whereColumnList">
         <if test="categoryId != null and categoryId != ''">
-            and a.category_id = #{categoryId}
+            and f.category_id = #{categoryId}
         </if>
         <if test="serialNumber != null and serialNumber != ''">
-            and a.serial_number = #{serialNumber}
+            and f.serial_number = #{serialNumber}
         </if>
         <if test="subjectName != null and subjectName != ''">
-            and a.subject_name like CONCAT('%',#{subjectName},'%')
+            and f.subject_name like CONCAT('%',#{subjectName},'%')
         </if>
     </sql>
 
