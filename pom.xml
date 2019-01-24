@@ -56,6 +56,7 @@
         <spring-boot-admin-server.version>1.5.7</spring-boot-admin-server.version>
         <spring-boot-admin-server-ui.version>1.5.7</spring-boot-admin-server-ui.version>
         <spring-boot-admin-server-ui-turbine.version>1.5.7</spring-boot-admin-server-ui-turbine.version>
+        <docker.maven.verion>0.4.12</docker.maven.verion>
     </properties>
 
     <!--公共依赖-->

@@ -55,6 +55,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        // 从数据库加载client
         JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
         clientDetailsService.setSelectClientDetailsSql(SecurityConstant.DEFAULT_SELECT_STATEMENT);
         clientDetailsService.setFindClientDetailsSql(SecurityConstant.DEFAULT_FIND_STATEMENT);
@@ -63,14 +64,17 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        // token增强配置
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(
-                Arrays.asList(tokenEnhancer(), jwtAccessTokenConverter()));
+        // 配置token增强和JwtAccessToken转换器
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), jwtAccessTokenConverter()));
         endpoints
+                // 将token存储到redis
                 .tokenStore(redisTokenStore())
+                // token增强
                 .tokenEnhancer(tokenEnhancerChain)
+                // 认证管理器
                 .authenticationManager(authenticationManager)
+                // refresh_token需要userDetailsService
                 .reuseRefreshTokens(false)
                 .userDetailsService(userDetailsService);
     }
@@ -97,13 +101,16 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public TokenStore redisTokenStore() {
+        // redis存储token
         RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
+        // exam前缀
         tokenStore.setPrefix(SecurityConstant.EXAM_PREFIX);
         return tokenStore;
     }
 
     @Bean
     public TokenEnhancer tokenEnhancer() {
+        // token增强，增加license和用户信息
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(2);
             additionalInfo.put("license", SecurityConstant.GITHUB_LICENSE);
