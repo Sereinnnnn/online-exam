@@ -1,6 +1,7 @@
 server:
   tomcat:
     max-threads: 10 # Maximum amount of worker threads.
+  port: 5001
 spring:
   application:
     name: online-exam-admin
@@ -8,10 +9,10 @@ spring:
     config:
       fail-fast: true
       discovery:
-        service-id: online-exam-config
+        service-id: ${CONFIG_HOST:online-exam-config}
         enabled: true
       profile: ${spring.profiles.active}
-      label: develop
+      label: test
 eureka:
   instance:
     prefer-ip-address: true
@@ -19,7 +20,7 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@localhost:8765/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
     registry-fetch-interval-seconds: 10
 logging:
   level:

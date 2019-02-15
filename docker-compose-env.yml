@@ -1,0 +1,40 @@
+version: '2'
+services:
+  # MySQL
+  online-exam-mysql:
+    image: mysql:5.7
+    volumes:
+      - data:/var/lib/mysql
+      # 自动执行初始化脚本
+      - ./doc/deploy/mysql:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: 11 # root账户的密码
+    restart: always
+    container_name: online-exam-mysql
+    ports:
+      - 3306:3306
+
+  # redis
+  online-exam-redis:
+    image: redis:5.0
+    ports:
+      - 6379:6379
+    restart: always
+    container_name: online-exam-redis
+    hostname: online-exam-redis
+
+  # rabbitMq
+  online-exam-rabbit-mq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  data:
+    driver: local

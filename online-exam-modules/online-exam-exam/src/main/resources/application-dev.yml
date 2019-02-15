@@ -18,7 +18,7 @@ spring:
       label: develop
   datasource:
         name: test
-        url: jdbc:mysql://192.168.0.144:3306/platform_test002?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://${MYSQL_HOST:192.168.0.144}:${MYSQL_PORT:3306}/platform_test002?useUnicode=true&characterEncoding=utf-8
         username: platform_test001
         password: 11
         type: com.alibaba.druid.pool.DruidDataSource
@@ -38,7 +38,7 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@localhost:8765/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
     registry-fetch-interval-seconds: 10
 management:
   security:
@@ -54,12 +54,12 @@ security:
     client:
       client-id: online-exam
       client-secret: online-exam
-      user-authorization-uri: http://localhost:3000/oauth/authorize
-      access-token-uri: http://localhost:3000/oauth/token
+      user-authorization-uri: http://${AUTH_HOST:localhost}:${AUTH_PORT:3000}/oauth/authorize
+      access-token-uri: http://${AUTH_HOST:localhost}:${AUTH_PORT:3000}/oauth/token
       scope: server
     resource:
       jwt:
-        key-uri: http://localhost:3000/oauth/token_key
+        key-uri: http://${AUTH_HOST:localhost}:${AUTH_PORT:3000}/oauth/token_key
 logging:
   level:
     com.github.tangyi: debug

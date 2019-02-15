@@ -1,0 +1,51 @@
+version: '2'
+services:
+  # 监控服务
+  online-exam-admin:
+    build:
+      context: ./
+      dockerfile: ./online-exam-monitor/online-exam-admin/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 5001:5001
+    environment:
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-admin
+    hostname: online-exam-admin
+    image: online-exam-admin
+
+  # zipkin服务
+  online-exam-zipkin:
+    build:
+      context: ./
+      dockerfile: ./online-exam-monitor/online-exam-zipkin/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 9411:9411
+    environment:
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-zipkin
+    hostname: online-exam-zipkin
+    image: online-exam-zipkin
+
+volumes:
+  data:
+    driver: local

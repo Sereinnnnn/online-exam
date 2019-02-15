@@ -1,6 +1,15 @@
-FROM java:8
-VOLUME /tmp
-ADD online-exam-config.jar app.jar
-RUN bash -c 'touch /app.jar'
-EXPOSE 8765
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+FROM anapsix/alpine-java:8_server-jre_unlimited
+
+MAINTAINER tangyi(1633736729@qq.com)
+
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+RUN mkdir -p /online-exam-config
+
+WORKDIR /online-exam-config
+
+EXPOSE 8888
+
+ADD online-exam-config.jar ./
+
+CMD java -Djava.security.egd=file:/dev/./urandom -jar -Xmn64m -Xms64m -Xmx64m online-exam-config.jar

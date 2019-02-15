@@ -13,7 +13,7 @@
     <parent>
         <artifactId>online-exam</artifactId>
         <groupId>com.github.tangyi</groupId>
-        <version>${online-exam.version}</version>
+        <version>0.1.0</version>
     </parent>
 
     <dependencies>
@@ -128,17 +128,6 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>${commons-collections4.version}</version>
-        </dependency>
-        <!-- TTL -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
-            <version>${ttl.version}</version>
         </dependency>
         <!--消息总线-->
         <dependency>

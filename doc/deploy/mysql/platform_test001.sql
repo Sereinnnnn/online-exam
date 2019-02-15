@@ -13,8 +13,15 @@ File Encoding         : 65001
 Date: 2019-01-23 10:06:05
 */
 
+DROP DATABASE IF EXISTS `platform_test001`;
+
+CREATE DATABASE  `platform_test001` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+SET NAMES utf8;
+
 SET FOREIGN_KEY_CHECKS=0;
 
+USE `platform_test001`;
 -- ----------------------------
 -- Table structure for sys_attachment
 -- ----------------------------

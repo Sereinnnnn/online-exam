@@ -25,13 +25,13 @@ spring:
       label: develop
   datasource:
         name: test
-        url: jdbc:mysql://192.168.0.144:3306/platform_test001?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://${MYSQL_HOST:192.168.0.144}:${MYSQL_PORT:3306}/platform_test001?useUnicode=true&characterEncoding=utf-8
         username: platform_test001
         password: 11
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
   zipkin:
-    base-url: http://localhost:9411/
+    base-url: http://${ZIPKIN_HOST:localhost}:${ZIPKIN_PORT:9411}/
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   configLocation: classpath:/mybatis-config.xml
@@ -47,7 +47,7 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@localhost:8765/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
     registry-fetch-interval-seconds: 10
 # fastDfs
 fdfs:

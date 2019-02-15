@@ -1,0 +1,36 @@
+version: '2'
+services:
+  # 注册中心
+  online-exam-eureka:
+    build:
+      context: ./
+      dockerfile: ./online-exam-eureka/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 8765:8765
+    container_name: online-exam-eureka
+    hostname: online-exam-eureka
+    image: online-exam-eureka
+
+#  # 配置中心
+  online-exam-config:
+    build:
+      context: ./
+      dockerfile: ./online-exam-config/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 8888:8888
+    depends_on:
+      - online-exam-eureka
+    links:
+      - online-exam-eureka:online-exam-eureka
+    environment:
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+    container_name: online-exam-config
+    hostname: online-exam-config
+    image: online-exam-config
+
+volumes:
+  data:
+    driver: local

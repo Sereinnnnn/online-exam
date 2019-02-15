@@ -1,0 +1,94 @@
+version: '2'
+services:
+  # 网关
+  online-exam-gateway:
+    build:
+      context: ./
+      dockerfile: ./online-exam-gateway/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 9999:9999
+    environment:
+      # 环境变量配置
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - AUTH_HOST=online-exam-auth
+      - AUTH_PORT=3000
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    # 启动顺序
+#    entrypoint: sh /wait-for-it.sh online-exam-auth:3000 -t 600 --
+#    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
+    container_name: online-exam-gateway
+    hostname: online-exam-gateway
+    image: online-exam-gateway
+
+  # 用户服务
+  online-exam-user:
+    build:
+      context: ./
+      dockerfile: ./online-exam-modules/online-exam-user/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 4000:4000
+    environment:
+      # 环境变量配置
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - AUTH_HOST=online-exam-auth
+      - AUTH_PORT=3000
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-user
+    hostname: online-exam-user
+    image: online-exam-user
+
+  # 考试服务
+  online-exam-exam:
+    build:
+      context: ./
+      dockerfile: ./online-exam-modules/online-exam-exam/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 35010:35010
+    environment:
+      # 环境变量配置
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - AUTH_HOST=online-exam-auth
+      - AUTH_PORT=3000
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-exam
+    hostname: online-exam-exam
+    image: online-exam-exam

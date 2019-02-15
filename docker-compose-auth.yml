@@ -1,0 +1,34 @@
+version: '2'
+services:
+  # 权限服务
+  online-exam-auth:
+    build:
+      context: ./
+      dockerfile: ./online-exam-auth/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+#    entrypoint: sh /wait-for-it.sh online-exam-config:8888 -t 600 --
+#    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
+    container_name: online-exam-auth
+    hostname: online-exam-auth
+    image: online-exam-auth
+
+volumes:
+  data:
+    driver: local

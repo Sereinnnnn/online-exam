@@ -10,7 +10,7 @@ spring:
       server:
         git:
           uri: https://gitee.com/wells2333/online-exam-config.git
-          default-label: master
+          default-label: test
 management:
   security:
     enabled: false
@@ -19,10 +19,11 @@ endpoints:
     sensitive: false
 eureka:
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 20
+    hostname: online-exam-config
   client:
     serviceUrl:
-      defaultZone: http://root:11@172.17.0.3:8765/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
     registry-fetch-interval-seconds: 10
