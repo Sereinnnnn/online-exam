@@ -1,5 +1,16 @@
 version: '2'
 services:
+  # online-exam-web
+  online-exam-web:
+    image: nginx
+    volumes:
+      # 挂载静态网页目录
+      - ../online-exam-web/dist/:/usr/share/nginx/html
+    container_name: online-exam-web
+    ports:
+      - 80:80
+    restart: always
+
   # MySQL
   online-exam-mysql:
     image: mysql:5.7
