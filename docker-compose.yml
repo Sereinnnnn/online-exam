@@ -14,236 +14,245 @@ services:
     ports:
       - 3306:3306
 
-#  # redis
-#  online-exam-redis:
-#    image: redis:5.0
-#    ports:
-#      - 6379:6379
-#    restart: always
-#    container_name: online-exam-redis
-#    hostname: online-exam-redis
-#
-#  # rabbitMq
-#  online-exam-rabbit-mq:
-#    image: rabbitmq:management-alpine
-#    container_name: rabbitmq
-#    environment:
-#      - RABBITMQ_DEFAULT_USER=admin
-#      - RABBITMQ_DEFAULT_PASS=admin
-#    restart: always
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#
-#  # 注册中心
-#  online-exam-eureka:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-eureka/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 8765:8765
-#    depends_on:
-#      - online-exam-mysql
-#      - online-exam-redis
-#      - online-exam-rabbit-mq
-#    container_name: online-exam-eureka
-#    hostname: online-exam-eureka
-#    image: online-exam-eureka
-#
-#  # 配置中心
-#  online-exam-config:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-config/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 8888:8888
-#    depends_on:
-#      - online-exam-eureka
-#    links:
-#      - online-exam-eureka:online-exam-eureka
-#    environment:
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#    container_name: online-exam-config
-#    hostname: online-exam-config
-#    image: online-exam-config
-#
-#  # 权限服务
-#  online-exam-auth:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-auth/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 3000:3000
-#    depends_on:
-#      - online-exam-eureka
-#      - online-exam-config
-#      - online-exam-rabbit-mq
-#    links:
-#      - online-exam-eureka:online-exam-eureka
-#      - online-exam-config:online-exam-config
-#    environment:
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#      - CONFIG_HOST=online-exam-config
-#      - CONFIG_PORT=8888
-#      - ZIPKIN_HOST=
-#      - ZIPKIN_PORT=
-#      - REDIS_HOST=online-exam-redis
-#      - REDIS_PORT=6379
-#      - MYSQL_HOST=online-exam-mysql
-#      - MYSQL_PORT=3306
-#      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-#      - RABBIT_MQ_PORT=5672
-#      - RABBIT_MQ_USERNAME=admin
-#      - RABBIT_MQ_PASSWORD=admin
-##    entrypoint: sh /wait-for-it.sh online-exam-config:8888 -t 600 --
-##    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
-#    container_name: online-exam-auth
-#    hostname: online-exam-auth
-#    image: online-exam-auth
-#
-#  # 网关
-#  online-exam-gateway:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-gateway/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 9999:9999
-#    environment:
-#      # 环境变量配置
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#      - CONFIG_HOST=online-exam-config
-#      - CONFIG_PORT=8888
-#      - AUTH_HOST=online-exam-auth
-#      - AUTH_PORT=3000
-#      - ZIPKIN_HOST=
-#      - ZIPKIN_PORT=
-#      - REDIS_HOST=online-exam-redis
-#      - REDIS_PORT=6379
-#      - MYSQL_HOST=online-exam-mysql
-#      - MYSQL_PORT=3306
-#      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-#      - RABBIT_MQ_PORT=5672
-#      - RABBIT_MQ_USERNAME=admin
-#      - RABBIT_MQ_PASSWORD=admin
-#    # 启动顺序
-##    entrypoint: sh /wait-for-it.sh online-exam-auth:3000 -t 600 --
-##    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
-#    container_name: online-exam-gateway
-#    hostname: online-exam-gateway
-#    image: online-exam-gateway
-#
-#  # 用户服务
-#  online-exam-user:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-modules/online-exam-user/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 4000:4000
-#    environment:
-#      # 环境变量配置
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#      - CONFIG_HOST=online-exam-config
-#      - CONFIG_PORT=8888
-#      - AUTH_HOST=online-exam-auth
-#      - AUTH_PORT=3000
-#      - ZIPKIN_HOST=
-#      - ZIPKIN_PORT=
-#      - REDIS_HOST=online-exam-redis
-#      - REDIS_PORT=6379
-#      - MYSQL_HOST=online-exam-mysql
-#      - MYSQL_PORT=3306
-#      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-#      - RABBIT_MQ_PORT=5672
-#      - RABBIT_MQ_USERNAME=admin
-#      - RABBIT_MQ_PASSWORD=admin
-#    container_name: online-exam-user
-#    hostname: online-exam-user
-#    image: online-exam-user
-#
-#  # 考试服务
-#  online-exam-exam:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-modules/online-exam-exam/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 35010:35010
-#    environment:
-#      # 环境变量配置
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#      - CONFIG_HOST=online-exam-config
-#      - CONFIG_PORT=8888
-#      - AUTH_HOST=online-exam-auth
-#      - AUTH_PORT=3000
-#      - ZIPKIN_HOST=
-#      - ZIPKIN_PORT=
-#      - REDIS_HOST=online-exam-redis
-#      - REDIS_PORT=6379
-#      - MYSQL_HOST=online-exam-mysql
-#      - MYSQL_PORT=3306
-#      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-#      - RABBIT_MQ_PORT=5672
-#      - RABBIT_MQ_USERNAME=admin
-#      - RABBIT_MQ_PASSWORD=admin
-#    container_name: online-exam-exam
-#    hostname: online-exam-exam
-#    image: online-exam-exam
-#
-#  # 监控服务
-#  online-exam-admin:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-monitor/online-exam-admin/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 5001:5001
-#    environment:
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#      - CONFIG_HOST=online-exam-config
-#      - CONFIG_PORT=8888
-#      - REDIS_HOST=online-exam-redis
-#      - REDIS_PORT=6379
-#      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-#      - RABBIT_MQ_PORT=5672
-#      - RABBIT_MQ_USERNAME=admin
-#      - RABBIT_MQ_PASSWORD=admin
-#    container_name: online-exam-admin
-#    hostname: online-exam-admin
-#    image: online-exam-admin
-#
-#  # zipkin服务
-#  online-exam-zipkin:
-#    build:
-#      context: ./
-#      dockerfile: ./online-exam-monitor/online-exam-zipkin/src/main/docker/Dockerfile
-#    restart: always
-#    ports:
-#      - 9411:9411
-#    environment:
-#      - EUREKA_HOST=online-exam-eureka
-#      - EUREKA_PORT=8765
-#      - CONFIG_HOST=online-exam-config
-#      - CONFIG_PORT=8888
-#      - REDIS_HOST=online-exam-redis
-#      - REDIS_PORT=6379
-#      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-#      - RABBIT_MQ_PORT=5672
-#      - RABBIT_MQ_USERNAME=admin
-#      - RABBIT_MQ_PASSWORD=admin
-#    container_name: online-exam-zipkin
-#    hostname: online-exam-zipkin
-#    image: online-exam-zipkin
+  # redis
+  online-exam-redis:
+    image: redis:5.0
+    ports:
+      - 6379:6379
+    restart: always
+    container_name: online-exam-redis
+    hostname: online-exam-redis
+
+  # rabbitMq
+  online-exam-rabbit-mq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # 注册中心
+  online-exam-eureka:
+    build:
+      context: ./
+      dockerfile: ./online-exam-eureka/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 8765:8765
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - online-exam-mysql
+      - online-exam-redis
+      - online-exam-rabbit-mq
+    container_name: online-exam-eureka
+    hostname: online-exam-eureka
+    image: online-exam-eureka
+
+  # 配置中心
+  online-exam-config:
+    build:
+      context: ./
+      dockerfile: ./online-exam-config/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 8888:8888
+    depends_on:
+      - online-exam-eureka
+    links:
+      - online-exam-eureka:online-exam-eureka
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+    container_name: online-exam-config
+    hostname: online-exam-config
+    image: online-exam-config
+
+  # 权限服务
+  online-exam-auth:
+    build:
+      context: ./
+      dockerfile: ./online-exam-auth/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - online-exam-eureka
+      - online-exam-config
+      - online-exam-rabbit-mq
+    links:
+      - online-exam-eureka:online-exam-eureka
+      - online-exam-config:online-exam-config
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+#    entrypoint: sh /wait-for-it.sh online-exam-config:8888 -t 600 --
+#    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
+    container_name: online-exam-auth
+    hostname: online-exam-auth
+    image: online-exam-auth
+
+  # 网关
+  online-exam-gateway:
+    build:
+      context: ./
+      dockerfile: ./online-exam-gateway/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 9999:9999
+    environment:
+      # 环境变量配置
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - AUTH_HOST=online-exam-auth
+      - AUTH_PORT=3000
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    # 启动顺序
+#    entrypoint: sh /wait-for-it.sh online-exam-auth:3000 -t 600 --
+#    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
+    container_name: online-exam-gateway
+    hostname: online-exam-gateway
+    image: online-exam-gateway
+
+  # 用户服务
+  online-exam-user:
+    build:
+      context: ./
+      dockerfile: ./online-exam-modules/online-exam-user/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 4000:4000
+    environment:
+      # 环境变量配置
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - AUTH_HOST=online-exam-auth
+      - AUTH_PORT=3000
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-user
+    hostname: online-exam-user
+    image: online-exam-user
+
+  # 考试服务
+  online-exam-exam:
+    build:
+      context: ./
+      dockerfile: ./online-exam-modules/online-exam-exam/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 35010:35010
+    environment:
+      # 环境变量配置
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - AUTH_HOST=online-exam-auth
+      - AUTH_PORT=3000
+      - ZIPKIN_HOST=
+      - ZIPKIN_PORT=
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - MYSQL_HOST=online-exam-mysql
+      - MYSQL_PORT=3306
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-exam
+    hostname: online-exam-exam
+    image: online-exam-exam
+
+  # 监控服务
+  online-exam-admin:
+    build:
+      context: ./
+      dockerfile: ./online-exam-monitor/online-exam-admin/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 5001:5001
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-admin
+    hostname: online-exam-admin
+    image: online-exam-admin
+
+  # zipkin服务
+  online-exam-zipkin:
+    build:
+      context: ./
+      dockerfile: ./online-exam-monitor/online-exam-zipkin/src/main/docker/Dockerfile
+    restart: always
+    ports:
+      - 9411:9411
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - EUREKA_HOST=online-exam-eureka
+      - EUREKA_PORT=8765
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8888
+      - REDIS_HOST=online-exam-redis
+      - REDIS_PORT=6379
+      - RABBIT_MQ_HOST=online-exam-rabbit-mq
+      - RABBIT_MQ_PORT=5672
+      - RABBIT_MQ_USERNAME=admin
+      - RABBIT_MQ_PASSWORD=admin
+    container_name: online-exam-zipkin
+    hostname: online-exam-zipkin
+    image: online-exam-zipkin
 volumes:
   data:
     driver: local

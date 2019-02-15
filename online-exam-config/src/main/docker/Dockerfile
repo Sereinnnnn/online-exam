@@ -12,4 +12,4 @@ EXPOSE 8888
 
 ADD online-exam-config.jar ./
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar -Xmn64m -Xms64m -Xmx64m online-exam-config.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=test -jar -Xmn64m -Xms64m -Xmx64m online-exam-config.jar

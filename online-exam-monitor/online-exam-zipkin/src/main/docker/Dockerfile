@@ -12,4 +12,4 @@ EXPOSE 9411
 
 ADD online-exam-zipkin.jar ./
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar online-exam-zipkin.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=test -jar online-exam-zipkin.jar

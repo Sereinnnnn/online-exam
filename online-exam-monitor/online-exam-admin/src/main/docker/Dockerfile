@@ -12,4 +12,4 @@ EXPOSE 5001
 
 ADD online-exam-admin.jar ./
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar online-exam-admin.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=test -jar online-exam-admin.jar

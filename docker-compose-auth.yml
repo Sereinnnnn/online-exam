@@ -9,6 +9,7 @@ services:
     ports:
       - 3000:3000
     environment:
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config
