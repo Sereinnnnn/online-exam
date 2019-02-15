@@ -12,4 +12,4 @@ EXPOSE 8765
 
 ADD online-exam-eureka.jar ./
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar -Xmn64m -Xms64m -Xmx64m online-exam-eureka.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=test -jar -Xmn64m -Xms64m -Xmx64m online-exam-eureka.jar

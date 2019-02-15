@@ -13,3 +13,6 @@ online-exam-gateway/target/
 online-exam-modules/online-exam-exam/target/
 online-exam-modules/online-exam-user/target/
 online-exam-zipkin/target/
+docker
+online-exam-monitor/online-exam-admin/target/
+online-exam-monitor/online-exam-zipkin/target/

@@ -10,6 +10,7 @@ services:
       - 9999:9999
     environment:
       # 环境变量配置
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config
@@ -43,6 +44,7 @@ services:
       - 4000:4000
     environment:
       # 环境变量配置
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config
@@ -73,6 +75,7 @@ services:
       - 35010:35010
     environment:
       # 环境变量配置
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config

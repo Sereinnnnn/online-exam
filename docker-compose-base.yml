@@ -8,6 +8,8 @@ services:
     restart: always
     ports:
       - 8765:8765
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
     container_name: online-exam-eureka
     hostname: online-exam-eureka
     image: online-exam-eureka
@@ -25,6 +27,7 @@ services:
     links:
       - online-exam-eureka:online-exam-eureka
     environment:
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
     container_name: online-exam-config

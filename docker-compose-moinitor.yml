@@ -9,6 +9,7 @@ services:
     ports:
       - 5001:5001
     environment:
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config
@@ -32,6 +33,7 @@ services:
     ports:
       - 9411:9411
     environment:
+      - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config

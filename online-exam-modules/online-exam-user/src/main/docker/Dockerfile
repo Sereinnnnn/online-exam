@@ -12,4 +12,4 @@ EXPOSE 4000
 
 ADD online-exam-user.jar ./
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar online-exam-user.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=test -jar online-exam-user.jar

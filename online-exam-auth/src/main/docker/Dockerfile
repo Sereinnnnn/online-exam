@@ -14,4 +14,4 @@ ADD online-exam-auth.jar ./
 
 ADD wait-for-it.sh /wait-for-it.sh
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar -Xmn64m -Xms64m -Xmx128m online-exam-auth.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=test -jar -Xmn64m -Xms64m -Xmx128m online-exam-auth.jar
