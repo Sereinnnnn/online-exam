@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: dev
   cloud:
     config:
       uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:8888}
