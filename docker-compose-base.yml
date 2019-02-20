@@ -2,9 +2,6 @@ version: '2'
 services:
   # 注册中心
   online-exam-eureka:
-    build:
-      context: ./
-      dockerfile: ./online-exam-eureka/src/main/docker/Dockerfile
     restart: always
     ports:
       - 8765:8765
@@ -12,13 +9,10 @@ services:
       - SPRING_PROFILES_ACTIVE=test
     container_name: online-exam-eureka
     hostname: online-exam-eureka
-    image: online-exam-eureka
+    image: tangyi/online-exam-eureka:0.1.0
 
 #  # 配置中心
   online-exam-config:
-    build:
-      context: ./
-      dockerfile: ./online-exam-config/src/main/docker/Dockerfile
     restart: always
     ports:
       - 8888:8888
@@ -32,7 +26,7 @@ services:
       - EUREKA_PORT=8765
     container_name: online-exam-config
     hostname: online-exam-config
-    image: online-exam-config
+    image: tangyi/online-exam-config:0.1.0
 
 volumes:
   data:

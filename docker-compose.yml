@@ -47,9 +47,6 @@ services:
 
   # 注册中心
   online-exam-eureka:
-    build:
-      context: ./
-      dockerfile: ./online-exam-eureka/src/main/docker/Dockerfile
     restart: always
     ports:
       - 8765:8765
@@ -61,13 +58,10 @@ services:
       - online-exam-rabbit-mq
     container_name: online-exam-eureka
     hostname: online-exam-eureka
-    image: online-exam-eureka
+    image: tangyi/online-exam-eureka:0.1.0
 
   # 配置中心
   online-exam-config:
-    build:
-      context: ./
-      dockerfile: ./online-exam-config/src/main/docker/Dockerfile
     restart: always
     ports:
       - 8888:8888
@@ -81,13 +75,10 @@ services:
       - EUREKA_PORT=8765
     container_name: online-exam-config
     hostname: online-exam-config
-    image: online-exam-config
+    image: tangyi/online-exam-config:0.1.0
 
   # 权限服务
   online-exam-auth:
-    build:
-      context: ./
-      dockerfile: ./online-exam-auth/src/main/docker/Dockerfile
     restart: always
     ports:
       - 3000:3000
@@ -118,13 +109,10 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
     container_name: online-exam-auth
     hostname: online-exam-auth
-    image: online-exam-auth
+    image: tangyi/online-exam-auth:0.1.0
 
   # 网关
   online-exam-gateway:
-    build:
-      context: ./
-      dockerfile: ./online-exam-gateway/src/main/docker/Dockerfile
     restart: always
     ports:
       - 9999:9999
@@ -152,13 +140,10 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
     container_name: online-exam-gateway
     hostname: online-exam-gateway
-    image: online-exam-gateway
+    image: tangyi/online-exam-gateway:0.1.0
 
   # 用户服务
   online-exam-user:
-    build:
-      context: ./
-      dockerfile: ./online-exam-modules/online-exam-user/src/main/docker/Dockerfile
     restart: always
     ports:
       - 4000:4000
@@ -183,13 +168,10 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-user
     hostname: online-exam-user
-    image: online-exam-user
+    image: tangyi/online-exam-user:0.1.0
 
   # 考试服务
   online-exam-exam:
-    build:
-      context: ./
-      dockerfile: ./online-exam-modules/online-exam-exam/src/main/docker/Dockerfile
     restart: always
     ports:
       - 35010:35010
@@ -214,13 +196,10 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-exam
     hostname: online-exam-exam
-    image: online-exam-exam
+    image: tangyi/online-exam-exam:0.1.0
 
   # 监控服务
   online-exam-admin:
-    build:
-      context: ./
-      dockerfile: ./online-exam-monitor/online-exam-admin/src/main/docker/Dockerfile
     restart: always
     ports:
       - 5001:5001
@@ -238,13 +217,10 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-admin
     hostname: online-exam-admin
-    image: online-exam-admin
+    image: tangyi/online-exam-admin:0.1.0
 
   # zipkin服务
   online-exam-zipkin:
-    build:
-      context: ./
-      dockerfile: ./online-exam-monitor/online-exam-zipkin/src/main/docker/Dockerfile
     restart: always
     ports:
       - 9411:9411
@@ -262,7 +238,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-zipkin
     hostname: online-exam-zipkin
-    image: online-exam-zipkin
+    image: tangyi/online-exam-zipkin:0.1.0
 volumes:
   data:
     driver: local
