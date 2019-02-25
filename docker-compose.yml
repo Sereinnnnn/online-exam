@@ -1,12 +1,34 @@
 version: '2'
 services:
+  # online-exam-web
+  online-exam-web:
+    image: tangyi/online-exam-web:0.1.0
+    volumes:
+      # 挂载nginx的配置文件
+      - ./deploy/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    container_name: online-exam-web
+    ports:
+      - 80:80
+    restart: always
+
+  # online-exam-ui
+  online-exam-ui:
+    image: tangyi/online-exam-ui:0.1.0
+    volumes:
+      # 挂载nginx的配置文件
+      - ./deploy/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    container_name: online-exam-ui
+    ports:
+      - 81:80
+    restart: always
+
   # MySQL
   online-exam-mysql:
     image: mysql:5.7
     volumes:
       - data:/var/lib/mysql
       # 自动执行初始化脚本
-      - ./doc/deploy/mysql:/docker-entrypoint-initdb.d/
+      - ./deploy/mysql:/docker-entrypoint-initdb.d/
     environment:
       MYSQL_ROOT_PASSWORD: 11 # root账户的密码
     restart: always
@@ -35,29 +57,44 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  # fastDfs-tracker
+  online-exam-fdfs-tracker:
+    image: morunchang/fastdfs
+    ports:
+      - 22122:22122
+    entrypoint: sh tracker.sh
+    hostname: online-exam-fdfs-tracker
+
+  # fastDfs-storage
+  online-exam-fdfs-storage:
+    build: ./deploy/fastDFS/storage
+    ports:
+      - 8088:8080
+      - 23000:23000
+    depends_on:
+      - online-exam-fdfs-tracker
+    volumes:
+      - ./deploy/fastDFS/data:/data/fast_data
+    environment:
+      GROUP_NAME: group1
+      TRACKER_IP: online-exam-fdfs-tracker:22122
+      LOG_LEVEL: debug
+    image: tangyi/online-exam-fdfs-storage:0.1.0
+    hostname: online-exam-fdfs-storage
+
   # 注册中心
   online-exam-eureka:
-    build:
-      context: ./
-      dockerfile: ./online-exam-eureka/src/main/docker/Dockerfile
     restart: always
     ports:
       - 8765:8765
     environment:
       - SPRING_PROFILES_ACTIVE=test
-    depends_on:
-      - online-exam-mysql
-      - online-exam-redis
-      - online-exam-rabbit-mq
     container_name: online-exam-eureka
     hostname: online-exam-eureka
-    image: online-exam-eureka
+    image: tangyi/online-exam-eureka:0.1.0
 
   # 配置中心
   online-exam-config:
-    build:
-      context: ./
-      dockerfile: ./online-exam-config/src/main/docker/Dockerfile
     restart: always
     ports:
       - 8888:8888
@@ -71,13 +108,10 @@ services:
       - EUREKA_PORT=8765
     container_name: online-exam-config
     hostname: online-exam-config
-    image: online-exam-config
+    image: tangyi/online-exam-config:0.1.0
 
   # 权限服务
   online-exam-auth:
-    build:
-      context: ./
-      dockerfile: ./online-exam-auth/src/main/docker/Dockerfile
     restart: always
     ports:
       - 3000:3000
@@ -108,13 +142,10 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
     container_name: online-exam-auth
     hostname: online-exam-auth
-    image: online-exam-auth
+    image: tangyi/online-exam-auth:0.1.0
 
   # 网关
   online-exam-gateway:
-    build:
-      context: ./
-      dockerfile: ./online-exam-gateway/src/main/docker/Dockerfile
     restart: always
     ports:
       - 9999:9999
@@ -142,13 +173,10 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
     container_name: online-exam-gateway
     hostname: online-exam-gateway
-    image: online-exam-gateway
+    image: tangyi/online-exam-gateway:0.1.0
 
   # 用户服务
   online-exam-user:
-    build:
-      context: ./
-      dockerfile: ./online-exam-modules/online-exam-user/src/main/docker/Dockerfile
     restart: always
     ports:
       - 4000:4000
@@ -171,15 +199,16 @@ services:
       - RABBIT_MQ_PORT=5672
       - RABBIT_MQ_USERNAME=admin
       - RABBIT_MQ_PASSWORD=admin
+      - FDFS_HOST=online-exam-fdfs-tracker
+      - FDFS_PORT=22122
+      - ATTACHMENT_HOST=http://b.yourdomain.cn
+      - ATTACHMENT_PORT=80
     container_name: online-exam-user
     hostname: online-exam-user
-    image: online-exam-user
+    image: tangyi/online-exam-user:0.1.0
 
   # 考试服务
   online-exam-exam:
-    build:
-      context: ./
-      dockerfile: ./online-exam-modules/online-exam-exam/src/main/docker/Dockerfile
     restart: always
     ports:
       - 35010:35010
@@ -204,37 +233,10 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-exam
     hostname: online-exam-exam
-    image: online-exam-exam
-
-  # 监控服务
-  online-exam-admin:
-    build:
-      context: ./
-      dockerfile: ./online-exam-monitor/online-exam-admin/src/main/docker/Dockerfile
-    restart: always
-    ports:
-      - 5001:5001
-    environment:
-      - SPRING_PROFILES_ACTIVE=test
-      - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
-      - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
-      - REDIS_HOST=online-exam-redis
-      - REDIS_PORT=6379
-      - RABBIT_MQ_HOST=online-exam-rabbit-mq
-      - RABBIT_MQ_PORT=5672
-      - RABBIT_MQ_USERNAME=admin
-      - RABBIT_MQ_PASSWORD=admin
-    container_name: online-exam-admin
-    hostname: online-exam-admin
-    image: online-exam-admin
+    image: tangyi/online-exam-exam:0.1.0
 
   # zipkin服务
   online-exam-zipkin:
-    build:
-      context: ./
-      dockerfile: ./online-exam-monitor/online-exam-zipkin/src/main/docker/Dockerfile
     restart: always
     ports:
       - 9411:9411
@@ -252,7 +254,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-zipkin
     hostname: online-exam-zipkin
-    image: online-exam-zipkin
+    image: tangyi/online-exam-zipkin:0.1.0
 volumes:
   data:
     driver: local

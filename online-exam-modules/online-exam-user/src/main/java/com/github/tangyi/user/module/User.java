@@ -24,6 +24,8 @@ public class User extends BaseEntity<User> {
 
     private String avatar;
 
+    private String avatarId;
+
     private String email;
 
     private String sex;
@@ -174,5 +176,13 @@ public class User extends BaseEntity<User> {
 
     public void setRole(List<String> role) {
         this.role = role;
+    }
+
+    public String getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(String avatarId) {
+        this.avatarId = avatarId;
     }
 }

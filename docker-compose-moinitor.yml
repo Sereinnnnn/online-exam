@@ -2,9 +2,6 @@ version: '2'
 services:
   # 监控服务
   online-exam-admin:
-    build:
-      context: ./
-      dockerfile: ./online-exam-monitor/online-exam-admin/src/main/docker/Dockerfile
     restart: always
     ports:
       - 5001:5001
@@ -22,13 +19,10 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-admin
     hostname: online-exam-admin
-    image: online-exam-admin
+    image: tangyi/online-exam-admin:0.1.0
 
   # zipkin服务
   online-exam-zipkin:
-    build:
-      context: ./
-      dockerfile: ./online-exam-monitor/online-exam-zipkin/src/main/docker/Dockerfile
     restart: always
     ports:
       - 9411:9411
@@ -46,7 +40,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-zipkin
     hostname: online-exam-zipkin
-    image: online-exam-zipkin
+    image: tangyi/online-exam-zipkin:0.1.0
 
 volumes:
   data:

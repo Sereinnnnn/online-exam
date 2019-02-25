@@ -2,9 +2,6 @@ version: '2'
 services:
   # 网关
   online-exam-gateway:
-    build:
-      context: ./
-      dockerfile: ./online-exam-gateway/src/main/docker/Dockerfile
     restart: always
     ports:
       - 9999:9999
@@ -32,13 +29,10 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
     container_name: online-exam-gateway
     hostname: online-exam-gateway
-    image: online-exam-gateway
+    image: tangyi/online-exam-gateway:0.1.0
 
   # 用户服务
   online-exam-user:
-    build:
-      context: ./
-      dockerfile: ./online-exam-modules/online-exam-user/src/main/docker/Dockerfile
     restart: always
     ports:
       - 4000:4000
@@ -61,15 +55,16 @@ services:
       - RABBIT_MQ_PORT=5672
       - RABBIT_MQ_USERNAME=admin
       - RABBIT_MQ_PASSWORD=admin
+      - FDFS_HOST=online-exam-fdfs-tracker
+      - FDFS_PORT=22122
+      - ATTACHMENT_HOST=http://b.yourdomain.cn
+      - ATTACHMENT_PORT=80
     container_name: online-exam-user
     hostname: online-exam-user
-    image: online-exam-user
+    image: tangyi/online-exam-user:0.1.0
 
   # 考试服务
   online-exam-exam:
-    build:
-      context: ./
-      dockerfile: ./online-exam-modules/online-exam-exam/src/main/docker/Dockerfile
     restart: always
     ports:
       - 35010:35010
@@ -94,4 +89,4 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-exam
     hostname: online-exam-exam
-    image: online-exam-exam
+    image: tangyi/online-exam-exam:0.1.0

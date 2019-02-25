@@ -40,7 +40,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>${docker.maven.verion}</version>
 				<configuration>
-					<imageName>${project.name}</imageName>
+					<imageName>tangyi/${project.name}:${project.version}</imageName>
 					<!-- 指定Dockerfile所在的路径 -->
 					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
 					<baseImage>java</baseImage>
