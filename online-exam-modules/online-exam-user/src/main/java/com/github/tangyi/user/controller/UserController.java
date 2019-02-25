@@ -7,6 +7,7 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.common.web.BaseController;
+import com.github.tangyi.user.config.UserConfig;
 import com.github.tangyi.user.constants.RoleConstant;
 import com.github.tangyi.user.dto.UserDto;
 import com.github.tangyi.user.dto.UserInfoDto;
@@ -61,6 +62,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private UserConfig userConfig;
 
     /**
      * 根据id获取
@@ -199,7 +203,7 @@ public class UserController extends BaseController {
             userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
         user.setPassword(encoder.encode(userDto.getPassword()));
         // 默认头像
-        user.setAvatar(CommonConstant.DEFAULT_AVATAR);
+        user.setAvatar(userConfig.getDefaultAvatar());
         // 保存用户
         return new ReturnT<>(userService.insert(user) > 0);
     }
@@ -384,6 +388,7 @@ public class UserController extends BaseController {
 
     /**
      * 注册
+     *
      * @param userDto userDto
      * @return ReturnT
      * @author tangyi
@@ -402,7 +407,7 @@ public class UserController extends BaseController {
             userDto.setPassword(CommonConstant.DEFAULT_PASSWORD);
         user.setPassword(encoder.encode(userDto.getPassword()));
         // 默认头像
-        user.setAvatar(CommonConstant.DEFAULT_AVATAR);
+        user.setAvatar(userConfig.getDefaultAvatar());
         // 保存用户
         if (userService.insert(user) > 0) {
             // 分配默认角色

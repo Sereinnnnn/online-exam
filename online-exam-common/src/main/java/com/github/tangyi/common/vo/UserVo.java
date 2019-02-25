@@ -43,6 +43,11 @@ public class UserVo extends BaseEntity<UserVo> {
     private String avatar;
 
     /**
+     * 头像对应的附件id
+     */
+    private String avatarId;
+
+    /**
      * 邮箱
      */
     private String email;
@@ -192,5 +197,13 @@ public class UserVo extends BaseEntity<UserVo> {
 
     public void setDeptId(String deptId) {
         this.deptId = deptId;
+    }
+
+    public String getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(String avatarId) {
+        this.avatarId = avatarId;
     }
 }

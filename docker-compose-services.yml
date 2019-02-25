@@ -55,6 +55,10 @@ services:
       - RABBIT_MQ_PORT=5672
       - RABBIT_MQ_USERNAME=admin
       - RABBIT_MQ_PASSWORD=admin
+      - FDFS_HOST=online-exam-fdfs-tracker
+      - FDFS_PORT=22122
+      - ATTACHMENT_HOST=http://b.yourdomain.cn
+      - ATTACHMENT_PORT=80
     container_name: online-exam-user
     hostname: online-exam-user
     image: tangyi/online-exam-user:0.1.0

@@ -18,3 +18,5 @@ online-exam-monitor/online-exam-admin/target/
 online-exam-monitor/online-exam-zipkin/target/
 deploy/nginx/online-exam-ui/dist/
 deploy/nginx/online-exam-web/dist/
+deploy/fastDFS/data/
+/online-exam-common/online-exam-common.iml

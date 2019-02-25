@@ -1,5 +1,65 @@
 version: '2'
 services:
+  # MySQL
+  online-exam-mysql:
+    image: mysql:5.7
+    volumes:
+      - data:/var/lib/mysql
+      # 自动执行初始化脚本
+      - ./deploy/mysql:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: 11 # root账户的密码
+    restart: always
+    container_name: online-exam-mysql
+    ports:
+      - 3306:3306
+
+  # redis
+  online-exam-redis:
+    image: redis:5.0
+    ports:
+      - 6379:6379
+    restart: always
+    container_name: online-exam-redis
+    hostname: online-exam-redis
+
+  # rabbitMq
+  online-exam-rabbit-mq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # fastDfs-tracker
+  online-exam-fdfs-tracker:
+    image: morunchang/fastdfs
+    ports:
+      - 22122:22122
+    entrypoint: sh tracker.sh
+    hostname: online-exam-fdfs-tracker
+
+  # fastDfs-storage
+  online-exam-fdfs-storage:
+    build: ./deploy/fastDFS/storage
+    ports:
+      - 8088:8080
+      - 23000:23000
+    depends_on:
+      - online-exam-fdfs-tracker
+    volumes:
+      - ./deploy/fastDFS/data:/data/fast_data
+    environment:
+      GROUP_NAME: group1
+      TRACKER_IP: online-exam-fdfs-tracker:22122
+      LOG_LEVEL: debug
+    image: tangyi/online-exam-fdfs-storage:0.1.0
+    hostname: online-exam-fdfs-storage
+
   # 注册中心
   online-exam-eureka:
     restart: always
@@ -11,7 +71,7 @@ services:
     hostname: online-exam-eureka
     image: tangyi/online-exam-eureka:0.1.0
 
-#  # 配置中心
+  # 配置中心
   online-exam-config:
     restart: always
     ports:
