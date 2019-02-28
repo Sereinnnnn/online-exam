@@ -2,7 +2,7 @@ version: '2'
 services:
   # online-exam-web
   online-exam-web:
-    image: tangyi/online-exam-web:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-web:0.1.0
     volumes:
       # 挂载nginx的配置文件
       - ./deploy/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
@@ -13,7 +13,7 @@ services:
 
   # online-exam-ui
   online-exam-ui:
-    image: tangyi/online-exam-ui:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-ui:0.1.0
     volumes:
       # 挂载nginx的配置文件
       - ./deploy/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
@@ -79,7 +79,7 @@ services:
       GROUP_NAME: group1
       TRACKER_IP: online-exam-fdfs-tracker:22122
       LOG_LEVEL: debug
-    image: tangyi/online-exam-fdfs-storage:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-fdfs-storage:0.1.0
     hostname: online-exam-fdfs-storage
 
   # 注册中心
@@ -91,7 +91,7 @@ services:
       - SPRING_PROFILES_ACTIVE=test
     container_name: online-exam-eureka
     hostname: online-exam-eureka
-    image: tangyi/online-exam-eureka:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-eureka:0.1.0
 
   # 配置中心
   online-exam-config:
@@ -108,7 +108,7 @@ services:
       - EUREKA_PORT=8765
     container_name: online-exam-config
     hostname: online-exam-config
-    image: tangyi/online-exam-config:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-config:0.1.0
 
   # 权限服务
   online-exam-auth:
@@ -142,7 +142,7 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
     container_name: online-exam-auth
     hostname: online-exam-auth
-    image: tangyi/online-exam-auth:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-auth:0.1.0
 
   # 网关
   online-exam-gateway:
@@ -173,7 +173,7 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
     container_name: online-exam-gateway
     hostname: online-exam-gateway
-    image: tangyi/online-exam-gateway:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-gateway:0.1.0
 
   # 用户服务
   online-exam-user:
@@ -201,11 +201,11 @@ services:
       - RABBIT_MQ_PASSWORD=admin
       - FDFS_HOST=online-exam-fdfs-tracker
       - FDFS_PORT=22122
-      - ATTACHMENT_HOST=http://b.yourdomain.cn
+      - ATTACHMENT_HOST=http://b.yourdomain.cn:8088
       - ATTACHMENT_PORT=80
     container_name: online-exam-user
     hostname: online-exam-user
-    image: tangyi/online-exam-user:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-user:0.1.0
 
   # 考试服务
   online-exam-exam:
@@ -233,7 +233,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-exam
     hostname: online-exam-exam
-    image: tangyi/online-exam-exam:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-exam:0.1.0
 
   # zipkin服务
   online-exam-zipkin:
@@ -254,7 +254,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-zipkin
     hostname: online-exam-zipkin
-    image: tangyi/online-exam-zipkin:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-zipkin:0.1.0
 volumes:
   data:
     driver: local

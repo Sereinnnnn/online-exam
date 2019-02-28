@@ -1,5 +1,7 @@
 version: '2'
 services:
+  registry: registry.cn-hangzhou.aliyuncs.com
+  namespace: online-exam
   # 监控服务
   online-exam-admin:
     restart: always
@@ -19,7 +21,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-admin
     hostname: online-exam-admin
-    image: tangyi/online-exam-admin:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-admin:0.1.0
 
   # zipkin服务
   online-exam-zipkin:
@@ -40,7 +42,7 @@ services:
       - RABBIT_MQ_PASSWORD=admin
     container_name: online-exam-zipkin
     hostname: online-exam-zipkin
-    image: tangyi/online-exam-zipkin:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-zipkin:0.1.0
 
 volumes:
   data:
