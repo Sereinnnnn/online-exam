@@ -61,13 +61,11 @@ fdfs:
     maxTotalPerKey: 30
     maxWaitMillis: 10000
   trackerList: ${FDFS_HOST:192.168.0.95}:${FDFS_PORT:22122}
-  # fastDfs的HTTP配置
-  http:
-    host: ${ATTACHMENT_HOST:http://192.168.0.95}:${ATTACHMENT_PORT:80}
-    zuulUploadUrl: zuul/admin/attachment/upload
 
-# 用户配置
-user:
+# 系统配置
+sys:
+  fdfsHttpHost: ${ATTACHMENT_HOST:http://192.168.0.95}:${ATTACHMENT_PORT:80}  # fastDfs的HTTP配置
+  zuulUploadUrl: zuul/admin/attachment/upload
   defaultAvatar: https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80
 
 logging:

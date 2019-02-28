@@ -96,14 +96,15 @@ public class ExaminationController extends BaseController {
             List<Course> courses = courseService.findListById(course);
             String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             page.getList().forEach(exam -> {
+                ExaminationDto examinationDto = new ExaminationDto();
+                BeanUtils.copyProperties(exam, examinationDto);
+                examinationDto.setCurrentTime(currentTime);
                 courses.forEach(tempCourse -> {
                     if (tempCourse.getId().equals(exam.getCourseId())) {
-                        ExaminationDto examinationDto = new ExaminationDto(tempCourse);
-                        BeanUtils.copyProperties(exam, examinationDto);
-                        examinationDto.setCurrentTime(currentTime);
-                        examinationDtos.add(examinationDto);
+                        examinationDto.setCourse(tempCourse);
                     }
                 });
+                examinationDtos.add(examinationDto);
             });
         }
         examinationDtoPageInfo.setList(examinationDtos);

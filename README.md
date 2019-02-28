@@ -59,6 +59,8 @@
 
 ![image](doc/images/image_web_incorrect_answer.png)
 
+![image](doc/images/image_web_practices.png)
+
 后台
 
 ![image](doc/images/image_admin_menu.png)
@@ -70,6 +72,12 @@
 ![image](doc/images/image_admin_subject.png)
 
 ![image](doc/images/image_admin_msg.png)
+
+#### 环境搭建
+
+[在线考试系统部署文档](doc/在线考试系统V0.1.0_部署文档.md)
+
+基于docker-compose部署（待补充）
 
 #### 后续
 

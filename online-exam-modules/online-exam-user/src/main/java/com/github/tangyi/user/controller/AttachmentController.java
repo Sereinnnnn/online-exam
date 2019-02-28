@@ -8,7 +8,6 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.utils.*;
 import com.github.tangyi.common.vo.AttachmentVo;
 import com.github.tangyi.common.web.BaseController;
-import com.github.tangyi.user.config.AttachmentConfig;
 import com.github.tangyi.user.module.Attachment;
 import com.github.tangyi.user.service.AttachmentService;
 import com.github.tangyi.user.service.FastDfsService;
@@ -51,9 +50,6 @@ public class AttachmentController extends BaseController {
 
     @Autowired
     private FastDfsService fastDfsService;
-
-    @Autowired
-    private AttachmentConfig attachmentConfig;
 
     /**
      * 根据ID获取
@@ -243,17 +239,5 @@ public class AttachmentController extends BaseController {
             returnT = new ReturnT<>(attachmentVoList);
         }
         return returnT;
-    }
-
-    /**
-     * 获取附件配置
-     *
-     * @return ReturnT
-     * @author tangyi
-     * @date 2019/2/24 20:17
-     */
-    @GetMapping("attachmentConfig")
-    public ReturnT<AttachmentConfig> attachmentConfig() {
-        return new ReturnT<>(attachmentConfig);
     }
 }

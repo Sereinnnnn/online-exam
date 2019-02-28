@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2019-02-15 11:16:18
+Date: 2019-02-28 22:01:22
 */
 
 DROP DATABASE IF EXISTS `platform_test002`;
@@ -48,8 +48,11 @@ CREATE TABLE `answer` (
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
+INSERT INTO `answer` VALUES ('018021d041964d269d2b421a007d722f', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', null, '4d654c576f534f349278806b046608d6', 'C', 'student', '2019-02-28 15:33:35', 'student', '2019-02-28 15:34:24', '0', 'EXAM');
 INSERT INTO `answer` VALUES ('3f0d4789b373404b98b78c60e83baaf2', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', null, 'e34926a94a4a4895817d7ea78aa63012', 'C', 'tangyi7', '2019-01-22 17:27:27', 'tangyi7', '2019-01-22 17:37:18', '0', 'EXAM');
 INSERT INTO `answer` VALUES ('44fdf520d4f44ab0ad75bee7e2a16c0f', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', null, '1a934e62942640459b3a66c05f6c09b2', 'C', 'tangyi7', '2019-01-22 17:29:17', 'tangyi7', '2019-01-22 17:29:17', '0', 'EXAM');
+INSERT INTO `answer` VALUES ('5befebfb0d6848e98e5caf60f15a505e', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', null, 'e34926a94a4a4895817d7ea78aa63012', 'C', 'student', '2019-02-28 15:33:33', 'student', '2019-02-28 15:34:22', '0', 'EXAM');
+INSERT INTO `answer` VALUES ('ee2a02497a04429d956174f099a2ddd0', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', null, '1a934e62942640459b3a66c05f6c09b2', 'C', 'student', '2019-02-28 15:33:38', 'student', '2019-02-28 15:34:25', '0', 'EXAM');
 INSERT INTO `answer` VALUES ('fe49216810e846c8aeb70d08cdd564b6', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', null, '4d654c576f534f349278806b046608d6', 'C', 'tangyi7', '2019-01-22 17:29:07', 'tangyi7', '2019-01-22 17:37:21', '0', 'EXAM');
 
 -- ----------------------------
@@ -75,9 +78,7 @@ CREATE TABLE `course` (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES ('2a6187239d7f48749da321aa6fd56424', '高等数学', '金融学院', '金融工程', '黄*东', '研究离散量的结构及其相互关系的数学学科', 'admin', '2018-11-12 19:39:24', 'admin', '2018-11-12 22:39:20', '1', 'EXAM');
-INSERT INTO `course` VALUES ('6a4ce4b624eb43a09eae4a824e5bd83c', '语文', '4', '4', '4', '语言和文化的综合科', 'admin', '2018-11-22 20:56:13', 'admin', '2018-12-04 21:26:18', '1', 'EXAM');
-INSERT INTO `course` VALUES ('6dcccd4639bc49b88810be1d30a77f92', '离散数学', '信息学院', '软件工程', '袁大头', '研究离散量的结构及其相互关系的数学学科', 'admin', '2018-11-12 22:31:28', 'admin', '2019-01-07 20:37:14', '0', 'EXAM');
+INSERT INTO `course` VALUES ('6dcccd4639bc49b88810be1d30a77f92', '测试课程', '测试学院', '测试专业', '陈老师', '测试课程', 'admin', '2018-11-12 22:31:28', 'admin', '2019-01-07 20:37:14', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for examination
@@ -95,6 +96,7 @@ CREATE TABLE `examination` (
   `total_subject` varchar(64) DEFAULT NULL COMMENT '题目数',
   `status` varchar(64) DEFAULT NULL COMMENT '考试状态',
   `avatar` varchar(255) DEFAULT NULL COMMENT '封面',
+  `avatar_id` varchar(255) DEFAULT NULL,
   `college_id` varchar(64) DEFAULT NULL COMMENT '学院',
   `major_id` varchar(64) DEFAULT NULL COMMENT '专业',
   `course_id` varchar(64) DEFAULT NULL COMMENT '课程',
@@ -111,10 +113,10 @@ CREATE TABLE `examination` (
 -- ----------------------------
 -- Records of examination
 -- ----------------------------
-INSERT INTO `examination` VALUES ('4f9ced28ffe64fcea57a7367e9fd4c0c', '离散数学', '2', '离散数学', '2019-01-03 00:00', '2019-01-11 00:00', '', '100', '0', '0', '1dadd14d55ed48f99eba3d0021ffb600', '信息学院', '软件工程', '6dcccd4639bc49b88810be1d30a77f92', '离散数学练习', 'admin', '2019-01-13 20:16:36', 'admin', '2019-01-23 20:24:29', '0', 'EXAM');
-INSERT INTO `examination` VALUES ('b5990bc1c48d49fcb0023de51772c309', '数学期末考试', '0', '期末考试', '2019-01-22 17:00', '2019-01-22 23:00', '', '150', '2', '0', 'c27ce9e094404eba8fd304c66a0fce41', '应用数学', '应用数学', '6dcccd4639bc49b88810be1d30a77f92', '期末考试', 'admin', '2018-11-20 22:48:40', 'admin', '2019-01-23 20:34:58', '0', 'EXAM');
-INSERT INTO `examination` VALUES ('f051f54621fc4812b929a7777a701712', '语文考试', '0', '语文考试', '2019-01-22 17:00', '2019-01-22 23:00', '', '150', '2', '0', '', '中文', '中文', '6a4ce4b624eb43a09eae4a824e5bd83c', '语文考试', 'admin', '2018-11-20 22:50:55', 'admin', '2019-01-23 20:22:39', '0', 'EXAM');
-INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '0', '文综历史试题', '2019-01-22 17:00', '2019-01-22 23:00', '', '100', '3', '0', '502ebfa8626f42bbb034f78596a47359', '文综历史试题', '文综历史试题', '6a4ce4b624eb43a09eae4a824e5bd83c', '文综历史试题', 'admin', '2018-11-12 20:25:38', 'admin', '2019-01-23 20:22:16', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('4f9ced28ffe64fcea57a7367e9fd4c0c', '离散数学', '2', '离散数学', '2019-01-03 00:00', '2019-01-11 00:00', '', '100', '0', '1', 'group1/M00/00/00/wKgAX1x3gGqABz6cAAZyO2yzEwA450.jpg', 'da4b5623e9754abbb07320d8def18fe7', '信息学院', '软件工程', '6dcccd4639bc49b88810be1d30a77f92', '离散数学练习', 'admin', '2019-01-13 20:16:36', 'admin', '2019-02-28 14:33:30', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('b5990bc1c48d49fcb0023de51772c309', '数学期末考试', '0', '期末考试', '2019-01-22 17:00', '2019-01-22 23:00', '', '150', '2', '1', 'group1/M00/00/00/wKgAX1x3gHWAa82wAAArtzxOXJ4599.jpg', '60df2d550bd9453a943122033a27fe72', '应用数学', '应用数学', '6dcccd4639bc49b88810be1d30a77f92', '期末考试', 'admin', '2018-11-20 22:48:40', 'admin', '2019-02-28 14:33:29', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('f051f54621fc4812b929a7777a701712', '语文考试', '0', '语文考试', '2019-01-22 17:00', '2019-01-22 23:00', '', '150', '2', '1', 'group1/M00/00/00/wKgAX1x3gIOAIVzXAABrb92CxLk678.jpg', '45d2ac58eb21436692e8cdbdd64291dd', '中文', '中文', '6dcccd4639bc49b88810be1d30a77f92', '语文考试', 'admin', '2018-11-20 22:50:55', 'admin', '2019-02-28 14:33:27', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '0', '文综历史试题', '2019-02-28 15:00', '2019-02-28 17:00', '', '100', '3', '0', 'group1/M00/00/00/wKgAX1x3f52AIE4IAADGq28ys0g361.jpg', 'a178c7b221524a89b44e884d8e3172cf', '文综历史试题', '文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '文综历史试题', 'admin', '2018-11-12 20:25:38', 'admin', '2019-02-28 14:33:32', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for exam_recode
@@ -143,7 +145,10 @@ CREATE TABLE `exam_recode` (
 -- ----------------------------
 -- Records of exam_recode
 -- ----------------------------
+INSERT INTO `exam_recode` VALUES ('220b2cece0834f359ab76ec42a888135', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '2019-02-28 15:31:54', '2019-02-28 15:34:28', '0', '0', '3', 'student', '2019-02-28 15:31:54', 'student', '2019-02-28 15:34:28', '0', 'EXAM');
+INSERT INTO `exam_recode` VALUES ('862b7fb039b24925b3ec6f90a5f2dd0e', '2', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '2019-02-28 15:18:58', null, null, null, null, 'admin', '2019-02-28 15:18:58', 'admin', '2019-02-28 15:18:58', '0', 'EXAM');
 INSERT INTO `exam_recode` VALUES ('f3eb89b5c12941399466676a7341bf3a', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', null, '2019-01-22 17:23:57', '2019-01-22 17:37:24', '0', '0', '3', 'tangyi7', '2019-01-22 17:23:57', 'tangyi7', '2019-01-22 17:37:24', '0', 'EXAM');
+INSERT INTO `exam_recode` VALUES ('f586d49aaf2c4a82b8de43b659d6c908', '2', '4f9ced28ffe64fcea57a7367e9fd4c0c', '离散数学', '6dcccd4639bc49b88810be1d30a77f92', '2019-02-28 14:50:24', null, null, null, null, 'admin', '2019-02-28 14:50:24', 'admin', '2019-02-28 14:50:24', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for incorrect_answer
@@ -169,13 +174,17 @@ CREATE TABLE `incorrect_answer` (
 -- ----------------------------
 -- Records of incorrect_answer
 -- ----------------------------
+INSERT INTO `incorrect_answer` VALUES ('010fc8da1a7148e8bb7e616d2d5554b8', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', 'e34926a94a4a4895817d7ea78aa63012', '1', 'C', 'student', '2019-02-28 15:34:28', 'student', '2019-02-28 15:34:28', '0', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('474736033b184374ad9c6046b2352f37', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', '4d654c576f534f349278806b046608d6', '2', 'C', 'tangyi7', '2019-01-22 17:37:24', 'tangyi7', '2019-01-22 17:37:24', '0', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('49f2f2313b5542379bb81cdc3c1e4cc8', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'tangyi7', '2019-01-22 17:36:02', 'tangyi7', '2019-01-22 17:36:02', '1', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('62ddd8c4d5134c2aa69a16483810f81e', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', 'e34926a94a4a4895817d7ea78aa63012', '1', 'C', 'tangyi7', '2019-01-22 17:36:13', 'tangyi7', '2019-01-22 17:36:13', '1', 'EXAM');
+INSERT INTO `incorrect_answer` VALUES ('6c2c1eea83204e8fb617cadd7ce346b2', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'student', '2019-02-28 15:34:28', 'student', '2019-02-28 15:34:28', '0', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('94e330c215d6497fabab39d0a1520a4f', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'tangyi7', '2019-01-22 17:37:24', 'tangyi7', '2019-01-22 17:37:24', '0', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('9cfc3052ae3c41028120c45f935664db', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', 'e34926a94a4a4895817d7ea78aa63012', '1', 'C', 'tangyi7', '2019-01-22 17:37:24', 'tangyi7', '2019-01-22 17:37:24', '0', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('a7b1b40205b24abc9d56d9ab96de7acc', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'tangyi7', '2019-01-22 17:36:13', 'tangyi7', '2019-01-22 17:36:13', '1', 'EXAM');
+INSERT INTO `incorrect_answer` VALUES ('ce9469020c2a4e7282fb5587475233a3', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'student', '2019-02-28 15:33:47', 'student', '2019-02-28 15:33:47', '1', 'EXAM');
 INSERT INTO `incorrect_answer` VALUES ('cf686f2a9eba4a02a01c222bb31a5767', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', 'f3eb89b5c12941399466676a7341bf3a', '1a934e62942640459b3a66c05f6c09b2', '3', 'C', 'tangyi7', '2019-01-22 17:29:57', 'tangyi7', '2019-01-22 17:29:57', '1', 'EXAM');
+INSERT INTO `incorrect_answer` VALUES ('f6bdf67b920744f7bb13f2551bb7469c', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '220b2cece0834f359ab76ec42a888135', '4d654c576f534f349278806b046608d6', '2', 'C', 'student', '2019-02-28 15:34:28', 'student', '2019-02-28 15:34:28', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for knowledge
