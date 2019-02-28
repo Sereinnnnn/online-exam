@@ -2,7 +2,7 @@ version: '2'
 services:
   # online-exam-web
   online-exam-web:
-    image: tangyi/online-exam-web:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-web:0.1.0
     volumes:
       # 挂载nginx的配置文件
       - ./deploy/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
@@ -13,7 +13,7 @@ services:
 
   # online-exam-ui
   online-exam-ui:
-    image: tangyi/online-exam-ui:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-ui:0.1.0
     volumes:
       # 挂载nginx的配置文件
       - ./deploy/nginx/conf/nginx.conf:/etc/nginx/nginx.conf

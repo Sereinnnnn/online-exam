@@ -64,6 +64,7 @@ fdfs:
   # fastDfs的HTTP配置
   http:
     host: ${ATTACHMENT_HOST:http://192.168.0.95}:${ATTACHMENT_PORT:80}
+    zuulUploadUrl: zuul/admin/attachment/upload
 
 # 用户配置
 user:

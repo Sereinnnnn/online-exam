@@ -57,7 +57,7 @@ services:
       GROUP_NAME: group1
       TRACKER_IP: online-exam-fdfs-tracker:22122
       LOG_LEVEL: debug
-    image: tangyi/online-exam-fdfs-storage:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-fdfs-storage:0.1.0
     hostname: online-exam-fdfs-storage
 
   # 注册中心
@@ -69,7 +69,7 @@ services:
       - SPRING_PROFILES_ACTIVE=test
     container_name: online-exam-eureka
     hostname: online-exam-eureka
-    image: tangyi/online-exam-eureka:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-eureka:0.1.0
 
   # 配置中心
   online-exam-config:
@@ -86,7 +86,7 @@ services:
       - EUREKA_PORT=8765
     container_name: online-exam-config
     hostname: online-exam-config
-    image: tangyi/online-exam-config:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-config:0.1.0
 
 volumes:
   data:

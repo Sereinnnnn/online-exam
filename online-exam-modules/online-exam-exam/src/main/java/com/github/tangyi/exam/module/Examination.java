@@ -66,6 +66,11 @@ public class Examination extends BaseEntity<Examination> {
     private String avatar;
 
     /**
+     * 封面对应的附件id
+     */
+    private String avatarId;
+
+    /**
      * 学院
      */
     private String collegeId;
@@ -203,5 +208,13 @@ public class Examination extends BaseEntity<Examination> {
 
     public void setTotalSubject(String totalSubject) {
         this.totalSubject = totalSubject;
+    }
+
+    public String getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(String avatarId) {
+        this.avatarId = avatarId;
     }
 }

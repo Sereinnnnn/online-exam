@@ -57,6 +57,8 @@
         <spring-boot-admin-server-ui.version>1.5.7</spring-boot-admin-server-ui.version>
         <spring-boot-admin-server-ui-turbine.version>1.5.7</spring-boot-admin-server-ui-turbine.version>
         <docker.maven.verion>0.4.12</docker.maven.verion>
+        <docker.registry>registry.cn-hangzhou.aliyuncs.com</docker.registry>
+        <docker.namespace>online-exam</docker.namespace>
     </properties>
 
     <!--公共依赖-->

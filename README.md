@@ -2,8 +2,13 @@
 
 #### 项目介绍
 
-利用业余时间重写毕设[spring-cloud-online-exam](https://gitee.com/wells2333/spring-cloud-online-exam)，采用前后端分离技术，前端通过token和后端接口交互。
-前端采用vue2.0，后端采用spring cloud，MySQL，Redis等技术。
+重写毕设[spring-cloud-online-exam](https://gitee.com/wells2333/spring-cloud-online-exam)
+
+采用前后端分离技术，前端通过token和后端接口交互。
+
+前端采用vue2.0，后端采用spring cloud、MySQL、Redis、rabbitMq等技术。
+
+访问地址：[在线考试](http://182.254.233.125)（没有部署后端，所以不能登录）
 
 #### 功能概述
 
@@ -34,7 +39,7 @@
 - 知识库：知识库增删改查、上传附件
 
 附件管理：项目的所有附件存储在fastDfs里，提供统一的管理入口
-- 附件列表：管理所有附件，如用户头像、考试附件等。
+- 附件列表：管理所有附件，如用户头像、考试附件、知识库附件等。
 
 个人管理：管理个人资料和修改密码
 - 个人资料：姓名、头像等基本信息的修改
@@ -44,66 +49,19 @@
 
 ![image](doc/产品设计/系统架构图.png)
 
-#### 服务和端口
-
-注册中心（online-exam-eureka）：8765
-
-配置中心（online-exam-config）：8888
-
-认证中心（online-exam-auth）：3000
-
-用户服务（online-exam-user）：4000
-
-考试服务（online-exam-exam）：35010
-
-网关（online-exam-gateway）：9999
-
-zipkin监控（online-exam-zipkin）：9411
-
-服务监控（online-exam-admin）：5001
-
-启动顺序：
-
-1. online-exam-config
-2. online-exam-eureka
-3. online-exam-auth
-4. online-exam-user
-5. online-exam-exam
-6. online-exam-gateway
-7. online-exam-zipkin
-8. online-exam-admin
-
-#### 问题反馈
-
-欢迎提交 issue，请写清楚遇到问题的原因，浏览器和操作系统环境，重现的流程。 如果有开发能力，建议在本地调试出出错的代码。
-
-不接受功能请求的issue，功能请求可能会被直接关闭，请谅解。
-
 #### 功能演示
 
 前台
-
-![image](doc/images/image_web_exam_all.png)
 
 ![image](doc/images/image_web_exam.png)
 
 ![image](doc/images/image_web_exam_card.png)
 
-![image](doc/images/image_web_exam_score.png)
-
 ![image](doc/images/image_web_incorrect_answer.png)
-
-![image](doc/images/image_web_exam_record.png)
 
 后台
 
-![image](doc/images/image_admin_login.png)
-
-![image](doc/images/image_admin.png)
-
 ![image](doc/images/image_admin_menu.png)
-
-![image](doc/images/image_admin_zipkin.png)
 
 ![image](doc/images/image_admin_exam.png)
 
@@ -111,10 +69,21 @@ zipkin监控（online-exam-zipkin）：9411
 
 ![image](doc/images/image_admin_subject.png)
 
-![image](doc/images/image_admin_attachment.png)
-
 ![image](doc/images/image_admin_msg.png)
 
 #### 后续
 
-继续完善
+- 完善业务功能
+- 容器化部署
+
+#### 问题反馈
+
+欢迎提交 issue，请写清楚遇到问题的原因，浏览器和操作系统环境，重现的流程。 
+
+如果有开发能力，建议在本地调试出出错的代码。
+
+***
+
+### 关于
+
+作者：1633736729@qq.com

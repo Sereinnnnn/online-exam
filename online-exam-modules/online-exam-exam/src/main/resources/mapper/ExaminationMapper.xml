@@ -13,6 +13,7 @@
         <result column="total_subject" property="totalSubject"/>
         <result column="status" property="status"/>
         <result column="avatar" property="avatar"/>
+        <result column="avatar_id" property="avatarId"/>
         <result column="college_id" property="collegeId"/>
         <result column="major_id" property="majorId"/>
         <result column="course_id" property="courseId"/>
@@ -37,6 +38,7 @@
         a.total_subject,
         a.status,
         a.avatar,
+        a.avatar_id,
         a.college_id,
         a.major_id,
         a.course_id,
@@ -103,6 +105,7 @@
             total_subject,
             status,
             avatar,
+            avatar_id,
             college_id,
             major_id,
             course_id,
@@ -125,6 +128,7 @@
             #{totalSubject},
             #{status},
             #{avatar},
+            #{avatarId},
             #{collegeId},
             #{majorId},
             #{courseId},
@@ -169,6 +173,9 @@
         </if>
         <if test="avatar != null">
             avatar = #{avatar},
+        </if>
+        <if test="avatarId != null">
+            avatar_id = #{avatarId},
         </if>
         <if test="collegeId != null">
             college_id = #{collegeId},

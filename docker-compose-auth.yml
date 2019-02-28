@@ -25,7 +25,7 @@ services:
 #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-auth.jar
     container_name: online-exam-auth
     hostname: online-exam-auth
-    image: tangyi/online-exam-auth:0.1.0
+    image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-auth:0.1.0
 
 volumes:
   data:

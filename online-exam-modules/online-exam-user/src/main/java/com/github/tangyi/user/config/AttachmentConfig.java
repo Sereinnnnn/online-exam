@@ -13,7 +13,15 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "fdfs.http")
 public class AttachmentConfig {
 
+    /**
+     * fastDfs服务器的HTTP地址
+     */
     private String host;
+
+    /**
+     * zuul上传地址
+     */
+    private String zuulUploadUrl;
 
     public String getHost() {
         return host;
@@ -21,5 +29,13 @@ public class AttachmentConfig {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getZuulUploadUrl() {
+        return zuulUploadUrl;
+    }
+
+    public void setZuulUploadUrl(String zuulUploadUrl) {
+        this.zuulUploadUrl = zuulUploadUrl;
     }
 }
