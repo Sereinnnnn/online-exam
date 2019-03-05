@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
  * @date 2018-09-14-19:24
  */
 @RestController
-@RequestMapping(value = "/code")
+@RequestMapping(value = "/api/v1/code")
 public class ValidateCodeController extends BaseController {
 
     @Autowired

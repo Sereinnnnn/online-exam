@@ -40,7 +40,7 @@ import java.util.*;
  * @date 2018-08-25-16:20
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/v1/user")
 public class UserController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);

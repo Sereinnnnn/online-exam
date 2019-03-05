@@ -26,7 +26,7 @@ import java.util.Map;
  * @date 2018/11/8 21:25
  */
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/api/v1/course")
 public class CourseController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);

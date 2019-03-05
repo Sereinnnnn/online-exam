@@ -42,7 +42,7 @@ import java.util.*;
  * @date 2018/11/8 21:27
  */
 @RestController
-@RequestMapping("/examRecord")
+@RequestMapping("/api/v1/examRecord")
 public class ExamRecordController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ExamRecordController.class);

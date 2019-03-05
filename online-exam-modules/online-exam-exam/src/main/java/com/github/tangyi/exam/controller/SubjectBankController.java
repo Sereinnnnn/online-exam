@@ -35,7 +35,7 @@ import java.util.*;
  * @date 2018/12/9 14:12
  */
 @RestController
-@RequestMapping("/subjectBank")
+@RequestMapping("/api/v1/subjectBank")
 public class SubjectBankController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(SubjectBankController.class);

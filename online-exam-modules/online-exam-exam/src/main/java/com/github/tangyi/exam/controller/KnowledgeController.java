@@ -31,7 +31,7 @@ import java.util.*;
  * @date 2019/1/1 15:11
  */
 @RestController
-@RequestMapping("/knowledge")
+@RequestMapping("/api/v1/knowledge")
 public class KnowledgeController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(KnowledgeController.class);

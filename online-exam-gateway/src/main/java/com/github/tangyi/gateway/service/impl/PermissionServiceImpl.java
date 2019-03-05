@@ -56,10 +56,8 @@ public class PermissionServiceImpl implements PermissionService {
             }
             // 如果是管理员角色，不校验权限
             for (SimpleGrantedAuthority grantedAuthority : grantedAuthorities) {
-                if (SysUtil.isAdmin(grantedAuthority.getAuthority())) {
-                    logger.debug("管理员，不校验权限.");
+                if (SysUtil.isAdmin(grantedAuthority.getAuthority()))
                     return true;
-                }
             }
 
             // 获取权限

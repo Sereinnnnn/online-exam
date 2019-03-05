@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-02-28 17:29
  */
 @RestController
-@RequestMapping("/sysConfig")
+@RequestMapping("/api/v1/sysConfig")
 public class SysConfigController extends BaseController {
 
     @Autowired

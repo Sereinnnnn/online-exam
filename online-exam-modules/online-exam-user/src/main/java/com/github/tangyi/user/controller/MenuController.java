@@ -33,7 +33,7 @@ import java.util.*;
  * @date 2018/8/26 22:48
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/api/v1/menu")
 public class MenuController extends BaseController {
 
     @Autowired

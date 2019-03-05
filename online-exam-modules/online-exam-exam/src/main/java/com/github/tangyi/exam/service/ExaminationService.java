@@ -87,4 +87,15 @@ public class ExaminationService extends CrudService<ExaminationMapper, Examinati
     public int deleteAll(String[] ids) {
         return super.deleteAll(ids);
     }
+
+    /**
+     * 查询考试数量
+     * @param examination examination
+     * @return int
+     * @author tangyi
+     * @date 2019/3/1 15:32
+     */
+    public int findExaminationCount(Examination examination) {
+        return this.dao.findExaminationCount(examination);
+    }
 }

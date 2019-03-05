@@ -31,7 +31,7 @@ import java.util.*;
  * @date 2018/11/8 21:28
  */
 @RestController
-@RequestMapping("/incorrectAnswer")
+@RequestMapping("/api/v1/incorrectAnswer")
 public class IncorrectAnswerController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(IncorrectAnswerController.class);

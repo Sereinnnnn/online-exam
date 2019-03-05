@@ -43,7 +43,7 @@ import java.util.Map;
  * @date 2018/11/8 21:29
  */
 @RestController
-@RequestMapping("/subject")
+@RequestMapping("/api/v1/subject")
 public class SubjectController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(SubjectController.class);

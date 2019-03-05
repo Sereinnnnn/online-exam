@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018-08-25-14:44
  */
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/api/v1/authentication")
 public class AuthenticationController extends BaseController {
 
     @Autowired

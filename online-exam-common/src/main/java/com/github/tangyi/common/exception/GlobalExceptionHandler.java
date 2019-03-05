@@ -1,5 +1,6 @@
 package com.github.tangyi.common.exception;
 
+import com.github.tangyi.common.model.ReturnT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String exception(Exception e) {
+    public ReturnT<?> exception(Exception e) {
         logger.info("保存全局异常信息 ex={}", e.getMessage(), e);
-        return e.getMessage();
+        return new ReturnT<>(e);
     }
 }

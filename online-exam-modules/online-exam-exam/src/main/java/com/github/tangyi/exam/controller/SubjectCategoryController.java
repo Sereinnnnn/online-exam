@@ -23,7 +23,7 @@ import java.util.*;
  * @date 2018/12/4 21:57
  */
 @RestController
-@RequestMapping("/subjectCategory")
+@RequestMapping("/api/v1/subjectCategory")
 public class SubjectCategoryController extends BaseController {
 
     @Autowired

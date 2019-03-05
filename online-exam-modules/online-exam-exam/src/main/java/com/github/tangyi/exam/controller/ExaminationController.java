@@ -32,7 +32,7 @@ import java.util.*;
  * @date 2018/11/8 21:26
  */
 @RestController
-@RequestMapping("/examination")
+@RequestMapping("/api/v1/examination")
 public class ExaminationController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ExaminationController.class);
@@ -46,7 +46,7 @@ public class ExaminationController extends BaseController {
     /**
      * 根据ID获取
      *
-     * @param id         id
+     * @param id id
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:08
@@ -194,5 +194,19 @@ public class ExaminationController extends BaseController {
             logger.error("删除考试失败！", e);
         }
         return new ReturnT<>(success);
+    }
+
+    /**
+     * 查询考试数量
+     *
+     * @return ReturnT
+     * @author tangyi
+     * @date 2019/3/1 15:30
+     */
+    @GetMapping("/examinationCount")
+    public ReturnT<Integer> examinationCount() {
+        Examination examination = new Examination();
+        examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        return new ReturnT<>(examinationService.findExaminationCount(examination));
     }
 }

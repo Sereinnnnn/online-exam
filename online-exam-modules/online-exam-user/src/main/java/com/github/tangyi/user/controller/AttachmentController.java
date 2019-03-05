@@ -39,7 +39,7 @@ import java.util.Map;
  * @date 2018/10/30 20:45
  */
 @RestController
-@RequestMapping("/attachment")
+@RequestMapping("/api/v1/attachment")
 public class AttachmentController extends BaseController {
 
     @Autowired

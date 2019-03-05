@@ -25,7 +25,7 @@ import java.util.Map;
  * @date 2018/11/8 21:24
  */
 @RestController
-@RequestMapping("/answer")
+@RequestMapping("/api/v1/answer")
 public class AnswerController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);

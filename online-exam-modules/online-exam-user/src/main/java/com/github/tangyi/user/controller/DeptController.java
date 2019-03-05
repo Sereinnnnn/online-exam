@@ -25,7 +25,7 @@ import java.util.*;
  * @date 2018/8/26 0026 22:49
  */
 @RestController
-@RequestMapping("/dept")
+@RequestMapping("/api/v1/dept")
 public class DeptController extends BaseController {
 
     @Autowired
