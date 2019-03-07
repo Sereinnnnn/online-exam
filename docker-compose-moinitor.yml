@@ -10,9 +10,10 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - REDIS_HOST=online-exam-redis
       - REDIS_PORT=6379
       - RABBIT_MQ_HOST=online-exam-rabbit-mq
@@ -34,6 +35,7 @@ services:
       - EUREKA_PORT=8765
       - CONFIG_HOST=online-exam-config
       - CONFIG_PORT=8888
+      - CONFIG_LABEL=test
       - REDIS_HOST=online-exam-redis
       - REDIS_PORT=6379
       - RABBIT_MQ_HOST=online-exam-rabbit-mq

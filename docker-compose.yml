@@ -86,9 +86,12 @@ services:
   online-exam-eureka:
     restart: always
     ports:
-      - 8765:8765
+      - 8761:8761
     environment:
       - SPRING_PROFILES_ACTIVE=test
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
     container_name: online-exam-eureka
     hostname: online-exam-eureka
     image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-eureka:0.1.0
@@ -97,7 +100,7 @@ services:
   online-exam-config:
     restart: always
     ports:
-      - 8888:8888
+      - 8769:8769
     depends_on:
       - online-exam-eureka
     links:
@@ -105,7 +108,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
     container_name: online-exam-config
     hostname: online-exam-config
     image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-config:0.1.0
@@ -114,7 +117,7 @@ services:
   online-exam-auth:
     restart: always
     ports:
-      - 3000:3000
+      - 8081:8081
     depends_on:
       - online-exam-eureka
       - online-exam-config
@@ -125,9 +128,10 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - ZIPKIN_HOST=
       - ZIPKIN_PORT=
       - REDIS_HOST=online-exam-redis
@@ -148,16 +152,17 @@ services:
   online-exam-gateway:
     restart: always
     ports:
-      - 9999:9999
+      - 8000:8000
     environment:
       # 环境变量配置
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - AUTH_HOST=online-exam-auth
-      - AUTH_PORT=3000
+      - AUTH_PORT=8081
       - ZIPKIN_HOST=
       - ZIPKIN_PORT=
       - REDIS_HOST=online-exam-redis
@@ -179,16 +184,17 @@ services:
   online-exam-user:
     restart: always
     ports:
-      - 4000:4000
+      - 8082:8082
     environment:
       # 环境变量配置
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - AUTH_HOST=online-exam-auth
-      - AUTH_PORT=3000
+      - AUTH_PORT=8081
       - ZIPKIN_HOST=
       - ZIPKIN_PORT=
       - REDIS_HOST=online-exam-redis
@@ -211,16 +217,17 @@ services:
   online-exam-exam:
     restart: always
     ports:
-      - 35010:35010
+      - 8083:8083
     environment:
       # 环境变量配置
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - AUTH_HOST=online-exam-auth
-      - AUTH_PORT=3000
+      - AUTH_PORT=8081
       - ZIPKIN_HOST=
       - ZIPKIN_PORT=
       - REDIS_HOST=online-exam-redis
@@ -243,9 +250,10 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - REDIS_HOST=online-exam-redis
       - REDIS_PORT=6379
       - RABBIT_MQ_HOST=online-exam-rabbit-mq

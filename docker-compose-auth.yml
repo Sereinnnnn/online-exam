@@ -4,13 +4,14 @@ services:
   online-exam-auth:
     restart: always
     ports:
-      - 3000:3000
+      - 8081:8081
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
       - CONFIG_HOST=online-exam-config
-      - CONFIG_PORT=8888
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
       - ZIPKIN_HOST=
       - ZIPKIN_PORT=
       - REDIS_HOST=online-exam-redis

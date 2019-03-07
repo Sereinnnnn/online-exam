@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8769
   tomcat:
     max-threads: 10 # 最大线程数
 spring:
@@ -10,7 +10,7 @@ spring:
       server:
         git:
           uri: ${CONFIG_URI:https://gitee.com/wells2333/online-exam-config.git} # 配置文件的Git地址
-          default-label: ${CONFIG_LABEl:develop}  # 配置文件的Git分支，默认develop分支
+          default-label: ${CONFIG_LABEL:develop}  # 配置文件的Git分支，默认develop分支
 management:
   security:
     enabled: false
@@ -24,5 +24,5 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
     registry-fetch-interval-seconds: 10

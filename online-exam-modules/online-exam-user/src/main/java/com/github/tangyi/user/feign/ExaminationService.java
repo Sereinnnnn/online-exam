@@ -19,6 +19,6 @@ public interface ExaminationService {
      *
      * @return ReturnT
      */
-    @GetMapping("/examination/examinationCount")
+    @GetMapping("/api/v1/examination/examinationCount")
     ReturnT<Integer> findExaminationCount();
 }

@@ -4,6 +4,9 @@ import com.github.tangyi.common.exception.CommonException;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.service.UserService;
 import com.google.code.kaptcha.Producer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import java.awt.image.BufferedImage;
  * @author tangyi
  * @date 2018-09-14-19:24
  */
+@Api("生成验证码")
 @RestController
 @RequestMapping(value = "/api/v1/code")
 public class ValidateCodeController extends BaseController {
@@ -40,6 +44,8 @@ public class ValidateCodeController extends BaseController {
      * @author tangyi
      * @date 2018/9/14 20:13
      */
+    @ApiOperation(value = "生成验证码", notes = "生成验证码")
+    @ApiImplicitParam(name = "random", value = "随机数", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{random}")
     public void produceCode(@PathVariable String random, HttpServletResponse response) throws Exception {
         if (StringUtils.isEmpty(random))

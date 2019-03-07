@@ -17,8 +17,7 @@ import com.github.tangyi.exam.service.ExaminationService;
 import com.github.tangyi.exam.service.SubjectService;
 import com.github.tangyi.exam.utils.SubjectUtil;
 import com.google.common.net.HttpHeaders;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -34,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 题目controller
@@ -42,6 +40,7 @@ import java.util.Map;
  * @author tangyi
  * @date 2018/11/8 21:29
  */
+@Api("题目信息管理")
 @RestController
 @RequestMapping("/api/v1/subject")
 public class SubjectController extends BaseController {
@@ -83,19 +82,33 @@ public class SubjectController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params  params
-     * @param subject subject
+     * @param pageNum  pageNum
+     * @param pageSize pageSize
+     * @param sort     sort
+     * @param order    order
+     * @param subject  subject
      * @return PageInfo
      * @author tangyi
      * @date 2018/11/10 21:43
      */
     @ApiOperation(value = "获取题目列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "subject", value = "题目信息", dataType = "Subject")
+    })
     @RequestMapping("subjectList")
-    public PageInfo<Subject> subjectList(@RequestParam Map<String, String> params, Subject subject) {
+    public PageInfo<Subject> subjectList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                         @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                         @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                         @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                         Subject subject) {
         PageInfo<Subject> page = new PageInfo<Subject>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         return subjectService.findPage(page, subject);
     }
 
@@ -182,6 +195,8 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/28 12:53
      */
+    @ApiOperation(value = "导出题目", notes = "根据分类id导出题目")
+    @ApiImplicitParam(name = "subjectDto", value = "题目信息", required = true, dataType = "SubjectDto")
     @PostMapping("/export")
     public void exportSubject(@RequestBody SubjectDto subjectDto, HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -219,8 +234,10 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/11/28 12:59
      */
+    @ApiOperation(value = "导入题目", notes = "导入题目")
+    @ApiImplicitParam(name = "examinationId", value = "考试ID", required = true, dataType = "String")
     @RequestMapping("import")
-    public ReturnT<Boolean> importSubject(String examinationId, MultipartFile file) {
+    public ReturnT<Boolean> importSubject(String examinationId, @ApiParam(value = "要上传的文件", required = true) MultipartFile file) {
         boolean success = false;
         Assert.notNull(examinationId, CommonConstant.IllEGAL_ARGUMENT);
         try {
@@ -258,6 +275,8 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2018/12/04 9:55
      */
+    @ApiOperation(value = "批量删除题目", notes = "根据题目id批量删除题目")
+    @ApiImplicitParam(name = "subjectDto", value = "题目信息", dataType = "SubjectDto")
     @PostMapping("deleteAll")
     public ReturnT<Boolean> deleteSubjects(@RequestBody SubjectDto subjectDto) {
         boolean success = false;
@@ -294,6 +313,12 @@ public class SubjectController extends BaseController {
      * @author tangyi
      * @date 2019/01/16 22:25
      */
+    @ApiOperation(value = "查询题目和答题", notes = "根据题目id查询题目和答题")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "serialNumber", value = "题目序号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "examRecordId", value = "考试记录ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "userId", value = "用户ID", dataType = "String")
+    })
     @GetMapping("subjectAnswer")
     public ReturnT<SubjectDto> subjectAnswer(@RequestParam("serialNumber") String serialNumber,
                                              @RequestParam("examRecordId") String examRecordId,

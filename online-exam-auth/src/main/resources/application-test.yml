@@ -1,18 +1,10 @@
 server:
-  port: 3000
+  port: 8081
   tomcat:
     max-threads: 10 # 最大线程数
 spring:
   application:
     name: online-exam-auth
-  cloud:
-    config:
-      fail-fast: true
-      discovery:
-        service-id: ${CONFIG_HOST:online-exam-config}
-        enabled: false
-      profile: ${spring.profiles.active}
-      label: test
   zipkin:
     base-url: http://${ZIPKIN_HOST:localhost}:${ZIPKIN_PORT:9411}/
 

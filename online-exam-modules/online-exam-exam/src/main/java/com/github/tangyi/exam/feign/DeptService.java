@@ -25,6 +25,6 @@ public interface DeptService {
      * @param deptVo deptVo
      * @return ReturnT
      */
-    @RequestMapping(value = "/dept/findById", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v1/dept/findById", method = RequestMethod.POST)
     ReturnT<List<DeptVo>> findById(@RequestBody DeptVo deptVo);
 }

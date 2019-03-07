@@ -25,7 +25,7 @@ public interface AttachmentService {
      * @author tangyi
      * @date 2019/01/01 20:44
      */
-    @DeleteMapping("/attachment/{id}")
+    @DeleteMapping("/api/v1/attachment/{id}")
     ReturnT<Boolean> delete(@PathVariable(value = "id") String id);
 
     /**
@@ -34,6 +34,6 @@ public interface AttachmentService {
      * @param attachmentVo attachmentVo
      * @return ReturnT
      */
-    @RequestMapping(value = "/attachment/findById", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v1/attachment/findById", method = RequestMethod.POST)
     ReturnT<List<AttachmentVo>> findById(@RequestBody AttachmentVo attachmentVo);
 }

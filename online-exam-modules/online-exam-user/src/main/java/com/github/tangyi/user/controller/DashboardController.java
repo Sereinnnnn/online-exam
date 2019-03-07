@@ -4,17 +4,20 @@ import com.github.tangyi.common.model.ReturnT;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.user.dto.DashboardDto;
 import com.github.tangyi.user.feign.ExaminationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 后台首页展示
+ * 后台首页数据展示
  *
  * @author tangyi
  * @date 2019-03-01 13:54
  */
+@Api("后台首页数据展示")
 @RestController
 @RequestMapping("/api/v1/dashboard")
 public class DashboardController extends BaseController {
@@ -30,6 +33,7 @@ public class DashboardController extends BaseController {
      * @author tangyi
      * @date 2019/3/1 13:55
      */
+    @ApiOperation(value = "后台首页数据展示", notes = "后台首页数据展示")
     @GetMapping
     @SuppressWarnings("unchecked")
     public ReturnT<DashboardDto> dashboard() {

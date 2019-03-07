@@ -13,8 +13,7 @@ import com.github.tangyi.exam.service.SubjectBankService;
 import com.github.tangyi.exam.service.SubjectCategoryService;
 import com.github.tangyi.exam.utils.SubjectBankUtil;
 import com.google.common.net.HttpHeaders;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -34,6 +33,7 @@ import java.util.*;
  * @author tangyi
  * @date 2018/12/9 14:12
  */
+@Api("题库信息管理")
 @RestController
 @RequestMapping("/api/v1/subjectBank")
 public class SubjectBankController extends BaseController {
@@ -69,19 +69,33 @@ public class SubjectBankController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params      params
+     * @param pageNum     pageNum
+     * @param pageSize    pageSize
+     * @param sort        sort
+     * @param order       order
      * @param subjectBank subjectBank
      * @return PageInfo
      * @author tangyi
      * @date 2018/12/9 14:13
      */
     @ApiOperation(value = "获取题库列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "subjectBank", value = "题库信息", dataType = "SubjectBank")
+    })
     @RequestMapping("subjectBankList")
-    public PageInfo<SubjectBank> subjectBankList(@RequestParam Map<String, String> params, SubjectBank subjectBank) {
+    public PageInfo<SubjectBank> subjectBankList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                                 @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                                 @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                                 @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                                 SubjectBank subjectBank) {
         PageInfo<SubjectBank> page = new PageInfo<>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         page = subjectBankService.findPage(page, subjectBank);
         if (CollectionUtils.isNotEmpty(page.getList())) {
             // 查询分类信息
@@ -171,6 +185,8 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:16
      */
+    @ApiOperation(value = "导出题目", notes = "根据分类id导出题目")
+    @ApiImplicitParam(name = "subjectBankDto", value = "分类信息", required = true, dataType = "SubjectBankDto")
     @PostMapping("/export")
     public void exportSubjectBank(@RequestBody SubjectBankDto subjectBankDto, HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -208,8 +224,10 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/9 14:19
      */
+    @ApiOperation(value = "导入题目", notes = "导入题目")
+    @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true, dataType = "String")
     @RequestMapping("/import")
-    public ReturnT<Boolean> importSubjectBank(String categoryId, MultipartFile file) {
+    public ReturnT<Boolean> importSubjectBank(String categoryId, @ApiParam(value = "要上传的文件", required = true) MultipartFile file) {
         try {
             logger.debug("开始导入题目数据，分类ID：{}", categoryId);
             List<SubjectBank> subjectBanks = MapUtil.map2Java(SubjectBank.class,
@@ -244,6 +262,8 @@ public class SubjectBankController extends BaseController {
      * @author tangyi
      * @date 2018/12/04 9:55
      */
+    @ApiOperation(value = "批量删除题目", notes = "根据题目id批量删除题目")
+    @ApiImplicitParam(name = "subjectBankDto", value = "题目信息", dataType = "SubjectBankDto")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteSubjectBanks(@RequestBody SubjectBankDto subjectBankDto) {
         boolean success = false;

@@ -9,7 +9,9 @@ import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Course;
 import com.github.tangyi.exam.service.CourseService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -17,14 +19,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 /**
  * 课程controller
  *
  * @author tangyi
  * @date 2018/11/8 21:25
  */
+@Api("课程信息管理")
 @RestController
 @RequestMapping("/api/v1/course")
 public class CourseController extends BaseController {
@@ -57,19 +58,33 @@ public class CourseController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params params
-     * @param course course
+     * @param pageNum  pageNum
+     * @param pageSize pageSize
+     * @param sort     sort
+     * @param order    order
+     * @param course   course
      * @return PageInfo
      * @author tangyi
      * @date 2018/11/10 21:30
      */
     @ApiOperation(value = "获取课程列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "course", value = "课程信息", dataType = "Course")
+    })
     @RequestMapping("courseList")
-    public PageInfo<Course> courseList(@RequestParam Map<String, String> params, Course course) {
-        PageInfo<Course> page = new PageInfo<Course>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+    public PageInfo<Course> courseList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                       @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                       @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                       @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                       Course course) {
+        PageInfo<Course> page = new PageInfo<>();
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         return courseService.findPage(page, course);
     }
 
@@ -140,6 +155,8 @@ public class CourseController extends BaseController {
      * @author tangyi
      * @date 2018/12/4 11:26
      */
+    @ApiOperation(value = "批量删除课程", notes = "根据课程id批量删除课程")
+    @ApiImplicitParam(name = "course", value = "课程信息", dataType = "Course")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllCourses(@RequestBody Course course) {
         boolean success = false;

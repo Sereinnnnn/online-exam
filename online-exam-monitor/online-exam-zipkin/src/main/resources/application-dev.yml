@@ -5,14 +5,6 @@ server:
 spring:
   application:
     name: online-exam-zipkin
-  cloud:
-    config:
-      fail-fast: true
-      discovery:
-        service-id: online-exam-config
-        enabled: true
-      profile: ${spring.profiles.active}
-      label: develop
 eureka:
   instance:
     prefer-ip-address: true
@@ -20,12 +12,12 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
     registry-fetch-interval-seconds: 10
 # 认证服务器地址
 security:
   auth:
-    server: http://${AUTH_HOST:localhost}:${AUTH_PORT:3000}
+    server: http://${AUTH_HOST:localhost}:${AUTH_PORT:8081}
 logging:
   level:
     com.github.tangyi: debug

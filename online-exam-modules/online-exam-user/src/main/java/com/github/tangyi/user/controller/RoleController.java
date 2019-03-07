@@ -14,7 +14,9 @@ import com.github.tangyi.user.service.DeptService;
 import com.github.tangyi.user.service.RoleDeptService;
 import com.github.tangyi.user.service.RoleMenuService;
 import com.github.tangyi.user.service.RoleService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 角色controller
@@ -32,6 +33,7 @@ import java.util.Map;
  * @author tangyi
  * @date 2018/8/26 0026 22:50
  */
+@Api("角色信息管理")
 @RestController
 @RequestMapping("/api/v1/role")
 public class RoleController extends BaseController {
@@ -71,19 +73,33 @@ public class RoleController extends BaseController {
     /**
      * 角色分页查询
      *
-     * @param params params
-     * @param role   role
+     * @param pageNum  pageNum
+     * @param pageSize pageSize
+     * @param sort     sort
+     * @param order    order
+     * @param role     role
      * @return PageInfo
      * @author tangyi
      * @date 2018/10/24 0024 下午 10:13
      */
     @ApiOperation(value = "获取角色列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "role", value = "角色信息", dataType = "Role")
+    })
     @RequestMapping("roleList")
-    public PageInfo<Role> userList(@RequestParam Map<String, String> params, Role role) {
+    public PageInfo<Role> userList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                   @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                   @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                   @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                   Role role) {
         PageInfo<Role> page = new PageInfo<Role>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         // 查询所属部门
         PageInfo<Role> pageInfo = roleService.findPage(page, role);
         if (CollectionUtils.isNotEmpty(pageInfo.getList())) {
@@ -162,6 +178,8 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/10/28 下午 2:20
      */
+    @ApiOperation(value = "更新角色菜单信息", notes = "更新角色菜单信息")
+    @ApiImplicitParam(name = "role", value = "角色实体role", required = true, dataType = "Role")
     @PutMapping("roleMenuUpdate")
     public ReturnT<Boolean> updateRoleMenu(@RequestBody Role role) {
         boolean success = false;
@@ -218,6 +236,8 @@ public class RoleController extends BaseController {
      * @author tangyi
      * @date 2018/12/4 10:00
      */
+    @ApiOperation(value = "批量删除角色", notes = "根据角色id批量删除角色")
+    @ApiImplicitParam(name = "role", value = "角色信息", dataType = "Role")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllRoles(@RequestBody Role role) {
         boolean success = false;

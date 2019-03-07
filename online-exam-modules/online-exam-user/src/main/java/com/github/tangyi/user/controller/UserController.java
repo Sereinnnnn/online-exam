@@ -17,8 +17,7 @@ import com.github.tangyi.user.module.UserRole;
 import com.github.tangyi.user.service.*;
 import com.github.tangyi.user.utils.UserUtils;
 import com.google.common.net.HttpHeaders;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -39,6 +38,7 @@ import java.util.*;
  * @author tangyi
  * @date 2018-08-25-16:20
  */
+@Api("用户信息管理")
 @RestController
 @RequestMapping(value = "/api/v1/user")
 public class UserController extends BaseController {
@@ -109,23 +109,38 @@ public class UserController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params params
-     * @param userVo userVo
+     * @param pageNum  pageNum
+     * @param pageSize pageSize
+     * @param sort     sort
+     * @param order    order
+     * @param userVo   userVo
      * @return PageInfo
      * @author tangyi
      * @date 2018/8/26 22:56
      */
     @ApiOperation(value = "获取用户列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "userVo", value = "用户信息", dataType = "UserVo")
+    })
     @RequestMapping("userList")
-    public PageInfo<User> userList(@RequestParam Map<String, String> params, UserVo userVo) {
-        PageInfo<User> page = new PageInfo<User>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+    public PageInfo<User> userList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                   @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                   @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                   @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                   @RequestParam(value = "username", required = false, defaultValue = "") String username,
+                                   UserVo userVo) {
+        PageInfo<User> page = new PageInfo<>();
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
         User user = new User();
         BeanUtils.copyProperties(userVo, user);
         // 用户名查询条件
-        user.setUsername(params.getOrDefault("username", ""));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+        user.setUsername(username);
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         page = userService.findPage(page, user);
         List<User> users = page.getList();
         if (CollectionUtils.isNotEmpty(users)) {
@@ -279,6 +294,8 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/11/26 22:11
      */
+    @ApiOperation(value = "导出用户", notes = "根据用户id导出用户")
+    @ApiImplicitParam(name = "userVo", value = "用户信息", required = true, dataType = "UserVo")
     @PostMapping("/export")
     public void exportUser(@RequestBody UserVo userVo, HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -314,8 +331,9 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/11/28 12:44
      */
+    @ApiOperation(value = "导入数据", notes = "导入数据")
     @RequestMapping("import")
-    public ReturnT<Boolean> importUser(MultipartFile file, HttpServletRequest request) {
+    public ReturnT<Boolean> importUser(@ApiParam(value = "要上传的文件", required = true) MultipartFile file, HttpServletRequest request) {
         try {
             logger.debug("开始导入用户数据");
             List<User> users = MapUtil.map2Java(User.class,
@@ -342,6 +360,8 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/12/4 9:58
      */
+    @ApiOperation(value = "批量删除用户", notes = "根据用户id批量删除用户")
+    @ApiImplicitParam(name = "user", value = "用户信息", dataType = "User")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllUsers(@RequestBody User user) {
         boolean success = false;
@@ -362,6 +382,8 @@ public class UserController extends BaseController {
      * @author tangyi
      * @date 2018/12/31 21:16
      */
+    @ApiOperation(value = "根据ID查询用户", notes = "根据ID查询用户")
+    @ApiImplicitParam(name = "userVo", value = "用户信息", required = true, paramType = "UserVo")
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     public ReturnT<List<UserVo>> findById(@RequestBody UserVo userVo) {
         ReturnT<List<UserVo>> returnT = null;
