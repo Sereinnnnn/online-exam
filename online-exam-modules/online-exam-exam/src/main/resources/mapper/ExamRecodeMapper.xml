@@ -82,7 +82,7 @@
         <include refid="examRecodeColumns"/>
         FROM exam_recode a
         WHERE a.id IN
-        <foreach collection="collection" index="index" item="item" open="(" separator="," close=")">
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>

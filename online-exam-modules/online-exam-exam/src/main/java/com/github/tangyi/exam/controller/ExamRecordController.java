@@ -19,7 +19,9 @@ import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.service.ExamRecordService;
 import com.github.tangyi.exam.service.ExaminationService;
 import com.github.tangyi.exam.utils.ExamRecordUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -41,8 +43,9 @@ import java.util.*;
  * @author tangyi
  * @date 2018/11/8 21:27
  */
+@Api("考试记录信息管理")
 @RestController
-@RequestMapping("/examRecord")
+@RequestMapping("/api/v1/examRecord")
 public class ExamRecordController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ExamRecordController.class);
@@ -82,18 +85,32 @@ public class ExamRecordController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params     params
+     * @param pageNum    pageNum
+     * @param pageSize   pageSize
+     * @param sort       sort
+     * @param order      order
      * @param examRecord examRecord
      * @return PageInfo
      * @author tangyi
      * @date 2018/11/10 21:33
      */
     @ApiOperation(value = "获取考试记录列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "examRecord", value = "考试记录信息", dataType = "ExamRecord")
+    })
     @RequestMapping("examRecordList")
-    public PageInfo<ExamRecordDto> examRecodeList(@RequestParam Map<String, String> params, ExamRecord examRecord) {
+    public PageInfo<ExamRecordDto> examRecodeList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                                  @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                                  @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                                  @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                                  ExamRecord examRecord) {
         PageInfo<ExamRecord> page = new PageInfo<ExamRecord>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
         PageInfo<ExamRecordDto> examRecordDtoPageInfo = new PageInfo<>();
         List<ExamRecordDto> examRecordDtoList = new ArrayList<>();
         // 查询考试记录
@@ -119,6 +136,7 @@ public class ExamRecordController extends BaseController {
                         if (tempExamRecord.getExaminationId().equals(tempExamination.getId())) {
                             ExamRecordDto examRecordDto = new ExamRecordDto();
                             BeanUtils.copyProperties(tempExamination, examRecordDto);
+                            examRecordDto.setId(tempExamRecord.getId());
                             examRecordDto.setStartTime(tempExamRecord.getStartTime());
                             examRecordDto.setEndTime(tempExamRecord.getEndTime());
                             examRecordDto.setScore(tempExamRecord.getScore());
@@ -239,6 +257,8 @@ public class ExamRecordController extends BaseController {
      * @author tangyi
      * @date 2018/12/31 22:28
      */
+    @ApiOperation(value = "导出考试成绩", notes = "根据成绩id导出成绩")
+    @ApiImplicitParam(name = "examRecordDto", value = "成绩信息", required = true, dataType = "ExamRecordDto")
     @PostMapping("/export")
     public void exportExamRecord(@RequestBody ExamRecordDto examRecordDto, HttpServletRequest request, HttpServletResponse response) {
         try {

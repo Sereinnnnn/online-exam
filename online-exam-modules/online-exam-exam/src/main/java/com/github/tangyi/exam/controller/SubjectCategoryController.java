@@ -8,6 +8,7 @@ import com.github.tangyi.exam.dto.SubjectCategoryDto;
 import com.github.tangyi.exam.module.SubjectCategory;
 import com.github.tangyi.exam.service.SubjectCategoryService;
 import com.xiaoleilu.hutool.collection.CollUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
@@ -22,8 +23,9 @@ import java.util.*;
  * @author tangyi
  * @date 2018/12/4 21:57
  */
+@Api("题库分类信息管理")
 @RestController
-@RequestMapping("/subjectCategory")
+@RequestMapping("/api/v1/subjectCategory")
 public class SubjectCategoryController extends BaseController {
 
     @Autowired
@@ -39,7 +41,7 @@ public class SubjectCategoryController extends BaseController {
     @ApiOperation(value = "获取分类列表")
     @GetMapping(value = "/categories")
     public List<SubjectCategoryDto> menus() {
-        // 查询所有菜单
+        // 查询所有分类
         Set<SubjectCategory> subjectCategorySet = new HashSet<SubjectCategory>(categoryService.findList(new SubjectCategory()));
         List<SubjectCategoryDto> subjectCategorySetTreeList = new ArrayList<SubjectCategoryDto>();
         subjectCategorySet.forEach(subjectCategory -> subjectCategorySetTreeList.add(new SubjectCategoryDto(subjectCategory)));

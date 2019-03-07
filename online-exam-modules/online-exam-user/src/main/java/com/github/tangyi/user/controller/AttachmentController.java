@@ -13,8 +13,7 @@ import com.github.tangyi.user.service.AttachmentService;
 import com.github.tangyi.user.service.FastDfsService;
 import com.github.tangyi.user.service.LogService;
 import com.google.common.net.HttpHeaders;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -30,16 +29,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * 附件管理
+ * 附件信息管理
  *
  * @author tangyi
  * @date 2018/10/30 20:45
  */
+@Api("附件信息管理")
 @RestController
-@RequestMapping("/attachment")
+@RequestMapping("/api/v1/attachment")
 public class AttachmentController extends BaseController {
 
     @Autowired
@@ -74,19 +73,33 @@ public class AttachmentController extends BaseController {
     /**
      * 分页查询
      *
-     * @param params     params
+     * @param pageNum    pageNum
+     * @param pageSize   pageSize
+     * @param sort       sort
+     * @param order      order
      * @param attachment attachment
      * @return PageInfo
      * @author tangyi
      * @date 2018/10/30 21:05
      */
-    @ApiOperation(value = "获取附件集合")
+    @ApiOperation(value = "获取附件列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "attachment", value = "附件信息", dataType = "Attachment")
+    })
     @RequestMapping("attachmentList")
-    public PageInfo<Attachment> userList(@RequestParam Map<String, String> params, Attachment attachment) {
-        PageInfo<Attachment> page = new PageInfo<Attachment>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+    public PageInfo<Attachment> userList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                         @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                         @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                         @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                         Attachment attachment) {
+        PageInfo<Attachment> page = new PageInfo<>();
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         return attachmentService.findPage(page, attachment);
     }
 
@@ -98,12 +111,19 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2018/10/30 21:54
      */
+    @ApiOperation(value = "上传文件", notes = "上传文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "busiType", value = "业务分类", dataType = "String"),
+            @ApiImplicitParam(name = "busiId", value = "业务Id", dataType = "String"),
+            @ApiImplicitParam(name = "busiModule", value = "业务模块", dataType = "String"),
+    })
     @RequestMapping("upload")
-    public ReturnT<Attachment> upload(@RequestParam("file") MultipartFile file, Attachment attachment, HttpServletRequest request) {
+    public ReturnT<Attachment> upload(@ApiParam(value = "要上传的文件", required = true) @RequestParam("file") MultipartFile file,
+                                      Attachment attachment, HttpServletRequest request) {
         long start = System.currentTimeMillis();
         logger.debug("{}", file.getName());
         if (file.isEmpty())
-            return new ReturnT<Attachment>(new Attachment());
+            return new ReturnT<>(new Attachment());
         InputStream inputStream = null;
         Attachment newAttachment = null;
         try {
@@ -140,6 +160,8 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2018/10/30 22:26
      */
+    @ApiOperation(value = "下载附件", notes = "根据ID下载附件")
+    @ApiImplicitParam(name = "id", value = "附件ID", required = true, dataType = "String")
     @RequestMapping("download")
     public void download(String id, HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isBlank(id))
@@ -203,6 +225,8 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2018/12/4 10:01
      */
+    @ApiOperation(value = "批量删除附件", notes = "根据附件id批量删除附件")
+    @ApiImplicitParam(name = "attachment", value = "附件信息", dataType = "Attachment")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllAttachments(@RequestBody Attachment attachment) {
         boolean success = false;
@@ -223,6 +247,8 @@ public class AttachmentController extends BaseController {
      * @author tangyi
      * @date 2019/01/01 22:16
      */
+    @ApiOperation(value = "批量查询附件信息", notes = "根据附件ID批量查询附件信息")
+    @ApiImplicitParam(name = "attachmentVo", value = "附件信息", dataType = "AttachmentVo")
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     public ReturnT<List<AttachmentVo>> findById(@RequestBody AttachmentVo attachmentVo) {
         ReturnT<List<AttachmentVo>> returnT = null;

@@ -64,9 +64,12 @@ services:
   online-exam-eureka:
     restart: always
     ports:
-      - 8765:8765
+      - 8761:8761
     environment:
       - SPRING_PROFILES_ACTIVE=test
+      - CONFIG_HOST=online-exam-config
+      - CONFIG_PORT=8769
+      - CONFIG_LABEL=test
     container_name: online-exam-eureka
     hostname: online-exam-eureka
     image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-eureka:0.1.0
@@ -75,7 +78,7 @@ services:
   online-exam-config:
     restart: always
     ports:
-      - 8888:8888
+      - 8769:8769
     depends_on:
       - online-exam-eureka
     links:
@@ -83,7 +86,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - EUREKA_HOST=online-exam-eureka
-      - EUREKA_PORT=8765
+      - EUREKA_PORT=8761
     container_name: online-exam-config
     hostname: online-exam-config
     image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-config:0.1.0

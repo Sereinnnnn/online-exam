@@ -1,5 +1,6 @@
 package com.github.tangyi.user.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.tangyi.common.constants.CommonConstant;
 import com.github.tangyi.common.model.ReturnT;
@@ -13,8 +14,7 @@ import com.github.tangyi.user.service.MenuService;
 import com.github.tangyi.user.utils.MenuUtil;
 import com.google.common.net.HttpHeaders;
 import com.xiaoleilu.hutool.collection.CollUtil;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,9 @@ import java.util.*;
  * @author tangyi
  * @date 2018/8/26 22:48
  */
+@Api("菜单信息管理")
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/api/v1/menu")
 public class MenuController extends BaseController {
 
     @Autowired
@@ -47,7 +48,7 @@ public class MenuController extends BaseController {
      *
      * @return 当前用户的树形菜单
      */
-    @ApiOperation(value = "获取当前用户的树形菜单")
+    @ApiOperation(value = "获取当前用户的菜单列表")
     @GetMapping(value = "/userMenu")
     public List<MenuDto> userMenu() {
         // 查询菜单
@@ -85,7 +86,7 @@ public class MenuController extends BaseController {
      *
      * @return 树形菜单集合
      */
-    @ApiOperation(value = "获取树形菜单集合")
+    @ApiOperation(value = "获取树形菜单列表")
     @GetMapping(value = "/menus")
     public List<MenuDto> menus() {
         // 查询所有菜单
@@ -166,19 +167,34 @@ public class MenuController extends BaseController {
     /**
      * 获取菜单分页列表
      *
-     * @param params params
-     * @param Menu   Menu
+     * @param pageNum  pageNum
+     * @param pageSize pageSize
+     * @param sort     sort
+     * @param order    order
+     * @param menu     menu
      * @return PageInfo
      * @author tangyi
      * @date 2018/8/26 23:17
      */
     @ApiOperation(value = "获取菜单列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "Menu", value = "菜单信息", dataType = "Menu")
+    })
     @RequestMapping("/menuList")
-    public PageInfo<Menu> menuList(@RequestParam Map<String, String> params, Menu Menu) {
+    public PageInfo<Menu> menuList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                   @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                   @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                   @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                   Menu menu) {
         PageInfo<Menu> page = new PageInfo<Menu>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        return menuService.findPage(page, Menu);
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
+        return menuService.findPage(page, menu);
     }
 
     /**
@@ -219,6 +235,8 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/11/28 12:46
      */
+    @ApiOperation(value = "导出菜单", notes = "根据菜单id导出菜单")
+    @ApiImplicitParam(name = "menuVo", value = "菜单信息", required = true, dataType = "MenuVo")
     @PostMapping("/export")
     public void exportMenu(@RequestBody MenuVo menuVo, HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -256,8 +274,9 @@ public class MenuController extends BaseController {
      * @author tangyi
      * @date 2018/11/28 12:51
      */
+    @ApiOperation(value = "导入菜单", notes = "导入菜单")
     @RequestMapping("import")
-    public ReturnT<Boolean> importMenu(MultipartFile file, HttpServletRequest request) {
+    public ReturnT<Boolean> importMenu(@ApiParam(value = "要上传的文件", required = true) MultipartFile file, HttpServletRequest request) {
         try {
             logger.debug("开始导入菜单数据");
             List<Menu> menus = MapUtil.map2Java(Menu.class,

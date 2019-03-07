@@ -1,18 +1,10 @@
 server:
-  port: 3000
+  port: 8081
   tomcat:
     max-threads: 10 # 最大线程数
 spring:
   application:
     name: online-exam-auth
-  cloud:
-    config:
-      fail-fast: true
-      discovery:
-        service-id: ${CONFIG_HOST:online-exam-config}
-        enabled: true
-      profile: ${spring.profiles.active}
-      label: develop
   zipkin:
     base-url: http://${ZIPKIN_HOST:localhost}:${ZIPKIN_PORT:9411}/
 
@@ -23,7 +15,7 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
     registry-fetch-interval-seconds: 10
 logging:
   level:

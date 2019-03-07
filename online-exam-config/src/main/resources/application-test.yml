@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8769
   tomcat:
     max-threads: 10 # 最大线程数
 spring:
@@ -25,5 +25,5 @@ eureka:
     hostname: online-exam-config
   client:
     serviceUrl:
-      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
     registry-fetch-interval-seconds: 10

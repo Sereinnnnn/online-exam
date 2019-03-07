@@ -1,5 +1,5 @@
 server:
-  port: 4000
+  port: 8082
   tomcat:
     max-threads: 10 # Maximum amount of worker threads.
     min-spare-threads: 5 # Minimum amount of worker threads
@@ -15,14 +15,6 @@ spring:
       charset: utf-8
       force: true
       enabled: true
-  cloud:
-    config:
-      fail-fast: true
-      discovery:
-        service-id: online-exam-config
-        enabled: true
-      profile: ${spring.profiles.active}
-      label: test
   datasource:
         name: test
         url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/platform_test001?useUnicode=true&characterEncoding=utf-8
@@ -47,7 +39,7 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
     registry-fetch-interval-seconds: 10
 # fastDfs
 fdfs:

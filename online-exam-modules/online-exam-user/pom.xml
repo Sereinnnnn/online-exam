@@ -18,6 +18,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.tangyi</groupId>
             <artifactId>online-exam-common</artifactId>
             <version>${online-exam.version}</version>

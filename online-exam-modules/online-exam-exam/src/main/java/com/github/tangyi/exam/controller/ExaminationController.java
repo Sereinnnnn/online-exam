@@ -12,7 +12,9 @@ import com.github.tangyi.exam.module.Course;
 import com.github.tangyi.exam.module.Examination;
 import com.github.tangyi.exam.service.CourseService;
 import com.github.tangyi.exam.service.ExaminationService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -31,8 +33,9 @@ import java.util.*;
  * @author tangyi
  * @date 2018/11/8 21:26
  */
+@Api("考试信息管理")
 @RestController
-@RequestMapping("/examination")
+@RequestMapping("/api/v1/examination")
 public class ExaminationController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ExaminationController.class);
@@ -46,7 +49,7 @@ public class ExaminationController extends BaseController {
     /**
      * 根据ID获取
      *
-     * @param id         id
+     * @param id id
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:08
@@ -69,19 +72,33 @@ public class ExaminationController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params      params
+     * @param pageNum     pageNum
+     * @param pageSize    pageSize
+     * @param sort        sort
+     * @param order       order
      * @param examination examination
      * @return PageInfo
      * @author tangyi
      * @date 2018/11/10 21:10
      */
     @ApiOperation(value = "获取考试列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "examination", value = "考试信息", dataType = "Examination")
+    })
     @RequestMapping("examinationList")
-    public PageInfo<ExaminationDto> examinationList(@RequestParam Map<String, String> params, Examination examination) {
+    public PageInfo<ExaminationDto> examinationList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                                    @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                                    @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                                    @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                                    Examination examination) {
         PageInfo<Examination> page = new PageInfo<Examination>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
-        PageHelper.orderBy(PageUtil.orderBy(params.getOrDefault("sort", CommonConstant.PAGE_SORT_DEFAULT), params.getOrDefault("order", CommonConstant.PAGE_ORDER_DEFAULT)));
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
+        PageHelper.orderBy(PageUtil.orderBy(sort, order));
         page = examinationService.findPage(page, examination);
         PageInfo<ExaminationDto> examinationDtoPageInfo = new PageInfo<>();
         BeanUtils.copyProperties(page, examinationDtoPageInfo);
@@ -184,6 +201,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/12/03 22:03
      */
+    @ApiOperation(value = "批量删除考试", notes = "根据考试id批量删除考试")
+    @ApiImplicitParam(name = "examinationDto", value = "考试信息", dataType = "ExaminationDto")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllExaminations(@RequestBody ExaminationDto examinationDto) {
         boolean success = false;
@@ -194,5 +213,19 @@ public class ExaminationController extends BaseController {
             logger.error("删除考试失败！", e);
         }
         return new ReturnT<>(success);
+    }
+
+    /**
+     * 查询考试数量
+     *
+     * @return ReturnT
+     * @author tangyi
+     * @date 2019/3/1 15:30
+     */
+    @GetMapping("/examinationCount")
+    public ReturnT<Integer> examinationCount() {
+        Examination examination = new Examination();
+        examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        return new ReturnT<>(examinationService.findExaminationCount(examination));
     }
 }

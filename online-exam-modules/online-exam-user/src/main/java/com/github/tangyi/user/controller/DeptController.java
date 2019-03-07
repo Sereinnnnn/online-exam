@@ -9,6 +9,7 @@ import com.github.tangyi.user.dto.DeptDto;
 import com.github.tangyi.user.module.Dept;
 import com.github.tangyi.user.service.DeptService;
 import com.xiaoleilu.hutool.collection.CollUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections4.CollectionUtils;
@@ -24,8 +25,9 @@ import java.util.*;
  * @author tangyi
  * @date 2018/8/26 0026 22:49
  */
+@Api("部门信息管理")
 @RestController
-@RequestMapping("/dept")
+@RequestMapping("/api/v1/dept")
 public class DeptController extends BaseController {
 
     @Autowired
@@ -38,7 +40,7 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/10/25 12:57
      */
-    @ApiOperation(value = "获取树形部门集合")
+    @ApiOperation(value = "获取部门列表")
     @GetMapping(value = "/depts")
     public List<DeptDto> depts() {
         // 查询所有部门
@@ -76,7 +78,7 @@ public class DeptController extends BaseController {
      * @date 2018/8/28 10:15
      */
     @ApiOperation(value = "创建部门", notes = "创建部门")
-    @ApiImplicitParam(name = "dept", value = "部门实体dept", required = true, dataType = "Dept")
+    @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
     @PostMapping
     public ReturnT<Boolean> add(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -110,7 +112,7 @@ public class DeptController extends BaseController {
      * @date 2018/8/28 10:22
      */
     @ApiOperation(value = "更新部门信息", notes = "根据部门id更新部门的基本信息")
-    @ApiImplicitParam(name = "dept", value = "部门实体dept", required = true, dataType = "Dept")
+    @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
     @PutMapping
     public ReturnT<Boolean> update(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -125,6 +127,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/12/31 22:13
      */
+    @ApiOperation(value = "批量查询部门信息", notes = "根据Ids批量查询信息")
+    @ApiImplicitParam(name = "deptVo", value = "部门实体", required = true, dataType = "DeptVo")
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     public ReturnT<List<DeptVo>> findById(@RequestBody DeptVo deptVo) {
         ReturnT<List<DeptVo>> returnT = null;

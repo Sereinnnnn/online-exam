@@ -35,6 +35,7 @@ public class ZuulRouteConfig {
      * 初始化路由配置的数据
      */
     @EventListener(value = {EmbeddedServletContainerInitializedEvent.class})
+    @SuppressWarnings("unchecked")
     public void init() {
         logger.info("开始初始化路由配置数据");
         List<SysZuulRoute> routeList = zuulRouteService.findList(new SysZuulRoute());

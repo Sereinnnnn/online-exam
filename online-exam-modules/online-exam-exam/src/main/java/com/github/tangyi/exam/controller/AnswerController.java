@@ -7,7 +7,9 @@ import com.github.tangyi.common.utils.SysUtil;
 import com.github.tangyi.common.web.BaseController;
 import com.github.tangyi.exam.module.Answer;
 import com.github.tangyi.exam.service.AnswerService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -16,16 +18,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 /**
  * 答题controller
  *
  * @author tangyi
  * @date 2018/11/8 21:24
  */
+@Api("答题信息管理")
 @RestController
-@RequestMapping("/answer")
+@RequestMapping("/api/v1/answer")
 public class AnswerController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
@@ -56,18 +57,32 @@ public class AnswerController extends BaseController {
     /**
      * 获取分页数据
      *
-     * @param params params
-     * @param answer answer
+     * @param pageNum  pageNum
+     * @param pageSize pageSize
+     * @param sort     sort
+     * @param order    order
+     * @param answer   answer
      * @return PageInfo
      * @author tangyi
      * @date 2018/11/10 21:25
      */
     @ApiOperation(value = "获取答题列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
+            @ApiImplicitParam(name = "answer", value = "答题信息", dataType = "Answer")
+    })
     @RequestMapping("answerList")
-    public PageInfo<Answer> answerList(@RequestParam Map<String, String> params, Answer answer) {
-        PageInfo<Answer> page = new PageInfo<Answer>();
-        page.setPageNum(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_NUM, CommonConstant.PAGE_NUM_DEFAULT)));
-        page.setPageSize(Integer.parseInt(params.getOrDefault(CommonConstant.PAGE_SIZE, CommonConstant.PAGE_SIZE_DEFAULT)));
+    public PageInfo<Answer> answerList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
+                                       @RequestParam(value = "pageSize", required = false, defaultValue = CommonConstant.PAGE_SIZE_DEFAULT) String pageSize,
+                                       @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
+                                       @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
+                                       Answer answer) {
+        PageInfo<Answer> page = new PageInfo<>();
+        page.setPageNum(Integer.parseInt(pageNum));
+        page.setPageSize(Integer.parseInt(pageSize));
         return answerService.findPage(page, answer);
     }
 
@@ -136,6 +151,8 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/12/24 20:06
      */
+    @ApiOperation(value = "保存答题", notes = "保存答题")
+    @ApiImplicitParam(name = "answer", value = "答题信息", dataType = "Answer")
     @PostMapping("saveOrUpdate")
     public ReturnT<Boolean> saveOrUpdate(@RequestBody Answer answer) {
         boolean success;
@@ -161,6 +178,8 @@ public class AnswerController extends BaseController {
      * @author tangyi
      * @date 2018/12/24 20:44
      */
+    @ApiOperation(value = "提交答卷", notes = "提交答卷")
+    @ApiImplicitParam(name = "answer", value = "答卷信息", dataType = "Answer")
     @PostMapping("submit")
     public ReturnT<Boolean> submit(@RequestBody Answer answer) {
         return new ReturnT<>(answerService.submit(answer));

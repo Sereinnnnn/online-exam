@@ -13,14 +13,6 @@ spring:
       charset: utf-8
       force: true
       enabled: true
-  cloud:
-    config:
-      fail-fast: true
-      discovery:
-        service-id: ${CONFIG_HOST:online-exam-config}
-        enabled: true
-      profile: ${spring.profiles.active}
-      label: develop
   zipkin:
     base-url: http://${ZIPKIN_HOST:localhost}:${ZIPKIN_PORT:9411}/
 # zuul 限流配置
@@ -50,12 +42,12 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     serviceUrl:
-      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8765}/eureka
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
     registry-fetch-interval-seconds: 10
 # 认证服务器地址
 security:
   auth:
-    server: http://${AUTH_HOST:localhost}:${AUTH_PORT:3000}
+    server: http://${AUTH_HOST:localhost}:${AUTH_PORT:8081}
 logging:
   level:
     com.github.tangyi: debug

@@ -1,5 +1,5 @@
 server:
-  port: 8765
+  port: 8761
   tomcat:
     max-threads: 10 # 最大线程数
 

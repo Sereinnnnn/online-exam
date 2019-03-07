@@ -23,6 +23,6 @@ public interface MenuService {
      * @author tangyi
      * @date 2018/8/28 20:39
      */
-    @GetMapping(value = "/menu/findMenuByRole/{role}")
+    @GetMapping(value = "/api/v1/menu/findMenuByRole/{role}")
     Set<MenuVo> findMenuByRole(@PathVariable("role") String role);
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2019-02-28 22:01:22
+Date: 2019-03-07 10:59:15
 */
 
 DROP DATABASE IF EXISTS `platform_test002`;
@@ -78,7 +78,7 @@ CREATE TABLE `course` (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES ('6dcccd4639bc49b88810be1d30a77f92', '测试课程', '测试学院', '测试专业', '陈老师', '测试课程', 'admin', '2018-11-12 22:31:28', 'admin', '2019-01-07 20:37:14', '0', 'EXAM');
+INSERT INTO `course` VALUES ('6dcccd4639bc49b88810be1d30a77f92', '测试课程', '测试学院', '测试专业', '陈老师', '测试课程', 'admin', '2018-11-12 22:31:28', 'admin', '2019-03-06 13:56:59', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for examination
@@ -116,7 +116,7 @@ CREATE TABLE `examination` (
 INSERT INTO `examination` VALUES ('4f9ced28ffe64fcea57a7367e9fd4c0c', '离散数学', '2', '离散数学', '2019-01-03 00:00', '2019-01-11 00:00', '', '100', '0', '1', 'group1/M00/00/00/wKgAX1x3gGqABz6cAAZyO2yzEwA450.jpg', 'da4b5623e9754abbb07320d8def18fe7', '信息学院', '软件工程', '6dcccd4639bc49b88810be1d30a77f92', '离散数学练习', 'admin', '2019-01-13 20:16:36', 'admin', '2019-02-28 14:33:30', '0', 'EXAM');
 INSERT INTO `examination` VALUES ('b5990bc1c48d49fcb0023de51772c309', '数学期末考试', '0', '期末考试', '2019-01-22 17:00', '2019-01-22 23:00', '', '150', '2', '1', 'group1/M00/00/00/wKgAX1x3gHWAa82wAAArtzxOXJ4599.jpg', '60df2d550bd9453a943122033a27fe72', '应用数学', '应用数学', '6dcccd4639bc49b88810be1d30a77f92', '期末考试', 'admin', '2018-11-20 22:48:40', 'admin', '2019-02-28 14:33:29', '0', 'EXAM');
 INSERT INTO `examination` VALUES ('f051f54621fc4812b929a7777a701712', '语文考试', '0', '语文考试', '2019-01-22 17:00', '2019-01-22 23:00', '', '150', '2', '1', 'group1/M00/00/00/wKgAX1x3gIOAIVzXAABrb92CxLk678.jpg', '45d2ac58eb21436692e8cdbdd64291dd', '中文', '中文', '6dcccd4639bc49b88810be1d30a77f92', '语文考试', 'admin', '2018-11-20 22:50:55', 'admin', '2019-02-28 14:33:27', '0', 'EXAM');
-INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '0', '文综历史试题', '2019-02-28 15:00', '2019-02-28 17:00', '', '100', '3', '0', 'group1/M00/00/00/wKgAX1x3f52AIE4IAADGq28ys0g361.jpg', 'a178c7b221524a89b44e884d8e3172cf', '文综历史试题', '文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '文综历史试题', 'admin', '2018-11-12 20:25:38', 'admin', '2019-02-28 14:33:32', '0', 'EXAM');
+INSERT INTO `examination` VALUES ('fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '0', '文综历史试题', '2019-02-28 15:00', '2019-02-28 17:00', '', '100', '3', '0', 'group1/M00/00/00/wKgAX1x3f52AIE4IAADGq28ys0g361.jpg', 'a178c7b221524a89b44e884d8e3172cf', '文综历史试题', '文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '文综历史试题', 'admin', '2018-11-12 20:25:38', 'admin', '2019-03-06 13:57:13', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for exam_recode
@@ -147,6 +147,7 @@ CREATE TABLE `exam_recode` (
 -- ----------------------------
 INSERT INTO `exam_recode` VALUES ('220b2cece0834f359ab76ec42a888135', 'abd4dbe19faf4f7f8ff239b63acc5d34', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '2019-02-28 15:31:54', '2019-02-28 15:34:28', '0', '0', '3', 'student', '2019-02-28 15:31:54', 'student', '2019-02-28 15:34:28', '0', 'EXAM');
 INSERT INTO `exam_recode` VALUES ('862b7fb039b24925b3ec6f90a5f2dd0e', '2', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', '6dcccd4639bc49b88810be1d30a77f92', '2019-02-28 15:18:58', null, null, null, null, 'admin', '2019-02-28 15:18:58', 'admin', '2019-02-28 15:18:58', '0', 'EXAM');
+INSERT INTO `exam_recode` VALUES ('ec925a93ac9b4502b72973c7c12a66fe', 'abd4dbe19faf4f7f8ff239b63acc5d34', '4f9ced28ffe64fcea57a7367e9fd4c0c', '离散数学', '6dcccd4639bc49b88810be1d30a77f92', '2019-03-07 10:15:55', null, null, null, null, 'student', '2019-03-07 10:15:55', 'student', '2019-03-07 10:15:55', '0', 'EXAM');
 INSERT INTO `exam_recode` VALUES ('f3eb89b5c12941399466676a7341bf3a', '4f3ffc2924f740df93641063559842a6', 'fad663ea371f4250a81332bd3a346739', '四川省2016年普通高考适应性测试文综历史试题', null, '2019-01-22 17:23:57', '2019-01-22 17:37:24', '0', '0', '3', 'tangyi7', '2019-01-22 17:23:57', 'tangyi7', '2019-01-22 17:37:24', '0', 'EXAM');
 INSERT INTO `exam_recode` VALUES ('f586d49aaf2c4a82b8de43b659d6c908', '2', '4f9ced28ffe64fcea57a7367e9fd4c0c', '离散数学', '6dcccd4639bc49b88810be1d30a77f92', '2019-02-28 14:50:24', null, null, null, null, 'admin', '2019-02-28 14:50:24', 'admin', '2019-02-28 14:50:24', '0', 'EXAM');
 
@@ -208,7 +209,7 @@ CREATE TABLE `knowledge` (
 -- ----------------------------
 -- Records of knowledge
 -- ----------------------------
-INSERT INTO `knowledge` VALUES ('d81ef4c730b6460f98a7898cdba8902b', '历史学习资料', '历史学习资料', '52f17901c5504c608ebb76c8202ca2eb', '0', 'admin', '2019-01-01 21:02:00', 'admin', '2019-01-09 22:08:32', '0', 'EXAM');
+INSERT INTO `knowledge` VALUES ('d81ef4c730b6460f98a7898cdba8902b', '历史学习资料', '历史学习资料', '52f17901c5504c608ebb76c8202ca2eb', '1', 'admin', '2019-01-01 21:02:00', 'teacher', '2019-03-07 09:51:08', '0', 'EXAM');
 
 -- ----------------------------
 -- Table structure for subject
@@ -296,7 +297,7 @@ CREATE TABLE `subject_bank` (
 -- Records of subject_bank
 -- ----------------------------
 INSERT INTO `subject_bank` VALUES ('2612f127f8e74736a086e9ec18850852', '700556b5becd4091821644a5288d489c', null, '232222', '0', '', '323fffff', '32', '32', '323', '', '', '2', '323', '323', '2', 'admin', '2018-12-09 14:38:47', 'admin', '2018-12-09 14:49:43', '1', 'EXAM');
-INSERT INTO `subject_bank` VALUES ('3600225f10114e40a07e4312d3f7f8ad', '700556b5becd4091821644a5288d489c', '1', '1', '0', '', '1', '1', '1', '1', '', '', 'B', '1', '1', '2', 'admin', '2019-01-09 21:11:34', 'admin', '2019-01-23 19:48:18', '0', 'EXAM');
+INSERT INTO `subject_bank` VALUES ('3600225f10114e40a07e4312d3f7f8ad', '700556b5becd4091821644a5288d489c', '1', '1', '0', '', '1', '1', '1', '1', '', '', 'B', '1', '1', '2', 'admin', '2019-01-09 21:11:34', 'admin', '2019-03-06 13:58:54', '0', 'EXAM');
 INSERT INTO `subject_bank` VALUES ('494fb828f270450690a82f23450f138f', '700556b5becd4091821644a5288d489c', '323', '23', '0', '', '323', '323', '323', '233', '', '', 'B', '323', '323', '2', 'admin', '2019-01-09 18:03:22', 'admin', '2019-01-09 18:03:22', '1', 'EXAM');
 INSERT INTO `subject_bank` VALUES ('aeff7c505e374cbdbcecf79e7a587ddd', '', '1', '33', '0', '', '33', '33', '33', '33', '', '', '3', '4', '333', '4', 'admin', '2018-12-09 14:47:02', 'admin', '2019-01-09 17:45:30', '1', 'EXAM');
 INSERT INTO `subject_bank` VALUES ('b1058acf24184bfd8c85c61d59dfdfd0', 'c664646337c345ac8a91e3b024ded8bb', null, '操作系统', '0', '', '操作系统', '操作系统', '操作系统', '操作系统', '', '', '1', '操作系统', '操作系统', '2', 'admin', '2018-12-09 20:26:59', 'admin', '2018-12-09 20:27:05', '1', 'EXAM');
@@ -328,7 +329,7 @@ INSERT INTO `subject_category` VALUES ('047a8dd7d0614314a72750af9915ada0', '大�
 INSERT INTO `subject_category` VALUES ('103cf01d23574c93b88a4aff2a350471', '四级', null, '412a93a6e1ac49a59e66da0721c183cd', '1', 'admin', '2018-12-09 20:32:08', 'admin', '2018-12-09 20:32:08', '1', 'EXAM');
 INSERT INTO `subject_category` VALUES ('412a93a6e1ac49a59e66da0721c183cd', '大学英语', '大学英语', '-1', '2', 'admin', '2018-12-06 20:37:29', 'admin', '2018-12-06 20:44:25', '0', 'EXAM');
 INSERT INTO `subject_category` VALUES ('577ff5e3a9b345e18d40e505cc631110', '国际金融', null, '-1', '5', 'admin', '2018-12-06 20:38:30', 'admin', '2018-12-06 20:44:40', '0', 'EXAM');
-INSERT INTO `subject_category` VALUES ('700556b5becd4091821644a5288d489c', '架构基础', '4343434', 'aceeeb30b57f4d6982cd37682b5b7522', '1', 'admin', '2018-12-06 20:45:06', 'admin', '2018-12-09 20:47:28', '0', 'EXAM');
+INSERT INTO `subject_category` VALUES ('700556b5becd4091821644a5288d489c', '架构基础', '4343434', 'aceeeb30b57f4d6982cd37682b5b7522', '1', 'admin', '2018-12-06 20:45:06', 'admin', '2019-03-06 13:59:01', '0', 'EXAM');
 INSERT INTO `subject_category` VALUES ('9fdbb0add5354249a8a2d530bdd48d08', '高等数学', null, '-1', '3', 'admin', '2018-12-06 20:37:45', 'admin', '2018-12-06 20:44:31', '0', 'EXAM');
 INSERT INTO `subject_category` VALUES ('aceeeb30b57f4d6982cd37682b5b7522', '计算机', null, '-1', '1', 'admin', '2018-12-06 20:41:44', 'admin', '2018-12-06 20:44:09', '0', 'EXAM');
 INSERT INTO `subject_category` VALUES ('c664646337c345ac8a91e3b024ded8bb', '操作系统', null, 'aceeeb30b57f4d6982cd37682b5b7522', '2', 'admin', '2018-12-06 20:45:21', 'admin', '2018-12-06 20:45:21', '0', 'EXAM');

@@ -21,6 +21,6 @@ public interface UserService {
      * @param username
      * @return
      */
-    @GetMapping("/user/findUserByUsername/{username}")
+    @GetMapping("/api/v1/user/findUserByUsername/{username}")
     UserVo findByUsername(@PathVariable("username") String username);
 }

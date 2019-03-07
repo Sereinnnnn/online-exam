@@ -61,7 +61,7 @@ public class CommonConstant {
     /**
      * 默认排序
      */
-    public static final String PAGE_SORT_DEFAULT = "id";
+    public static final String PAGE_SORT_DEFAULT = "create_date";
 
     /**
      * 默认排序方向

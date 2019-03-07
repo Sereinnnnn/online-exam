@@ -25,6 +25,6 @@ public interface UserService {
      * @param userVo userVo
      * @return UserVo
      */
-    @RequestMapping(value = "/user/findById", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v1/user/findById", method = RequestMethod.POST)
     ReturnT<List<UserVo>> findById(@RequestBody UserVo userVo);
 }
