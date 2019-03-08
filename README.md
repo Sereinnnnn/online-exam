@@ -82,6 +82,7 @@
 #### 后续
 
 - 完善业务功能
+- 框架升级（spring boot：2.1.3.RELEASE，spring cloud：Greenwich GA）
 - 容器化部署
 
 #### 问题反馈

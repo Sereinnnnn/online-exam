@@ -1,3 +1,24 @@
+server:
+  port: 8769
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+  application:
+    name: online-exam-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${CONFIG_URI:https://gitee.com/wells2333/online-exam-config.git} # 配置文件的Git地址
+          default-label: ${CONFIG_LABEL:develop}  # 配置文件的Git分支，默认develop分支
+
+management:
+  security:
+    enabled: false
+endpoints:
+  health:
+    sensitive: false
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://root:11@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
