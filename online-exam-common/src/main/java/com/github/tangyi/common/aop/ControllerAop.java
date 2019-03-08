@@ -80,14 +80,8 @@ public class ControllerAop {
         HttpServletRequest request = attributes.getRequest();
         // 获取用户名
         String username = request.getHeader(SecurityConstant.USER_HEADER);
-        if (StrUtil.isNotBlank(username)) {
-            logger.debug("get username:{}", username);
+        if (StrUtil.isNotBlank(username))
             SysUtil.setUser(username);
-        }
-        logger.debug("URL : {}, HTTP_METHOD : {}, IP : {}, CLASS_METHOD : {}, ARGS : {}",
-                request.getRequestURL(), request.getMethod(), request.getRemoteAddr(),
-                joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName(),
-                Arrays.toString(joinPoint.getArgs()));
         Object result;
         result = joinPoint.proceed();
         logger.info("{} use time: {}ms", joinPoint.getSignature(), System.currentTimeMillis() - startTime);
