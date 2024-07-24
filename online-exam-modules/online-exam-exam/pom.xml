@@ -13,7 +13,7 @@
 	<parent>
 		<artifactId>online-exam-modules</artifactId>
 		<groupId>com.github.tangyi</groupId>
-		<version>${online-exam.version}</version>
+		<version>0.1.0</version>
 	</parent>
 
 	<dependencies>

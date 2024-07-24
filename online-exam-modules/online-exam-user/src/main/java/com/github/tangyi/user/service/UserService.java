@@ -92,6 +92,8 @@ public class UserService extends CrudService<UserMapper, User> {
     public UserInfoDto findUserInfo(UserVo userVo) {
         // 根据用户名查询用户信息
         userVo = userMapper.selectUserVoByUsername(userVo.getUsername());
+        System.out.println("查到的用户是");
+        System.out.println(userVo);
         UserInfoDto user = new UserInfoDto();
         if (userVo != null) {
             user.setUser(userVo);
@@ -118,6 +120,9 @@ public class UserService extends CrudService<UserMapper, User> {
             });
             user.setPermissions(permissions.toArray(new String[permissions.size()]));
         }
+        System.out.println("findUserInfo()被调用");
+        System.out.println("返回");
+        System.out.println(user);
         return user;
     }
 

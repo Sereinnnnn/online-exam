@@ -25,7 +25,7 @@ import java.util.*;
  * @author tangyi
  * @date 2018/8/26 0026 22:49
  */
-@Api("部门信息管理")
+//@Api("部门信息管理")
 @RestController
 @RequestMapping("/api/v1/dept")
 public class DeptController extends BaseController {
@@ -40,7 +40,7 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/10/25 12:57
      */
-    @ApiOperation(value = "获取部门列表")
+//    @ApiOperation(value = "获取部门列表")
     @GetMapping(value = "/depts")
     public List<DeptDto> depts() {
         // 查询所有部门
@@ -60,8 +60,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:11
      */
-    @ApiOperation(value = "获取部门信息", notes = "根据部门id获取部门详细信息")
-    @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "String", paramType = "path")
+//    @ApiOperation(value = "获取部门信息", notes = "根据部门id获取部门详细信息")
+//    @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public Dept get(@PathVariable String id) {
         Dept dept = new Dept();
@@ -77,8 +77,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:15
      */
-    @ApiOperation(value = "创建部门", notes = "创建部门")
-    @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
+//    @ApiOperation(value = "创建部门", notes = "创建部门")
+//    @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
     @PostMapping
     public ReturnT<Boolean> add(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -93,8 +93,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:16
      */
-    @ApiOperation(value = "删除部门", notes = "根据ID删除部门")
-    @ApiImplicitParam(name = "id", value = "部门ID", required = true, paramType = "path")
+//    @ApiOperation(value = "删除部门", notes = "根据ID删除部门")
+//    @ApiImplicitParam(name = "id", value = "部门ID", required = true, paramType = "path")
     @DeleteMapping("/{id}")
     public ReturnT<Boolean> delete(@PathVariable String id) {
         Dept dept = new Dept();
@@ -111,8 +111,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/8/28 10:22
      */
-    @ApiOperation(value = "更新部门信息", notes = "根据部门id更新部门的基本信息")
-    @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
+//    @ApiOperation(value = "更新部门信息", notes = "根据部门id更新部门的基本信息")
+//    @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
     @PutMapping
     public ReturnT<Boolean> update(@RequestBody Dept dept) {
         dept.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
@@ -127,8 +127,8 @@ public class DeptController extends BaseController {
      * @author tangyi
      * @date 2018/12/31 22:13
      */
-    @ApiOperation(value = "批量查询部门信息", notes = "根据Ids批量查询信息")
-    @ApiImplicitParam(name = "deptVo", value = "部门实体", required = true, dataType = "DeptVo")
+//    @ApiOperation(value = "批量查询部门信息", notes = "根据Ids批量查询信息")
+//    @ApiImplicitParam(name = "deptVo", value = "部门实体", required = true, dataType = "DeptVo")
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     public ReturnT<List<DeptVo>> findById(@RequestBody DeptVo deptVo) {
         ReturnT<List<DeptVo>> returnT = null;

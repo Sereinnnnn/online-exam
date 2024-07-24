@@ -1,6 +1,7 @@
 package com.github.tangyi.exam.dto;
 
 import com.github.tangyi.exam.module.IncorrectAnswer;
+import lombok.Data;
 
 /**
  * 错题Dto
@@ -8,6 +9,7 @@ import com.github.tangyi.exam.module.IncorrectAnswer;
  * @author tangyi
  * @date 2018/12/25 22:29
  */
+@Data
 public class IncorrectAnswerDto extends IncorrectAnswer {
 
     /**

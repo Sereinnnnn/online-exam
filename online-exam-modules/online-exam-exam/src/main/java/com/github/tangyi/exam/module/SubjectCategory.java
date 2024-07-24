@@ -1,6 +1,7 @@
 package com.github.tangyi.exam.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 题目分类
@@ -8,6 +9,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018-12-04 11:18
  */
+@Data
 public class SubjectCategory extends BaseEntity<SubjectCategory> {
 
     /**

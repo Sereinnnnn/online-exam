@@ -1,6 +1,7 @@
 package com.github.tangyi.exam.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 题目
@@ -8,6 +9,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018/11/8 20:53
  */
+@Data
 public class Subject extends BaseEntity<Subject> {
 
     /**

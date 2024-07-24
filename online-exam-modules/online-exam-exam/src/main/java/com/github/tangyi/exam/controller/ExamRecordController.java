@@ -108,6 +108,8 @@ public class ExamRecordController extends BaseController {
                                                   @RequestParam(value = "sort", required = false, defaultValue = CommonConstant.PAGE_SORT_DEFAULT) String sort,
                                                   @RequestParam(value = "order", required = false, defaultValue = CommonConstant.PAGE_ORDER_DEFAULT) String order,
                                                   ExamRecord examRecord) {
+        logger.error("传入的examRecord为:");
+        System.out.println(examRecord);
         PageInfo<ExamRecord> page = new PageInfo<ExamRecord>();
         page.setPageNum(Integer.parseInt(pageNum));
         page.setPageSize(Integer.parseInt(pageSize));
@@ -115,24 +117,52 @@ public class ExamRecordController extends BaseController {
         List<ExamRecordDto> examRecordDtoList = new ArrayList<>();
         // 查询考试记录
         PageInfo<ExamRecord> examRecordPageInfo = examRecordService.findPage(page, examRecord);
+        logger.error("examRecordService.findPage(page, examRecord)得到的examRecordPageInfo为：{}",examRecordPageInfo);
         if (CollectionUtils.isNotEmpty(examRecordPageInfo.getList())) {
             // 考试id、用户id
             Set<String> examIdSet = new HashSet<>(), userIdSet = new HashSet<>();
             examRecordPageInfo.getList().forEach(tempExamRecord -> {
                 examIdSet.add(tempExamRecord.getExaminationId());
+                logger.error("循环中的考试id：{}",tempExamRecord.getExaminationId());
                 userIdSet.add(tempExamRecord.getUserId());
+                logger.error("循环中的用户id：{}",tempExamRecord.getUserId());
             });
             Examination examination = new Examination();
             examination.setIds(examIdSet.toArray(new String[examIdSet.size()]));
+
+            System.out.println("遍历Set<String> examIdSet");
+            Iterator<String> iterator = examIdSet.iterator();
+            while (iterator.hasNext()) {
+                String examId = iterator.next();
+                System.out.println(examId);
+            }
+
+            System.out.println("examination是：");
+            System.out.println(examination);
+
             // 查询考试信息
             List<Examination> examinations = examinationService.findListById(examination);
+            logger.error("查询到的考试信息：{}",examinations);
             // 查询用户信息
             UserVo userVo = new UserVo();
             userVo.setIds(userIdSet.toArray(new String[userIdSet.size()]));
+            logger.error("userVo.getIds()为：{}",userVo.getIds());
+            for(String id:userVo.getIds()){
+                System.out.println("对应的name是:");
+//                System.out.println(userService.selectNameById(id));
+            }
+
             ReturnT<List<UserVo>> returnT = userService.findById(userVo);
+            logger.error("循环打印出returnT的值");
+            List<UserVo> list = returnT.getData();
+            for(UserVo uv:list){
+                System.out.println(uv);
+            }
             if (returnT != null && CollectionUtils.isNotEmpty(returnT.getData())) {
                 examRecordPageInfo.getList().forEach(tempExamRecord -> {
                     examinations.forEach(tempExamination -> {
+                        logger.error("examRecordPageInfo循环着的考试id是：{}",tempExamRecord.getExaminationId());
+                        logger.error("examinations循环着的考试id是：{}",tempExamination.getId());
                         if (tempExamRecord.getExaminationId().equals(tempExamination.getId())) {
                             ExamRecordDto examRecordDto = new ExamRecordDto();
                             BeanUtils.copyProperties(tempExamination, examRecordDto);
@@ -145,6 +175,10 @@ public class ExamRecordController extends BaseController {
                         }
                     });
                 });
+                System.out.println("循环之后，examRecordDtoList是：");
+                for(ExamRecordDto er:examRecordDtoList){
+                    System.out.println(er);
+                }
                 // 查询部门信息
                 Set<String> deptIdSet = new HashSet<>();
                 returnT.getData().forEach(tempUserVo -> deptIdSet.add(tempUserVo.getDeptId()));

@@ -1,6 +1,7 @@
 package com.github.tangyi.exam.dto;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 考试记录DTO
@@ -8,6 +9,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018-12-26 16:26
  */
+@Data
 public class ExamRecordDto extends BaseEntity<ExamRecordDto> {
 
     /**

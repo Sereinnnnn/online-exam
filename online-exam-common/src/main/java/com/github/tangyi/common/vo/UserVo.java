@@ -1,6 +1,7 @@
 package com.github.tangyi.common.vo;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
  * @author tangyi
  * @date 2018-08-25-13:57
  */
+
+@Data
 public class UserVo extends BaseEntity<UserVo> {
 
     /**
@@ -86,6 +89,8 @@ public class UserVo extends BaseEntity<UserVo> {
      * 状态，0-启用，1-禁用
      */
     private String status;
+
+
 
     public String getUsername() {
         return username;

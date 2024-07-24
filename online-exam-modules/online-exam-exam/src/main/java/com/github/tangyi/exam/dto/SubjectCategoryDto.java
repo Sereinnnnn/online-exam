@@ -2,11 +2,13 @@ package com.github.tangyi.exam.dto;
 
 import com.github.tangyi.common.persistence.TreeEntity;
 import com.github.tangyi.exam.module.SubjectCategory;
+import lombok.Data;
 
 /**
  * @author tangyi
  * @date 2018/12/4 22:04
  */
+@Data
 public class SubjectCategoryDto extends TreeEntity<SubjectCategoryDto> {
 
     /**

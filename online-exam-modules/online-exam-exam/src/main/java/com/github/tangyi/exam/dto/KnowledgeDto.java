@@ -1,11 +1,13 @@
 package com.github.tangyi.exam.dto;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * @author tangyi
  * @date 2019/1/1 0001 22:04
  */
+@Data
 public class KnowledgeDto extends BaseEntity<KnowledgeDto> {
 
     /**

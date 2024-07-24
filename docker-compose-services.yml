@@ -26,8 +26,8 @@ services:
       - RABBIT_MQ_USERNAME=admin
       - RABBIT_MQ_PASSWORD=admin
     # 启动顺序
-#    entrypoint: sh /wait-for-it.sh online-exam-auth:3000 -t 600 --
-#    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
+    #    entrypoint: sh /wait-for-it.sh online-exam-auth:3000 -t 600 --
+    #    command: java -Djava.security.egd=file:/dev/./urandom -jar online-exam-gateway.jar
     container_name: online-exam-gateway
     hostname: online-exam-gateway
     image: registry.cn-hangzhou.aliyuncs.com/online-exam/online-exam-gateway:0.1.0

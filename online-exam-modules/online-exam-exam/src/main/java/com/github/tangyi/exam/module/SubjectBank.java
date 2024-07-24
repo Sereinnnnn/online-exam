@@ -1,12 +1,14 @@
 package com.github.tangyi.exam.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 题库
  * @author tangyi
  * @date 2018/12/9 14:09
  */
+@Data
 public class SubjectBank extends BaseEntity<SubjectBank> {
 
     /**

@@ -1,6 +1,7 @@
 package com.github.tangyi.exam.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 考试记录
@@ -8,6 +9,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018/11/8 21:05
  */
+@Data
 public class ExamRecord extends BaseEntity<ExamRecord> {
 
     /**

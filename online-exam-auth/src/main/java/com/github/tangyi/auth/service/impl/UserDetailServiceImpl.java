@@ -4,6 +4,7 @@ import com.github.tangyi.common.vo.UserVo;
 import com.github.tangyi.auth.feign.UserService;
 import com.github.tangyi.auth.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Service("userDetailService")
 public class UserDetailServiceImpl implements UserDetailsService {
 
+    @Qualifier("com.github.tangyi.auth.feign.UserService")
     @Autowired
     private UserService userService;
 

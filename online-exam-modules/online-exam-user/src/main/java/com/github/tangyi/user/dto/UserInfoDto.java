@@ -1,6 +1,7 @@
 package com.github.tangyi.user.dto;
 
 import com.github.tangyi.common.vo.UserVo;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
  * @author tangyi
  * @date 2018-09-13-17:18
  */
+@Data
 public class UserInfoDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
