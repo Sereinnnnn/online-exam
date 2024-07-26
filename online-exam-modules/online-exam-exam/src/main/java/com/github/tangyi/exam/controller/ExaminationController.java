@@ -66,6 +66,7 @@ public class ExaminationController extends BaseController {
             if (examination != null)
                 examination.setCurrentTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         }
+        System.out.println(examination);
         return new ReturnT<>(examination);
     }
 
@@ -146,6 +147,14 @@ public class ExaminationController extends BaseController {
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
         // zzz:题目数默认是0
         examination.setTotalSubject("0");
+        System.out.println("即将创建问卷~~~~~~~~~~~~~~~~~~~~");
+        if(examination.getType() == "心理测评"){
+            examination.setType("0");
+        }
+        else if(examination.getType() == "趣味测试"){
+            examination.setType("1");
+        }
+        System.out.println(examination);
         return new ReturnT<>(examinationService.insert(examination) > 0);
     }
 
@@ -165,6 +174,14 @@ public class ExaminationController extends BaseController {
         BeanUtils.copyProperties(examinationDto, examination);
         examination.setCourseId(examinationDto.getCourse().getId());
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        System.out.println("即将更新问卷信息~~~~~~~~~~~~~~~~~~~~~~~~");
+        if(examination.getType() == "心理测评"){
+            examination.setType("0");
+        }
+        else if(examination.getType() == "趣味测试"){
+            examination.setType("1");
+        }
+        System.out.println(examination);
         return new ReturnT<>(examinationService.update(examination) > 0);
     }
 
