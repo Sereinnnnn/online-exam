@@ -1,6 +1,7 @@
 package com.github.tangyi.user.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 角色
@@ -8,6 +9,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018-08-25-13:58
  */
+@Data
 public class Role extends BaseEntity<Role> {
 
     private String roleName;

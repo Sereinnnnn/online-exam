@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 角色service
  *
@@ -31,6 +33,13 @@ public class RoleService extends CrudService<RoleMapper, Role> {
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    public List<Role> getAllRoles() {
+        return roleMapper.findAll();
+    }
 
     /**
      * 新增

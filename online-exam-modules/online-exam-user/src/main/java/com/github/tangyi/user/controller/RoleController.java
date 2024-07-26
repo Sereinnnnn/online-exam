@@ -50,6 +50,15 @@ public class RoleController extends BaseController {
     @Autowired
     private DeptService deptService;
 
+    @GetMapping("/all")
+    public List<Role> roles() {
+        List<Role> roles = roleService.getAllRoles();
+        for(int i=0; i<roles.size(); ++i){
+            System.out.println(roles.get(i));
+        }
+        return roles;
+    }
+
     /**
      * 根据id获取角色
      *
@@ -103,18 +112,25 @@ public class RoleController extends BaseController {
         // 查询所属部门
         PageInfo<Role> pageInfo = roleService.findPage(page, role);
         if (CollectionUtils.isNotEmpty(pageInfo.getList())) {
+            System.out.println("CollectionUtils.isNotEmpty");
             pageInfo.getList().forEach(tempRole -> {
+                System.out.println("pageInfo循环中展示的Role");
+                System.out.println(tempRole);
                 RoleDept roleDept = new RoleDept();
                 roleDept.setRoleId(tempRole.getId());
                 // 查询角色部门关系
                 roleDept = roleDeptService.get(roleDept);
+                System.out.println("查询角色部门关系之后的roleDept");
+                System.out.println(roleDept);
                 if (roleDept != null) {
+                    System.out.println("roleDept!=null");
                     // 查询部门信息
                     Dept dept = new Dept();
                     dept.setId(roleDept.getDeptId());
                     dept = deptService.get(dept);
                     // 设置角色所属部门ID和名称
                     if (dept != null) {
+                        System.out.println("dept != null");
                         tempRole.setDeptId(roleDept.getDeptId());
                         tempRole.setDeptName(dept.getDeptName());
                     }

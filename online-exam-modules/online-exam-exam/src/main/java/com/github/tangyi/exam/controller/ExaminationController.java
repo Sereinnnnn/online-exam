@@ -28,12 +28,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 考试controller
+ * 问卷controller
  *
  * @author tangyi
  * @date 2018/11/8 21:26
  */
-@Api("考试信息管理")
+@Api("问卷信息管理")
 @RestController
 @RequestMapping("/api/v1/examination")
 public class ExaminationController extends BaseController {
@@ -54,8 +54,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:08
      */
-    @ApiOperation(value = "获取考试信息", notes = "根据考试id获取考试详细信息")
-    @ApiImplicitParam(name = "id", value = "考试ID", required = true, dataType = "String", paramType = "path")
+    @ApiOperation(value = "获取问卷信息", notes = "根据问卷id获取问卷详细信息")
+    @ApiImplicitParam(name = "id", value = "问卷ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/{id}")
     public ReturnT<Examination> examination(@PathVariable String id) {
         Examination examination = new Examination();
@@ -81,13 +81,13 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:10
      */
-    @ApiOperation(value = "获取考试列表")
+    @ApiOperation(value = "获取问卷列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "分页页码", defaultValue = CommonConstant.PAGE_NUM_DEFAULT, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "分页大小", defaultValue = CommonConstant.PAGE_SIZE_DEFAULT, dataType = "String"),
             @ApiImplicitParam(name = "sort", value = "排序字段", defaultValue = CommonConstant.PAGE_SORT_DEFAULT, dataType = "String"),
             @ApiImplicitParam(name = "order", value = "排序方向", defaultValue = CommonConstant.PAGE_ORDER_DEFAULT, dataType = "String"),
-            @ApiImplicitParam(name = "examination", value = "考试信息", dataType = "Examination")
+            @ApiImplicitParam(name = "examination", value = "问卷信息", dataType = "Examination")
     })
     @RequestMapping("examinationList")
     public PageInfo<ExaminationDto> examinationList(@RequestParam(value = "pageNum", required = false, defaultValue = CommonConstant.PAGE_NUM_DEFAULT) String pageNum,
@@ -136,14 +136,16 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:14
      */
-    @ApiOperation(value = "创建考试", notes = "创建考试")
-    @ApiImplicitParam(name = "examinationDto", value = "考试实体examinationDto", required = true, dataType = "ExaminationDto")
+    @ApiOperation(value = "创建问卷", notes = "创建问卷")
+    @ApiImplicitParam(name = "examinationDto", value = "问卷实体examinationDto", required = true, dataType = "ExaminationDto")
     @PostMapping
     public ReturnT<Boolean> addExamination(@RequestBody ExaminationDto examinationDto) {
         Examination examination = new Examination();
         BeanUtils.copyProperties(examinationDto, examination);
         examination.setCourseId(examinationDto.getCourse().getId());
         examination.setCommonValue(SysUtil.getUser(), SysUtil.getSysCode());
+        // zzz:题目数默认是0
+        examination.setTotalSubject("0");
         return new ReturnT<>(examinationService.insert(examination) > 0);
     }
 
@@ -155,8 +157,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/11/10 21:15
      */
-    @ApiOperation(value = "更新考试信息", notes = "根据考试id更新考试的基本信息")
-    @ApiImplicitParam(name = "examinationDto", value = "考试实体answer", required = true, dataType = "ExaminationDto")
+    @ApiOperation(value = "更新问卷信息", notes = "根据问卷id更新问卷的基本信息")
+    @ApiImplicitParam(name = "examinationDto", value = "问卷实体answer", required = true, dataType = "ExaminationDto")
     @PutMapping
     public ReturnT<Boolean> updateExamination(@RequestBody ExaminationDto examinationDto) {
         Examination examination = new Examination();
@@ -167,15 +169,15 @@ public class ExaminationController extends BaseController {
     }
 
     /**
-     * 删除考试
+     * 删除问卷
      *
      * @param id id
      * @return ReturnT
      * @author tangyi
      * @date 2018/11/10 21:20
      */
-    @ApiOperation(value = "删除考试", notes = "根据ID删除考试")
-    @ApiImplicitParam(name = "id", value = "考试ID", required = true, paramType = "path")
+    @ApiOperation(value = "删除问卷", notes = "根据ID删除问卷")
+    @ApiImplicitParam(name = "id", value = "问卷ID", required = true, paramType = "path")
     @DeleteMapping("{id}")
     public ReturnT<Boolean> deleteExamination(@PathVariable String id) {
         boolean success = false;
@@ -188,7 +190,7 @@ public class ExaminationController extends BaseController {
                 success = examinationService.delete(examination) > 0;
             }
         } catch (Exception e) {
-            logger.error("删除考试失败！", e);
+            logger.error("删除问卷失败！", e);
         }
         return new ReturnT<>(success);
     }
@@ -201,8 +203,8 @@ public class ExaminationController extends BaseController {
      * @author tangyi
      * @date 2018/12/03 22:03
      */
-    @ApiOperation(value = "批量删除考试", notes = "根据考试id批量删除考试")
-    @ApiImplicitParam(name = "examinationDto", value = "考试信息", dataType = "ExaminationDto")
+    @ApiOperation(value = "批量删除问卷", notes = "根据问卷id批量删除问卷")
+    @ApiImplicitParam(name = "examinationDto", value = "问卷信息", dataType = "ExaminationDto")
     @PostMapping("/deleteAll")
     public ReturnT<Boolean> deleteAllExaminations(@RequestBody ExaminationDto examinationDto) {
         boolean success = false;
@@ -210,13 +212,13 @@ public class ExaminationController extends BaseController {
             if (StringUtils.isNotEmpty(examinationDto.getIdString()))
                 success = examinationService.deleteAll(examinationDto.getIdString().split(",")) > 0;
         } catch (Exception e) {
-            logger.error("删除考试失败！", e);
+            logger.error("删除问卷失败！", e);
         }
         return new ReturnT<>(success);
     }
 
     /**
-     * 查询考试数量
+     * 查询问卷数量
      *
      * @return ReturnT
      * @author tangyi

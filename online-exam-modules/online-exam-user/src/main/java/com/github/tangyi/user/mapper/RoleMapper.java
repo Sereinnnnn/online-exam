@@ -4,6 +4,8 @@ import com.github.tangyi.common.persistence.CrudMapper;
 import com.github.tangyi.user.module.Role;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 角色mapper
  *
@@ -12,4 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RoleMapper extends CrudMapper<Role> {
+    List<Role> findAll();
 }

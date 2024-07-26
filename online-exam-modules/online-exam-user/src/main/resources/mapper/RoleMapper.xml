@@ -68,6 +68,9 @@
             #{item}
         </foreach>
     </select>
+    <select id="findAll" resultType="com.github.tangyi.user.module.Role">
+        SELECT * FROM sys_role
+    </select>
 
     <insert id="insert">
         INSERT INTO sys_role (

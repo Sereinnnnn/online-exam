@@ -1,6 +1,7 @@
 package com.github.tangyi.user.module;
 
 import com.github.tangyi.common.persistence.BaseEntity;
+import lombok.Data;
 
 /**
  * 部门角色关系
@@ -8,6 +9,7 @@ import com.github.tangyi.common.persistence.BaseEntity;
  * @author tangyi
  * @date 2018/8/26 0026 22:27
  */
+@Data
 public class RoleDept extends BaseEntity<RoleDept> {
 
     /**
