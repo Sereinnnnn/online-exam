@@ -1,0 +1,30 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.github.tangyi.user.config.SysConfig",
+      "name": "sys",
+      "type": "com.github.tangyi.user.config.SysConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.github.tangyi.user.config.SysConfig",
+      "name": "sys.default-avatar",
+      "description": "默认头像",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.github.tangyi.user.config.SysConfig",
+      "name": "sys.fdfs-http-host",
+      "description": "fastDfs服务器的HTTP地址",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.github.tangyi.user.config.SysConfig",
+      "name": "sys.zuul-upload-url",
+      "description": "zuul上传地址",
+      "type": "java.lang.String"
+    }
+  ]
+}

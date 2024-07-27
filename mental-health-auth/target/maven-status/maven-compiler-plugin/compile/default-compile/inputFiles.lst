@@ -1,0 +1,10 @@
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\config\ExamJwtAccessTokenConverter.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\feign\UserService.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\config\AuthorizationConfig.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\config\MybatisConfig.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\controller\AuthenticationController.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\utils\UserDetailsImpl.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\OnlineExamAuthApplication.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\service\impl\UserDetailServiceImpl.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\config\WebSecurityConfig.java
+E:\Desktop\Software-Implementation\mental-health\git\mental-health\mental-health-auth\src\main\java\com\github\tangyi\auth\feign\fallback\UserDetailServiceFallBackImpl.java

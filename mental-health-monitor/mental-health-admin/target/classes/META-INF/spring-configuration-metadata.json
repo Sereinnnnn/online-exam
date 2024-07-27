@@ -1,0 +1,22 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.github.tangyi.admin.properties.MonitorProperties",
+      "name": "notifier",
+      "type": "com.github.tangyi.admin.properties.MonitorProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.github.tangyi.admin.properties.MonitorProperties",
+      "name": "notifier.ding-talk",
+      "type": "com.github.tangyi.admin.properties.MonitorDingTalkProperties"
+    },
+    {
+      "sourceType": "com.github.tangyi.admin.properties.MonitorProperties",
+      "name": "notifier.mobile",
+      "type": "com.github.tangyi.admin.properties.MonitorMobileProperties"
+    }
+  ]
+}

@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.tangyi</groupId>
-    <artifactId>online-exam</artifactId>
-    <version>${online-exam.version}</version>
+    <artifactId>mental-health</artifactId>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -16,13 +16,13 @@
     </parent>
 
     <modules>
-        <module>online-exam-common</module>
-        <module>online-exam-eureka</module>
-        <module>online-exam-config</module>
-        <module>online-exam-gateway</module>
-        <module>online-exam-auth</module>
-        <module>online-exam-modules</module>
-        <module>online-exam-monitor</module>
+        <module>mental-health-common</module>
+        <module>mental-health-eureka</module>
+        <module>mental-health-config</module>
+        <module>mental-health-gateway</module>
+        <module>mental-health-auth</module>
+        <module>mental-health-modules</module>
+        <module>mental-health-monitor</module>
     </modules>
 
     <properties>
@@ -30,7 +30,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <javadoc.version>3.0.0</javadoc.version>
-        <online-exam.version>0.1.0</online-exam.version>
+        <mental-health.version>0.1.0</mental-health.version>
         <spring-cloud.version>Edgware.SR4</spring-cloud.version>
         <spring-boot.version>1.5.13.RELEASE</spring-boot.version>
         <jjwt.version>0.9.0</jjwt.version>
@@ -58,7 +58,7 @@
         <spring-boot-admin-server-ui-turbine.version>1.5.7</spring-boot-admin-server-ui-turbine.version>
         <docker.maven.verion>0.4.12</docker.maven.verion>
         <docker.registry>registry.cn-hangzhou.aliyuncs.com</docker.registry>
-        <docker.namespace>online-exam</docker.namespace>
+        <docker.namespace>mental-health</docker.namespace>
     </properties>
 
     <!--公共依赖-->

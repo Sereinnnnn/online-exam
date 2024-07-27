@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: mental-health-eureka
+  cloud:
+    config:
+      profile: ${SPRING_PROFILES_ACTIVE:dev}
+      label: ${CONFIG_LABEL:develop}
+      uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:8769}
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

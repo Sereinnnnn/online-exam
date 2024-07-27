@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: mental-health-user
+  cloud:
+    config:
+      fail-fast: true
+      profile: ${SPRING_PROFILES_ACTIVE:dev}
+      label: ${CONFIG_LABEL:develop}
+      uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:8769}
